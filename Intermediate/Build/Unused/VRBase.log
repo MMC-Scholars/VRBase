@@ -1,0 +1,11 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.props(31,3): warning MSB4011: "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Makefile.props" cannot be imported again. It was already imported at "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.cpp.props (31,3)". This is most likely a build authoring error. This subsequent import will be ignored. [C:\Users\Chel\Unreal\VRBase\Intermediate\ProjectFiles\VRBase.vcxproj]
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.props(31,3): warning MSB4011: "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Makefile.props" cannot be imported again. It was already imported at "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.cpp.props (31,3)". This is most likely a build authoring error. This subsequent import will be ignored. [C:\Users\Chel\Unreal\VRBase\Intermediate\ProjectFiles\UE4.vcxproj]
+  Performing 3 actions (4 in parallel)
+  IBaseEntity.cpp
+c:\users\chel\unreal\vrbase\source\vrbase\ibaseentity\IBaseEntity.h(33): error C4800: 'IBaseEntity *': forcing value to bool 'true' or 'false' (performance warning)
+c:\users\chel\unreal\vrbase\source\vrbase\ibaseentity\IBaseEntity.h(124): warning C4265: 'IBaseEntity': class has virtual functions, but destructor is not virtual
+           instances of this class may not be destructed correctly
+c:\users\chel\unreal\vrbase\source\vrbase\ibaseentity\IBaseEntity.h(116): error C4800: 'unsigned long': forcing value to bool 'true' or 'false' (performance warning)
+ERROR : UBT error : Failed to produce item: C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase.pdb
+  Total build time: 2.89 seconds (Local executor: 0.00 seconds)
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.MakeFile.Targets(41,5): error MSB3075: The command ""C:\Program Files\Epic Games\UE_4.17\Engine\Build\BatchFiles\Build.bat" VRBaseEditor Win64 Development "C:\Users\Chel\Unreal\VRBase\VRBase.uproject" -waitmutex" exited with code 5. Please verify that you have sufficient rights to run this command.

@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\VRBase.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{C1B9DAB2-C786-44EB-9150-8EFFD91D5977}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\VRBase.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\VRBaseEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{936FD844-C2AC-4E3B-A49C-6216423AABFE}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultScalability.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\VRBase">
+      <UniqueIdentifier>{0C946300-B59F-4B14-9B3C-52B2B919DE98}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\VRBase\IBaseEntity.cpp">
+      <Filter>Source\VRBase</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\VRBase\IBaseEntity.h">
+      <Filter>Source\VRBase</Filter>
+    </ClInclude>
+    <None Include="..\..\Source\VRBase\VRBase.Build.cs">
+      <Filter>Source\VRBase</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\VRBase\VRBase.cpp">
+      <Filter>Source\VRBase</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\VRBase\VRBase.h">
+      <Filter>Source\VRBase</Filter>
+    </ClInclude>
+    <Filter Include="Source\VRBase\IBaseEntity">
+      <UniqueIdentifier>{A9F869C3-62A2-4DBF-AB60-55616FB92F09}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\VRBase\IBaseEntity\CTakeDamageInfo.h">
+      <Filter>Source\VRBase\IBaseEntity</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\VRBase\IBaseEntity\IBaseEntity.cpp">
+      <Filter>Source\VRBase\IBaseEntity</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\VRBase\IBaseEntity\IBaseEntity.h">
+      <Filter>Source\VRBase\IBaseEntity</Filter>
+    </ClInclude>
+    <Filter Include="Source\VRBase\System">
+      <UniqueIdentifier>{58461A4B-A7E4-4036-9976-4920BDEF3C56}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\VRBase\System\predefs.h">
+      <Filter>Source\VRBase\System</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source\VRBase\CBaseEntity">
+      <UniqueIdentifier>{7bc122bd-fd26-41ba-8c64-eebd08364ef8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\VRBase\CBaseEntity\CBaseEntity.h">
+      <Filter>Source\VRBase\CBaseEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\VRBase\System\Globals.h">
+      <Filter>Source\VRBase\System</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\VRBase\System\Globals.cpp">
+      <Filter>Source\VRBase\System</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
