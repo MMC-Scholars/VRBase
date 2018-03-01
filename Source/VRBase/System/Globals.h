@@ -20,7 +20,7 @@ public:
 	void checkReset();
 	void markReset();
 private:
-	clock_t m_tStart;
+	clock_t m_tPrevious;
 	bool	m_bReset = true;
 };
 

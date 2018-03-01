@@ -414,12 +414,13 @@
     <None Include="..\..\Config\DefaultGame.ini" />
     <None Include="..\..\Config\DefaultInput.ini" />
     <None Include="..\..\Config\DefaultScalability.ini" />
-    <ClCompile Include="..\..\Source\VRBase\IBaseEntity.cpp" />
     <ClInclude Include="..\..\Source\VRBase\CBaseEntity\CBaseEntity.h" />
-    <ClInclude Include="..\..\Source\VRBase\IBaseEntity.h" />
     <None Include="..\..\Source\VRBase\VRBase.Build.cs" />
+    <ClCompile Include="..\..\Source\VRBase\CGameRules\CGameRules.cpp" />
     <ClCompile Include="..\..\Source\VRBase\System\Globals.cpp" />
     <ClCompile Include="..\..\Source\VRBase\VRBase.cpp" />
+    <ClInclude Include="..\..\Source\VRBase\CBasePawn\CBasePawn.h" />
+    <ClInclude Include="..\..\Source\VRBase\CGameRules\CGameRules.h" />
     <ClInclude Include="..\..\Source\VRBase\System\Globals.h" />
     <ClInclude Include="..\..\Source\VRBase\VRBase.h" />
     <ClInclude Include="..\..\Source\VRBase\IBaseEntity\CTakeDamageInfo.h" />

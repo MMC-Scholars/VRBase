@@ -4,9 +4,14 @@
 //or contact The Ohio State University's Office of Legal Affairs
 
 #include "IBaseEntity.h"
+#include "CBaseEntity/CBaseEntity.h"
+#include "CBasePawn/CBasePawn.h"
 #include "CoreMinimal.h"
 
 IBaseEntity* g_ppEntityList[MAX_ENTITY_COUNT] = { NULL };
+static TArray<IBaseEntity*> g_EntityListSmall;
+TArray<IBaseEntity*>* g_ppEntityListSmall = &g_EntityListSmall;
+
 
 //a global index which keeps track of where we last inserted 
 //an entity into the list
@@ -20,12 +25,11 @@ EHANDLE::EHANDLE(const IBaseEntity* pEnt) : m_iEnt(0) {
 		m_iEnt = pEnt->EntIndex();
 }
 
-
 //-------------------------------------------------------------------------------------
 // IBaseEntity Constructor & helpers
 //-------------------------------------------------------------------------------------
 IBaseEntity::IBaseEntity() {
-	AddEntityToList(this);
+	AddEntityToLists(this);
 
 	m_tConstructionTime = g_pGlobals->curtime;
 }
@@ -34,10 +38,12 @@ bool IBaseEntity::DestroyEntity() {
 	return GetActor()->Destroy();
 }
 
-void IBaseEntity::AddEntityToList(IBaseEntity* pEnt) {
+void IBaseEntity::AddEntityToLists(IBaseEntity* pEnt) {
+	g_ppEntityListSmall->Add(pEnt);
+
+	//now add it to the const-index array
 	//find an empty slot
 	eindex slot = -1;
-
 
 	//This code finds an empty slot for us, if one exists
 	int checkCount = 0;
@@ -57,17 +63,26 @@ void IBaseEntity::AddEntityToList(IBaseEntity* pEnt) {
 
 	//check if we found a valid slot
 	if (slot == -1) {
-		//TODO error!
+		UE_LOG(LogTemp, Error, TEXT("Could not find slot for new entity!\nThis most likely means that there are too many entities!"));
 	}
 	else {
 		//we're good to go - assign things
 		g_ppEntityList[slot] = pEnt;
 		pEnt->m_iEntIndex = slot;
 	}
+
+
 }
 
 IBaseEntity* IBaseEntity::FromActor(AActor* pActor) {
-	return dynamic_cast<IBaseEntity*>(pActor);
+	//Epic disabled RTTI so we use this janky and hacky
+	//method instead
+	IBaseEntity* pEnt = NULL;
+	if (pActor->ActorHasTag(TAG_BASEENTITY))
+		pEnt = (IBaseEntity*) static_cast<CBaseEntity*>(pActor);
+	else if (pActor->ActorHasTag(TAG_BASEPAWN))
+		pEnt = (IBaseEntity*) static_cast<CBasePawn*>(pActor);
+	return pEnt;
 }
 
 //---------------------------------------------------------------
@@ -85,12 +100,8 @@ void IBaseEntity::DefaultThink() {
 void IBaseEntity::Respawn() {
 	m_iHealth = m_iSpawnHealth;
 	m_iFlags = m_iSpawnFlags;
+	m_bThinkReady = true;
 }
-
-
-//---------------------------------------------------------------
-// Location system
-//---------------------------------------------------------------
 
 //---------------------------------------------------------------
 // Health System
@@ -125,5 +136,5 @@ void IBaseEntity::CheckDeath(int deltaHealth, const CTakeDamageInfo* info) {
 			OnTakeDamage_Alive(info);
 		}
 	}
-	
 }
+

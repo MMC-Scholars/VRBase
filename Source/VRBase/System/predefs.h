@@ -37,19 +37,17 @@ class CBaseCharacter;
 class CTakeDamageInfo;
 struct EHANDLE;
 
-//enumeration of Unreal's base actor types
-enum {
-	ACTOR,
-	PAWN,
-	CHARACTER,
-};
-typedef unsigned char etype;
+//tags denoting our Unreal-to-entity classes
+#define TAG_BASEENTITY		"MMC_BaseEntity"
+#define TAG_BASEPAWN		"MMC_BasePawn"
+#define TAG_BASECHARACTER	"MMC_BaseCharacter"
 
 
 
 //Forward declaration of global entity lists
 #define MAX_ENTITY_COUNT 2048
-extern IBaseEntity* g_ppEntityList[];
+extern IBaseEntity* g_ppEntityList[];	//const-index list, don't iterate over this, don't modify
+extern TArray<IBaseEntity*>* g_ppEntityListSmall; //entity list, iterate through this instead
 
 
 

@@ -32,12 +32,6 @@
     <Filter Include="Source\VRBase">
       <UniqueIdentifier>{0C946300-B59F-4B14-9B3C-52B2B919DE98}</UniqueIdentifier>
     </Filter>
-    <ClCompile Include="..\..\Source\VRBase\IBaseEntity.cpp">
-      <Filter>Source\VRBase</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\VRBase\IBaseEntity.h">
-      <Filter>Source\VRBase</Filter>
-    </ClInclude>
     <None Include="..\..\Source\VRBase\VRBase.Build.cs">
       <Filter>Source\VRBase</Filter>
     </None>
@@ -70,6 +64,9 @@
     <Filter Include="Source\VRBase\CBaseEntity">
       <UniqueIdentifier>{7bc122bd-fd26-41ba-8c64-eebd08364ef8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\VRBase\CBasePawn">
+      <UniqueIdentifier>{852a4eee-f96d-4031-9e84-58c5b4b36029}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\VRBase\CBaseEntity\CBaseEntity.h">
@@ -78,10 +75,19 @@
     <ClInclude Include="..\..\Source\VRBase\System\Globals.h">
       <Filter>Source\VRBase\System</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\VRBase\CBasePawn\CBasePawn.h">
+      <Filter>Source\VRBase\CBasePawn</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\VRBase\CGameRules\CGameRules.h">
+      <Filter>Source\VRBase</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\VRBase\System\Globals.cpp">
       <Filter>Source\VRBase\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\VRBase\CGameRules\CGameRules.cpp">
+      <Filter>Source\VRBase</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

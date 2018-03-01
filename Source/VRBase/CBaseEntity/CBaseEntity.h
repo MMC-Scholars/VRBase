@@ -15,15 +15,26 @@
 // This is our master base class for anything that is not controlled by the player.
 // I.e. anything that is not an APawn or an ACharacter
 //-------------------------------------------------------------------------------------
-class CBaseEntity : public AActor, public IBaseEntity {
+class CBaseEntity : public IBaseEntity, public AActor {
+public:
+	DECLARE_CLASS_SIMPLE(CBaseEntity, IBaseEntity)
+
 	//not much to do here because most of the functionality is built into
 	//the IBaseEntity interface
-	CBaseEntity() {}
-
-	virtual void BeginPlay() override {
-		Respawn();
+	CBaseEntity() {
+		Tags.Add(TAG_BASEENTITY);
+		m_pSelfAsActor = this;
+		bAllowTickBeforeBeginPlay = false;
+		SetActorTickEnabled(false);
 	}
+
+	//you can override these if you want, but there's no guarantees
+	//about how these interact with the new custom game flow
+	//for example, BeginPlay() might be called before 
+	// g_pGlobals->curtime is correctly set
+	virtual void BeginPlay() override { AActor::BeginPlay(); }
 	virtual void Tick(float deltaTime) override {}
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override {}
 };
 
 

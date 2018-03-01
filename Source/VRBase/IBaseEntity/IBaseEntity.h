@@ -11,8 +11,6 @@
 #include "System/predefs.h"
 #include "System/Globals.h"
 
-
-
 //-------------------------------------------------------------------------------------
 // The purpose of this struct is to declare a handler to an IBaseEntity. Acts as a "pointer"
 //		to an IBaseEntity except that it is safe against entities which are removed
@@ -32,7 +30,7 @@ public:
 
 	inline eindex EntIndex() const { return m_iEnt; }
 	inline operator IBaseEntity*() const { return Get(); }
-	inline operator bool() const { return Get(); }
+	inline operator bool() const { return Get() != NULL;}
 
 	inline IBaseEntity* operator->() const { return (Get()); }
 };
@@ -50,8 +48,9 @@ abstract_class IBaseEntity {
 public:
 	//Default constructor performs defaults and adds self to global lists
 	IBaseEntity();
-	~IBaseEntity() {
+	virtual ~IBaseEntity() {
 		g_ppEntityList[EntIndex()] = NULL; //this fixes all EHANDLEs
+		g_ppEntityListSmall->Remove(this);
 	}
 	ftime m_tConstructionTime;
 
@@ -63,9 +62,9 @@ public:
 	EHANDLE GetEHandle() const { return EHANDLE(this); }
 private:
 	eindex m_iEntIndex;
-	static void AddEntityToList(IBaseEntity* pEnt);
+	static void AddEntityToLists(IBaseEntity* pEnt);
 
-	etype  m_eBaseType; //denotes if we inherit from actor, pawn, or character
+	
 
 	//---------------------------------------------------------------
 	// Linkage to vanilla Unreal4 Actor system
@@ -73,10 +72,17 @@ private:
 	// get segmentation faults or something bad!
 	//---------------------------------------------------------------
 public:
-	etype GetEntityType() const { return m_eBaseType; }
+	bool IsBaseEntity()	const	{ return GetActor()->ActorHasTag(TAG_BASEENTITY); }
+	bool IsBasePawn()	const 	{ return GetActor()->ActorHasTag(TAG_BASEPAWN); }
+	bool IsBaseCharacter() const{ return GetActor()->ActorHasTag(TAG_BASECHARACTER); }
 	static IBaseEntity* FromActor(AActor* pActor);
 	inline IBaseEntity& GetRef() { return *this; }
-	inline AActor* GetActor() const { return reinterpret_cast<AActor*>(const_cast<IBaseEntity*>(this)); }
+	inline AActor* GetActor() const { 
+		return m_pSelfAsActor;
+	}
+protected:
+	AActor* m_pSelfAsActor;
+public:
 	AActor* operator->() const { return GetActor(); }
 	AActor& operator*() const { return *GetActor(); }
 	operator AActor*() const { return GetActor(); }
@@ -89,14 +95,21 @@ public:
 public:
 	typedef void (IBaseEntity::* BASEPTR)(void);
 	virtual void	DefaultThink(); //this think function is always called
-	inline void		Think()							{ if (m_pfnThink) this->(*m_pfnThink)(); }
+	inline void		Think()							{ if (m_pfnThink) (this->*m_pfnThink)(); }
 	inline void		SetNextThink(ftime time)		{ m_tNextThink = time; }
 	inline ftime	GetNextThink() const			{ return m_tNextThink; }
 	inline void		SetThink(BASEPTR pProcedure)	{ m_pfnThink = pProcedure; }
 
+	static inline bool		AllEntitiesReady()		{ return s_iReadyEntityCount == s_iEntityCount; }
 private:
-	BASEPTR		m_pfnThink = nullptr;
+	void (IBaseEntity::* m_pfnThink)() = nullptr;
 	ftime		m_tNextThink;
+
+protected:
+	static int	s_iReadyEntityCount;
+	static int	s_iEntityCount;
+
+
 
 	//---------------------------------------------------------------
 	// Respawn system
@@ -142,7 +155,7 @@ protected:
 	//---------------------------------------------------------------
 public:
 	inline ulong	GetFlags()				const	{ return m_iFlags; }
-	inline bool		HasFlags(ulong flags)	const	{ return m_iFlags & flags; }
+	inline bool		HasFlags(ulong flags)	const	{ return (m_iFlags & flags) != 0; }
 	inline void		AddFlags(ulong flags)			{ m_iFlags |= flags; }
 	inline void		RemoveFlags(ulong flags)		{ m_iFlags &= ~flags; }
 	inline void		ToggleFlags(ulong flags)		{ m_iFlags ^= flags; }

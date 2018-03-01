@@ -9,6 +9,7 @@
 "C:\Program Files\Epic Games\UE_4.17\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.h.obj"
 "C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\Development\VRBase\IBaseEntity.cpp.obj"
 "C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\Development\VRBase\VRBase.cpp.obj"
+"C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\Development\VRBase\Globals.cpp.obj"
 "C:\Program Files\Epic Games\UE_4.17\Engine\Intermediate\Build\Win64\UE4Editor\Development\VRBase\PCLaunch.rc.res"
 "C:\Program Files\Epic Games\UE_4.17\Engine\Intermediate\Build\Win64\UE4Editor\Development\ModuleVersionResource.rc.inl.res"
 /OUT:"C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-VRBase.lib"

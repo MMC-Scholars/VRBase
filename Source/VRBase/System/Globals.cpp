@@ -1,16 +1,19 @@
-#include "CoreMinimal.h"
 #include "Globals.h"
+#include "CoreMinimal.h"
+
+static CGlobalVars g_vars;
+CGlobalVars* g_pGlobals = &g_vars;
 
 void CGlobalVars::update() {
 	clock_t newclock = clock();
-	ftime newtime = (newclock - m_tStart) / CLOCKS_PER_SEC;
+	frametime = (newclock - m_tPrevious) / CLOCKS_PER_SEC;
+	m_tPrevious = newclock;
 
-	frametime = newtime - curtime;
-	curtime = newtime;
+	curtime = curtime + frametime;
 }
 
 void CGlobalVars::reset() {
-	m_tStart = clock();
+	curtime = -99999.99f; //lowest value with 2 decimal digits, appoximmately
 }
 
 void CGlobalVars::checkReset() {
