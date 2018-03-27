@@ -1,10 +1,47 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.props(31,3): warning MSB4011: "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Makefile.props" cannot be imported again. It was already imported at "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.cpp.props (31,3)". This is most likely a build authoring error. This subsequent import will be ignored. [C:\Users\Chel\Unreal\VRBase\Intermediate\ProjectFiles\VRBase.vcxproj]
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.props(31,3): warning MSB4011: "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Makefile.props" cannot be imported again. It was already imported at "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.cpp.props (31,3)". This is most likely a build authoring error. This subsequent import will be ignored. [C:\Users\Chel\Unreal\VRBase\Intermediate\ProjectFiles\UE4.vcxproj]
-  Performing 3 actions (4 in parallel)
+  Creating makefile for VRBaseEditor (game project files are newer)
+  Parsing headers for VRBaseEditor
+    Running UnrealHeaderTool "C:\Users\Chel\Unreal\VRBase\VRBase.uproject" "C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\VRBaseEditor\DebugGame\VRBaseEditor.uhtmanifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors -installed
+  Reflection code generated for VRBaseEditor in 9.454423 seconds
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-1681-Win64-DebugGame.dll".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-1681-Win64-DebugGame.pdb".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-1878-Win64-DebugGame.dll".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-1878-Win64-DebugGame.pdb".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-2214-Win64-DebugGame.dll".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-2214-Win64-DebugGame.pdb".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-2601-Win64-DebugGame.dll".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-2601-Win64-DebugGame.pdb".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-2690-Win64-DebugGame.dll".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-2690-Win64-DebugGame.pdb".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-3266-Win64-DebugGame.dll".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-3266-Win64-DebugGame.pdb".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-3615-Win64-DebugGame.dll".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-3615-Win64-DebugGame.pdb".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-3922-Win64-DebugGame.dll".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-3922-Win64-DebugGame.pdb".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-4660-Win64-DebugGame.dll".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-4660-Win64-DebugGame.pdb".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-6533-Win64-DebugGame.dll".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-6533-Win64-DebugGame.pdb".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-7360-Win64-DebugGame.dll".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-7360-Win64-DebugGame.pdb".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-7459-Win64-DebugGame.dll".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-7459-Win64-DebugGame.pdb".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-7667-Win64-DebugGame.dll".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-7667-Win64-DebugGame.pdb".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-8128-Win64-DebugGame.dll".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-8128-Win64-DebugGame.pdb".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-8322-Win64-DebugGame.dll".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-8322-Win64-DebugGame.pdb".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-9227-Win64-DebugGame.dll".
+  Deleting old hot reload file: "C:\Users\Chel\Unreal\VRBase\Binaries\Win64\UE4Editor-VRBase-9227-Win64-DebugGame.pdb".
+  Performing 4 actions (4 in parallel)
   IBaseEntity.cpp
-  [2/3] Link UE4Editor-VRBase.dll
-  [3/3] Link UE4Editor-VRBase.lib
-     Creating library C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-VRBase.lib and object C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-VRBase.exp
-     Creating library C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-VRBase.suppressed.lib and object C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-VRBase.suppressed.exp
-  Deploying VRBaseEditor Win64 Development...
-  Total build time: 10.25 seconds (Local executor: 8.32 seconds)
+  AGameRules.cpp
+  [3/4] Link UE4Editor-VRBase-Win64-DebugGame.dll
+  [4/4] Link UE4Editor-VRBase-Win64-DebugGame.lib
+     Creating library C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\DebugGame\UE4Editor-VRBase-Win64-DebugGame.lib and object C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\DebugGame\UE4Editor-VRBase-Win64-DebugGame.exp
+     Creating library C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\DebugGame\UE4Editor-VRBase-Win64-DebugGame.suppressed.lib and object C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\DebugGame\UE4Editor-VRBase-Win64-DebugGame.suppressed.exp
+  Deploying VRBaseEditor Win64 DebugGame...
+  Total build time: 18.47 seconds (Local executor: 2.70 seconds)

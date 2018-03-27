@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\VRBase.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{C1B9DAB2-C786-44EB-9150-8EFFD91D5977}</UniqueIdentifier>
+      <UniqueIdentifier>{347C3600-E644-4BFD-9BAA-B8A17071FFCF}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\VRBase.Target.cs">
       <Filter>Source</Filter>
@@ -12,7 +12,7 @@
       <Filter>Source</Filter>
     </None>
     <Filter Include="Config">
-      <UniqueIdentifier>{936FD844-C2AC-4E3B-A49C-6216423AABFE}</UniqueIdentifier>
+      <UniqueIdentifier>{E9507876-7DFD-435C-BDBA-1094742FF00F}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
       <Filter>Config</Filter>
@@ -30,7 +30,7 @@
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\VRBase">
-      <UniqueIdentifier>{0C946300-B59F-4B14-9B3C-52B2B919DE98}</UniqueIdentifier>
+      <UniqueIdentifier>{E0F644AB-EA07-4C2D-A7CF-64F4A0331E17}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\VRBase\VRBase.Build.cs">
       <Filter>Source\VRBase</Filter>
@@ -41,8 +41,44 @@
     <ClInclude Include="..\..\Source\VRBase\VRBase.h">
       <Filter>Source\VRBase</Filter>
     </ClInclude>
+    <Filter Include="Source\VRBase\ABaseCharacter">
+      <UniqueIdentifier>{F0FBFA17-42A8-4D7E-BDA7-84A30E73DF50}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\VRBase\ABaseCharacter\ABaseCharacter.cpp">
+      <Filter>Source\VRBase\ABaseCharacter</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\VRBase\ABaseCharacter\ABaseCharacter.h">
+      <Filter>Source\VRBase\ABaseCharacter</Filter>
+    </ClInclude>
+    <Filter Include="Source\VRBase\ABaseEntity">
+      <UniqueIdentifier>{BF3794AD-C319-4D35-906A-B674EBA6E8BC}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\VRBase\ABaseEntity\ABaseEntity.cpp">
+      <Filter>Source\VRBase\ABaseEntity</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\VRBase\ABaseEntity\ABaseEntity.h">
+      <Filter>Source\VRBase\ABaseEntity</Filter>
+    </ClInclude>
+    <Filter Include="Source\VRBase\ABasePawn">
+      <UniqueIdentifier>{0B5695FA-5EAC-4912-A8A1-F30ABF0DEB89}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\VRBase\ABasePawn\ABasePawn.cpp">
+      <Filter>Source\VRBase\ABasePawn</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\VRBase\ABasePawn\ABasePawn.h">
+      <Filter>Source\VRBase\ABasePawn</Filter>
+    </ClInclude>
+    <Filter Include="Source\VRBase\AGameRules">
+      <UniqueIdentifier>{D05EA500-E6B0-4383-9EE6-FEBE4E5358C0}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\VRBase\AGameRules\AGameRules.cpp">
+      <Filter>Source\VRBase\AGameRules</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\VRBase\AGameRules\AGameRules.h">
+      <Filter>Source\VRBase\AGameRules</Filter>
+    </ClInclude>
     <Filter Include="Source\VRBase\IBaseEntity">
-      <UniqueIdentifier>{A9F869C3-62A2-4DBF-AB60-55616FB92F09}</UniqueIdentifier>
+      <UniqueIdentifier>{802D4D55-0118-49D4-8195-B57BE30E514F}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\Source\VRBase\IBaseEntity\CTakeDamageInfo.h">
       <Filter>Source\VRBase\IBaseEntity</Filter>
@@ -53,41 +89,45 @@
     <ClInclude Include="..\..\Source\VRBase\IBaseEntity\IBaseEntity.h">
       <Filter>Source\VRBase\IBaseEntity</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\VRBase\IBaseEntity\IBaseEntity_flags.h">
+      <Filter>Source\VRBase\IBaseEntity</Filter>
+    </ClInclude>
     <Filter Include="Source\VRBase\System">
-      <UniqueIdentifier>{58461A4B-A7E4-4036-9976-4920BDEF3C56}</UniqueIdentifier>
+      <UniqueIdentifier>{12EB6DD2-1B41-4BD5-9C7E-3799A886400F}</UniqueIdentifier>
     </Filter>
-    <ClInclude Include="..\..\Source\VRBase\System\predefs.h">
+    <ClInclude Include="..\..\Source\VRBase\System\EHandle.h">
       <Filter>Source\VRBase\System</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Source\VRBase\CBaseEntity">
-      <UniqueIdentifier>{7bc122bd-fd26-41ba-8c64-eebd08364ef8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\VRBase\CBasePawn">
-      <UniqueIdentifier>{852a4eee-f96d-4031-9e84-58c5b4b36029}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Source\VRBase\CBaseEntity\CBaseEntity.h">
-      <Filter>Source\VRBase\CBaseEntity</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\VRBase\System\Globals.h">
-      <Filter>Source\VRBase\System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\VRBase\CBasePawn\CBasePawn.h">
-      <Filter>Source\VRBase\CBasePawn</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\VRBase\CGameRules\CGameRules.h">
-      <Filter>Source\VRBase</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\Source\VRBase\System\Globals.cpp">
       <Filter>Source\VRBase\System</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\VRBase\CGameRules\CGameRules.cpp">
-      <Filter>Source\VRBase</Filter>
+    <ClInclude Include="..\..\Source\VRBase\System\Globals.h">
+      <Filter>Source\VRBase\System</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\VRBase\System\Input.cpp">
+      <Filter>Source\VRBase\System</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\VRBase\System\Input.h">
+      <Filter>Source\VRBase\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\VRBase\System\predefs.h">
+      <Filter>Source\VRBase\System</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\VRBase\System\static_initialize.cpp">
+      <Filter>Source\VRBase\System</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\VRBase\System\static_initialize.h">
+      <Filter>Source\VRBase\System</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\VRBase\System\NLogger.h">
+      <Filter>Source\VRBase\System</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\VRBase\System\NLogger.cpp">
+      <Filter>Source\VRBase\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
