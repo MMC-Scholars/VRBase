@@ -10,30 +10,11 @@
 #include "UnrealEngine.h"
 #include "System/predefs.h"
 #include "System/Globals.h"
+#include "System/static_initialize.h"
+#include "IBaseEntity_flags.h"
+#include "GameFramework/Actor.h"
+#include "System/EHandle.h"
 
-//-------------------------------------------------------------------------------------
-// The purpose of this struct is to declare a handler to an IBaseEntity. Acts as a "pointer"
-//		to an IBaseEntity except that it is safe against entities which are removed
-//		after the initial EHANDLE is created.
-//-------------------------------------------------------------------------------------
-struct EHANDLE {
-private:
-	eindex m_iEnt;
-
-public:
-	//construction and assignment
-	EHANDLE(const IBaseEntity* pEnt);
-	EHANDLE(eindex iEnt) : m_iEnt(iEnt) {}
-	inline EHANDLE& operator=(const IBaseEntity* pEnt) { return (*this = EHANDLE(pEnt)); }
-
-	inline IBaseEntity* Get() const { return g_ppEntityList[m_iEnt]; }
-
-	inline eindex EntIndex() const { return m_iEnt; }
-	inline operator IBaseEntity*() const { return Get(); }
-	inline operator bool() const { return Get() != NULL;}
-
-	inline IBaseEntity* operator->() const { return (Get()); }
-};
 
 /**********************************************************************
 * IBaseEntity
@@ -46,25 +27,33 @@ public:
 **********************************************************************/
 abstract_class IBaseEntity {
 public:
+	friend class CGlobalVars;
 	//Default constructor performs defaults and adds self to global lists
-	IBaseEntity();
-	virtual ~IBaseEntity() {
-		g_ppEntityList[EntIndex()] = NULL; //this fixes all EHANDLEs
-		g_ppEntityListSmall->Remove(this);
+							IBaseEntity();
+	virtual					~IBaseEntity() {
+		RemoveSelfFromLists();
+		s_iEntityCount--;
+		s_iReadyEntityCount--;
 	}
 	ftime m_tConstructionTime;
 
-	bool DestroyEntity(); //destroys this Actor
+			void			RemoveSelfFromLists(); //invalidates EHANDLES, does NOT modify static counts, do that yourself
+			bool			DestroyEntity(); //destroys this Actor
 	//---------------------------------------------------------------
 	// Entity indexing system
 	//---------------------------------------------------------------
-	inline eindex EntIndex() const { return m_iEntIndex; }
-	EHANDLE GetEHandle() const { return EHANDLE(this); }
+	inline	eindex			EntIndex()			const { return m_iEntIndex; }
+			EHANDLE			GetEHandle()		const { return EHANDLE(this); }
 private:
 	eindex m_iEntIndex;
-	static void AddEntityToLists(IBaseEntity* pEnt);
+	static	void			AddEntityToLists(IBaseEntity* pEnt);
 
-	
+	//---------------------------------------------------------------
+	// Intiailization system
+	//---------------------------------------------------------------
+public:
+	virtual void			PreInit()	{}	//called before all the static intializers
+	virtual void			PostInit()	{}	//called after all the static initializers
 
 	//---------------------------------------------------------------
 	// Linkage to vanilla Unreal4 Actor system
@@ -72,20 +61,18 @@ private:
 	// get segmentation faults or something bad!
 	//---------------------------------------------------------------
 public:
-	bool IsBaseEntity()	const	{ return GetActor()->ActorHasTag(TAG_BASEENTITY); }
-	bool IsBasePawn()	const 	{ return GetActor()->ActorHasTag(TAG_BASEPAWN); }
-	bool IsBaseCharacter() const{ return GetActor()->ActorHasTag(TAG_BASECHARACTER); }
-	static IBaseEntity* FromActor(AActor* pActor);
-	inline IBaseEntity& GetRef() { return *this; }
-	inline AActor* GetActor() const { 
-		return m_pSelfAsActor;
-	}
+			bool			IsBaseEntity()		const	{ return GetActor()->ActorHasTag(TAG_BASEENTITY); }
+			bool			IsBasePawn()		const 	{ return GetActor()->ActorHasTag(TAG_BASEPAWN); }
+			bool			IsBaseCharacter()	const	{ return GetActor()->ActorHasTag(TAG_BASECHARACTER); }
+	static	IBaseEntity*	FromActor(AActor* pActor);
+	inline	IBaseEntity&	GetRef()					{ return *this; }
+	inline	AActor*			GetActor()			const	{ return m_pSelfAsActor; }
 protected:
 	AActor* m_pSelfAsActor;
 public:
-	AActor* operator->() const { return GetActor(); }
-	AActor& operator*() const { return *GetActor(); }
-	operator AActor*() const { return GetActor(); }
+			AActor*			operator->()		const	{ return GetActor(); }
+			AActor&			operator*()			const	{ return *GetActor(); }
+	operator AActor*()							const	{ return GetActor(); }
 
 	//---------------------------------------------------------------
 	// Think system
@@ -94,16 +81,16 @@ public:
 	//---------------------------------------------------------------
 public:
 	typedef void (IBaseEntity::* BASEPTR)(void);
-	virtual void	DefaultThink(); //this think function is always called
-	inline void		Think()							{ if (m_pfnThink) (this->*m_pfnThink)(); }
-	inline void		SetNextThink(ftime time)		{ m_tNextThink = time; }
-	inline ftime	GetNextThink() const			{ return m_tNextThink; }
-	inline void		SetThink(BASEPTR pProcedure)	{ m_pfnThink = pProcedure; }
+	virtual void			DefaultThink(); //this think function is always called
+	inline	void			Think()							{ if (m_pfnThink) (this->*m_pfnThink)(); }
+	inline	void			SetNextThink(ftime time)		{ m_tNextThink = time; }
+	inline	ftime			GetNextThink() const			{ return m_tNextThink; }
+	inline	void			SetThink(BASEPTR pProcedure)	{ m_pfnThink = pProcedure; }
 
-	static inline bool		AllEntitiesReady()		{ return s_iReadyEntityCount == s_iEntityCount; }
+	static inline bool		AllEntitiesReady()				{ return s_iReadyEntityCount == s_iEntityCount; }
 private:
-	void (IBaseEntity::* m_pfnThink)() = nullptr;
-	ftime		m_tNextThink;
+	BASEPTR m_pfnThink		= nullptr;
+	ftime m_tNextThink;
 
 protected:
 	static int	s_iReadyEntityCount;
@@ -125,24 +112,27 @@ private:
 	// Health System
 	//---------------------------------------------------------------
 public:
-	int GetHealth() const { return m_iHealth; }
-	int GetSpawnHealth() const { return m_iSpawnHealth; }
-	void SetHealth(int health);
+			int				GetHealth()			const { return m_iHealth; }
+			int				GetSpawnHealth()	const { return m_iSpawnHealth; }
+			void			SetHealth(int health);
 
-	virtual void TraceAttack(const CTakeDamageInfo& info);
+	virtual void			TraceAttack(const CTakeDamageInfo& info);
+
+	inline	bool			IsInvincible()		const { return HasFlags(FL_INVINCIBLE); }
+	inline	bool			IsNotDamageable()	const { return HasFlags(FL_NODAMAGE); }
 
 private:
-	void CheckDeath(int deltaHealth, const CTakeDamageInfo* pInfo);
+	void CheckDamageEvents(int deltaHealth, const CTakeDamageInfo* pInfo);
 
 protected:
 	//for these functions with pointers, info is not guaranteed to be non-null
-	virtual void OnHealed(const CTakeDamageInfo* info) {}
-	virtual void OnTakeDamage(const CTakeDamageInfo* info) {}
-	virtual void OnTakeDamage_Alive(const CTakeDamageInfo* info) {}
-	virtual void OnKilled(const CTakeDamageInfo* info) {}
-	virtual void OnKilled_Other(const CTakeDamageInfo& info) {}
-	inline bool IsAlive() const { return m_iHealth > 0; }
-	inline bool IsDead() const { return !IsAlive(); }
+	virtual void			OnHealed(const CTakeDamageInfo* info)			{}
+	virtual void			OnTakeDamage(const CTakeDamageInfo* info)		{}
+	virtual void			OnTakeDamage_Alive(const CTakeDamageInfo* info) {}
+	virtual void			OnKilled(const CTakeDamageInfo* info)			{}
+	virtual void			OnKilled_Other(const CTakeDamageInfo& info)		{}
+	inline	bool			IsAlive()	const								{ return m_iHealth > 0; }
+	inline	bool			IsDead()	const								{ return !IsAlive(); }
 
 protected:
 	int m_iSpawnHealth = 100;
@@ -154,15 +144,27 @@ protected:
 	// as a unsigned long has 64 bits
 	//---------------------------------------------------------------
 public:
-	inline ulong	GetFlags()				const	{ return m_iFlags; }
-	inline bool		HasFlags(ulong flags)	const	{ return (m_iFlags & flags) != 0; }
-	inline void		AddFlags(ulong flags)			{ m_iFlags |= flags; }
-	inline void		RemoveFlags(ulong flags)		{ m_iFlags &= ~flags; }
-	inline void		ToggleFlags(ulong flags)		{ m_iFlags ^= flags; }
-	inline void		ResetFlags()					{ m_iFlags = m_iSpawnFlags; }
+	inline	ulong			GetFlags()				const	{ return m_iFlags; }
+	inline	bool			HasFlags(ulong flags)	const	{ return (m_iFlags & flags) != 0; }
+	inline	bool			HasFlagsAll(ulong flags)const	{ return (m_iFlags & flags) == flags; }
+	inline	void			AddFlags(ulong flags)			{ m_iFlags |= flags; }
+	inline	void			RemoveFlags(ulong flags)		{ m_iFlags &= ~flags; }
+	inline	void			ToggleFlags(ulong flags)		{ m_iFlags ^= flags; }
+	inline	void			ResetFlags()					{ m_iFlags = m_iSpawnFlags; }
 protected:
 	ulong m_iSpawnFlags = 0;
 	ulong m_iFlags;
+
+	//---------------------------------------------------------------
+	//Generic "Use" System
+	//---------------------------------------------------------------
+public:
+			bool			Use(ABaseEntity* pActivator);	//returns true on success, false if blocked
+	virtual void			OnUsed(ABaseEntity* pActivator)				{}
+	inline	bool			IsUseable()							const	{ return !HasFlags(FL_IGNORE_USE | FL_INGORE_INPUT); }
+	inline	bool			IsInputEnabled()					const	{ return !HasFlags(FL_INGORE_INPUT); }
+	UInputComponent*		GetInput();
+	
 };
 
 #include "CTakeDamageInfo.h"

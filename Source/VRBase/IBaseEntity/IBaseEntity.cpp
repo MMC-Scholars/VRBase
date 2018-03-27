@@ -4,8 +4,8 @@
 //or contact The Ohio State University's Office of Legal Affairs
 
 #include "IBaseEntity.h"
-#include "CBaseEntity/CBaseEntity.h"
-#include "CBasePawn/CBasePawn.h"
+#include "ABaseEntity/ABaseEntity.h"
+#include "ABasePawn/ABasePawn.h"
 #include "CoreMinimal.h"
 
 IBaseEntity* g_ppEntityList[MAX_ENTITY_COUNT] = { NULL };
@@ -38,8 +38,14 @@ bool IBaseEntity::DestroyEntity() {
 	return GetActor()->Destroy();
 }
 
+void IBaseEntity::RemoveSelfFromLists() {
+	g_ppEntityList[EntIndex()] = NULL;
+	g_ppEntityListSmall->Remove(this);
+}
+
 void IBaseEntity::AddEntityToLists(IBaseEntity* pEnt) {
 	g_ppEntityListSmall->Add(pEnt);
+	s_iEntityCount++;
 
 	//now add it to the const-index array
 	//find an empty slot
@@ -79,9 +85,9 @@ IBaseEntity* IBaseEntity::FromActor(AActor* pActor) {
 	//method instead
 	IBaseEntity* pEnt = NULL;
 	if (pActor->ActorHasTag(TAG_BASEENTITY))
-		pEnt = (IBaseEntity*) static_cast<CBaseEntity*>(pActor);
+		pEnt = (IBaseEntity*) static_cast<ABaseEntity*>(pActor);
 	else if (pActor->ActorHasTag(TAG_BASEPAWN))
-		pEnt = (IBaseEntity*) static_cast<CBasePawn*>(pActor);
+		pEnt = (IBaseEntity*) static_cast<ABasePawn*>(pActor);
 	return pEnt;
 }
 
@@ -92,7 +98,11 @@ void IBaseEntity::DefaultThink() {
 	if (g_pGlobals->curtime > m_tNextRespawn) {
 		Respawn();
 	}
+	//Msg(__FUNCTION__);
 }
+
+int IBaseEntity::s_iEntityCount = 0;
+int IBaseEntity::s_iReadyEntityCount = 0;
 
 //---------------------------------------------------------------
 // Respawn system
@@ -100,29 +110,39 @@ void IBaseEntity::DefaultThink() {
 void IBaseEntity::Respawn() {
 	m_iHealth = m_iSpawnHealth;
 	m_iFlags = m_iSpawnFlags;
-	m_bThinkReady = true;
+	//m_bThinkReady = true;
 }
 
 //---------------------------------------------------------------
 // Health System
 //---------------------------------------------------------------
 void IBaseEntity::SetHealth(int health) {
-	int deltaHealth = m_iHealth - health;
-	m_iHealth = health;
-	CheckDeath(deltaHealth, nullptr);
+	if (IsNotDamageable())
+		return;
+	int deltaHealth = health - m_iHealth;
+
+	if (!IsInvincible())
+		m_iHealth = health;
+
+	CheckDamageEvents(deltaHealth, nullptr);
 }
 
 void IBaseEntity::TraceAttack(const CTakeDamageInfo& info) {
+	if (IsNotDamageable())
+		return;
+	
 	//get damage amount
 	int damage = info.GetBaseDamage();
 
 	//subtract damage from health
-	SetHealth(m_iHealth - info.GetBaseDamage());
+	//SetHealth(m_iHealth - info.GetBaseDamage());
+	if (!IsInvincible())
+		m_iHealth -= damage;
 
-	CheckDeath(info.GetBaseDamage(), &info);
+	CheckDamageEvents(-damage, &info);
 }
 
-void IBaseEntity::CheckDeath(int deltaHealth, const CTakeDamageInfo* info) {
+void IBaseEntity::CheckDamageEvents(int deltaHealth, const CTakeDamageInfo* info) {
 	if (deltaHealth > 0) {
 		OnHealed(info);
 	}
@@ -137,4 +157,18 @@ void IBaseEntity::CheckDeath(int deltaHealth, const CTakeDamageInfo* info) {
 		}
 	}
 }
+
+//---------------------------------------------------------------
+//Generic "Use" System
+//---------------------------------------------------------------
+bool IBaseEntity::Use(ABaseEntity* pActivator) {
+	if (IsUseable()) {
+		OnUsed(pActivator);
+		return true;
+	}
+	return false;
+}
+
+
+
 

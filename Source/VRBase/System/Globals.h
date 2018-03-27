@@ -3,9 +3,13 @@
 //https://tco.osu.edu/wp-content/uploads/2013/09/PatentCopyrightPolicy.pdf 
 //or contact The Ohio State University's Office of Legal Affairs
 
+#ifndef GLOBALS_H
+#define GLOBALS_H
+
 #include "CoreMinimal.h"
 #include "predefs.h"
 #include "time.h"
+#include "NLogger.h"
 
 class CGlobalVars {
 public:
@@ -25,3 +29,5 @@ private:
 };
 
 extern CGlobalVars* g_pGlobals;
+
+#endif //GLOBALS_H

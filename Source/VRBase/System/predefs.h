@@ -12,10 +12,10 @@
 #include "CoreMinimal.h"
 
 //Typedefs
-typedef unsigned char	byte;
-typedef unsigned short	ushort;
-typedef unsigned int	uint;
-typedef unsigned long	ulong;
+typedef unsigned char		byte;
+typedef unsigned short		ushort;
+typedef unsigned int		uint;
+typedef unsigned long long	ulong;
 
 typedef float			ftime; //denotes time variable
 typedef unsigned long	hcode; //denotes a ulong which is a unique hashcode
@@ -23,6 +23,9 @@ typedef float			vec; //denotes a float used by vectors; represents world space
 typedef unsigned short	eindex;
 
 //Syntax aliases
+#define STRINGIZE_INTERNAL(tokens) #tokens
+#define STRINGIZE(tokens) STRINGIZE_INTERNAL(tokens)
+
 #define until(condition) while (!(condition)) //simplifies thinking in some contexts
 #define abstract_class class //denotes a class as one which should not be directly constructed
 #define DECLARE_CLASS_SIMPLE(ChildClass, ParentClass) \
@@ -31,9 +34,9 @@ typedef unsigned short	eindex;
 
 //forward declarations of classes so that other classes can contain pointers to them in their header files
 class IBaseEntity;
-class CBaseEntity;
-class CBasePawn;
-class CBaseCharacter;
+class ABaseEntity;
+class ABasePawn;
+class ABaseCharacter;
 class CTakeDamageInfo;
 struct EHANDLE;
 
