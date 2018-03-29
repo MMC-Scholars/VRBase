@@ -21,4 +21,6 @@ namespace NLogger {
 
 }
 
+inline const wchar_t* WCStr(const FString& str) { return &(str[0]);}
 void Msg(const char* pszFormat, ...);
+void MsgW(const wchar_t* pszFormat, ...);

@@ -12,7 +12,6 @@ IBaseEntity* g_ppEntityList[MAX_ENTITY_COUNT] = { NULL };
 static TArray<IBaseEntity*> g_EntityListSmall;
 TArray<IBaseEntity*>* g_ppEntityListSmall = &g_EntityListSmall;
 
-
 //a global index which keeps track of where we last inserted 
 //an entity into the list
 static eindex g_iEntityCounter = 0; 
@@ -76,8 +75,6 @@ void IBaseEntity::AddEntityToLists(IBaseEntity* pEnt) {
 		g_ppEntityList[slot] = pEnt;
 		pEnt->m_iEntIndex = slot;
 	}
-
-
 }
 
 IBaseEntity* IBaseEntity::FromActor(AActor* pActor) {

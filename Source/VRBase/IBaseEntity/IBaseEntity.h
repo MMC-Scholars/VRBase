@@ -52,7 +52,7 @@ private:
 	// Intiailization system
 	//---------------------------------------------------------------
 public:
-	virtual void			PreInit()	{}	//called before all the static intializers
+	virtual void			PreInit() { MsgW(L"%s PreInit", WCStr(GetActor()->GetName())); }	//called before all the static intializers
 	virtual void			PostInit()	{}	//called after all the static initializers
 
 	//---------------------------------------------------------------

@@ -4,6 +4,6 @@
 	"BuildId" : "7d5229ac-d3e2-4191-ac6f-9a43d8706aee",
 	"Modules" : 
 	{
-		"VRBase" : "UE4Editor-VRBase-7291.dll"
+		"VRBase" : "UE4Editor-VRBase.dll"
 	}
 }

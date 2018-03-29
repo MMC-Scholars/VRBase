@@ -93,6 +93,7 @@ void AGameRules::RestartRound() {
 }
 
 void AGameRules::InitializeAllEntities() {
+	Msg(__FUNCTION__);
 	//run pre inits of all entities
 	for (eindex i = 0; i < g_ppEntityListSmall->Num(); i++) {
 		(*g_ppEntityListSmall)[i]->SetNextThink(FLT_MIN);

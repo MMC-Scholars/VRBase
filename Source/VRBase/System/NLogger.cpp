@@ -18,6 +18,16 @@ namespace NLogger {
 		}
 	}
 
+#define BUFFER_SIZE 512
+	wchar_t wbuffer[BUFFER_SIZE];
+	static void VWMsgMaster(FColor c, ftime duration, const wchar_t* pszFormat, va_list args) {
+		if (GEngine) {
+			vswprintf_s(wbuffer, BUFFER_SIZE, pszFormat, args);
+			FString str = wbuffer;
+			GEngine->AddOnScreenDebugMessage(-1, duration, c, str);
+		}
+	}
+
 
 	inline void MsgMaster(FColor c, ftime duration, const FString& str) {
 		if (GEngine) {
@@ -80,5 +90,12 @@ void Msg(const char* pszFormat, ...) {
 	va_list args;
 	va_start(args, pszFormat);
 	NLogger::VMsgMaster(FColor::Cyan, 15.0f, pszFormat, args);
+	va_end(args);
+}
+
+void MsgW(const wchar_t* pszFormat, ...) {
+	va_list args;
+	va_start(args, pszFormat);
+	NLogger::VWMsgMaster(FColor::Cyan, 15.0f, pszFormat, args);
 	va_end(args);
 }
