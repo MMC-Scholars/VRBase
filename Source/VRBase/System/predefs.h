@@ -50,7 +50,7 @@ struct EHANDLE;
 //Forward declaration of global entity lists
 #define MAX_ENTITY_COUNT 2048
 extern IBaseEntity* g_ppEntityList[];	//const-index list, don't iterate over this, don't modify
-extern TArray<IBaseEntity*>* g_ppEntityListSmall; //entity list, iterate through this instead
+extern TArray<IBaseEntity*> g_entList; //entity list, iterate through this instead
 
 
 

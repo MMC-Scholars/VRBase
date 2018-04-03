@@ -15,6 +15,7 @@ class CGlobalVars {
 public:
 	ftime curtime;
 	ftime frametime;
+	bool  ineditor = true; //if true, we are editing a world in the editor and are not playing it. For PIE, this is true
 
 
 	void update();

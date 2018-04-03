@@ -89,13 +89,13 @@ namespace NLogger {
 void Msg(const char* pszFormat, ...) {
 	va_list args;
 	va_start(args, pszFormat);
-	NLogger::VMsgMaster(FColor::Cyan, 15.0f, pszFormat, args);
+	NLogger::VMsgMaster(FColor::Cyan, 10.0f, pszFormat, args);
 	va_end(args);
 }
 
 void MsgW(const wchar_t* pszFormat, ...) {
 	va_list args;
 	va_start(args, pszFormat);
-	NLogger::VWMsgMaster(FColor::Cyan, 15.0f, pszFormat, args);
+	NLogger::VWMsgMaster(FColor::Cyan, 10.0f, pszFormat, args);
 	va_end(args);
 }

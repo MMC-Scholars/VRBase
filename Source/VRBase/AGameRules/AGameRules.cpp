@@ -5,6 +5,7 @@ AGameRules::AGameRules() : ABaseEntity() {
 	g_pGameRules = this;
 	//g_pGlobals->reset();
 	PrimaryActorTick.bCanEverTick = true;
+	SetActorTickEnabled(true);
 }
 
 void AGameRules::Tick(float deltaTime) {
@@ -29,22 +30,26 @@ void AGameRules::Tick(float deltaTime) {
 		m_tNextRoundRestart = FLT_MAX;
 	}
 
-	for (eindex i = 0; i < g_ppEntityListSmall->Num(); i++) {
-		(*g_ppEntityListSmall)[i]->DefaultThink();
+	for (eindex i = 0; i < g_entList.Num(); i++) {
+		g_entList[i]->DefaultThink();
 	}
 
-	for (eindex i = 0; i < g_ppEntityListSmall->Num(); i++) {
-		(*g_ppEntityListSmall)[i]->Think();
+	for (eindex i = 0; i < g_entList.Num(); i++) {
+		g_entList[i]->Think();
 	}
 }
 
 void AGameRules::BeginPlay() {
 	BaseClass::BeginPlay();
 	Msg("AGameRules::BeginPlay\n");
-	Msg("ReadyEntityCount = %i/%i/%i\n", s_iReadyEntityCount, g_ppEntityListSmall->Num(), s_iEntityCount);
-	for (int i = 0; i < g_ppEntityListSmall->Num(); i++) {
-		FString name = (*g_ppEntityListSmall)[i]->GetActor()->GetName();
-		NLogger::Message(name);
+	Msg("ReadyEntityCount = %i/%i\n", s_iReadyEntityCount, s_iEntityCount);
+	if (s_iEntityCount != g_entList.Num()) {
+		NLogger::Fatal("\nIBaseEntity::s_iEntityCount != g_entList.Num()");
+	}
+	for (int i = 0; i < g_entList.Num(); i++) {
+		AActor* pEnt = g_entList[i]->GetActor();
+		FString name = pEnt->GetName();
+		MsgW(L"%s : %s : %p", WCStr(name), pEnt);
 	}
 	
 	m_bHasRestartedRound = false;
@@ -68,8 +73,8 @@ void AGameRules::RestartRound() {
 	TArray<EHANDLE> m_aDestroyedEntities;
 	//this array remembers which entities we'll destroy later
 
-	for (int i = 0; i < g_ppEntityListSmall->Num(); i++) {
-		IBaseEntity* pEnt = (*g_ppEntityListSmall)[i];
+	for (int i = 0; i < g_entList.Num(); i++) {
+		IBaseEntity* pEnt = g_entList[i];
 
 		//ignore entities marked with preserve
 		if (!pEnt->HasFlags(FL_ROUND_PRESERVE)) {
@@ -95,17 +100,20 @@ void AGameRules::RestartRound() {
 void AGameRules::InitializeAllEntities() {
 	Msg(__FUNCTION__);
 	//run pre inits of all entities
-	for (eindex i = 0; i < g_ppEntityListSmall->Num(); i++) {
-		(*g_ppEntityListSmall)[i]->SetNextThink(FLT_MIN);
-		(*g_ppEntityListSmall)[i]->PreInit();
+	Msg("Running all pre-inits");
+	for (eindex i = 0; i < g_entList.Num(); i++) {
+		g_entList[i]->SetNextThink(FLT_MIN);
+		g_entList[i]->PreInit();
 	}
 
 	//run global initializers in order
+	Msg("Running all static initializers");
 	CStaticInitializer::InvokeAllInOrder();
 
 	//run post inits of all entities
-	for (eindex i = 0; i < g_ppEntityListSmall->Num(); i++)
-		(*g_ppEntityListSmall)[i]->PreInit();
+	Msg("Running all post-inits");
+	for (eindex i = 0; i < g_entList.Num(); i++)
+		g_entList[i]->PreInit();
 
 	//mark us as ready
 	m_bHasInitializedAllEntities = true;

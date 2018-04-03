@@ -16,15 +16,15 @@ void CGlobalVars::update() {
 void CGlobalVars::reset() {
 	m_bReset = false;
 	Msg("CGlobalVars::reset\n");
-	IBaseEntity::s_iReadyEntityCount = 0;
+	
 	curtime = -99999.99f; //lowest value with 2 decimal digits, appoximmately
 
 	TArray<IBaseEntity*> removedList;
 
 	//recount number of entities
 	IBaseEntity::s_iEntityCount = 0;
-	for (int i = 0; i < g_ppEntityListSmall->Num(); i++) {
-		IBaseEntity* pEnt = (*g_ppEntityListSmall)[i];
+	for (int i = 0; i < g_entList.Num(); i++) {
+		IBaseEntity* pEnt = g_entList[i];
 		AActor* pActor = pEnt->GetActor();
 		FString name = pActor->GetName();
 		if (name.StartsWith("Default")) {
@@ -50,4 +50,13 @@ void CGlobalVars::checkReset() {
 
 void CGlobalVars::markReset() {
 	m_bReset = true;
+	ineditor = true;
+
+	//clear all lists
+	IBaseEntity::s_iReadyEntityCount = IBaseEntity::s_iEntityCount = 0;
+	for (int i = 0; i < MAX_ENTITY_COUNT; i++) {
+		g_ppEntityList[i] = nullptr;
+	}
+	while (g_entList.Num() > 0)
+		g_entList.Pop();
 }

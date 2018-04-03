@@ -46,6 +46,7 @@ public:
 			EHANDLE			GetEHandle()		const { return EHANDLE(this); }
 private:
 	eindex m_iEntIndex;
+protected:
 	static	void			AddEntityToLists(IBaseEntity* pEnt);
 
 	//---------------------------------------------------------------

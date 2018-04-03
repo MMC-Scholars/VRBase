@@ -23,9 +23,9 @@
 /wd4838
 /w44668
 /I "C:\Program Files\Epic Games\UE_4.17\Engine\Source"
-/I C:\Users\Chel\Unreal\VRBase\Source
-/I C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\Inc\VRBase
-/I C:\Users\Chel\Unreal\VRBase\Source\VRBase
+/I "C:\Users\Public\Documents\Public Projects\VRBase\Source"
+/I "C:\Users\Public\Documents\Public Projects\VRBase\Intermediate\Build\Win64\UE4Editor\Inc\VRBase"
+/I "C:\Users\Public\Documents\Public Projects\VRBase\Source\VRBase"
 /I "C:\Program Files\Epic Games\UE_4.17\Engine\Source\Runtime\Core\Public"
 /I "C:\Program Files\Epic Games\UE_4.17\Engine\Source\Runtime\Core\Public\Internationalization"
 /I "C:\Program Files\Epic Games\UE_4.17\Engine\Source\Runtime\Core\Public\Async"
@@ -355,9 +355,9 @@
 /FI"C:\Program Files\Epic Games\UE_4.17\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.h"
 /Yu"C:\Program Files\Epic Games\UE_4.17\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.h"
 /Fp"C:\Program Files\Epic Games\UE_4.17\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.h.pch"
-"C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\Inc\VRBase\VRBase.init.gen.cpp"
-/FI"C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\Development\VRBase\Definitions.VRBase.h"
-/Fo"C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\Development\VRBase\VRBase.init.gen.cpp.obj"
+"C:\Users\Public\Documents\Public Projects\VRBase\Intermediate\Build\Win64\UE4Editor\Inc\VRBase\VRBase.init.gen.cpp"
+/FI"C:\Users\Public\Documents\Public Projects\VRBase\Intermediate\Build\Win64\UE4Editor\Development\VRBase\Definitions.VRBase.h"
+/Fo"C:\Users\Public\Documents\Public Projects\VRBase\Intermediate\Build\Win64\UE4Editor\Development\VRBase\VRBase.init.gen.cpp.obj"
 /TP
 /GR-
 /W4

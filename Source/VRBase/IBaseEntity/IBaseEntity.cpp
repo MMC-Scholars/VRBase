@@ -9,8 +9,7 @@
 #include "CoreMinimal.h"
 
 IBaseEntity* g_ppEntityList[MAX_ENTITY_COUNT] = { NULL };
-static TArray<IBaseEntity*> g_EntityListSmall;
-TArray<IBaseEntity*>* g_ppEntityListSmall = &g_EntityListSmall;
+TArray<IBaseEntity*> g_entList;
 
 //a global index which keeps track of where we last inserted 
 //an entity into the list
@@ -28,7 +27,7 @@ EHANDLE::EHANDLE(const IBaseEntity* pEnt) : m_iEnt(0) {
 // IBaseEntity Constructor & helpers
 //-------------------------------------------------------------------------------------
 IBaseEntity::IBaseEntity() {
-	AddEntityToLists(this);
+	//AddEntityToLists(this);
 
 	m_tConstructionTime = g_pGlobals->curtime;
 }
@@ -39,11 +38,12 @@ bool IBaseEntity::DestroyEntity() {
 
 void IBaseEntity::RemoveSelfFromLists() {
 	g_ppEntityList[EntIndex()] = NULL;
-	g_ppEntityListSmall->Remove(this);
+	g_entList.Remove(this);
 }
 
 void IBaseEntity::AddEntityToLists(IBaseEntity* pEnt) {
-	g_ppEntityListSmall->Add(pEnt);
+	Msg("Adding entity to lists");
+	g_entList.Add(pEnt);
 	s_iEntityCount++;
 
 	//now add it to the const-index array
@@ -165,7 +165,3 @@ bool IBaseEntity::Use(ABaseEntity* pActivator) {
 	}
 	return false;
 }
-
-
-
-

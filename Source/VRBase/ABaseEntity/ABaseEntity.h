@@ -26,10 +26,8 @@ public:
 	ABaseEntity() : IBaseEntity() {
 		Tags.Add(TAG_BASEENTITY); 
 		m_pSelfAsActor = this;
-		Msg(__FUNCTION__);
-		NLogger::Message(GetName());
-		//bAllowTickBeforeBeginPlay = false;
-		//SetActorTickEnabled(false);
+		bAllowTickBeforeBeginPlay = false;
+		SetActorTickEnabled(false);
 	}
 
 	//you can override these if you want, but there's no guarantees
@@ -41,6 +39,24 @@ public:
 		AActor::BeginPlay();
 		s_iReadyEntityCount++;
 	}
+
+	/*virtual void OnConstruction(const FTransform& transform) override {
+		Super::OnConstruction(transform);
+		MsgW(L"Calling OnConstruction for %s", WCStr(GetName()));
+	}
+
+	virtual void PostActorCreated() override {
+		Super::PostActorCreated();
+		MsgW(L"Calling OnConstruction for %s", WCStr(GetName()));
+	}*/
+
 	virtual void Tick(float deltaTime) override {  }
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override {}
+	virtual void PostDuplicate(EDuplicateMode::Type mode) override {
+		Super::PostDuplicate(mode);
+		if (mode != EDuplicateMode::Normal) {
+			AddEntityToLists(this);
+			g_pGlobals->ineditor = false;
+		}
+	}
 };
