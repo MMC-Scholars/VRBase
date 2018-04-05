@@ -127,13 +127,18 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\VRBase\NonEntityTester.h">
-      <Filter>Source\VRBase</Filter>
+    <Filter Include="Source\VRBase\FMovingVector">
+      <UniqueIdentifier>{0c4e39ee-84c1-4e3d-95b9-2e1599a4e6b3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\VRBase\FMovingVector\FMovingVector.h">
+      <Filter>Source\VRBase\FMovingVector</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\VRBase\NonEntityTester.cpp">
-      <Filter>Source\VRBase</Filter>
+    <ClCompile Include="..\..\Source\VRBase\FMovingVector\FMovingVector.cpp">
+      <Filter>Source\VRBase\FMovingVector</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

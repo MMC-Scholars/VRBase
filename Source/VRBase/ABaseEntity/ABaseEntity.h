@@ -40,23 +40,10 @@ public:
 		s_iReadyEntityCount++;
 	}
 
-	/*virtual void OnConstruction(const FTransform& transform) override {
-		Super::OnConstruction(transform);
-		MsgW(L"Calling OnConstruction for %s", WCStr(GetName()));
-	}
-
-	virtual void PostActorCreated() override {
-		Super::PostActorCreated();
-		MsgW(L"Calling OnConstruction for %s", WCStr(GetName()));
-	}*/
-
 	virtual void Tick(float deltaTime) override {  }
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override {}
 	virtual void PostDuplicate(EDuplicateMode::Type mode) override {
 		Super::PostDuplicate(mode);
-		if (mode != EDuplicateMode::Normal) {
-			AddEntityToLists(this);
-			g_pGlobals->ineditor = false;
-		}
+		IBaseEntity::PostDuplicate(mode);
 	}
 };

@@ -41,6 +41,14 @@ void IBaseEntity::RemoveSelfFromLists() {
 	g_entList.Remove(this);
 }
 
+void IBaseEntity::PostDuplicate(EDuplicateMode::Type mode) {
+	Msg("Calling IBaseEntity::PostDuplicate");
+	if (mode != EDuplicateMode::Normal) {
+		AddEntityToLists(this);
+		g_pGlobals->ineditor = false;
+	}
+}
+
 void IBaseEntity::AddEntityToLists(IBaseEntity* pEnt) {
 	Msg("Adding entity to lists");
 	g_entList.Add(pEnt);

@@ -47,6 +47,7 @@ public:
 private:
 	eindex m_iEntIndex;
 protected:
+			void			PostDuplicate(EDuplicateMode::Type mode);
 	static	void			AddEntityToLists(IBaseEntity* pEnt);
 
 	//---------------------------------------------------------------

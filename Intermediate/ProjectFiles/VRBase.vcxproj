@@ -415,9 +415,9 @@
     <None Include="..\..\Config\DefaultInput.ini" />
     <None Include="..\..\Config\DefaultScalability.ini" />
     <None Include="..\..\Source\VRBase\VRBase.Build.cs" />
-    <ClCompile Include="..\..\Source\VRBase\NonEntityTester.cpp" />
+    <ClCompile Include="..\..\Source\VRBase\FMovingVector\FMovingVector.cpp" />
     <ClCompile Include="..\..\Source\VRBase\VRBase.cpp" />
-    <ClInclude Include="..\..\Source\VRBase\NonEntityTester.h" />
+    <ClInclude Include="..\..\Source\VRBase\FMovingVector\FMovingVector.h" />
     <ClInclude Include="..\..\Source\VRBase\VRBase.h" />
     <ClCompile Include="..\..\Source\VRBase\ABaseCharacter\ABaseCharacter.cpp" />
     <ClInclude Include="..\..\Source\VRBase\ABaseCharacter\ABaseCharacter.h" />

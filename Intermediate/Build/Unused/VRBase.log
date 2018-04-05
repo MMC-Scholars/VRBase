@@ -1,17 +1,14 @@
-﻿  Compiling game modules for hot reload
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.props(31,3): warning MSB4011: "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Makefile.props" cannot be imported again. It was already imported at "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.cpp.props (31,3)". This is most likely a build authoring error. This subsequent import will be ignored. [C:\Users\Chel\Unreal\VRBase\Intermediate\ProjectFiles\VRBase.vcxproj]
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.props(31,3): warning MSB4011: "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Makefile.props" cannot be imported again. It was already imported at "C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.cpp.props (31,3)". This is most likely a build authoring error. This subsequent import will be ignored. [C:\Users\Chel\Unreal\VRBase\Intermediate\ProjectFiles\UE4.vcxproj]
+  Compiling game modules for hot reload
   Parsing headers for VRBaseEditor
-    Running UnrealHeaderTool "C:\Users\Public\Documents\Public Projects\VRBase\VRBase.uproject" "C:\Users\Public\Documents\Public Projects\VRBase\Intermediate\Build\Win64\VRBaseEditor\DebugGame\VRBaseEditor.uhtmanifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors -installed
-  Reflection code generated for VRBaseEditor in 7.7800297 seconds
-  Performing 8 actions (4 in parallel)
-  Globals.cpp
-  ABaseEntity.gen.cpp
-  IBaseEntity.cpp
-  AGameRules.gen.cpp
-  AGameRules.cpp
-  ABaseEntity.cpp
-  [7/8] Link UE4Editor-VRBase-1560-Win64-DebugGame.dll
-  [8/8] Link UE4Editor-VRBase-1560-Win64-DebugGame.lib
-     Creating library C:\Users\Public\Documents\Public Projects\VRBase\Intermediate\Build\Win64\UE4Editor\DebugGame\UE4Editor-VRBase-1560-Win64-DebugGame.lib and object C:\Users\Public\Documents\Public Projects\VRBase\Intermediate\Build\Win64\UE4Editor\DebugGame\UE4Editor-VRBase-1560-Win64-DebugGame.exp
-     Creating library C:\Users\Public\Documents\Public Projects\VRBase\Intermediate\Build\Win64\UE4Editor\DebugGame\UE4Editor-VRBase-1560-Win64-DebugGame.suppressed.lib and object C:\Users\Public\Documents\Public Projects\VRBase\Intermediate\Build\Win64\UE4Editor\DebugGame\UE4Editor-VRBase-1560-Win64-DebugGame.suppressed.exp
+    Running UnrealHeaderTool "C:\Users\Chel\Unreal\VRBase\VRBase.uproject" "C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\VRBaseEditor\DebugGame\VRBaseEditor.uhtmanifest" -LogCmds="loginit warning, logexit warning, logdatabase error" -Unattended -WarningsAsErrors -installed
+  Reflection code generated for VRBaseEditor in 8.117034 seconds
+  Performing 3 actions (4 in parallel)
+  VRBase.init.gen.cpp
+  [2/3] Link UE4Editor-VRBase-5977-Win64-DebugGame.dll
+  [3/3] Link UE4Editor-VRBase-5977-Win64-DebugGame.lib
+     Creating library C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\DebugGame\UE4Editor-VRBase-5977-Win64-DebugGame.lib and object C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\DebugGame\UE4Editor-VRBase-5977-Win64-DebugGame.exp
+     Creating library C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\DebugGame\UE4Editor-VRBase-5977-Win64-DebugGame.suppressed.lib and object C:\Users\Chel\Unreal\VRBase\Intermediate\Build\Win64\UE4Editor\DebugGame\UE4Editor-VRBase-5977-Win64-DebugGame.suppressed.exp
   Deploying VRBaseEditor Win64 DebugGame...
-  Total build time: 57.15 seconds (Local executor: 3.17 seconds)
+  Total build time: 16.20 seconds (Local executor: 2.25 seconds)

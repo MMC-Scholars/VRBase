@@ -46,11 +46,11 @@ void AGameRules::BeginPlay() {
 	if (s_iEntityCount != g_entList.Num()) {
 		NLogger::Fatal("\nIBaseEntity::s_iEntityCount != g_entList.Num()");
 	}
-	for (int i = 0; i < g_entList.Num(); i++) {
+	/*for (int i = 0; i < g_entList.Num(); i++) {
 		AActor* pEnt = g_entList[i]->GetActor();
 		FString name = pEnt->GetName();
 		MsgW(L"%s : %s : %p", WCStr(name), pEnt);
-	}
+	}*/
 	
 	m_bHasRestartedRound = false;
 	m_bHasInitializedAllEntities = false;
