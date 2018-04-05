@@ -2,23 +2,39 @@
 
 #include "UnrealEngine.h"
 
+//---------------------------------------------------------------------------
+// General purpose moving vectors. Notes on memory usage:
+//		Create new ones with the "new" keyword - this is only safe to do
+//			starting in AActor::BeginPlay() and from any tick or think function
+//		Velocities can be  modified at any time
+//		These are all destroyed in AGameRules::EndPlay(), but it is also safe
+//			to delete them during Tick or Think functions
+//---------------------------------------------------------------------------
 class FMovingVector : public FVector {
+	friend class IMovingVectorManager;
 public:
 	FMovingVector(const FVector& v);
 	FMovingVector(const FVector& v, const FVector& vel);
-	FMovingVector(float x, float y, float z);
-	FMovingVector(float x, float y, float z, float dx, float dy, float dz);
+	FMovingVector(vec x, vec y, vec z);
+	FMovingVector(vec x, vec y, vec z, vec dx, vec dy, vec dz);
 	~FMovingVector();
 
 
-	FVector vel;
-	inline float speed() const { return vel.Size(); }
+	FVector velocity;
+	inline vec speed() const { return vel.Size(); }
 
-	static void UpdateAll();
+	
 
 private:
 	inline void addSelf() {
 		s_pVectors.Add(this);
 	}
-	static TArray<FMovingVector*> s_pVectors;
+	static bool						s_bDeletingAll;
+	static TArray<FMovingVector*>	s_pVectors;
+};
+
+class IMovingVectorManager {
+	static void UpdateAll();
+	static void RemoveAndDeleteAll();
+	static void Reset();
 };

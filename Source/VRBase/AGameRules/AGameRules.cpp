@@ -1,4 +1,5 @@
 #include "AGameRules.h"
+#include "FMovingVector/FMovingVector.h"
 
 AGameRules* g_pGameRules;
 AGameRules::AGameRules() : ABaseEntity() {
@@ -11,12 +12,11 @@ AGameRules::AGameRules() : ABaseEntity() {
 void AGameRules::Tick(float deltaTime) {
 	Super::Tick(deltaTime);
 
-	g_pGlobals->update();
-
 	//Msg("AGameRules::Tick");
 	//NLogger::Blurp("%f - %f", g_pGlobals->curtime, m_tNextRoundRestart);
-
 	
+	//check for round restart
+	//here we also check for initialization of all entities, efficient place to do it
 	if (g_pGlobals->curtime > m_tNextRoundRestart) {
 		NLogger::Message(FColor::Cyan, 3.0f, "Executing round restart statement");
 		if (!m_bHasInitializedAllEntities && AllEntitiesReady()) {
@@ -30,13 +30,18 @@ void AGameRules::Tick(float deltaTime) {
 		m_tNextRoundRestart = FLT_MAX;
 	}
 
+	//Execute all default thinks
 	for (eindex i = 0; i < g_entList.Num(); i++) {
 		g_entList[i]->DefaultThink();
 	}
 
+	//Execute all the pointer-based thinks
 	for (eindex i = 0; i < g_entList.Num(); i++) {
 		g_entList[i]->Think();
 	}
+
+	g_pGlobals->update();
+
 }
 
 void AGameRules::BeginPlay() {

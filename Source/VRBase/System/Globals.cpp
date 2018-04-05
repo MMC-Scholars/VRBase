@@ -2,6 +2,8 @@
 #include "CoreMinimal.h"
 #include "AGameRules/AGameRules.h"
 
+UWorld* g_pWorld;
+
 static CGlobalVars g_vars;
 CGlobalVars* g_pGlobals = &g_vars;
 

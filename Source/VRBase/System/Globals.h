@@ -11,6 +11,8 @@
 #include "time.h"
 #include "NLogger.h"
 
+extern UWorld* g_pWorld;
+
 class CGlobalVars {
 public:
 	ftime curtime;

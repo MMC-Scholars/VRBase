@@ -21,6 +21,7 @@ typedef float			ftime; //denotes time variable
 typedef unsigned long	hcode; //denotes a ulong which is a unique hashcode
 typedef float			vec; //denotes a float used by vectors; represents world space
 typedef unsigned short	eindex;
+typedef float			lerp;
 
 //Syntax aliases
 #define STRINGIZE_INTERNAL(tokens) #tokens
