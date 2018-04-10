@@ -13,8 +13,11 @@ UCLASS()
 class VRBASE_API AHMDTeleportTarget : public ABaseEntity
 {
 	GENERATED_BODY()
-	
-	
+
+	void BeginPlay() override;
+	void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	
 	
 };
+
+extern TArray<AHMDTeleportTarget*> g_aTeleportTargets;

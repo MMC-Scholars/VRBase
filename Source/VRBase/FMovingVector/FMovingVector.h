@@ -1,6 +1,7 @@
 #pragma once
 
 #include "UnrealEngine.h"
+#include "System/predefs.h"
 
 //---------------------------------------------------------------------------
 // General purpose moving vectors. Notes on memory usage:
@@ -17,11 +18,11 @@ public:
 	FMovingVector(const FVector& v, const FVector& vel);
 	FMovingVector(vec x, vec y, vec z);
 	FMovingVector(vec x, vec y, vec z, vec dx, vec dy, vec dz);
-	~FMovingVector();
+	~FMovingVector() {}
 
 
 	FVector velocity;
-	inline vec speed() const { return vel.Size(); }
+	inline vec speed() const { return velocity.Size(); }
 
 	
 

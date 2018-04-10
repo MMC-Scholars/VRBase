@@ -22,17 +22,16 @@ public:
 	
 	ABaseMoving();
 	
-	virtual void PreInit() override;
+	virtual void PreInit() override {}
 
 	virtual void PostInit() override {}
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
-	lerp m_lInitialLerp;
+	float m_lInitialLerp;
 
 
 private:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
-	lerp m_lCurrentLerp;
+	float m_lCurrentLerp;
 
 	
 	
