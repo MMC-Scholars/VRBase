@@ -7,5 +7,17 @@
 #define VRBASE_H
 
 #include "CoreMinimal.h"
+#include "ABaseEntity/ABaseEntity.h"
+#include "ABaseCharacter/ABaseCharacter.h"
+#include "ABasePawn/ABasePawn.h"
+#include "AGameRules/AGameRules.h"
+#include "AHMDTeleportTarget/AHMDTeleportTarget.h"
+#include "FMovingVector/FMovingVector.h"
+#include "ABaseMoving/ABaseMoving.h"
+
+#include "System/Globals.h"
+#include "System/NLogger.h"
+#include "System/Input.h"
+#include "System/static_initialize.h"
 
 #endif //VRBASE_H
