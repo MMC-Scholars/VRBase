@@ -10,6 +10,7 @@
 #define MMC_PREDEFS_H
 
 #include "CoreMinimal.h"
+#define VRBASE_API
 
 //Typedefs
 typedef unsigned char		byte;
