@@ -21,9 +21,9 @@
 * Declares functionality common to all "Base" types and defines some
 *		of it.
 * Derived types are, for example:
-*	class CBaseEntity	 :	public AActor, public IBaseEntity {...};
-*	class CBasePawn      :	public APawn, public IBaseEntity {...};
-*	class CBaseCharacter :	public ACharacter, public IBaseEntity {...};
+*	class ABaseEntity	 :	public AActor, public IBaseEntity {...};
+*	class ABasePawn      :	public APawn, public IBaseEntity {...};
+*	class ABaseCharacter :	public ACharacter, public IBaseEntity {...};
 **********************************************************************/
 abstract_class IBaseEntity {
 public:
@@ -54,7 +54,7 @@ protected:
 	// Intiailization system
 	//---------------------------------------------------------------
 public:
-	virtual void			PreInit() { MsgW(L"%s PreInit", WCStr(GetActor()->GetName())); }	//called before all the static intializers
+	virtual void			PreInit() {}	//called before all the static intializers
 	virtual void			PostInit()	{}	//called after all the static initializers
 
 	//---------------------------------------------------------------
@@ -71,10 +71,6 @@ public:
 	inline	AActor*			GetActor()			const	{ return m_pSelfAsActor; }
 protected:
 	AActor* m_pSelfAsActor;
-public:
-			AActor*			operator->()		const	{ return GetActor(); }
-			AActor&			operator*()			const	{ return *GetActor(); }
-	operator AActor*()							const	{ return GetActor(); }
 
 	//---------------------------------------------------------------
 	// Think system
@@ -124,7 +120,7 @@ public:
 	inline	bool			IsNotDamageable()	const { return HasFlags(FL_NODAMAGE); }
 
 private:
-	void CheckDamageEvents(int deltaHealth, const CTakeDamageInfo* pInfo);
+			void			CheckDamageEvents(int deltaHealth, const CTakeDamageInfo* pInfo);
 
 protected:
 	//for these functions with pointers, info is not guaranteed to be non-null
@@ -154,6 +150,7 @@ public:
 	inline	void			ToggleFlags(ulong flags)		{ m_iFlags ^= flags; }
 	inline	void			ResetFlags()					{ m_iFlags = m_iSpawnFlags; }
 protected:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "IBaseEntity")
 	ulong m_iSpawnFlags = 0;
 	ulong m_iFlags;
 
