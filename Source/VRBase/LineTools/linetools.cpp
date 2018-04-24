@@ -1,23 +1,24 @@
 #include "linetools.h"
+#include "System/system.h"
+#include "AGameRules/AGameRules.h"
 #include "Components/LineBatchComponent.h"
 
 #define sqr(a) ((a)*(a))
 
 void UTIL_DrawLine(FVector start, FVector end, FColor c, float thickness, ftime life) {
-	if (!GEngine || !GEngine->GetWorld() || !GEngine->GetWorld()->LineBatcher)
+	//Msg("Checking drawing line!\n");
+	if (!g_pGameRules || !g_pGameRules->GetWorld() || !g_pGameRules->GetWorld()->LineBatcher)
 		return;
-
-	GEngine->GetWorld()->LineBatcher->DrawLine(start, end, c, SDPG_World, thickness, life);
-	
+	g_pGameRules->GetWorld()->LineBatcher->DrawLine(start, end, c, SDPG_World, thickness, life);
 }
 
 #define SPLINE_STEP 5.f
 void UTIL_DrawSpline(FVector start, FVector end, FVector force, 
 	FColor c, float thickness, ftime life) {
-	if (!GEngine || !GEngine->GetWorld() || !GEngine->GetWorld()->LineBatcher)
+	if (!g_pGameRules || !g_pGameRules->GetWorld() || !g_pGameRules->GetWorld()->LineBatcher)
 		return;
-
-	ULineBatchComponent* lb = GEngine->GetWorld()->LineBatcher;
+	//Msg("Drawing spline");
+	ULineBatchComponent* lb = g_pGameRules->GetWorld()->LineBatcher;
 
 	FVector displacement = end - start;
 	vec len = displacement.Size();

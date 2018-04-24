@@ -93,7 +93,7 @@ void Msg(const char* pszFormat, ...) {
 	va_end(args);
 }
 
-void MsgW(const wchar_t* pszFormat, ...) {
+void Msg(const wchar_t* pszFormat, ...) {
 	va_list args;
 	va_start(args, pszFormat);
 	NLogger::VWMsgMaster(FColor::Cyan, 10.0f, pszFormat, args);

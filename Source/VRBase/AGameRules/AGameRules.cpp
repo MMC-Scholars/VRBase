@@ -32,6 +32,7 @@ void AGameRules::Tick(float deltaTime) {
 
 	//Execute all default thinks
 	for (eindex i = 0; i < g_entList.Num(); i++) {
+		//Msg(L"Executing think for actor %s", WCStr(g_entList[i]->GetActor()->GetName()));
 		g_entList[i]->DefaultThink();
 	}
 

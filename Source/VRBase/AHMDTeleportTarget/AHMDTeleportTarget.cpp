@@ -13,4 +13,5 @@ void AHMDTeleportTarget::BeginPlay() {
 void AHMDTeleportTarget::EndPlay(const EEndPlayReason::Type EndPlayReason) {
 	Super::EndPlay(EndPlayReason);
 	g_aTeleportTargets.Remove(this);
+
 }

@@ -15,7 +15,8 @@ class VRBASE_API ALineDrawer : public ABaseEntity
 	GENERATED_BODY()
 
 	void PreInit() override {}
-	void DefaultThink() override {}
+	void DefaultThink() override;
 
+	
 	
 };

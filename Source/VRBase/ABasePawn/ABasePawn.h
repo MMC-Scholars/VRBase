@@ -5,6 +5,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "IBaseEntity/IBaseEntity.h"
+#include "Components/SceneComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Camera/CameraComponent.h"
+#include "MotionControllerComponent.h"
+#include "Components/ChildActorComponent.h"
 #include "ABasePawn.generated.h"
 
 UCLASS()
@@ -12,12 +17,7 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity
 {
 	GENERATED_BODY()
 
-	ABasePawn() {
-		Tags.Add(TAG_BASEPAWN);
-		m_pSelfAsActor = this;
-		bAllowTickBeforeBeginPlay = false;
-		SetActorTickEnabled(false);
-	}
+	ABasePawn();
 
 	virtual void BeginPlay() override {
 		g_pGlobals->checkReset();
@@ -28,4 +28,13 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	// Components
+	/*USceneComponent*			m_pPlayerRoot;
+	UCameraComponent*			m_pCamera;
+	UMotionControllerComponent* m_pLeftMotionController;
+	UChildActorComponent*		m_pLeftChildActor;
+	UMotionControllerComponent* m_pRightMotionController;
+	UChildActorComponent*		m_pRightChildActor;*/
+
 };
