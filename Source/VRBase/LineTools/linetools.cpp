@@ -2,8 +2,20 @@
 #include "System/system.h"
 #include "AGameRules/AGameRules.h"
 #include "Components/LineBatchComponent.h"
+#include "UnrealEngine.h"
 
 #define sqr(a) ((a)*(a))
+
+void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction, float maxDistance) {
+	if (!g_pGameRules || !g_pGameRules->GetWorld())
+		return;
+
+	FVector end = start;
+	end += direction.GetClampedToSize(maxDistance, maxDistance);
+	NLogger::Blurp("(%f, %f, %f)", end.X, end.Y, end.Z);
+
+	g_pGameRules->GetWorld()->LineTraceSingleByChannel(t, start, end, ECC_Visibility);
+}
 
 void UTIL_DrawLine(FVector start, FVector end, FColor c, float thickness, ftime life) {
 	//Msg("Checking drawing line!\n");
@@ -17,6 +29,10 @@ void UTIL_DrawSpline(FVector start, FVector end, FVector force,
 	FColor c, float thickness, ftime life) {
 	if (!g_pGameRules || !g_pGameRules->GetWorld() || !g_pGameRules->GetWorld()->LineBatcher)
 		return;
+
+	NLogger::Blurp("(%f, %f, %f)", end.X, end.Y, end.Z);
+	return;
+
 	//Msg("Drawing spline");
 	ULineBatchComponent* lb = g_pGameRules->GetWorld()->LineBatcher;
 

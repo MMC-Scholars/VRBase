@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "VRBase/ABaseEntity/ABaseEntity.h"
-#include "BaseController.generated.h"
+#include "ABaseController.generated.h"
 
 /**
  * 

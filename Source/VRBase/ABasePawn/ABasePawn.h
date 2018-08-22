@@ -8,13 +8,16 @@
 #include "Components/SceneComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Camera/CameraComponent.h"
+#include "HeadMountedDisplay.h"
+//#include "HeadMountedDisplayFunctionLibrary.h"
 #include "MotionControllerComponent.h"
 #include "Components/ChildActorComponent.h"
+
 #include "ABasePawn.generated.h"
 
 UCLASS()
-class VRBASE_API ABasePawn : public APawn, public IBaseEntity
-{
+class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
+//class VRBASE_API ABasePawn : public APawn {
 	GENERATED_BODY()
 
 	ABasePawn();
@@ -30,11 +33,12 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	// Components
-	/*USceneComponent*			m_pPlayerRoot;
+	UCapsuleComponent*			m_pRootCapsule;
+	USceneComponent*			m_pPlayerRoot;
 	UCameraComponent*			m_pCamera;
-	UMotionControllerComponent* m_pLeftMotionController;
-	UChildActorComponent*		m_pLeftChildActor;
-	UMotionControllerComponent* m_pRightMotionController;
-	UChildActorComponent*		m_pRightChildActor;*/
+	UMotionControllerComponent* m_pLMotionController;
+	//UChildActorComponent*		m_pLChildActor;
+	UMotionControllerComponent* m_pRMotionController;
+	//UChildActorComponent*		m_pRChildActor;
 
 };
