@@ -5,7 +5,7 @@
 #include "System/predefs.h"
 #include "System/EHandle.h"
 
-#define BF(i) (1 << (i))
+//#define BF(i) (1 << (i))
 #define IN_A				BF(1)
 #define IN_B				BF(2)
 #define IN_TRIGGER			BF(3)

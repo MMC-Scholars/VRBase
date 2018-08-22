@@ -12,7 +12,7 @@ ABasePawn::ABasePawn() {
 	SetActorTickEnabled(false);
 
 	// Capsule Root Component
-	m_pRootCapsule = CreateDefaultSubobject<UCapsuleComponent>("Capsule");
+	/*m_pRootCapsule = CreateDefaultSubobject<UCapsuleComponent>("Capsule");
 	m_pRootCapsule->InitCapsuleSize(16.0, 96.0);
 	//m_pRootCapsule->InitCapsuleSize(16.0, 112.0);
 	RootComponent = m_pRootCapsule;
@@ -31,7 +31,7 @@ ABasePawn::ABasePawn() {
 	FVector DevicePosition;
 	GEngine->HMDDevice->GetCurrentOrientationAndPosition(DeviceQuat, DevicePosition);
 	
-	m_pCamera->SetWorldLocation(DevicePosition);
+	m_pCamera->SetWorldLocation(DevicePosition);*/
 
 
 	
