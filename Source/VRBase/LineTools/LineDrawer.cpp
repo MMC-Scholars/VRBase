@@ -14,10 +14,14 @@ void ALineDrawer::DefaultThink() {
 	FVector direction = FVector(cosf(g_pGlobals->curtime), sinf(g_pGlobals->curtime), 0);
 
 	FHitResult t;
-	//UTIL_TraceLine(t, start, direction);
-	UTIL_TraceSpline(t, start, direction, FVector(0, 0, -0.1f), 10);
-	UTIL_DrawLine(start, t.TraceEnd, FColor::Red, 3.f, 1.f);
-	Msg("%s", WCStr(t.TraceEnd.ToString()));
+	UTIL_TraceLine(t, start, direction);
+	//UTIL_TraceSpline(t, start, direction, FVector(0, 0, -0.1f), 10);
+	
+	// Michael, I commented out the line below because it was giving errors about how the function doesn't take 5 arguments.
+	// I don't know what arguments it needs so I just commented it out.
+
+	//UTIL_DrawLine(start, t.Location, FColor::Red, 3.f, 1.f);
+	//Msg(t.Location);
 
 	g_iDrawnLines++;
 

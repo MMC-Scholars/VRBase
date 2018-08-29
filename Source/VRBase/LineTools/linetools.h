@@ -4,6 +4,15 @@
 #include "System/predefs.h"
 
 //------------------------------------------------------------------------------------
+// Purpose: Contains parameters used for drawing lines and splines in the world
+//------------------------------------------------------------------------------------
+struct SLineDrawParams {
+	FColor Color;
+	float Thickness;
+	ftime Duration;
+};
+
+//------------------------------------------------------------------------------------
 // Purpose: Given a start position, direction, and max distance, performs a ray cast
 //		and stores the result in the given FHitResult
 //------------------------------------------------------------------------------------
@@ -15,13 +24,13 @@ void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction, floa
 //		The direction and magnitude of force determines the curvature of the spline;
 //		i.e. the force vector causes an acceleration on the spline curve.
 //------------------------------------------------------------------------------------
-void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FVector force, uint16 maxIterations = 4096);
+void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FVector force, uint16 maxIterations = 4096, SLineDrawParams* rendered = NULL);
 
 //------------------------------------------------------------------------------------
 // Purpose: Given a start position, end position, color, thickness, and lifetime, draws
 //		a line in the world.
 //------------------------------------------------------------------------------------
-void UTIL_DrawLine(FVector start, FVector end, FColor c, float thickness, ftime life);
+void UTIL_DrawLine(FVector start, FVector end, SLineDrawParams* rendered);
 
 //------------------------------------------------------------------------------------
 // Purpose: Given a start position, end position, force, color, thickness, and lifetime, draws

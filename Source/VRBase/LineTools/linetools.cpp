@@ -7,17 +7,26 @@
 #define sqr(a) ((a)*(a))
 #define SPLINE_STEP 5.f
 
+#define CHN_WORLDSTATIC		(1 << ECC_WorldStatic)
+#define CHN_WORLDDYNAMIC	(1 << ECC_WorldDynamic)
+#define CHN_PAWN			(1 << ECC_Pawn)
+#define CHN_VISIBILITY		(1 << ECC_Visibility)
+#define CHN_CAMERA			(1 << ECC_Camera)
+#define CHN_PHYSICSBODY		(1 << ECC_PhysicsBody)
+#define CHN_DESTRUCTIBLE	(1 << ECC_Destructible)
+#define CHN_ALL				(CHN_WORLDSTATIC | CHN_WORLDDYNAMIC | CHN_PAWN | CHN_CAMERA | CHN_PHYSICSBODY | CHN_DESTRUCTIBLE)
+
+
+FCollisionObjectQueryParams g_coqpDefault = FCollisionObjectQueryParams(FCollisionObjectQueryParams::AllObjects);
+
 void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction, float maxDistance) {
 	if (!g_pGameRules || !g_pGameRules->GetWorld())
 		return;
 
 	t.Init();
-
 	FVector end = start;
 	end += direction.GetClampedToSize(maxDistance, maxDistance);
-	NLogger::Blurp("(%f, %f, %f)", end.X, end.Y, end.Z);
-
-	g_pGameRules->GetWorld()->LineTraceSingleByChannel(t, start, end, ECC_Visibility);
+	g_pGameRules->GetWorld()->LineTraceSingleByObjectType(t, start, end, g_coqpDefault);
 }
 
 void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FVector force, uint16 maxIterations) {
@@ -35,7 +44,7 @@ void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FV
 		t.Reset();
 		next = start + direction + force;
 
-		g_pGameRules->GetWorld()->LineTraceSingleByChannel(t, previous, next, ECC_Visibility);
+		g_pGameRules->GetWorld()->LineTraceSingleByObjectType(t, previous, next, g_coqpDefault);
 		previous = next;
 
 		iterations++;

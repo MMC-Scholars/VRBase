@@ -24,3 +24,8 @@ namespace NLogger {
 inline const wchar_t* WCStr(const FString& str) { return &(str[0]);}
 void Msg(const char* pszFormat, ...);
 void Msg(const wchar_t* pszFormat, ...);
+
+// Shortcut messaging for structures
+inline void Msg(const FVector& v) {
+	Msg("(%f,%f,%f)", v.X, v.Y, v.Z);
+}
