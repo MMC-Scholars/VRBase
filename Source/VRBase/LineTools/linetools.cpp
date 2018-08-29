@@ -29,7 +29,7 @@ void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction, floa
 	g_pGameRules->GetWorld()->LineTraceSingleByObjectType(t, start, end, g_coqpDefault);
 }
 
-void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FVector force, uint16 maxIterations) {
+void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FVector force, uint16 maxIterations, SLineDrawParams* rendered) {
 	if (!g_pGameRules || !g_pGameRules->GetWorld())
 		return;
 
@@ -40,7 +40,8 @@ void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FV
 	FVector origForce = force;
 	FVector next;
 	FVector previous = start;
-	while (iterations <= maxIterations && t.Time > 0.9999f) {
+
+	auto pfTraceOp = [&]() {
 		t.Reset();
 		next = start + direction + force;
 
@@ -50,6 +51,17 @@ void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FV
 		iterations++;
 		force += origForce * iterations;
 		direction += step;
+	};
+	if (rendered) {
+		while (iterations <= maxIterations && t.Time > 0.9999f) {
+			pfTraceOp();
+			g_pGameRules->GetWorld()->LineBatcher->DrawLine(previous, next, rendered->Color, SDPG_World, rendered->Thickness, rendered->Duration);
+		}
+	}
+	else {
+		while (iterations <= maxIterations && t.Time > 0.9999f) {
+			pfTraceOp();
+		}
 	}
 }
 
