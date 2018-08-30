@@ -13,9 +13,12 @@ void ALineDrawer::DefaultThink() {
 	FVector start = GetActorLocation();
 	FVector direction = FVector(cosf(g_pGlobals->curtime), sinf(g_pGlobals->curtime), 0);
 
+	SLineDrawParams rendered{ FColor::Red, 5.f, (ftime)0.2f };
+
 	FHitResult t;
-	UTIL_TraceLine(t, start, direction);
-	//UTIL_TraceSpline(t, start, direction, FVector(0, 0, -0.1f), 10);
+	//UTIL_TraceLine(t, start, direction);
+	UTIL_TraceSpline(t, start, direction, FVector(0, 0, -0.1f), 128, &rendered);
+	UTIL_DrawCircle(t.Location, 50.f, &rendered);
 	
 	// Michael, I commented out the line below because it was giving errors about how the function doesn't take 5 arguments.
 	// I don't know what arguments it needs so I just commented it out.

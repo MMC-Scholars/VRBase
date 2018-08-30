@@ -19,8 +19,10 @@
 
 FCollisionObjectQueryParams g_coqpDefault = FCollisionObjectQueryParams(FCollisionObjectQueryParams::AllObjects);
 
+inline bool LineToolsReady() { return g_pGameRules && g_pGameRules->GetWorld(); }
+
 void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction, float maxDistance) {
-	if (!g_pGameRules || !g_pGameRules->GetWorld())
+	if (!LineToolsReady())
 		return;
 
 	t.Init();
@@ -30,7 +32,7 @@ void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction, floa
 }
 
 void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FVector force, uint16 maxIterations, SLineDrawParams* rendered) {
-	if (!g_pGameRules || !g_pGameRules->GetWorld())
+	if (!LineToolsReady())
 		return;
 
 	t.Init();
@@ -55,7 +57,7 @@ void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FV
 	if (rendered) {
 		while (iterations <= maxIterations && t.Time > 0.9999f) {
 			pfTraceOp();
-			g_pGameRules->GetWorld()->LineBatcher->DrawLine(previous, next, rendered->Color, SDPG_World, rendered->Thickness, rendered->Duration);
+			g_pGameRules->GetWorld()->LineBatcher->DrawLine(t.TraceStart, t.TraceEnd, rendered->Color, SDPG_World, rendered->Thickness, rendered->Duration);
 		}
 	}
 	else {
@@ -65,16 +67,16 @@ void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FV
 	}
 }
 
-void UTIL_DrawLine(FVector start, FVector end, FColor c, float thickness, ftime life) {
+void UTIL_DrawLine(FVector start, FVector end, SLineDrawParams* rendered) {
 	//Msg("Checking drawing line!\n");
-	if (!g_pGameRules || !g_pGameRules->GetWorld() || !g_pGameRules->GetWorld()->LineBatcher)
+	if (!LineToolsReady() || !g_pGameRules->GetWorld()->LineBatcher)
 		return;
-	g_pGameRules->GetWorld()->LineBatcher->DrawLine(start, end, c, SDPG_World, thickness, life);
+	g_pGameRules->GetWorld()->LineBatcher->DrawLine(start, end, rendered->Color, SDPG_World, rendered->Thickness, rendered->Duration);
 }
 
 void UTIL_DrawSpline(FVector start, FVector end, FVector force, 
 	FColor c, float thickness, ftime life) {
-	if (!g_pGameRules || !g_pGameRules->GetWorld() || !g_pGameRules->GetWorld()->LineBatcher)
+	if (!LineToolsReady() || !g_pGameRules->GetWorld()->LineBatcher)
 		return;
 
 	//NLogger::Blurp("(%f, %f, %f)", end.X, end.Y, end.Z);
@@ -96,6 +98,25 @@ void UTIL_DrawSpline(FVector start, FVector end, FVector force,
 		previousStep = vectorStep;
 		step += SPLINE_STEP;
 	}
+}
+
+void UTIL_DrawCircle(FVector loc, vec radius, SLineDrawParams* rendered) {
+	if (!LineToolsReady() || !g_pGameRules->GetWorld()->LineBatcher)
+		return;
+
+	ULineBatchComponent* lb = g_pGameRules->GetWorld()->LineBatcher;
+
+	const uint8 NUM_ARCS = 64;
+	FRotator rotationIncrement = FRotator(0, 360.f / NUM_ARCS, 0);
+	FVector previous = FVector(radius, 0, 0);
+	FVector next = rotationIncrement.RotateVector(previous);
+
+	for (uint8 i = 0; i < NUM_ARCS + 1; i++) {
+		lb->DrawLine(loc + previous, loc + next, rendered->Color, SDPG_World, rendered->Thickness, rendered->Duration);
+		previous = next;
+		next = rotationIncrement.RotateVector(next);
+	}
+	
 }
 
 vec UTIL_DistanceToLine(FVector vDirection, FVector vOrigin, FVector point) {

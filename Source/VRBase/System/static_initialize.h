@@ -17,6 +17,7 @@ public:
 		FIRST,
 		SECOND,
 		THIRD,
+		NUM,
 	};
 
 	CStaticInitializer(EPriority priority);
@@ -26,9 +27,8 @@ public:
 
 	static void InvokeAllInOrder();
 private:
-	static TArray<CStaticInitializer*> s_pFirstInitializers;
-	static TArray<CStaticInitializer*> s_pSecondInitializers;
-	static TArray<CStaticInitializer*> s_pThirdInitializers;
+
+	static TArray<CStaticInitializer*> s_pInitializers[];
 };
 
 //just use the define and then immediately open braces to define
@@ -47,6 +47,6 @@ private:
 		};																				\
 	}																					\
 	static CStaticInitializer_##identifier g_staticInitializer_##identifier(CStaticInitializer::EPriority::priority);	\
-	void StaticIntializerFunc_##identifier()
+	static void StaticInitializerFunc_##identifier()
 
 #endif //STATIC_INITIALIZE_H

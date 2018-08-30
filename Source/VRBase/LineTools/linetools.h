@@ -21,6 +21,7 @@ void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction, floa
 //------------------------------------------------------------------------------------
 // Purpose: Given a start position, direction, force, and maximum number of iterations
 //		performs a spline cast and stores the result in the given FHitResult.
+//		The magnitude of the direction does not effect the trace.
 //		The direction and magnitude of force determines the curvature of the spline;
 //		i.e. the force vector causes an acceleration on the spline curve.
 //------------------------------------------------------------------------------------
@@ -38,6 +39,12 @@ void UTIL_DrawLine(FVector start, FVector end, SLineDrawParams* rendered);
 //		The direction and magnitude of force determines the curvature of the spline.
 //------------------------------------------------------------------------------------
 void UTIL_DrawSpline(FVector start, FVector end, FVector force, FColor c, float thickness, ftime life);
+
+//------------------------------------------------------------------------------------
+// Purpose: Given a start position, radius, and render parameters, renders a circle
+//		in the world.
+//------------------------------------------------------------------------------------
+void UTIL_DrawCircle(FVector loc, vec radius, SLineDrawParams*);
 
 //------------------------------------------------------------------------------------
 // Purpose: Given a vector vDirection originating from vOrigin, finds the distance
