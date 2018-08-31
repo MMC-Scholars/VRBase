@@ -55,6 +55,7 @@ void CGlobalVars::markReset() {
 	ineditor = true;
 
 	//clear all lists
+	Msg("Reseting entity counts.");
 	IBaseEntity::s_iReadyEntityCount = IBaseEntity::s_iEntityCount = 0;
 	for (int i = 0; i < MAX_ENTITY_COUNT; i++) {
 		g_ppEntityList[i] = nullptr;

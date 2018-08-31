@@ -25,6 +25,12 @@ public:
 	// Returns target closest to given point, or NULL if no target exists
 	static AHMDTeleportTarget* TargetClosestToLocation(FVector);
 
+	// Performs a spline cast in the given direction, and returns the AHMDTeleportTarget closest
+	// to the hit location, or NULL if no target exists.
+	// Also renders a spline curve in the world and a circle at hit location.
+	// Use this for teleporting via ABaseController.
+	static AHMDTeleportTarget* SplineFind(const FVector& direction);
+
 	//---------------------------------------------------------------------------------
 	// Member functions only control the rendering of this object.
 	//		The player only teleports to the highlighted teleport target.

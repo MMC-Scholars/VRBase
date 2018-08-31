@@ -32,8 +32,9 @@ public:
 							IBaseEntity();
 	virtual					~IBaseEntity() {
 		RemoveSelfFromLists();
-		s_iEntityCount--;
-		s_iReadyEntityCount--;
+		//Msg("Decrementing entity count");
+		//s_iEntityCount--;
+		//s_iReadyEntityCount--;
 	}
 	ftime m_tConstructionTime;
 

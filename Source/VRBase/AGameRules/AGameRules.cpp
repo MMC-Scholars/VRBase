@@ -19,6 +19,7 @@ void AGameRules::Tick(float deltaTime) {
 	//here we also check for initialization of all entities, efficient place to do it
 	if (g_pGlobals->curtime > m_tNextRoundRestart) {
 		NLogger::Message(FColor::Cyan, 3.0f, "Executing round restart statement");
+		Msg("ReadyEntityCount = %i/%i\n", s_iReadyEntityCount, s_iEntityCount);
 		if (!m_bHasInitializedAllEntities && AllEntitiesReady()) {
 			NLogger::Message(FColor::Cyan, 3.0f, "Initializing all entities");
 			InitializeAllEntities();
@@ -48,7 +49,6 @@ void AGameRules::Tick(float deltaTime) {
 void AGameRules::BeginPlay() {
 	BaseClass::BeginPlay();
 	Msg("AGameRules::BeginPlay\n");
-	Msg("ReadyEntityCount = %i/%i\n", s_iReadyEntityCount, s_iEntityCount);
 	if (s_iEntityCount != g_entList.Num()) {
 		NLogger::Fatal("\nIBaseEntity::s_iEntityCount != g_entList.Num()");
 	}
