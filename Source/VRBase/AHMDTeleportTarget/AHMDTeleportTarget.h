@@ -29,7 +29,7 @@ public:
 	// to the hit location, or NULL if no target exists.
 	// Also renders a spline curve in the world and a circle at hit location.
 	// Use this for teleporting via ABaseController.
-	static AHMDTeleportTarget* SplineFind(const FVector& direction);
+	static AHMDTeleportTarget* SplineFind(const FVector& start, const FVector& direction);
 
 	//---------------------------------------------------------------------------------
 	// Member functions only control the rendering of this object.
