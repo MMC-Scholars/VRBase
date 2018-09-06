@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+
 
 #include "ABaseController.h"
 
@@ -16,8 +16,6 @@ ABaseController::ABaseController() {
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> HandMesh(L"StaticMesh'/Game/Geometry/office_fridge2.office_fridge2'");
 	m_pHandMeshComponent->SetStaticMesh(HandMesh.Object);
 	//m_pHandMeshComponent->SetWorldRotation(FRotator(0.0f, 90.0f, 90.0f));
-
-	//UStaticMeshComponent* attachRoot = m_pHandMeshComponent;
 
 	// Sphere collision
 	m_pControllerCollision = CreateDefaultSubobject<USphereComponent>("Controller Collision");
@@ -60,10 +58,30 @@ void AHand::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 	}
 }
 */
-// ------------------------------------------------------------
-// FUNCTION SetWhichHand
-// ------------------------------------------------------------
 
+ABaseController* g_pLeftController;
+ABaseController* g_pRightController;
+
+void ABaseController::OnButtonsChanged() {
+	m_iButtons |= m_iButtonsPressed;
+	m_iButtons &= ~m_iButtonsReleased;
+
+	//iterate through registered entities and check if any of them should be triggered.
+	for (eindex i = 0; i < m_aRegisteredEntities.Num(); i++) {
+		SEntityInputTriggerRequirement* trig = &m_aRegisteredEntities[i];
+		if (trig->m_ent &&  /* button matching expression goes here*/) {
+
+		}
+	}
+
+	//reset our trackers for button changes
+	m_iButtonsPressed = m_iButtonsReleased = 0;
+}
+
+/**
+ * setWhichHand
+ */
 void ABaseController::setWhichHand(EControllerHand h) {
-	m_pWhichHand = &h;
+	m_pWhichHand = h;
+	//TODO map g_pLeftController and g_pRightController to specific controllers.
 }

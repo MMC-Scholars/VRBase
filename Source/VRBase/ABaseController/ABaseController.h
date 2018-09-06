@@ -1,9 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "VRBase/ABaseEntity/ABaseEntity.h"
+#include "System/Input.h"
 #include "Components/SceneComponent.h"
 #include "ConstructorHelpers.h"
 #include "Components/StaticMeshComponent.h"
@@ -25,7 +26,7 @@ class MMC_OFF_RECREATION_API ABaseController : public ABaseEntity {
 	USphereComponent*		m_pControllerCollision;
 
 	// Variables
-	EControllerHand*		m_pWhichHand;
+	EControllerHand			m_pWhichHand;
 	//TArray<AActor*>		m_aOverlapActors;
 	//TArray<APickup*>		m_aAttachActors;
 
@@ -35,9 +36,24 @@ class MMC_OFF_RECREATION_API ABaseController : public ABaseEntity {
 	//UFUNCTION()
 	//	void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+protected:
+
+	TArray<SEntityInputTriggerRequirement> m_aRegisteredEntities; //Which entites are listening to buttons on this controller?
+
+	uint32 m_iButtons; //bitfield - which buttons are currently being pressed?
+	uint32 m_iButtonsPressed; //bitifield - which buttons were just pressed?
+	uint32 m_iButtonsReleased; //bitfield - which buttons were just released?
+	void OnButtonsChanged();
+
 
 public:
 	// Functions
 	void setWhichHand(EControllerHand h);
 	
 };
+
+extern ABaseController* g_pLeftController;
+extern ABaseController* g_pRightController;
+inline bool ControllersReady() {
+	return g_pRightController && g_pLeftController;
+}

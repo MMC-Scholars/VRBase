@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+
 
 #pragma once
 
@@ -16,7 +16,7 @@
 
 UCLASS()
 class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
-//class VRBASE_API ABasePawn : public APawn {
+
 	GENERATED_BODY()
 
 	ABasePawn();
@@ -47,5 +47,8 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 	ABaseController*			m_pLHand;
 	ABaseController*			m_pRHand;
 
+	// Input
+	//UFUNCTION()
+	void UpdateInput();
 
 };

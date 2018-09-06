@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+
 
 #include "ABasePawn.h"
 
@@ -10,7 +10,6 @@ ABasePawn::ABasePawn() {
 	bAllowTickBeforeBeginPlay = false;
 	SetActorTickEnabled(false);
 
-
 	// Root Component Capsule
 	m_pRootCapsule = CreateDefaultSubobject<UCapsuleComponent>("Capsule");
 	m_pRootCapsule->InitCapsuleSize(16.0, 96.0);
@@ -19,9 +18,6 @@ ABasePawn::ABasePawn() {
 	// Player Root Scene Component
 	m_pPlayerRoot = CreateDefaultSubobject<USceneComponent>("Player Root");
 	m_pPlayerRoot->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
-
-
-	//USceneComponent *attachRoot = m_pPlayerRoot;
 
 	// HMD Camera
 	m_pCamera = CreateDefaultSubobject<UCameraComponent>("Camera");
@@ -53,7 +49,37 @@ ABasePawn::ABasePawn() {
 // Called to bind functionality to input
 void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	
+
+
+
+	if (PlayerInputComponent) {
+		PlayerInputComponent->BindKey(EKeys::SpaceBar, IE_Pressed, this, &UpdateInput);
+		//float BValue = PlayerInputComponent->GetKeyValue(EKeys::B);
+		//Msg(PlayerInputComponent->KeyBindings);
+	}
+
+
+
+	//check(InputComponent);
+
+	//InputComponent->BindAction("EventLTrigger", IE_Pressed, this, &ABasePawn::UpdateInput);
+
+	// Event L Trigger
+	//InputComponent->BindAction("EventLTrigger", IE_Pressed, this, &AFPChar::OnPressLTrigger);
+	//InputComponent->BindAction("EventLTrigger", IE_Released, this, &AFPChar::OnReleaseLTrigger);
+	// Event L Trackpad
+	//InputComponent->BindAction("EventLTrackpad", IE_Pressed, this, &AFPChar::OnPressLTrackpad);
+	//InputComponent->BindAction("EventLTrackpad", IE_Released, this, &AFPChar::OnReleaseLTrackpad);
+
+	// Event R Trigger
+	//InputComponent->BindAction("EventRTrigger", IE_Pressed, this, &AFPChar::OnPressRTrigger);
+	//InputComponent->BindAction("EventRTrigger", IE_Released, this, &AFPChar::OnReleaseRTrigger);
+	// Event R Trackpad
+	//InputComponent->BindAction("EventRTrackpad", IE_Pressed, this, &AFPChar::OnPressRTrackpad);
+	//InputComponent->BindAction("EventRTrackpad", IE_Released, this, &AFPChar::OnReleaseRTrackpad);
+
+
+
 }
 
 
@@ -66,7 +92,11 @@ void ABasePawn::PreInit() {
 	m_pRHand = Cast<ABaseController>(m_pRChildActor->GetChildActor());
 	m_pRHand->setWhichHand(EControllerHand::Right);
 
-
-
-
 }
+
+
+
+void ABasePawn::UpdateInput() {
+	Msg("pressed.");
+}
+
