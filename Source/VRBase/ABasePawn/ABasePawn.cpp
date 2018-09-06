@@ -53,7 +53,7 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 
 	if (PlayerInputComponent) {
-		PlayerInputComponent->BindKey(EKeys::SpaceBar, IE_Pressed, this, &UpdateInput);
+		PlayerInputComponent->BindKey(EKeys::SpaceBar, IE_Pressed, this, &ABasePawn::UpdateInput);
 		//float BValue = PlayerInputComponent->GetKeyValue(EKeys::B);
 		//Msg(PlayerInputComponent->KeyBindings);
 	}
@@ -87,10 +87,10 @@ void ABasePawn::PreInit() {
 
 	// Initialize ABaseController variables
 	m_pLHand = Cast<ABaseController>(m_pLChildActor->GetChildActor());
-	m_pLHand->setWhichHand(EControllerHand::Left);
+	m_pLHand->SetWhichHand(EControllerHand::Left);
 
 	m_pRHand = Cast<ABaseController>(m_pRChildActor->GetChildActor());
-	m_pRHand->setWhichHand(EControllerHand::Right);
+	m_pRHand->SetWhichHand(EControllerHand::Right);
 
 }
 

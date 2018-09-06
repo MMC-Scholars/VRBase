@@ -47,8 +47,9 @@ protected:
 
 
 public:
-	// Functions
-	void setWhichHand(EControllerHand h);
+	uint32 ButtonsPressed() const { return m_iButtons; } //Returns bitfield of buttons currently pressed on this controller
+	void RegisterEntityInput(IBaseEntity*, uint32 iButton, bool bOnReleased);
+	void SetWhichHand(EControllerHand);
 	
 };
 

@@ -66,11 +66,29 @@ void ABaseController::OnButtonsChanged() {
 	m_iButtons |= m_iButtonsPressed;
 	m_iButtons &= ~m_iButtonsReleased;
 
-	//iterate through registered entities and check if any of them should be triggered.
-	for (eindex i = 0; i < m_aRegisteredEntities.Num(); i++) {
-		SEntityInputTriggerRequirement* trig = &m_aRegisteredEntities[i];
-		if (trig->m_ent &&  /* button matching expression goes here*/) {
+	//first, removed inputs from invalid entities
+	uint32 i = 0;
+	while (i < m_aRegisteredEntities.Num()) {
+		if (!m_aRegisteredEntities[i].m_ent)
+			m_aRegisteredEntities.RemoveAt(i);
+		else
+			i++;
+	}
 
+	//iterate through registered entities and check if any of them should be triggered.
+	for (uint32 i = 0; i < m_aRegisteredEntities.Num(); i++) {
+		SEntityInputTriggerRequirement* trig = &m_aRegisteredEntities[i];
+		if (trig->m_ent) {
+			bool buttonActivated = false;
+			if (trig->m_bOnReleased && (trig->m_iButton & m_iButtonsReleased)) {
+				buttonActivated = true;
+			}
+			else if (!trig->m_bOnReleased && (trig->m_iButton & m_iButtonsPressed)) {
+				buttonActivated = true;
+			}
+			if (buttonActivated) {
+				trig->m_ent->Use(this);
+			}
 		}
 	}
 
@@ -78,10 +96,20 @@ void ABaseController::OnButtonsChanged() {
 	m_iButtonsPressed = m_iButtonsReleased = 0;
 }
 
+void ABaseController::RegisterEntityInput(IBaseEntity* pEnt, uint32 iButton, bool bOnReleased) {
+	//construct an input requirement and add it to ourselves.
+	m_aRegisteredEntities.Emplace(SEntityInputTriggerRequirement{ pEnt->GetEHandle(), iButton, bOnReleased });
+}
+
 /**
  * setWhichHand
  */
-void ABaseController::setWhichHand(EControllerHand h) {
+void ABaseController::SetWhichHand(EControllerHand h) {
 	m_pWhichHand = h;
-	//TODO map g_pLeftController and g_pRightController to specific controllers.
+	if (h == EControllerHand::Left)
+		g_pLeftController = this;
+	else if (h == EControllerHand::Right)
+		g_pRightController = this;
+	else
+		NLogger::Warning("Unknown controller registered with EControllerHand == %i", h);
 }

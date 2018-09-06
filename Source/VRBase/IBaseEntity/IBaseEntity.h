@@ -164,6 +164,11 @@ public:
 	inline	bool			IsUseable()							const	{ return !HasFlags(FL_IGNORE_USE | FL_INGORE_INPUT); }
 	inline	bool			IsInputEnabled()					const	{ return !HasFlags(FL_INGORE_INPUT); }
 	UInputComponent*		GetInput();
+	void					RegisterInputsToControllers();
+
+	//These functions are overriden by functions declared
+	virtual SEntityInputRegistrationParams*			GetLeftControllerInputRegistrationParams() {}
+	virtual SEntityInputRegistrationParams*			GetRightControllerInputRegistrationParams() {}
 	
 };
 
