@@ -25,9 +25,14 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 		g_pGlobals->checkReset();
 		APawn::BeginPlay();
 		s_iReadyEntityCount++;
+		ReportReady();
 	}
 
 	virtual void Tick(float deltaTime) override {}
+	virtual void PostDuplicate(EDuplicateMode::Type mode) override {
+		Super::PostDuplicate(mode);
+		IBaseEntity::PostDuplicate(mode);
+	}
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

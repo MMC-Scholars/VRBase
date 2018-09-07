@@ -51,8 +51,9 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 
-
+	Msg("Attempting Binding key to input");
 	if (PlayerInputComponent) {
+		Msg("Binding key to input");
 		PlayerInputComponent->BindKey(EKeys::SpaceBar, IE_Pressed, this, &ABasePawn::UpdateInput);
 		//float BValue = PlayerInputComponent->GetKeyValue(EKeys::B);
 		//Msg(PlayerInputComponent->KeyBindings);

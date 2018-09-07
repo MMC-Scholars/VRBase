@@ -10,10 +10,13 @@
 #include "UnrealEngine.h"
 #include "System/predefs.h"
 #include "System/Globals.h"
+#include "System/Globals.h"
+#include "System/Input.h"
 #include "System/static_initialize.h"
 #include "IBaseEntity_flags.h"
 #include "GameFramework/Actor.h"
 #include "System/EHandle.h"
+
 
 
 /**********************************************************************
@@ -40,6 +43,7 @@ public:
 
 			void			RemoveSelfFromLists(); //invalidates EHANDLES, does NOT modify static counts, do that yourself
 			bool			DestroyEntity(); //destroys this Actor
+	inline	void			ReportReady() { Msg(L"Entity %s ready", WCStr(FString(GetActor()->GetName()))); }
 	//---------------------------------------------------------------
 	// Entity indexing system
 	//---------------------------------------------------------------
@@ -56,7 +60,7 @@ protected:
 	//---------------------------------------------------------------
 public:
 	virtual void			PreInit() {}	//called before all the static intializers
-	virtual void			PostInit()	{}	//called after all the static initializers
+	virtual void			PostInit();	//called after all the static initializers
 
 	//---------------------------------------------------------------
 	// Linkage to vanilla Unreal4 Actor system
@@ -166,14 +170,12 @@ public:
 	UInputComponent*		GetInput();
 	void					RegisterInputsToControllers();
 
-	//These functions are overriden by functions declared
-	virtual SEntityInputRegistrationParams*			GetLeftControllerInputRegistrationParams() {}
-	virtual SEntityInputRegistrationParams*			GetRightControllerInputRegistrationParams() {}
+	//These functions are overriden by functions declared in ABaseEntity
+	virtual FEntityInputRegistrationParams*			GetLeftControllerInputRegistrationParams() { return NULL; }
+	virtual FEntityInputRegistrationParams*			GetRightControllerInputRegistrationParams() { return NULL; }
 	
 };
 
 #include "CTakeDamageInfo.h"
-
-#define LOAD_HANDLE(referenceName) m_h##referenceName = m_a##referenceName
 
 #endif //IBASEENTITY_H

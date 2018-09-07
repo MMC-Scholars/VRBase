@@ -18,11 +18,15 @@ void AGameRules::Tick(float deltaTime) {
 	//check for round restart
 	//here we also check for initialization of all entities, efficient place to do it
 	if (g_pGlobals->curtime > m_tNextRoundRestart) {
-		NLogger::Message(FColor::Cyan, 3.0f, "Executing round restart statement");
+		Msg("Executing round restart statement");
 		Msg("ReadyEntityCount = %i/%i\n", s_iReadyEntityCount, s_iEntityCount);
 		if (!m_bHasInitializedAllEntities && AllEntitiesReady()) {
-			NLogger::Message(FColor::Cyan, 3.0f, "Initializing all entities");
+			Msg("Initializing all entities");
 			InitializeAllEntities();
+		}
+		else if (!m_bHasInitializedAllEntities) {
+			//?! This should never happen!
+			NLogger::Fatal("OUT OF SYNC - s_iReadyEntityCount != s_iEntityCount !!!");
 		}
 		else {
 			NLogger::Message(FColor::Cyan, 3.0f, "Restarting round");

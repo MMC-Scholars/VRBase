@@ -10,6 +10,34 @@
 #include "IBaseEntity/IBaseEntity.h"
 #include "ABaseEntity.generated.h"
 
+//Each entity will have four of these total - two for each controller, pressed and released.
+//In IBaseEntity::PostInit(), every entity will register themselves with their controllers based off of these values.
+USTRUCT(BlueprintType)
+struct FEntityInputRegistrationButtons {
+	GENERATED_USTRUCT_BODY()
+		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		bool m_AX;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		bool m_BY;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		bool m_TRIGGER;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		bool m_GRIP;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		bool m_MENU;
+};
+
+//This has two sets of booleans - one for released, one for pressed.
+//Each entity will have two of these, one for each controller.
+USTRUCT(BlueprintType)
+struct FEntityInputRegistrationParams {
+	GENERATED_USTRUCT_BODY()
+		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		FEntityInputRegistrationButtons m_onPressed;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		FEntityInputRegistrationButtons m_onReleased;
+};
+
 //-------------------------------------------------------------------------------------
 // This is our master base class for anything that is not controlled by the player.
 // I.e. anything that is not an APawn or an ACharacter
@@ -38,6 +66,7 @@ public:
 		g_pGlobals->checkReset();
 		AActor::BeginPlay();
 		s_iReadyEntityCount++;
+		ReportReady();
 	}
 
 	virtual void Tick(float deltaTime) override {  }
@@ -46,4 +75,14 @@ public:
 		Super::PostDuplicate(mode);
 		IBaseEntity::PostDuplicate(mode);
 	}
+
+	//Controller input for "use"
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		FEntityInputRegistrationParams m_leftControllerInput;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		FEntityInputRegistrationParams m_rightControllerInput;
+
+	//These overrides expose our UPROPERTY variables to IBaseEntity
+	virtual FEntityInputRegistrationParams*			GetLeftControllerInputRegistrationParams() { return &m_leftControllerInput; }
+	virtual FEntityInputRegistrationParams*			GetRightControllerInputRegistrationParams() { return &m_rightControllerInput; }
 };

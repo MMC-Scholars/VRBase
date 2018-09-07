@@ -67,7 +67,7 @@ void ABaseController::OnButtonsChanged() {
 	m_iButtons &= ~m_iButtonsReleased;
 
 	//first, removed inputs from invalid entities
-	uint32 i = 0;
+	int32 i = 0;
 	while (i < m_aRegisteredEntities.Num()) {
 		if (!m_aRegisteredEntities[i].m_ent)
 			m_aRegisteredEntities.RemoveAt(i);
@@ -76,19 +76,17 @@ void ABaseController::OnButtonsChanged() {
 	}
 
 	//iterate through registered entities and check if any of them should be triggered.
-	for (uint32 i = 0; i < m_aRegisteredEntities.Num(); i++) {
+	for (i = 0; i < m_aRegisteredEntities.Num(); i++) {
 		SEntityInputTriggerRequirement* trig = &m_aRegisteredEntities[i];
-		if (trig->m_ent) {
-			bool buttonActivated = false;
-			if (trig->m_bOnReleased && (trig->m_iButton & m_iButtonsReleased)) {
-				buttonActivated = true;
-			}
-			else if (!trig->m_bOnReleased && (trig->m_iButton & m_iButtonsPressed)) {
-				buttonActivated = true;
-			}
-			if (buttonActivated) {
-				trig->m_ent->Use(this);
-			}
+		bool buttonActivated = false;
+		if (trig->m_bOnReleased && (trig->m_iButton & m_iButtonsReleased)) {
+			buttonActivated = true;
+		}
+		else if (!trig->m_bOnReleased && (trig->m_iButton & m_iButtonsPressed)) {
+			buttonActivated = true;
+		}
+		if (buttonActivated) {
+			trig->m_ent->Use(this);
 		}
 	}
 

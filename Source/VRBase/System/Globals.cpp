@@ -45,7 +45,7 @@ void CGlobalVars::reset() {
 }
 
 void CGlobalVars::checkReset() {
-	Msg(__FUNCTION__);
+	//Msg(__FUNCTION__);
 	if (m_bReset)
 		reset();
 }

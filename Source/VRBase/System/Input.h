@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef VRBASE_INPUT_H
 #define VRBASE_INPUT_H
 
@@ -29,34 +31,9 @@ struct SEntityInputTriggerRequirement {
 	bool	m_bOnReleased; //Is this triggered when the button is released, instead of pressed?
 };
 
-//Each entity will have four of these total - two for each controller, pressed and released.
-//In IBaseEntity::PostInit(), every entity will register themselves with their controllers based off of these values.
-USTRUCT(BlueprintType)
-struct SEntityInputRegistrationButtons {
-	GENERATED_USTRUCT_BODY()
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-	bool m_AX;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-	bool m_BY;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-	bool m_TRIGGER;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-	bool m_GRIP;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-	bool m_MENU;
-};
-
-//This has two sets of booleans - one for released, one for pressed.
-//Each entity will have two of these, one for each controller.
-USTRUCT(BlueprintType)
-struct SEntityInputRegistrationParams {
-	GENERATED_USTRUCT_BODY()
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-	SEntityInputRegistrationButtons m_onPressed;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-	SEntityInputRegistrationButtons m_onReleased;
-};
-
-
+//Forward declaration of entity input registration parameters
+struct FEntityInputRegistrationParams;
 
 #endif VRBASE_INPUT_H
+
+

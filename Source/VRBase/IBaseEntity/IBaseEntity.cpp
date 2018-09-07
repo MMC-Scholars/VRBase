@@ -42,7 +42,7 @@ void IBaseEntity::RemoveSelfFromLists() {
 }
 
 void IBaseEntity::PostDuplicate(EDuplicateMode::Type mode) {
-	Msg("Calling IBaseEntity::PostDuplicate");
+	//Msg("Calling IBaseEntity::PostDuplicate");
 	if (mode != EDuplicateMode::Normal) {
 		AddEntityToLists(this);
 		g_pGlobals->ineditor = false;
@@ -50,7 +50,7 @@ void IBaseEntity::PostDuplicate(EDuplicateMode::Type mode) {
 }
 
 void IBaseEntity::AddEntityToLists(IBaseEntity* pEnt) {
-	Msg("Adding entity to lists");
+	//Msg("Adding entity to lists");
 	g_entList.Add(pEnt);
 	s_iEntityCount++;
 
@@ -83,6 +83,10 @@ void IBaseEntity::AddEntityToLists(IBaseEntity* pEnt) {
 		g_ppEntityList[slot] = pEnt;
 		pEnt->m_iEntIndex = slot;
 	}
+}
+
+void IBaseEntity::PostInit() {
+	RegisterInputsToControllers();
 }
 
 IBaseEntity* IBaseEntity::FromActor(AActor* pActor) {
@@ -172,4 +176,33 @@ bool IBaseEntity::Use(ABaseEntity* pActivator) {
 		return true;
 	}
 	return false;
+}
+
+void IBaseEntity::RegisterInputsToControllers() {
+	FEntityInputRegistrationParams* pLeft = GetLeftControllerInputRegistrationParams();
+	FEntityInputRegistrationParams* pRight = GetRightControllerInputRegistrationParams();
+
+	if (!pLeft || !pRight || !ControllersReady())
+		return;
+
+	auto registerButtonSetToController = [&](ABaseController* pController, FEntityInputRegistrationButtons* pButtons, bool bOnRelease) {
+		if (pButtons->m_AX)
+			pController->RegisterEntityInput(this, IN_AX, bOnRelease);
+		if (pButtons->m_BY)
+			pController->RegisterEntityInput(this, IN_BY, bOnRelease);
+		if (pButtons->m_GRIP)
+			pController->RegisterEntityInput(this, IN_GRIP, bOnRelease);
+		if (pButtons->m_MENU)
+			pController->RegisterEntityInput(this, IN_MENU, bOnRelease);
+		if (pButtons->m_TRIGGER)
+			pController->RegisterEntityInput(this, IN_TRIGGER, bOnRelease);
+	};
+
+	auto registerToController = [&](ABaseController* pController, FEntityInputRegistrationParams* params) {
+		registerButtonSetToController(pController, &params->m_onPressed, false);
+		registerButtonSetToController(pController, &params->m_onReleased, true);
+	};
+
+	registerToController(g_pLeftController, pLeft);
+	registerToController(g_pLeftController, pRight);
 }
