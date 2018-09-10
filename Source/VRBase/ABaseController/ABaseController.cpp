@@ -13,8 +13,7 @@ ABaseController::ABaseController() {
 	m_pHandMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 	m_pHandMeshComponent->SetMobility(EComponentMobility::Movable);
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> HandMesh(L"StaticMesh'/Game/Geometry/office_fridge2.office_fridge2'");
-	m_pHandMeshComponent->SetStaticMesh(HandMesh.Object);
+	m_pHandMeshComponent->SetStaticMesh(FindMesh(L"StaticMesh'/Game/Geometry/office_fridge2.office_fridge2'"));
 	//m_pHandMeshComponent->SetWorldRotation(FRotator(0.0f, 90.0f, 90.0f));
 
 	// Sphere collision
@@ -110,4 +109,8 @@ void ABaseController::SetWhichHand(EControllerHand h) {
 		g_pRightController = this;
 	else
 		NLogger::Warning("Unknown controller registered with EControllerHand == %i", h);
+}
+
+void ABaseController::SetStaticMesh(UStaticMesh* pMesh) {
+	m_pHandMeshComponent->SetStaticMesh(pMesh);
 }

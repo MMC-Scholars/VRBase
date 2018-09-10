@@ -16,6 +16,7 @@
 #include "IBaseEntity_flags.h"
 #include "GameFramework/Actor.h"
 #include "System/EHandle.h"
+#include "UObject/ConstructorHelpers.h"
 
 
 
@@ -175,6 +176,9 @@ public:
 	virtual FEntityInputRegistrationParams*			GetRightControllerInputRegistrationParams() { return NULL; }
 	
 };
+
+//Finds a UStaticMesh by path
+UStaticMesh* FindMesh(const wchar_t* path);
 
 #include "CTakeDamageInfo.h"
 

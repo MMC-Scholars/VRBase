@@ -48,6 +48,14 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 	UMotionControllerComponent* m_pRMotionController;
 	UChildActorComponent*		m_pRChildActor;
 
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
+	UStaticMesh*				m_pLeftControllerMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
+	UStaticMesh*				m_pRightControllerMesh;
+
 	// Variables
 	ABaseController*			m_pLHand;
 	ABaseController*			m_pRHand;

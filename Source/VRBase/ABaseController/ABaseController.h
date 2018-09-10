@@ -51,6 +51,7 @@ public:
 	void RegisterEntityInput(IBaseEntity*, uint32 iButton, bool bOnReleased);
 	void SetWhichHand(EControllerHand);
 	
+	void SetStaticMesh(UStaticMesh*);
 };
 
 extern ABaseController* g_pLeftController;

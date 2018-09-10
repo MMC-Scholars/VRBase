@@ -2,6 +2,9 @@
 
 #include "ABasePawn.h"
 
+#define OCULUS_TOUCH_CONTROLLER_MODEL_LEFT_PATH L"StaticMesh'/Game/Geometry/Controllers/oculus_cv1_controller_left.oculus_cv1_controller_left'"
+#define OCULUS_TOUCH_CONTROLLER_MODEL_RIGHT_PATH L"StaticMesh'/Game/Geometry/Controllers/oculus_cv1_controller_right.oculus_cv1_controller_right'"
+
 ABasePawn::ABasePawn() {
 	Tags.Add(TAG_BASEPAWN);
 	m_pSelfAsActor = this;
@@ -44,6 +47,10 @@ ABasePawn::ABasePawn() {
 	m_pRChildActor->SetChildActorClass(ABaseController::StaticClass());
 	m_pRChildActor->AttachToComponent(m_pRMotionController, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 
+
+	//Set default controller models
+	m_pLeftControllerMesh = FindMesh(OCULUS_TOUCH_CONTROLLER_MODEL_LEFT_PATH);
+	m_pRightControllerMesh = FindMesh(OCULUS_TOUCH_CONTROLLER_MODEL_RIGHT_PATH);
 }
 
 // Called to bind functionality to input
@@ -86,12 +93,16 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ABasePawn::PreInit() {
 
+	Msg(__FUNCTION__);
+
 	// Initialize ABaseController variables
 	m_pLHand = Cast<ABaseController>(m_pLChildActor->GetChildActor());
 	m_pLHand->SetWhichHand(EControllerHand::Left);
+	m_pLHand->SetStaticMesh(m_pLeftControllerMesh);
 
 	m_pRHand = Cast<ABaseController>(m_pRChildActor->GetChildActor());
 	m_pRHand->SetWhichHand(EControllerHand::Right);
+	m_pRHand->SetStaticMesh(m_pRightControllerMesh);
 
 }
 

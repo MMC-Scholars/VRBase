@@ -206,3 +206,8 @@ void IBaseEntity::RegisterInputsToControllers() {
 	registerToController(g_pLeftController, pLeft);
 	registerToController(g_pLeftController, pRight);
 }
+
+UStaticMesh* FindMesh(const wchar_t* path) {
+	ConstructorHelpers::FObjectFinder<UStaticMesh> meshFinder(path);
+	return meshFinder.Object;
+}
