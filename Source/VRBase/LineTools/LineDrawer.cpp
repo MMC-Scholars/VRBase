@@ -32,3 +32,4 @@ void ALineDrawer::DefaultThink() {
 	//UTIL_DrawLine(start, t.TraceEnd, FColor::Red, 1.0f, 0.1f);
 	//UTIL_DrawSpline(start, t.TraceEnd, FVector(0,0,50) * sinf(g_pGlobals->curtime), FColor::Red, 1.0f, 0.1f);
 }
+

@@ -12,6 +12,7 @@
 #include "Components/ChildActorComponent.h"
 
 #include "ABaseController/ABaseController.h"
+#include "System/Input.h"
 #include "ABasePawn.generated.h"
 
 UCLASS()
@@ -60,8 +61,49 @@ public:
 	ABaseController*			m_pLHand;
 	ABaseController*			m_pRHand;
 
-	// Input
-	//UFUNCTION()
-	void UpdateInput();
+// Key input functions
+#define KEY_INPUT(key, change, hand) \
+	void On##hand##_##key##_##change() { \
+		m_p##hand##Hand->m_iButtons##change |= IN_##key; \
+		m_p##hand##Hand->OnButtonsChanged(); \
+	}
 
+	// Left Input
+	
+	// Trigger
+	KEY_INPUT(TRIGGER, Pressed, L);
+	KEY_INPUT(TRIGGER, Released, L);
+	// Grip
+	KEY_INPUT(GRIP, Pressed, L);
+	KEY_INPUT(GRIP, Released, L);
+	// Menu Button
+	KEY_INPUT(MENU, Pressed, L);
+	KEY_INPUT(MENU, Released, L);
+	// AX
+	KEY_INPUT(AX, Pressed, L);
+	KEY_INPUT(AX, Released, L);
+	// BY
+	KEY_INPUT(BY, Pressed, L);
+	KEY_INPUT(BY, Released, L);
+
+	// Right Input
+
+	// Trigger
+	KEY_INPUT(TRIGGER, Pressed, R);
+	KEY_INPUT(TRIGGER, Released, R);
+	// Grip
+	KEY_INPUT(GRIP, Pressed, R);
+	KEY_INPUT(GRIP, Released, R);
+	// Menu Button
+	KEY_INPUT(MENU, Pressed, R);
+	KEY_INPUT(MENU, Released, R);
+	// AX
+	KEY_INPUT(AX, Pressed, R);
+	KEY_INPUT(AX, Released, R);
+	// BY
+	KEY_INPUT(BY, Pressed, R);
+	KEY_INPUT(BY, Released, R);
+
+
+	//TODO KEY_INPUT(STICK, Released, R);
 };

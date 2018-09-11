@@ -17,6 +17,6 @@ class VRBASE_API ALineDrawer : public ABaseEntity
 	void PreInit() override {}
 	void DefaultThink() override;
 
-	
+	void OnUsed(ABaseEntity*) override { Msg("IT WORKS!"); }
 	
 };

@@ -1,6 +1,7 @@
 
 
 #include "ABaseController.h"
+#include "System/NLogger.h"
 
 ABaseController::ABaseController() {
 
@@ -14,7 +15,7 @@ ABaseController::ABaseController() {
 	m_pHandMeshComponent->SetMobility(EComponentMobility::Movable);
 
 	m_pHandMeshComponent->SetStaticMesh(FindMesh(L"StaticMesh'/Game/Geometry/office_fridge2.office_fridge2'"));
-	//m_pHandMeshComponent->SetWorldRotation(FRotator(0.0f, 90.0f, 90.0f));
+	m_pHandMeshComponent->SetWorldRotation(FRotator(0.0f, 90.0f, 135.0f));
 
 	// Sphere collision
 	m_pControllerCollision = CreateDefaultSubobject<USphereComponent>("Controller Collision");
@@ -64,6 +65,10 @@ ABaseController* g_pRightController;
 void ABaseController::OnButtonsChanged() {
 	m_iButtons |= m_iButtonsPressed;
 	m_iButtons &= ~m_iButtonsReleased;
+
+	Msg("Pressed: %i", m_iButtonsPressed);
+	Msg("Released: %i", m_iButtonsReleased);
+
 
 	//first, removed inputs from invalid entities
 	int32 i = 0;

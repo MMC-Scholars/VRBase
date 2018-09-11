@@ -204,7 +204,7 @@ void IBaseEntity::RegisterInputsToControllers() {
 	};
 
 	registerToController(g_pLeftController, pLeft);
-	registerToController(g_pLeftController, pRight);
+	registerToController(g_pRightController, pRight);
 }
 
 UStaticMesh* FindMesh(const wchar_t* path) {

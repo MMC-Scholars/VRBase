@@ -40,13 +40,14 @@ protected:
 
 	TArray<SEntityInputTriggerRequirement> m_aRegisteredEntities; //Which entites are listening to buttons on this controller?
 
+public:
 	uint32 m_iButtons; //bitfield - which buttons are currently being pressed?
 	uint32 m_iButtonsPressed; //bitifield - which buttons were just pressed?
 	uint32 m_iButtonsReleased; //bitfield - which buttons were just released?
 	void OnButtonsChanged();
 
 
-public:
+
 	uint32 ButtonsPressed() const { return m_iButtons; } //Returns bitfield of buttons currently pressed on this controller
 	void RegisterEntityInput(IBaseEntity*, uint32 iButton, bool bOnReleased);
 	void SetWhichHand(EControllerHand);
