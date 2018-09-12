@@ -18,7 +18,10 @@ UCLASS()
 class MMC_OFF_RECREATION_API ABaseController : public ABaseEntity {
 	GENERATED_BODY()
 	
+public:
 	ABaseController();
+
+	void PostInit() override;
 
 	// Components
 	USceneComponent*		m_pHandScene;
@@ -26,7 +29,8 @@ class MMC_OFF_RECREATION_API ABaseController : public ABaseEntity {
 	USphereComponent*		m_pControllerCollision;
 
 	// Variables
-	EControllerHand			m_pWhichHand;
+	EControllerHand			m_eWhichHand;
+	bool					m_bPerformedPositionFixup;
 	//TArray<AActor*>		m_aOverlapActors;
 	//TArray<APickup*>		m_aAttachActors;
 

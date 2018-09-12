@@ -106,4 +106,8 @@ public:
 
 
 	//TODO KEY_INPUT(STICK, Released, R);
+	
+	//virtual void UpdateInput(float);
+	//virtual void UpdateTouch(ETouchIndex::Type, FVector);
+	// https://api.unrealengine.com/INT/API/Runtime/InputCore/ETouchIndex__Type/index.html
 };

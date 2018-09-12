@@ -5,6 +5,17 @@
 
 ABaseController::ABaseController() {
 
+	bool bLeft = false;
+	if (!g_pLeftController) {
+		bLeft = true;
+		g_pLeftController = this;
+	}
+	else if (!g_pRightController) {
+		g_pRightController = this;
+	}
+
+	m_bPerformedPositionFixup = false;
+
 	// Scene component
 	m_pHandScene = CreateDefaultSubobject<USceneComponent>("Hand Main");
 	RootComponent = m_pHandScene;
@@ -15,7 +26,12 @@ ABaseController::ABaseController() {
 	m_pHandMeshComponent->SetMobility(EComponentMobility::Movable);
 
 	m_pHandMeshComponent->SetStaticMesh(FindMesh(L"StaticMesh'/Game/Geometry/office_fridge2.office_fridge2'"));
-	m_pHandMeshComponent->SetWorldRotation(FRotator(0.0f, 90.0f, 135.0f));
+	//m_pHandMeshComponent->SetWorldRotation(FRotator(0.0f, 90.0f, 135.0f));
+
+	/*vec horiz = 3.f;
+	if (!bLeft) horiz = -horiz;
+	m_pHandMeshComponent->AddRelativeLocation(FVector(0, horiz, 3));;*/
+	
 
 	// Sphere collision
 	m_pControllerCollision = CreateDefaultSubobject<USphereComponent>("Controller Collision");
@@ -26,6 +42,11 @@ ABaseController::ABaseController() {
 	//m_pControllerCollision->bGenerateOverlapEvents = true;
 	//m_pControllerCollision->OnComponentBeginOverlap.AddDynamic(this, &AHand::OnOverlapBegin);
 	//m_pControllerCollision->OnComponentEndOverlap.AddDynamic(this, &AHand::OnOverlapEnd);
+
+}
+
+void ABaseController::PostInit() {
+	
 
 }
 
@@ -107,13 +128,21 @@ void ABaseController::RegisterEntityInput(IBaseEntity* pEnt, uint32 iButton, boo
  * setWhichHand
  */
 void ABaseController::SetWhichHand(EControllerHand h) {
-	m_pWhichHand = h;
-	if (h == EControllerHand::Left)
+	m_eWhichHand = h;
+	bool fixup = !m_bPerformedPositionFixup;
+	if (h == EControllerHand::Left) 
 		g_pLeftController = this;
 	else if (h == EControllerHand::Right)
 		g_pRightController = this;
-	else
+	else {
 		NLogger::Warning("Unknown controller registered with EControllerHand == %i", h);
+		fixup = false;
+	}
+		
+	if (fixup) {
+		m_bPerformedPositionFixup = true;
+		
+	}
 }
 
 void ABaseController::SetStaticMesh(UStaticMesh* pMesh) {
