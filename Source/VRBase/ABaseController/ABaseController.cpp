@@ -2,6 +2,8 @@
 
 #include "ABaseController.h"
 #include "System/NLogger.h"
+#include "LineTools/linetools.h"
+#include "ABasePawn/ABasePawn.h"
 
 ABaseController::ABaseController() {
 
@@ -25,7 +27,7 @@ ABaseController::ABaseController() {
 	m_pHandMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 	m_pHandMeshComponent->SetMobility(EComponentMobility::Movable);
 
-	m_pHandMeshComponent->SetStaticMesh(FindMesh(L"StaticMesh'/Game/Geometry/office_fridge2.office_fridge2'"));
+	//m_pHandMeshComponent->SetStaticMesh(FindMesh(L"StaticMesh'/Game/Geometry/office_fridge2.office_fridge2'"));
 	//m_pHandMeshComponent->SetWorldRotation(FRotator(0.0f, 90.0f, 135.0f));
 
 	/*vec horiz = 3.f;
@@ -43,6 +45,7 @@ ABaseController::ABaseController() {
 	//m_pControllerCollision->OnComponentBeginOverlap.AddDynamic(this, &AHand::OnOverlapBegin);
 	//m_pControllerCollision->OnComponentEndOverlap.AddDynamic(this, &AHand::OnOverlapEnd);
 
+	m_bButtonHeld = false;
 }
 
 void ABaseController::PostInit() {
@@ -87,8 +90,40 @@ void ABaseController::OnButtonsChanged() {
 	m_iButtons |= m_iButtonsPressed;
 	m_iButtons &= ~m_iButtonsReleased;
 
-	Msg("Pressed: %i", m_iButtonsPressed);
-	Msg("Released: %i", m_iButtonsReleased);
+
+	// TEST AREA FOR BUTTON INPUT AND OTHER STUFF
+
+	//-----------------------------------------------------------------------------------------------------------------
+	if (m_bButtonHeld) {
+		// we have released the button
+		m_bButtonHeld = false;
+
+		if (m_iButtonsReleased & IN_AX) {
+			FVector start = m_pHandMeshComponent->GetComponentLocation();
+			Msg("The location is %i", start);
+			FVector direction = m_pHandMeshComponent->GetForwardVector();
+			Msg("The direction is %i", direction);
+
+			FHitResult t;
+			FVector force = FVector(0, 0, -0.08f);
+			UTIL_TraceSpline(t, start, direction, force, 4096);
+
+			//loc will be where we hit
+			FVector loc = t.Location;
+			if (loc == FVector::ZeroVector)
+				loc = t.TraceEnd;
+
+			ABasePawn* player = Cast<ABasePawn>(GetWorld()->GetFirstPlayerController()->GetPawn());
+			Msg("The actor is %i", player);
+		}
+	}
+	else {
+		// we just pressed the button
+		m_bButtonHeld = true;
+
+	}
+	//-----------------------------------------------------------------------------------------------------------------
+	
 
 
 	//first, removed inputs from invalid entities
@@ -147,4 +182,33 @@ void ABaseController::SetWhichHand(EControllerHand h) {
 
 void ABaseController::SetStaticMesh(UStaticMesh* pMesh) {
 	m_pHandMeshComponent->SetStaticMesh(pMesh);
+}
+
+void ABaseController::OnUsed(ABaseEntity* pActivator) {
+	
+	// insert code from method above once this works 
+
+}
+
+void ABaseController::DefaultThink() {
+	
+	if (m_bButtonHeld) {
+		//if (m_iButtonsPressed & IN_AX) {
+			SLineDrawParams rendered = { FColor::Red, 6.f, (ftime) 0.1f };
+
+			FVector start = m_pHandMeshComponent->GetComponentLocation();
+			FVector direction = m_pHandMeshComponent->GetForwardVector();
+
+			FHitResult t;
+			FVector force = FVector(0, 0, -0.08f);
+			UTIL_TraceSpline(t, start, direction, force, 4096, &rendered);
+
+			FVector loc = t.Location;
+			if (loc == FVector::ZeroVector)
+				loc = t.TraceEnd;
+
+			//then render a circle at loc
+		//}
+	}
+	
 }

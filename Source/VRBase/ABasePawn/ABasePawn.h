@@ -40,6 +40,7 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 
 	virtual void PreInit() override;
 
+public:
 	// Components
 	UCapsuleComponent*			m_pRootCapsule;
 	USceneComponent*			m_pPlayerRoot;
@@ -49,16 +50,19 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 	UMotionControllerComponent* m_pRMotionController;
 	UChildActorComponent*		m_pRChildActor;
 
-
-public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
 	UStaticMesh*				m_pLeftControllerMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
 	UStaticMesh*				m_pRightControllerMesh;
 
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
+	
+
 	// Variables
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
 	ABaseController*			m_pLHand;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
 	ABaseController*			m_pRHand;
 
 // Key input functions
@@ -110,4 +114,14 @@ public:
 	//virtual void UpdateInput(float);
 	//virtual void UpdateTouch(ETouchIndex::Type, FVector);
 	// https://api.unrealengine.com/INT/API/Runtime/InputCore/ETouchIndex__Type/index.html
+
+	//Controller input for "use"
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		FEntityInputRegistrationParams m_leftControllerInput;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		FEntityInputRegistrationParams m_rightControllerInput;
+
+	//These overrides expose our UPROPERTY variables to IBaseEntity
+	virtual FEntityInputRegistrationParams*	GetLeftControllerInputRegistrationParams() { return &m_leftControllerInput; }
+	virtual FEntityInputRegistrationParams*	GetRightControllerInputRegistrationParams() { return &m_rightControllerInput; }
 };

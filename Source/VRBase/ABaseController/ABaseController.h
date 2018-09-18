@@ -57,6 +57,14 @@ public:
 	void SetWhichHand(EControllerHand);
 	
 	void SetStaticMesh(UStaticMesh*);
+
+
+	//These are called when we hold the teleport button
+	bool m_bButtonHeld;
+	void OnUsed(ABaseEntity* pActivator) override;
+
+	//This will cast a spline and circle while we are holding the button
+	void DefaultThink() override;
 };
 
 extern ABaseController* g_pLeftController;

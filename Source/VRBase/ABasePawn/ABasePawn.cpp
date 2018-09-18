@@ -125,6 +125,11 @@ void ABasePawn::PreInit() {
 	m_pRHand->SetWhichHand(EControllerHand::Right);
 	m_pRHand->SetStaticMesh(m_pRightControllerMesh);
 
+	m_pRHand->m_rightControllerInput = m_rightControllerInput;
+	m_pLHand->m_leftControllerInput = m_leftControllerInput;
+
+	m_rightControllerInput = FEntityInputRegistrationParams();
+	m_leftControllerInput = FEntityInputRegistrationParams();
 }
 
 //void ABasePawn::UpdateInput(float delta) {

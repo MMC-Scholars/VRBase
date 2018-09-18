@@ -35,6 +35,7 @@ AHMDTeleportTarget* AHMDTeleportTarget::TargetClosestToLocation(FVector loc) {
 }
 
 AHMDTeleportTarget* AHMDTeleportTarget::SplineFind(const FVector& start, const FVector& direction) {
+
 	SLineDrawParams rendered = { FColor::Red, 6.f, (ftime) 0.1f};
 
 	FHitResult t;

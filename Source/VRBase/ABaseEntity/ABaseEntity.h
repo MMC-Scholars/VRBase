@@ -58,6 +58,9 @@ public:
 		SetActorTickEnabled(false);
 	}
 
+	virtual void OnUsed(ABaseEntity* pActivator) {}
+	virtual void DefaultThink() {}
+
 	//you can override these if you want, but there's no guarantees
 	//about how these interact with the new custom game flow
 	//for example, BeginPlay() might be called before 
