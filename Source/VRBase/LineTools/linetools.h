@@ -2,6 +2,7 @@
 
 #include "UnrealEngine.h"
 #include "System/predefs.h"
+#include "ABaseController/ABaseController.h"
 
 //------------------------------------------------------------------------------------
 // Purpose: Contains parameters used for drawing lines and splines in the world
@@ -12,11 +13,15 @@ struct SLineDrawParams {
 	ftime Duration;
 };
 
+
+
 //------------------------------------------------------------------------------------
-// Purpose: Given a start position, direction, and max distance, performs a ray cast
+// Purpose: Given a start position, direction, null-terminated list of ignored actor, 
+//      and max distance, performs a ray cast
 //		and stores the result in the given FHitResult
+//		
 //------------------------------------------------------------------------------------
-void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction, float maxDistance = (float)INT32_MAX);
+void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction, AActor** ppIgnoredActors = NULL, float maxDistance = (float)INT32_MAX );
 
 //------------------------------------------------------------------------------------
 // Purpose: Given a start position, direction, force, and maximum number of iterations
@@ -25,7 +30,7 @@ void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction, floa
 //		The direction and magnitude of force determines the curvature of the spline;
 //		i.e. the force vector causes an acceleration on the spline curve.
 //------------------------------------------------------------------------------------
-void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FVector force, uint16 maxIterations = 4096, SLineDrawParams* rendered = NULL);
+void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FVector force, uint16 maxIterations = 4096, SLineDrawParams* rendered = NULL, AActor** ppIgnoredActors = NULL);
 
 //------------------------------------------------------------------------------------
 // Purpose: Given a start position, end position, color, thickness, and lifetime, draws

@@ -113,8 +113,9 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	}
 }
 
-
+ABasePawn* g_pBasePawn = NULL;
 void ABasePawn::PreInit() {
+	g_pBasePawn = this;
 
 	// Initialize ABaseController variables
 	m_pLHand = Cast<ABaseController>(m_pLChildActor->GetChildActor());

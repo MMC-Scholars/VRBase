@@ -12,6 +12,7 @@ class ABaseController;
 
 extern ABaseController* g_pLeftController;
 extern ABaseController* g_pRightController;
+extern ABasePawn*		g_pBasePawn;
 
 //Bitfields offset for button inputs
 //These are used by the bitwise math in order to mark/unmark which

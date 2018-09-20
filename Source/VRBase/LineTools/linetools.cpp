@@ -19,19 +19,31 @@
 
 FCollisionObjectQueryParams g_coqpDefault = FCollisionObjectQueryParams(FCollisionObjectQueryParams::AllObjects);
 
+inline FCollisionQueryParams GetDefaultTraceParams(AActor** ppIgnored) {
+	FCollisionQueryParams params = FCollisionQueryParams::DefaultQueryParam;
+
+	if (ppIgnored) {
+		for (uint8 i = 0; ppIgnored[i]; i++) {
+			params.AddIgnoredActor(ppIgnored[i]);
+		}
+	}
+	
+	return params;
+}
+
 inline bool LineToolsReady() { return g_pGameRules && g_pGameRules->GetWorld(); }
 
-void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction, float maxDistance) {
+void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction, AActor** ppIgnoredActors, float maxDistance) {
 	if (!LineToolsReady())
 		return;
 
 	t.Init();
 	FVector end = start;
 	end += direction.GetClampedToSize(maxDistance, maxDistance);
-	g_pGameRules->GetWorld()->LineTraceSingleByObjectType(t, start, end, g_coqpDefault);
+	g_pGameRules->GetWorld()->LineTraceSingleByObjectType(t, start, end, g_coqpDefault, GetDefaultTraceParams(ppIgnoredActors));
 }
 
-void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FVector force, uint16 maxIterations, SLineDrawParams* rendered) {
+void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FVector force, uint16 maxIterations, SLineDrawParams* rendered, AActor** ppIgnoredActors) {
 	if (!LineToolsReady())
 		return;
 
@@ -47,7 +59,7 @@ void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FV
 		t.Reset();
 		next = start + direction + force;
 
-		g_pGameRules->GetWorld()->LineTraceSingleByObjectType(t, previous, next, g_coqpDefault);
+		g_pGameRules->GetWorld()->LineTraceSingleByObjectType(t, previous, next, g_coqpDefault, GetDefaultTraceParams(ppIgnoredActors));
 		previous = next;
 
 		iterations++;

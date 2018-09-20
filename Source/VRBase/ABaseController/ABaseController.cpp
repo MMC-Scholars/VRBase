@@ -26,6 +26,7 @@ ABaseController::ABaseController() {
 	m_pHandMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("Controller Mesh");
 	m_pHandMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 	m_pHandMeshComponent->SetMobility(EComponentMobility::Movable);
+	m_pHandMeshComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 
 	//m_pHandMeshComponent->SetStaticMesh(FindMesh(L"StaticMesh'/Game/Geometry/office_fridge2.office_fridge2'"));
 	//m_pHandMeshComponent->SetWorldRotation(FRotator(0.0f, 90.0f, 135.0f));
@@ -85,6 +86,7 @@ void AHand::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor
 
 ABaseController* g_pLeftController;
 ABaseController* g_pRightController;
+#define IGNORED_ACTORS() { g_pBasePawn, g_pLeftController, g_pRightController, NULL }
 
 void ABaseController::OnButtonsChanged() {
 	m_iButtons |= m_iButtonsPressed;
@@ -99,22 +101,25 @@ void ABaseController::OnButtonsChanged() {
 		m_bButtonHeld = false;
 
 		if (m_iButtonsReleased & IN_AX) {
-			FVector start = m_pHandMeshComponent->GetComponentLocation();
-			Msg("The location is %i", start);
-			FVector direction = m_pHandMeshComponent->GetForwardVector();
-			Msg("The direction is %i", direction);
+			FVector start = GetActorLocation();
+			//Msg(start);
+			FVector direction = GetActorForwardVector();
+			//Msg(direction);
+			//Msg("The direction is %i", direction);
+
+			AActor* ppIgnored[4] = IGNORED_ACTORS();
 
 			FHitResult t;
 			FVector force = FVector(0, 0, -0.08f);
-			UTIL_TraceSpline(t, start, direction, force, 4096);
+			UTIL_TraceSpline(t, start, direction, force, 4096, NULL, ppIgnored);
 
 			//loc will be where we hit
 			FVector loc = t.Location;
 			if (loc == FVector::ZeroVector)
 				loc = t.TraceEnd;
 
-			ABasePawn* player = Cast<ABasePawn>(GetWorld()->GetFirstPlayerController()->GetPawn());
-			Msg("The actor is %i", player);
+			//ABasePawn* player = Cast<ABasePawn>(GetWorld()->GetFirstPlayerController()->GetPawn());
+			//Msg("The actor is %i", player);
 		}
 	}
 	else {
@@ -187,7 +192,7 @@ void ABaseController::SetStaticMesh(UStaticMesh* pMesh) {
 void ABaseController::OnUsed(ABaseEntity* pActivator) {
 	
 	// insert code from method above once this works 
-
+	Msg(__FUNCTION__);
 }
 
 void ABaseController::DefaultThink() {
@@ -196,18 +201,22 @@ void ABaseController::DefaultThink() {
 		//if (m_iButtonsPressed & IN_AX) {
 			SLineDrawParams rendered = { FColor::Red, 6.f, (ftime) 0.1f };
 
-			FVector start = m_pHandMeshComponent->GetComponentLocation();
-			FVector direction = m_pHandMeshComponent->GetForwardVector();
+			FVector start = GetActorLocation(); //m_pHandMeshComponent->GetComponentLocation();
+			FVector direction = GetActorForwardVector(); //m_pHandMeshComponent->GetForwardVector();
 
 			FHitResult t;
+			AActor* ppIgnored[] = IGNORED_ACTORS();
 			FVector force = FVector(0, 0, -0.08f);
-			UTIL_TraceSpline(t, start, direction, force, 4096, &rendered);
+			UTIL_TraceSpline(t, start, direction, force, 4096, &rendered, ppIgnored);
+			//UTIL_TraceLine(t, start, direction);
 
 			FVector loc = t.Location;
 			if (loc == FVector::ZeroVector)
 				loc = t.TraceEnd;
 
 			//then render a circle at loc
+			//UTIL_DrawLine(start, loc, &rendered);
+			UTIL_DrawCircle(loc, (vec) 30.f, &rendered);
 		//}
 	}
 	
