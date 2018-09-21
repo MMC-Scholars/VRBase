@@ -100,7 +100,7 @@ void ABaseController::OnButtonsChanged() {
 		// we have released the button
 		m_bButtonHeld = false;
 
-		if (m_iButtonsReleased & IN_AX) {
+		//if (m_iButtonsReleased & IN_AX) {
 			FVector start = GetActorLocation();
 			//Msg(start);
 			FVector direction = GetActorForwardVector();
@@ -118,9 +118,9 @@ void ABaseController::OnButtonsChanged() {
 			if (loc == FVector::ZeroVector)
 				loc = t.TraceEnd;
 
-			//ABasePawn* player = Cast<ABasePawn>(GetWorld()->GetFirstPlayerController()->GetPawn());
-			//Msg("The actor is %i", player);
-		}
+			Msg("Teleporting player");
+			g_pBasePawn->SetActorLocation(loc);
+		//}
 	}
 	else {
 		// we just pressed the button
