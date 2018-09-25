@@ -44,7 +44,10 @@ public:
 
 			void			RemoveSelfFromLists(); //invalidates EHANDLES, does NOT modify static counts, do that yourself
 			bool			DestroyEntity(); //destroys this Actor
-	inline	void			ReportReady() { Msg(L"Entity %s ready", WCStr(FString(GetActor()->GetName()))); }
+	inline	void			ReportReady() { 
+		s_iReadyEntityCount++;
+		Msg(L"Entity %s ready", WCStr(FString(GetActor()->GetName()))); 
+	}
 	//---------------------------------------------------------------
 	// Entity indexing system
 	//---------------------------------------------------------------

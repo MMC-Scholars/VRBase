@@ -25,7 +25,7 @@ class VRBASE_API ABaseCharacter : public ACharacter, public IBaseEntity
 	virtual void BeginPlay() final override {
 		g_pGlobals->checkReset();
 		AActor::BeginPlay();
-		s_iReadyEntityCount++;
+		ReportReady();
 	}
 	virtual void Tick(float deltaTime) final override {}
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) final override {}

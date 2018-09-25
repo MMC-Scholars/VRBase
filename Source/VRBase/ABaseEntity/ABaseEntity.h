@@ -68,7 +68,6 @@ public:
 	virtual void BeginPlay() override {
 		g_pGlobals->checkReset();
 		AActor::BeginPlay();
-		s_iReadyEntityCount++;
 		ReportReady();
 	}
 
