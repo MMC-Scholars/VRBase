@@ -100,12 +100,12 @@ void ABaseController::OnButtonsChanged() {
 		// we have released the button
 		m_bButtonHeld = false;
 
+		// Disable Haptics
+		GetWorld()->GetFirstPlayerController()->SetHapticsByValue(300.0f, 0.0f, m_eWhichHand);
+
 		//if (m_iButtonsReleased & IN_AX) {
 			FVector start = GetActorLocation();
-			//Msg(start);
 			FVector direction = GetActorForwardVector();
-			//Msg(direction);
-			//Msg("The direction is %i", direction);
 
 			AActor* ppIgnored[4] = IGNORED_ACTORS();
 
@@ -118,8 +118,24 @@ void ABaseController::OnButtonsChanged() {
 			if (loc == FVector::ZeroVector)
 				loc = t.TraceEnd;
 
+
+			// Temporary Z fix... (not sure how to fix this?)
+			ABasePawn* player = Cast<ABasePawn>(GetParentActor());
+			float height = player->m_pCamera->GetComponentLocation().Z;
+			loc.Z = height;
+
+
+			// My attempt to fade the camera the way the default VR Blueprints teleport
+
 			Msg("Teleporting player");
+			//APlayerCameraManager* pCameraManager = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
+			//pCameraManager->StartCameraFade(0, 1, 0.1, FLinearColor::Black, false, true);
+
+			//FTimerHandle UnusedHandle;
+			//GetWorldTimerManager().SetTimer(UnusedHandle, this, [=](){
 			g_pBasePawn->SetActorLocation(loc);
+			//	pCameraManager->StartCameraFade(1, 0, 0.1, FLinearColor::Black, false, true);
+			//}, 0.1, false);
 		//}
 	}
 	else {
@@ -198,6 +214,10 @@ void ABaseController::OnUsed(ABaseEntity* pActivator) {
 void ABaseController::DefaultThink() {
 	
 	if (m_bButtonHeld) {
+
+		// Enable Haptics (* need to change frequency and amplitude later)
+		GetWorld()->GetFirstPlayerController()->SetHapticsByValue(300.0f, 0.5f, m_eWhichHand);
+
 		//if (m_iButtonsPressed & IN_AX) {
 			SLineDrawParams rendered = { FColor::Red, 6.f, (ftime) 0.1f };
 

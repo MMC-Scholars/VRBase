@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "VRBase/ABaseEntity/ABaseEntity.h"
 #include "System/Input.h"
+#include "Haptics/HapticFeedbackEffect_Base.h"
 #include "Components/SceneComponent.h"
 #include "ConstructorHelpers.h"
 #include "Components/StaticMeshComponent.h"
