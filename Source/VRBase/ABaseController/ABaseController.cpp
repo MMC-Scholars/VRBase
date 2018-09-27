@@ -118,22 +118,13 @@ void ABaseController::OnButtonsChanged() {
 			if (loc == FVector::ZeroVector)
 				loc = t.TraceEnd;
 
-
-			// Temporary Z fix... (not sure how to fix this?)
-			ABasePawn* player = Cast<ABasePawn>(GetParentActor());
-			float height = player->m_pCamera->GetComponentLocation().Z;
-			loc.Z = height;
-
-
 			// My attempt to fade the camera the way the default VR Blueprints teleport
-
-			Msg("Teleporting player");
 			//APlayerCameraManager* pCameraManager = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
 			//pCameraManager->StartCameraFade(0, 1, 0.1, FLinearColor::Black, false, true);
 
 			//FTimerHandle UnusedHandle;
 			//GetWorldTimerManager().SetTimer(UnusedHandle, this, [=](){
-			g_pBasePawn->SetActorLocation(loc);
+			m_pOwnerPawn->TeleportPlayer(loc);
 			//	pCameraManager->StartCameraFade(1, 0, 0.1, FLinearColor::Black, false, true);
 			//}, 0.1, false);
 		//}
