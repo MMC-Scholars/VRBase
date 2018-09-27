@@ -29,6 +29,8 @@ public:
 	UStaticMeshComponent*	m_pHandMeshComponent;
 	USphereComponent*		m_pControllerCollision;
 
+	ABasePawn*				m_pOwnerPawn;
+
 	// Variables
 	EControllerHand			m_eWhichHand;
 	bool					m_bPerformedPositionFixup;

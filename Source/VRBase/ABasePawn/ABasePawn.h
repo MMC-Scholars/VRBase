@@ -18,6 +18,9 @@
 UCLASS()
 class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 
+//------------------------------------------------------------------------------
+// ACTOR/PAWN/ENTITY OVERRIDES
+//-----------------------------------------------------------------------------
 	GENERATED_BODY()
 
 	ABasePawn();
@@ -39,6 +42,15 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 
 	virtual void PreInit() override;
 
+
+
+
+
+
+
+//------------------------------------------------------------------------------
+// MEMBER VARIABLES FOR PLAYER/PAWN/VR SETUP
+//-----------------------------------------------------------------------------
 public:
 	// Components
 	UCapsuleComponent*			m_pRootCapsule;
@@ -54,17 +66,17 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
 	UStaticMesh*				m_pRightControllerMesh;
-
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
-	
-
-	// Variables
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
 	ABaseController*			m_pLHand;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
 	ABaseController*			m_pRHand;
 
-// Key input functions
+
+
+
+//------------------------------------------------------------------------------
+// INPUT FUNCTIONS / INPUT HANDLING
+//-----------------------------------------------------------------------------
 #define KEY_INPUT(key, change, hand) \
 	void On##hand##_##key##_##change() { \
 		m_p##hand##Hand->m_iButtons##change |= IN_##key; \
@@ -106,8 +118,6 @@ public:
 	// BY
 	KEY_INPUT(BY, Pressed, R);
 	KEY_INPUT(BY, Released, R);
-
-
 	//TODO KEY_INPUT(STICK, Released, R);
 	
 	//virtual void UpdateInput(float);
@@ -123,4 +133,23 @@ public:
 	//These overrides expose our UPROPERTY variables to IBaseEntity
 	virtual FEntityInputRegistrationParams*	GetLeftControllerInputRegistrationParams() { return &m_leftControllerInput; }
 	virtual FEntityInputRegistrationParams*	GetRightControllerInputRegistrationParams() { return &m_rightControllerInput; }
+
+
+
+
+
+
+
+//------------------------------------------------------------------------------
+// PLAYER TELEPORT HANDLING
+//-----------------------------------------------------------------------------
+private:
+	bool CanTeleportToLocation(const FVector& loc);
+public:
+	bool TeleportPlayer(const FVector& loc);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = input)
+		float m_flHeightFromFloor;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = input)
+		AActor* m_pTeleportBounds;
 };

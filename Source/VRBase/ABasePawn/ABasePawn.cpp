@@ -9,6 +9,8 @@
 ABasePawn::ABasePawn() {
 	Tags.Add(TAG_BASEPAWN);
 	m_pSelfAsActor = this;
+	m_flHeightFromFloor = 40.f;
+	m_pTeleportBounds = NULL;
 
 	// disable event tick
 	bAllowTickBeforeBeginPlay = false;
@@ -121,10 +123,12 @@ void ABasePawn::PreInit() {
 	m_pLHand = Cast<ABaseController>(m_pLChildActor->GetChildActor());
 	m_pLHand->SetWhichHand(EControllerHand::Left);
 	m_pLHand->SetStaticMesh(m_pLeftControllerMesh);
+	m_pLHand->m_pOwnerPawn = this;
 
 	m_pRHand = Cast<ABaseController>(m_pRChildActor->GetChildActor());
 	m_pRHand->SetWhichHand(EControllerHand::Right);
 	m_pRHand->SetStaticMesh(m_pRightControllerMesh);
+	m_pRHand->m_pOwnerPawn = this;
 
 	m_pRHand->m_rightControllerInput = m_rightControllerInput;
 	m_pLHand->m_leftControllerInput = m_leftControllerInput;
@@ -133,6 +137,26 @@ void ABasePawn::PreInit() {
 	m_leftControllerInput = FEntityInputRegistrationParams();
 }
 
-//void ABasePawn::UpdateInput(float delta) {
-	//Msg("Touch Input Test: %i", delta);
-//}
+bool ABasePawn::CanTeleportToLocation(const FVector& loc) {
+	//If we don't have a bounds, return true
+	// This will help unexperienced VR developers avoid problems
+	if (!m_pTeleportBounds)
+		return true;
+
+	//Check if the given location is within our bounds
+	FVector boxOrigin, boxExtent;
+	m_pTeleportBounds->GetActorBounds(false, boxOrigin, boxExtent);
+	FBox box;
+	box.BuildAABB(boxOrigin, boxExtent);
+	return box.IsInsideOrOn(loc);
+}
+
+bool ABasePawn::TeleportPlayer(const FVector& loc) {
+	//First check if it is legal to enter this location
+	if (!CanTeleportToLocation(loc))
+		return false;
+
+	//Teleport with the offset
+	SetActorLocation(loc + FVector(0,0,m_flHeightFromFloor));
+	return true;
+}
