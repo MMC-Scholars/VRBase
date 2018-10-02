@@ -124,7 +124,18 @@ void ABaseController::OnButtonsChanged() {
 
 			//FTimerHandle UnusedHandle;
 			//GetWorldTimerManager().SetTimer(UnusedHandle, this, [=](){
+			//IHeadMountedDisplay* HMD = GEngine->HMDDevice.Get();
+			//FQuat rot = FQuat(0, 0, 0, 0);
+			//FVector pos = FVector(0, 0, 0);
+			//HMD->GetCurrentOrientationAndPosition(rot, pos);
+
+			
+
+			//Msg("height is %i", m_pOwnerPawn->m_pRootCapsule->GetScaledCapsuleHalfHeight());
+
+			
 			m_pOwnerPawn->TeleportPlayer(loc);
+			
 			//	pCameraManager->StartCameraFade(1, 0, 0.1, FLinearColor::Black, false, true);
 			//}, 0.1, false);
 		//}
