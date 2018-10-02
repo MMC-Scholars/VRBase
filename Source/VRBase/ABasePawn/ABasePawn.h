@@ -14,6 +14,7 @@
 #include "SteamVRFunctionLibrary.h"
 #include "SteamVRChaperoneComponent.h"
 
+
 #include "ABaseController/ABaseController.h"
 #include "System/Input.h"
 #include "ABasePawn.generated.h"
@@ -34,37 +35,7 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 		ReportReady();
 	}
 
-	virtual void Tick(float deltaTime) override {
-		FVector pos;
-		FRotator rot;
-		TArray<int32> devices;
-		FVector Loc;
-		FQuat quat;
-
-		//APlayerCameraManager* camera = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
-		//GEngine->HMDDevice->GetCurrentOrientationAndPosition(quat, Loc);
-		
-
-		//APlayerCameraManager* camera = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
-		//float offset = camera->GetCameraLocation().Z;
-		//SetActorLocation(GetActorLocation()+offset);
-		//Msg("Reset height hahaha jk");
-
-
-		//Msg(camera->GetCameraLocation());
-		//PlayerCameraManager* camera = GetWorld()->
-		//USteamVRFunctionLibrary::GetHandPositionAndOrientation(0, EControllerHand::Left, pos, rot);
-		//Msg("LEFT Z: %i", pos.Z);
-		/*
-		USteamVRFunctionLibrary::GetValidTrackedDeviceIds(ESteamVRTrackedDeviceType::Other, devices);
-		Msg("%i", devices.Num());
-
-		if (devices.Num() > 0) {
-			USteamVRFunctionLibrary::GetTrackedDevicePositionAndOrientation(devices[0], pos, rot);
-			Msg(pos);
-		}
-		*/
-	}
+	virtual void Tick(float deltaTime) override {}
 	virtual void PostDuplicate(EDuplicateMode::Type mode) override {
 		Super::PostDuplicate(mode);
 		IBaseEntity::PostDuplicate(mode);

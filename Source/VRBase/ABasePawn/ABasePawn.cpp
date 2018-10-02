@@ -14,7 +14,7 @@ ABasePawn::ABasePawn() {
 
 	// disable event tick
 	bAllowTickBeforeBeginPlay = false;
-	//SetActorTickEnabled(false);
+	SetActorTickEnabled(false);
 
 	// Root Component Capsule
 	m_pRootCapsule = CreateDefaultSubobject<UCapsuleComponent>("Capsule");
@@ -136,14 +136,14 @@ void ABasePawn::PreInit() {
 	m_rightControllerInput = FEntityInputRegistrationParams();
 	m_leftControllerInput = FEntityInputRegistrationParams();
 
-	FVector loc;
-	FQuat quat;
-
-	APlayerCameraManager* camera = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
-	GEngine->HMDDevice->GetCurrentOrientationAndPosition(quat, loc);
-	FVector c = GetActorLocation();
-	/// TODO
-	SetActorLocation(FVector(c.X, c.Y, loc.Z));
+	//FVector loc;
+	//FQuat quat;
+	//APlayerCameraManager* camera = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
+	//float camZ = camera->GetCameraLocation().Z;
+	//GEngine->HMDDevice->GetCurrentOrientationAndPosition(quat, loc);
+	//FVector c = GetActorLocation();
+	//SetActorLocation(FVector(c.X, c.Y, loc.Z + camZ + 140));
+	//SetActorLocation(FVector(c.X, c.Y, loc.Z));
 
 }
 
@@ -166,48 +166,15 @@ bool ABasePawn::TeleportPlayer(const FVector& loc) {
 	if (!CanTeleportToLocation(loc))
 		return false;
 
-	
-	FVector pos;
-	FRotator rot;
-	//TArray<int32> devices;
-	//USteamVRFunctionLibrary::GetValidTrackedDeviceIds(ESteamVRTrackedDeviceType::Controller, devices);
-
-	//USteamVRFunctionLibrary::GetTrackedDevicePositionAndOrientation(devices[0], pos, rot);
-	USteamVRFunctionLibrary::GetTrackedDevicePositionAndOrientation(0, pos, rot);
-	Msg(pos);
-	
+	// TEST AREA FOR HEIGHT STUFF
+	//-----------------------------------------------------------------------------------------------------------------
 
 
-	/*
-	FVector Loc;
-	FQuat quat;
-	//get local space HMD orientation
-	GEngine->HMDDevice->GetCurrentOrientationAndPosition(quat, Loc);
-	//get player controller 
-	APlayerController *PlayerController = Cast<APlayerController>(GetWorld()->GetFirstPlayerController());
-	//rotate the local space hmd position, then sum the camera 0 location to it
-	FVector finalloc = GetActorRotation().RotateVector(Loc) + PlayerController->PlayerCameraManager->GetCameraLocation();
-	Msg(finalloc);
-	*/
-	
-	
-	/*	USteamVRChaperoneComponent* steam = CreateDefaultSubobject(L"Chaperone");
-	TArray<FVector> bounds = steam->GetBounds();
-	
-	for (int i = 0; i < bounds.Num(); i++) {
-		Msg();
-		Msg("\n");
-	}
-	*/
-
-	//CreateDefaultSubobject<USteamVRChaperoneComponent>("Left Child Actor")
-	//USteamVRFunctionLibrary* steam = new USteamVRFunctionLibrary();
-	//FVector pos = FVector(0, 0, 0);
-	//FRotator rot = FRotator(0, 0, 0);
-//	USteamVRFunctionLibrary l GetTrackedDevicePositionAndOrientation(0, pos, rot);
-	//Msg(pos);
+	//SetActorLocation(loc + FVector(0,0,m_flHeightFromFloor));
 
 
+	//-----------------------------------------------------------------------------------------------------------------
+	// Uncomment that line below when this is fixed
 
 	//Teleport with the offset
 	//SetActorLocation(loc + FVector(0,0,m_flHeightFromFloor));

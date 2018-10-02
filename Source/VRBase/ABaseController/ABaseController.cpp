@@ -92,10 +92,6 @@ void ABaseController::OnButtonsChanged() {
 	m_iButtons |= m_iButtonsPressed;
 	m_iButtons &= ~m_iButtonsReleased;
 
-
-	// TEST AREA FOR BUTTON INPUT AND OTHER STUFF
-
-	//-----------------------------------------------------------------------------------------------------------------
 	if (m_bButtonHeld) {
 		// we have released the button
 		m_bButtonHeld = false;
@@ -118,34 +114,13 @@ void ABaseController::OnButtonsChanged() {
 			if (loc == FVector::ZeroVector)
 				loc = t.TraceEnd;
 
-			// My attempt to fade the camera the way the default VR Blueprints teleport
-			//APlayerCameraManager* pCameraManager = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
-			//pCameraManager->StartCameraFade(0, 1, 0.1, FLinearColor::Black, false, true);
-
-			//FTimerHandle UnusedHandle;
-			//GetWorldTimerManager().SetTimer(UnusedHandle, this, [=](){
-			//IHeadMountedDisplay* HMD = GEngine->HMDDevice.Get();
-			//FQuat rot = FQuat(0, 0, 0, 0);
-			//FVector pos = FVector(0, 0, 0);
-			//HMD->GetCurrentOrientationAndPosition(rot, pos);
-
-			
-
-			//Msg("height is %i", m_pOwnerPawn->m_pRootCapsule->GetScaledCapsuleHalfHeight());
-
-			
 			m_pOwnerPawn->TeleportPlayer(loc);
-			
-			//	pCameraManager->StartCameraFade(1, 0, 0.1, FLinearColor::Black, false, true);
-			//}, 0.1, false);
-		//}
 	}
 	else {
 		// we just pressed the button
 		m_bButtonHeld = true;
 
 	}
-	//-----------------------------------------------------------------------------------------------------------------
 	
 
 
