@@ -61,6 +61,8 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	
 	if (PlayerInputComponent) {
+		
+
 		// Left Input
 
 		// Trigger
@@ -118,6 +120,10 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 ABasePawn* g_pBasePawn = NULL;
 void ABasePawn::PreInit() {
 	g_pBasePawn = this;
+
+	//Set tracking origin to floor
+	auto HMD = GEngine->HMDDevice.Get();
+	HMD->SetTrackingOrigin(EHMDTrackingOrigin::Floor);
 
 	// Initialize ABaseController variables
 	m_pLHand = Cast<ABaseController>(m_pLChildActor->GetChildActor());
@@ -177,6 +183,6 @@ bool ABasePawn::TeleportPlayer(const FVector& loc) {
 	// Uncomment that line below when this is fixed
 
 	//Teleport with the offset
-	//SetActorLocation(loc + FVector(0,0,m_flHeightFromFloor));
+	SetActorLocation(loc + FVector(0,0,m_flHeightFromFloor));
 	return true;
 }
