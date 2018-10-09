@@ -9,7 +9,6 @@
 ABasePawn::ABasePawn() {
 	Tags.Add(TAG_BASEPAWN);
 	m_pSelfAsActor = this;
-	m_flHeightFromFloor = 40.f;
 	m_pTeleportBounds = NULL;
 
 	// disable event tick
@@ -29,7 +28,7 @@ ABasePawn::ABasePawn() {
 	m_pCamera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	m_pCamera->bLockToHmd = true;
 	m_pCamera->AttachToComponent(m_pPlayerRoot, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
-	
+
 	// L Motion Controller
 	m_pLMotionController = CreateDefaultSubobject<UMotionControllerComponent>("Left Motion Controller");
 	m_pLMotionController->Hand = EControllerHand::Left;
@@ -54,6 +53,9 @@ ABasePawn::ABasePawn() {
 	//Set default controller models
 	m_pLeftControllerMesh = FindMesh(OCULUS_TOUCH_CONTROLLER_MODEL_LEFT_PATH);
 	m_pRightControllerMesh = FindMesh(OCULUS_TOUCH_CONTROLLER_MODEL_RIGHT_PATH);
+
+	// automatically possess pawn placed in world instead of generating a pawn
+	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
 
 // Called to bind functionality to input
@@ -164,6 +166,6 @@ bool ABasePawn::TeleportPlayer(const FVector& loc) {
 		return false;
 
 	//Teleport with the offset
-	SetActorLocation(loc + FVector(0,0,m_flHeightFromFloor));
+	SetActorLocation(loc);
 	return true;
 }

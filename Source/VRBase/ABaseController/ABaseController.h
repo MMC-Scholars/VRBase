@@ -10,6 +10,8 @@
 #include "ConstructorHelpers.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/SphereComponent.h"
+
+#include "APickup/APickup.h"
 #include "ABaseController.generated.h"
 
 /**
@@ -22,8 +24,6 @@ class MMC_OFF_RECREATION_API ABaseController : public ABaseEntity {
 public:
 	ABaseController();
 
-	void PostInit() override;
-
 	// Components
 	USceneComponent*		m_pHandScene;
 	UStaticMeshComponent*	m_pHandMeshComponent;
@@ -34,14 +34,14 @@ public:
 	// Variables
 	EControllerHand			m_eWhichHand;
 	bool					m_bPerformedPositionFixup;
-	//TArray<AActor*>		m_aOverlapActors;
-	//TArray<APickup*>		m_aAttachActors;
+	TArray<AActor*>			m_aOverlapActors;
+	TArray<APickup*>		m_aAttachActors;
 
 	// Events
-	//UFUNCTION()
-	//	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	//UFUNCTION()
-	//	void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	UFUNCTION()
+		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION()
+		void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 protected:
 

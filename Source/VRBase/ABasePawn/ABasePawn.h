@@ -11,10 +11,6 @@
 #include "MotionControllerComponent.h"
 #include "Components/ChildActorComponent.h"
 
-#include "SteamVRFunctionLibrary.h"
-#include "SteamVRChaperoneComponent.h"
-
-
 #include "ABaseController/ABaseController.h"
 #include "System/Input.h"
 #include "ABasePawn.generated.h"
@@ -47,7 +43,7 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 	virtual void PreInit() override;
 
 
-
+	
 
 
 
@@ -152,8 +148,6 @@ private:
 public:
 	bool TeleportPlayer(const FVector& loc);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = input)
-		float m_flHeightFromFloor;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = input)
 		AActor* m_pTeleportBounds;
 };

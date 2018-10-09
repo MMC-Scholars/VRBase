@@ -28,61 +28,43 @@ ABaseController::ABaseController() {
 	m_pHandMeshComponent->SetMobility(EComponentMobility::Movable);
 	m_pHandMeshComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 
-	//m_pHandMeshComponent->SetStaticMesh(FindMesh(L"StaticMesh'/Game/Geometry/office_fridge2.office_fridge2'"));
-	//m_pHandMeshComponent->SetWorldRotation(FRotator(0.0f, 90.0f, 135.0f));
-
-	/*vec horiz = 3.f;
-	if (!bLeft) horiz = -horiz;
-	m_pHandMeshComponent->AddRelativeLocation(FVector(0, horiz, 3));;*/
-	
-
 	// Sphere collision
 	m_pControllerCollision = CreateDefaultSubobject<USphereComponent>("Controller Collision");
 	m_pControllerCollision->AttachToComponent(m_pHandMeshComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 	m_pControllerCollision->InitSphereRadius(12.0f);
 
 	// Sphere Collision Overlap
-	//m_pControllerCollision->bGenerateOverlapEvents = true;
-	//m_pControllerCollision->OnComponentBeginOverlap.AddDynamic(this, &AHand::OnOverlapBegin);
-	//m_pControllerCollision->OnComponentEndOverlap.AddDynamic(this, &AHand::OnOverlapEnd);
+	m_pControllerCollision->bGenerateOverlapEvents = true;
+	m_pControllerCollision->OnComponentBeginOverlap.AddDynamic(this, &ABaseController::OnOverlapBegin);
+	m_pControllerCollision->OnComponentEndOverlap.AddDynamic(this, &ABaseController::OnOverlapEnd);
 
 	m_bButtonHeld = false;
 }
 
-void ABaseController::PostInit() {
-	
-
-}
-
-/*
-// ------------------------------------------------------------
-// EVENT BeginOverlap (m_pControllerCollision)
-// ------------------------------------------------------------
-void AHand::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
+void ABaseController::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr)) {
 		// Add actor to TArray
 		m_aOverlapActors.Add(OtherActor);
-		// If APickup, outline mesh
-		APickup *pPickupActor = Cast<APickup>(OtherActor);
+
+		APickup* pPickupActor = Cast<APickup>(OtherActor);
 		if (pPickupActor) {
-			pPickupActor->m_pBaseMesh->SetRenderCustomDepth(true);
+			// outline mesh
+			pPickupActor->m_pPickupMeshComponent->SetRenderCustomDepth(true);
 		}
 	}
 }
 
-// ------------------------------------------------------------
-// EVENT EndOverlap (m_pControllerCollision)
-// ------------------------------------------------------------
-void AHand::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
+void ABaseController::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
 	// Remove actor from TArray
 	m_aOverlapActors.Remove(OtherActor);
-	// If APickup, remove mesh outline
+
 	APickup *pPickupActor = Cast<APickup>(OtherActor);
 	if (pPickupActor) {
-		pPickupActor->m_pBaseMesh->SetRenderCustomDepth(false);
+		// remove mesh outline
+		pPickupActor->m_pPickupMeshComponent->SetRenderCustomDepth(false);
 	}
 }
-*/
+
 
 ABaseController* g_pLeftController;
 ABaseController* g_pRightController;
@@ -97,9 +79,9 @@ void ABaseController::OnButtonsChanged() {
 		m_bButtonHeld = false;
 
 		// Disable Haptics
-		GetWorld()->GetFirstPlayerController()->SetHapticsByValue(300.0f, 0.0f, m_eWhichHand);
+		GetWorld()->GetFirstPlayerController()->SetHapticsByValue(0.0f, 0.0f, m_eWhichHand);
 
-		//if (m_iButtonsReleased & IN_AX) {
+		if (m_iButtonsReleased & IN_AX) {
 			FVector start = GetActorLocation();
 			FVector direction = GetActorForwardVector();
 
@@ -115,11 +97,26 @@ void ABaseController::OnButtonsChanged() {
 				loc = t.TraceEnd;
 
 			m_pOwnerPawn->TeleportPlayer(loc);
+		}
 	}
+	
 	else {
 		// we just pressed the button
 		m_bButtonHeld = true;
+		
+		if (m_iButtonsPressed & IN_TRIGGER) {
+			for (AActor* Actor : m_aOverlapActors) {
+				
+				APickup* pPickupActor = Cast<APickup>(Actor);
 
+				if (pPickupActor) {
+					pPickupActor->m_pPickupMeshComponent->SetSimulatePhysics(false);
+					pPickupActor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+					m_aAttachActors.Add(pPickupActor);
+				}
+			}
+
+		}
 	}
 	
 
@@ -192,10 +189,11 @@ void ABaseController::DefaultThink() {
 	
 	if (m_bButtonHeld) {
 
-		// Enable Haptics (* need to change frequency and amplitude later)
-		GetWorld()->GetFirstPlayerController()->SetHapticsByValue(300.0f, 0.5f, m_eWhichHand);
-
+		
 		//if (m_iButtonsPressed & IN_AX) {
+			// Enable Haptics
+			GetWorld()->GetFirstPlayerController()->SetHapticsByValue(200.0f, 0.3f, m_eWhichHand);
+		
 			SLineDrawParams rendered = { FColor::Red, 6.f, (ftime) 0.1f };
 
 			FVector start = GetActorLocation(); //m_pHandMeshComponent->GetComponentLocation();
