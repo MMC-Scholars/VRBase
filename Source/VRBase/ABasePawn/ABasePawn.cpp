@@ -142,15 +142,6 @@ void ABasePawn::PreInit() {
 	m_rightControllerInput = FEntityInputRegistrationParams();
 	m_leftControllerInput = FEntityInputRegistrationParams();
 
-	//FVector loc;
-	//FQuat quat;
-	//APlayerCameraManager* camera = GetWorld()->GetFirstPlayerController()->PlayerCameraManager;
-	//float camZ = camera->GetCameraLocation().Z;
-	//GEngine->HMDDevice->GetCurrentOrientationAndPosition(quat, loc);
-	//FVector c = GetActorLocation();
-	//SetActorLocation(FVector(c.X, c.Y, loc.Z + camZ + 140));
-	//SetActorLocation(FVector(c.X, c.Y, loc.Z));
-
 }
 
 bool ABasePawn::CanTeleportToLocation(const FVector& loc) {
@@ -171,16 +162,6 @@ bool ABasePawn::TeleportPlayer(const FVector& loc) {
 	//First check if it is legal to enter this location
 	if (!CanTeleportToLocation(loc))
 		return false;
-
-	// TEST AREA FOR HEIGHT STUFF
-	//-----------------------------------------------------------------------------------------------------------------
-
-
-	//SetActorLocation(loc + FVector(0,0,m_flHeightFromFloor));
-
-
-	//-----------------------------------------------------------------------------------------------------------------
-	// Uncomment that line below when this is fixed
 
 	//Teleport with the offset
 	SetActorLocation(loc + FVector(0,0,m_flHeightFromFloor));
