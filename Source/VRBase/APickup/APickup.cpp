@@ -25,3 +25,19 @@ void APickup::PreInit() {
 	m_pPickupMeshComponent->SetStaticMesh(m_pMesh);
 
 }
+
+void APickup::PrePickup(AActor* Actor) {
+	m_pPickupMeshComponent->SetSimulatePhysics(false);
+
+	AttachToActor(Actor, FAttachmentTransformRules::KeepWorldTransform);
+	/*
+	ABaseController* controller = static_cast<ABaseController>(Actor);
+	if (controller) {
+		OnPickup(controller);
+	}*/
+}
+
+void APickup::OnPickup(ABaseController* controller) {
+	// can be implemented by every derived class
+	Msg("Picked up!");
+}

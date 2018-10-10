@@ -39,8 +39,12 @@ ABaseController::ABaseController() {
 	m_pControllerCollision->OnComponentEndOverlap.AddDynamic(this, &ABaseController::OnOverlapEnd);
 
 	m_bButtonHeld = false;
+	m_bTeleportationActive = false;
 }
 
+// -----------------------------------------------------------------------------------------------------------------------------
+// OVERLAP BEGIN
+// -----------------------------------------------------------------------------------------------------------------------------
 void ABaseController::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr)) {
 		// Add actor to TArray
@@ -54,6 +58,9 @@ void ABaseController::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 	}
 }
 
+// -----------------------------------------------------------------------------------------------------------------------------
+// OVERLAP END
+// -----------------------------------------------------------------------------------------------------------------------------
 void ABaseController::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
 	// Remove actor from TArray
 	m_aOverlapActors.Remove(OtherActor);
@@ -74,6 +81,9 @@ void ABaseController::OnButtonsChanged() {
 	m_iButtons |= m_iButtonsPressed;
 	m_iButtons &= ~m_iButtonsReleased;
 
+	// -----------------------------------------------------------------------------------------------------------------------------
+	// BUTTON RELEASE
+	// -----------------------------------------------------------------------------------------------------------------------------
 	if (m_bButtonHeld) {
 		// we have released the button
 		m_bButtonHeld = false;
@@ -97,14 +107,33 @@ void ABaseController::OnButtonsChanged() {
 				loc = t.TraceEnd;
 
 			m_pOwnerPawn->TeleportPlayer(loc);
+			m_bTeleportationActive = false;
 		}
+
+		if (m_iButtonsReleased & IN_TRIGGER) {
+			// drop all pickups
+			for (APickup* pPickupActor : m_aAttachActors) {
+				pPickupActor->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+				pPickupActor->m_pPickupMeshComponent->SetSimulatePhysics(true);
+			}
+			m_aAttachActors.Empty();
+		}
+
 	}
-	
+
+	// -----------------------------------------------------------------------------------------------------------------------------
+	// BUTTON PRESS
+	// -----------------------------------------------------------------------------------------------------------------------------
 	else {
 		// we just pressed the button
 		m_bButtonHeld = true;
 		
+		if (m_iButtonsPressed & IN_AX) {
+			m_bTeleportationActive = true;
+		}
+
 		if (m_iButtonsPressed & IN_TRIGGER) {
+			// pick up all pickups
 			for (AActor* Actor : m_aOverlapActors) {
 				
 				APickup* pPickupActor = Cast<APickup>(Actor);
@@ -112,6 +141,7 @@ void ABaseController::OnButtonsChanged() {
 				if (pPickupActor) {
 					pPickupActor->m_pPickupMeshComponent->SetSimulatePhysics(false);
 					pPickupActor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+					//pPickupActor->PrePickup(this);
 					m_aAttachActors.Add(pPickupActor);
 				}
 			}
@@ -186,14 +216,14 @@ void ABaseController::OnUsed(ABaseEntity* pActivator) {
 }
 
 void ABaseController::DefaultThink() {
-	
+
+
 	if (m_bButtonHeld) {
 
-		
-		//if (m_iButtonsPressed & IN_AX) {
+		if (m_bTeleportationActive) {
 			// Enable Haptics
 			GetWorld()->GetFirstPlayerController()->SetHapticsByValue(200.0f, 0.3f, m_eWhichHand);
-		
+
 			SLineDrawParams rendered = { FColor::Red, 6.f, (ftime) 0.1f };
 
 			FVector start = GetActorLocation(); //m_pHandMeshComponent->GetComponentLocation();
@@ -212,7 +242,7 @@ void ABaseController::DefaultThink() {
 			//then render a circle at loc
 			//UTIL_DrawLine(start, loc, &rendered);
 			UTIL_DrawCircle(loc, (vec) 30.f, &rendered);
-		//}
+		}
 	}
 	
 }

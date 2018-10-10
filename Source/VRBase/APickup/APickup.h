@@ -6,6 +6,7 @@
 
 #include "Components/StaticMeshComponent.h"
 
+
 #include "APickup.generated.h"
 
 /**
@@ -24,8 +25,25 @@ public:
 public:
 	// Components
 	UStaticMeshComponent * m_pPickupMeshComponent;
-	
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Pickup)
 	UStaticMesh* m_pMesh;
+
+// set static mesh dynamically from within the editor
+#if WITH_EDITOR
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) {
+		FName PropertyName = (PropertyChangedEvent.Property != nullptr)
+			? PropertyChangedEvent.Property->GetFName() : NAME_None;
+
+		if (m_pPickupMeshComponent != nullptr) {
+			m_pPickupMeshComponent->SetStaticMesh(m_pMesh);
+		}
 	
+		Super::PostEditChangeProperty(PropertyChangedEvent);
+	}
+#endif
+
+	// Functions
+	void PrePickup(AActor*);
+	virtual void OnPickup(ABaseController*);
 };

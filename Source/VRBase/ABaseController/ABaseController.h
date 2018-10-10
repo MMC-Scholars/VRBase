@@ -36,6 +36,7 @@ public:
 	bool					m_bPerformedPositionFixup;
 	TArray<AActor*>			m_aOverlapActors;
 	TArray<APickup*>		m_aAttachActors;
+	bool					m_bTeleportationActive;
 
 	// Events
 	UFUNCTION()
