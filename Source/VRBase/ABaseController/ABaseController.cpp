@@ -113,8 +113,7 @@ void ABaseController::OnButtonsChanged() {
 		if (m_iButtonsReleased & IN_TRIGGER) {
 			// drop all pickups
 			for (APickup* pPickupActor : m_aAttachActors) {
-				pPickupActor->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-				pPickupActor->m_pPickupMeshComponent->SetSimulatePhysics(true);
+				pPickupActor->Drop(this);
 			}
 			m_aAttachActors.Empty();
 		}

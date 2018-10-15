@@ -1,6 +1,7 @@
 
 #include "APickup.h"
 #include "System/NLogger.h"
+#include "ABaseController/ABaseController.h"
 
 #define OCULUS_TOUCH_CONTROLLER_MODEL_RIGHT_PATH L"StaticMesh'/Game/Geometry/Controllers/oculus_cv1_controller_right.oculus_cv1_controller_right'"
 
@@ -26,18 +27,25 @@ void APickup::PreInit() {
 
 }
 
-void APickup::PrePickup(AActor* Actor) {
+void APickup::Pickup(ABaseController* controller) {
 	m_pPickupMeshComponent->SetSimulatePhysics(false);
+	AttachToActor(controller, FAttachmentTransformRules::KeepWorldTransform);
+	
+	OnPickup(controller);
+}
 
-	AttachToActor(Actor, FAttachmentTransformRules::KeepWorldTransform);
-	/*
-	ABaseController* controller = static_cast<ABaseController>(Actor);
-	if (controller) {
-		OnPickup(controller);
-	}*/
+void APickup::Drop(ABaseController* controller) {
+	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+	m_pPickupMeshComponent->SetSimulatePhysics(true);
+
+	OnDrop(controller);
 }
 
 void APickup::OnPickup(ABaseController* controller) {
 	// can be implemented by every derived class
 	Msg("Picked up!");
+}
+
+void APickup::OnDrop(ABaseController* controller) {
+	Msg("Dropped!");
 }

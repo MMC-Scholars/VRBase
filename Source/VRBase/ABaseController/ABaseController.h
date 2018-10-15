@@ -69,6 +69,11 @@ public:
 
 	//This will cast a spline and circle while we are holding the button
 	void DefaultThink() override;
+
+	//Retrieves the controller which is not this one
+	inline ABaseController* OtherController() {
+		return this == g_pLeftController ? g_pRightController : g_pLeftController;
+	}
 };
 
 extern ABaseController* g_pLeftController;

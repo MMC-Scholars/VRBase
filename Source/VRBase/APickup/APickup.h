@@ -44,6 +44,12 @@ public:
 #endif
 
 	// Functions
-	void PrePickup(AActor*);
+	void Pickup(ABaseController*);
+	void Drop(ABaseController*);
+
+	//Blueprint implementable events
+	//UFUNCTION(BlueprintImplementableEvent)
 	virtual void OnPickup(ABaseController*);
+	//UFUNCTION(BlueprintImplementableEvent)
+	virtual void OnDrop(ABaseController*);
 };
