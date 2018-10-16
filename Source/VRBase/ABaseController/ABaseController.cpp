@@ -38,13 +38,14 @@ ABaseController::ABaseController() {
 	m_pControllerCollision->OnComponentBeginOverlap.AddDynamic(this, &ABaseController::OnOverlapBegin);
 	m_pControllerCollision->OnComponentEndOverlap.AddDynamic(this, &ABaseController::OnOverlapEnd);
 
-	m_bButtonHeld = false;
+	//m_bButtonHeld = false;
 	m_bTeleportationActive = false;
 }
 
 // -----------------------------------------------------------------------------------------------------------------------------
 // OVERLAP BEGIN
 // -----------------------------------------------------------------------------------------------------------------------------
+
 void ABaseController::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr)) {
 		// Add actor to TArray
@@ -61,6 +62,7 @@ void ABaseController::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 // -----------------------------------------------------------------------------------------------------------------------------
 // OVERLAP END
 // -----------------------------------------------------------------------------------------------------------------------------
+
 void ABaseController::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
 	// Remove actor from TArray
 	m_aOverlapActors.Remove(OtherActor);
@@ -75,80 +77,66 @@ void ABaseController::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* 
 
 ABaseController* g_pLeftController;
 ABaseController* g_pRightController;
-#define IGNORED_ACTORS() { g_pBasePawn, g_pLeftController, g_pRightController, NULL }
 
 void ABaseController::OnButtonsChanged() {
 	m_iButtons |= m_iButtonsPressed;
 	m_iButtons &= ~m_iButtonsReleased;
 
 	// -----------------------------------------------------------------------------------------------------------------------------
+	// BUTTON PRESS
+	// -----------------------------------------------------------------------------------------------------------------------------
+
+	if (m_iButtonsPressed & IN_AX && !OtherController()->m_bTeleportationActive) {
+		m_bTeleportationActive = true;
+	}
+
+	if (m_iButtonsPressed & IN_TRIGGER) {
+		// pick up all pickups
+		for (AActor* Actor : m_aOverlapActors) {
+
+			APickup* pPickupActor = Cast<APickup>(Actor);
+
+			if (pPickupActor) {
+				pPickupActor->Pickup(this);
+				m_aAttachActors.Add(pPickupActor);
+			}
+		}
+	}
+
+	// -----------------------------------------------------------------------------------------------------------------------------
 	// BUTTON RELEASE
 	// -----------------------------------------------------------------------------------------------------------------------------
-	if (m_bButtonHeld) {
-		// we have released the button
-		m_bButtonHeld = false;
+	if (m_iButtonsReleased & IN_AX && m_bTeleportationActive) {
+		FVector start = GetActorLocation();
+		FVector direction = GetActorForwardVector();
+
+		TArray<AActor*> ignoredActors;
+		GetTraceIgnoredActors(ignoredActors);
+
+		FHitResult t;
+		FVector force = FVector(0, 0, -0.08f);
+		UTIL_TraceSpline(t, start, direction, force, 4096, NULL, &ignoredActors[0]);
+
+		//loc will be where we hit
+		FVector loc = t.Location;
+		if (loc == FVector::ZeroVector)
+			loc = t.TraceEnd;
+		m_pOwnerPawn->TeleportPlayer(loc);
+		m_bTeleportationActive = false;
 
 		// Disable Haptics
 		GetWorld()->GetFirstPlayerController()->SetHapticsByValue(0.0f, 0.0f, m_eWhichHand);
-
-		if (m_iButtonsReleased & IN_AX) {
-			FVector start = GetActorLocation();
-			FVector direction = GetActorForwardVector();
-
-			AActor* ppIgnored[4] = IGNORED_ACTORS();
-
-			FHitResult t;
-			FVector force = FVector(0, 0, -0.08f);
-			UTIL_TraceSpline(t, start, direction, force, 4096, NULL, ppIgnored);
-
-			//loc will be where we hit
-			FVector loc = t.Location;
-			if (loc == FVector::ZeroVector)
-				loc = t.TraceEnd;
-
-			m_pOwnerPawn->TeleportPlayer(loc);
-			m_bTeleportationActive = false;
-		}
-
-		if (m_iButtonsReleased & IN_TRIGGER) {
-			// drop all pickups
-			for (APickup* pPickupActor : m_aAttachActors) {
-				pPickupActor->Drop(this);
-			}
-			m_aAttachActors.Empty();
-		}
-
 	}
 
-	// -----------------------------------------------------------------------------------------------------------------------------
-	// BUTTON PRESS
-	// -----------------------------------------------------------------------------------------------------------------------------
-	else {
-		// we just pressed the button
-		m_bButtonHeld = true;
-		
-		if (m_iButtonsPressed & IN_AX) {
-			m_bTeleportationActive = true;
+	if (m_iButtonsReleased & IN_TRIGGER) {
+		// drop all pickups
+		for (APickup* pPickupActor : m_aAttachActors) {
+			pPickupActor->Drop(this);
 		}
-
-		if (m_iButtonsPressed & IN_TRIGGER) {
-			// pick up all pickups
-			for (AActor* Actor : m_aOverlapActors) {
-				
-				APickup* pPickupActor = Cast<APickup>(Actor);
-
-				if (pPickupActor) {
-					pPickupActor->m_pPickupMeshComponent->SetSimulatePhysics(false);
-					pPickupActor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
-					//pPickupActor->PrePickup(this);
-					m_aAttachActors.Add(pPickupActor);
-				}
-			}
-
-		}
+		m_aAttachActors.Empty();
 	}
+
 	
-
 
 	//first, removed inputs from invalid entities
 	int32 i = 0;
@@ -216,32 +204,45 @@ void ABaseController::OnUsed(ABaseEntity* pActivator) {
 
 void ABaseController::DefaultThink() {
 
+	if (m_bTeleportationActive) {
+		// Enable Haptics
+		GetWorld()->GetFirstPlayerController()->SetHapticsByValue(200.0f, 0.3f, m_eWhichHand);
 
-	if (m_bButtonHeld) {
+		SLineDrawParams rendered = { FColor::Red, 6.f, (ftime) 0.1f };
 
-		if (m_bTeleportationActive) {
-			// Enable Haptics
-			GetWorld()->GetFirstPlayerController()->SetHapticsByValue(200.0f, 0.3f, m_eWhichHand);
+		FVector start = GetActorLocation();
+		FVector direction = GetActorForwardVector();
 
-			SLineDrawParams rendered = { FColor::Red, 6.f, (ftime) 0.1f };
+		FHitResult t;
 
-			FVector start = GetActorLocation(); //m_pHandMeshComponent->GetComponentLocation();
-			FVector direction = GetActorForwardVector(); //m_pHandMeshComponent->GetForwardVector();
+		TArray<AActor*> ignoredActors;
+		GetTraceIgnoredActors(ignoredActors);
+		FVector force = FVector(0, 0, -0.08f);
+		UTIL_TraceSpline(t, start, direction, force, 4096, &rendered, &ignoredActors[0]);
 
-			FHitResult t;
-			AActor* ppIgnored[] = IGNORED_ACTORS();
-			FVector force = FVector(0, 0, -0.08f);
-			UTIL_TraceSpline(t, start, direction, force, 4096, &rendered, ppIgnored);
-			//UTIL_TraceLine(t, start, direction);
+		FVector loc = t.Location;
+		if (loc == FVector::ZeroVector)
+			loc = t.TraceEnd;
 
-			FVector loc = t.Location;
-			if (loc == FVector::ZeroVector)
-				loc = t.TraceEnd;
-
-			//then render a circle at loc
-			//UTIL_DrawLine(start, loc, &rendered);
-			UTIL_DrawCircle(loc, (vec) 30.f, &rendered);
-		}
+		//then render a circle at loc
+		UTIL_DrawCircle(loc, (vec) 30.f, &rendered);
 	}
 	
+}
+
+void ABaseController::GetTraceIgnoredActors(TArray<AActor*>& ignoredActors) {
+	// defaults
+	ignoredActors.Add(g_pBasePawn);
+	ignoredActors.Add(g_pLeftController);
+	ignoredActors.Add(g_pRightController);
+	// held pickups
+	for (int i = 0; i < m_aAttachActors.Num(); i++) {
+		ignoredActors.Add(m_aAttachActors[i]);
+	}
+
+	for (int i = 0; i < OtherController()->m_aAttachActors.Num(); i++) {
+		ignoredActors.Add(OtherController()->m_aAttachActors[i]);
+	}
+	// nullptr denotes the end of the list
+	ignoredActors.Add(nullptr);
 }

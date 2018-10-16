@@ -3,28 +3,27 @@
 #include "System/NLogger.h"
 #include "ABaseController/ABaseController.h"
 
-#define OCULUS_TOUCH_CONTROLLER_MODEL_RIGHT_PATH L"StaticMesh'/Game/Geometry/Controllers/oculus_cv1_controller_right.oculus_cv1_controller_right'"
+#define STATIC_CUBE L"StaticMesh'/Game/Geometry/Meshes/1M_Cube.1M_Cube'"
 
 APickup::APickup() {
 	// set default mesh
-	m_pMesh = FindMesh(OCULUS_TOUCH_CONTROLLER_MODEL_RIGHT_PATH);
-	
+	staticMesh = FindMesh(STATIC_CUBE);
+
 	// static mesh component
 	m_pPickupMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("Static Mesh Component");
-	m_pPickupMeshComponent->SetStaticMesh(m_pMesh);
+	m_pPickupMeshComponent->SetStaticMesh(staticMesh);
+
+	// set default material
+	material0 = m_pPickupMeshComponent->GetMaterial(0);
+	
+	// set root component
 	RootComponent = m_pPickupMeshComponent;
 
-	// overlap
+	// enable overlap
 	m_pPickupMeshComponent->bGenerateOverlapEvents = true;
 
 	// simulate physics
 	m_pPickupMeshComponent->SetSimulatePhysics(true);
-}
-
-void APickup::PreInit() {
-	// set static mesh to user-specified mesh
-	m_pPickupMeshComponent->SetStaticMesh(m_pMesh);
-
 }
 
 void APickup::Pickup(ABaseController* controller) {
@@ -39,13 +38,4 @@ void APickup::Drop(ABaseController* controller) {
 	m_pPickupMeshComponent->SetSimulatePhysics(true);
 
 	OnDrop(controller);
-}
-
-void APickup::OnPickup(ABaseController* controller) {
-	// can be implemented by every derived class
-	Msg("Picked up!");
-}
-
-void APickup::OnDrop(ABaseController* controller) {
-	Msg("Dropped!");
 }

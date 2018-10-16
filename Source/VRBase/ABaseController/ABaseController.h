@@ -64,11 +64,13 @@ public:
 
 
 	//These are called when we hold the teleport button
-	bool m_bButtonHeld;
 	void OnUsed(ABaseEntity* pActivator) override;
 
 	//This will cast a spline and circle while we are holding the button
 	void DefaultThink() override;
+
+	// Returns a null-terminated 
+	void GetTraceIgnoredActors(TArray<AActor*>&);
 
 	//Retrieves the controller which is not this one
 	inline ABaseController* OtherController() {
