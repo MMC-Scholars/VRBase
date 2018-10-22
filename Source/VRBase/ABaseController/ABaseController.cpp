@@ -24,13 +24,15 @@ ABaseController::ABaseController() {
 
 	// Static mesh
 	m_pHandMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("Controller Mesh");
-	m_pHandMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	//m_pHandMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	m_pHandMeshComponent->SetupAttachment(RootComponent);
 	m_pHandMeshComponent->SetMobility(EComponentMobility::Movable);
 	m_pHandMeshComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 
 	// Sphere collision
 	m_pControllerCollision = CreateDefaultSubobject<USphereComponent>("Controller Collision");
-	m_pControllerCollision->AttachToComponent(m_pHandMeshComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	//m_pControllerCollision->AttachToComponent(m_pHandMeshComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	m_pControllerCollision->SetupAttachment(m_pHandMeshComponent);
 	m_pControllerCollision->InitSphereRadius(12.0f);
 
 	// Sphere Collision Overlap
