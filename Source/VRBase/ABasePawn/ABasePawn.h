@@ -149,6 +149,6 @@ private:
 public:
 	bool TeleportPlayer(const FVector& loc);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = input)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Teleportation")
 		AActor* m_pTeleportBounds;
 };

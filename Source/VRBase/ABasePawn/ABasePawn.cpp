@@ -146,7 +146,13 @@ void ABasePawn::PreInit() {
 	m_leftControllerInput = FEntityInputRegistrationParams();
 
 
-	Msg(WCStr(this->GetHumanReadableName()));
+	FVector boxOrigin, boxExtent;
+	m_pTeleportBounds->GetActorBounds(false, boxOrigin, boxExtent);
+
+	Msg("BOUNDS^");
+	Msg(boxExtent);
+	Msg("ORIGIN^");
+	Msg(boxOrigin);
 }
 
 bool ABasePawn::CanTeleportToLocation(const FVector& loc) {
@@ -158,9 +164,18 @@ bool ABasePawn::CanTeleportToLocation(const FVector& loc) {
 	//Check if the given location is within our bounds
 	FVector boxOrigin, boxExtent;
 	m_pTeleportBounds->GetActorBounds(false, boxOrigin, boxExtent);
-	FBox box;
-	box.BuildAABB(boxOrigin, boxExtent);
-	return box.IsInsideOrOn(loc);
+	//FBox box;
+	//box.BuildAABB(boxOrigin, boxExtent);
+	//return box.IsInsideOrOn(loc);
+
+	// This is the logic IsInsideOrOn() should compute 
+	// but for some reason it returns a different answer than expected...
+	// This will have to do.
+	return (
+		loc.X >= boxOrigin.X - boxExtent.X && loc.X <= boxOrigin.X + boxExtent.X &&
+		loc.Y >= boxOrigin.Y - boxExtent.Y && loc.Y <= boxOrigin.Y + boxExtent.Y &&
+		loc.Z >= boxOrigin.Z - boxExtent.Z && loc.Z <= boxOrigin.Z + boxExtent.Z
+	);
 }
 
 bool ABasePawn::TeleportPlayer(const FVector& loc) {
