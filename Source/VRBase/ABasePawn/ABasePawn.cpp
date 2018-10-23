@@ -22,38 +22,32 @@ ABasePawn::ABasePawn() {
 
 	// Player Root Scene Component
 	m_pPlayerRoot = CreateDefaultSubobject<USceneComponent>("Player Root");
-	//m_pPlayerRoot->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 	m_pPlayerRoot->SetupAttachment(RootComponent);
 
 	// HMD Camera
 	m_pCamera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	m_pCamera->bLockToHmd = true;
-	//m_pCamera->AttachToComponent(m_pPlayerRoot, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 	m_pCamera->SetupAttachment(m_pPlayerRoot);
 
 	// L Motion Controller
 	m_pLMotionController = CreateDefaultSubobject<UMotionControllerComponent>("Left Motion Controller");
 	m_pLMotionController->Hand = EControllerHand::Left;
-	//m_pLMotionController->AttachToComponent(m_pPlayerRoot, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 	m_pLMotionController->SetupAttachment(m_pPlayerRoot);
 
 
 	// L Child Actor
 	m_pLChildActor = CreateDefaultSubobject<UChildActorComponent>("Left Child Actor");
 	m_pLChildActor->SetChildActorClass(ABaseController::StaticClass());
-	//m_pLChildActor->AttachToComponent(m_pLMotionController, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 	m_pLChildActor->SetupAttachment(m_pLMotionController);
 
 	// R Motion Controller
 	m_pRMotionController = CreateDefaultSubobject<UMotionControllerComponent>("Right Motion Controller");
 	m_pRMotionController->Hand = EControllerHand::Right;
-	//m_pRMotionController->AttachToComponent(m_pPlayerRoot, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 	m_pRMotionController->SetupAttachment(m_pPlayerRoot);
 
 	// R Child Actor
 	m_pRChildActor = CreateDefaultSubobject<UChildActorComponent>("Right Child Actor");
 	m_pRChildActor->SetChildActorClass(ABaseController::StaticClass());
-	//m_pRChildActor->AttachToComponent(m_pRMotionController, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 	m_pRChildActor->SetupAttachment(m_pRMotionController);
 
 

@@ -1,6 +1,6 @@
 #include "stdio.h"
 
-#define FILENAME_APP_NEXT
+#define FILENAME_APP_NEXT "vr_app_next.tmp"
 
 namespace VRAppController {
 	void markNextProgramName(const char* pszName) {
@@ -9,5 +9,9 @@ namespace VRAppController {
 			fprintf(pFile, pszName);
 			fclose(pFile);
 		}
+	}
+
+	void exit() {
+
 	}
 }
