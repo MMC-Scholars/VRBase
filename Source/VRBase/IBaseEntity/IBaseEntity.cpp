@@ -30,6 +30,10 @@ IBaseEntity::IBaseEntity() {
 	//AddEntityToLists(this);
 
 	m_tConstructionTime = g_pGlobals->curtime;
+
+	//If we're in a cooked game, PostDuplicate isn't called so let's call it here
+	if (IsCookedBuild())
+		AddEntityToLists(this);
 }
 
 bool IBaseEntity::DestroyEntity() {

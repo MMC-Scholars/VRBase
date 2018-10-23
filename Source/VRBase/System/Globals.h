@@ -33,4 +33,8 @@ private:
 
 extern CGlobalVars* g_pGlobals;
 
+inline bool IsCookedBuild() {
+	return !WITH_EDITOR;
+}
+
 #endif //GLOBALS_H

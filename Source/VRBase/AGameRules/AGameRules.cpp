@@ -24,7 +24,7 @@ void AGameRules::Tick(float deltaTime) {
 			Msg("Initializing all entities");
 			InitializeAllEntities();
 		}
-		else if (!m_bHasInitializedAllEntities) {
+		else if (!AllEntitiesReady()) {
 			//?! This should never happen!
 			NLogger::Fatal("OUT OF SYNC - s_iReadyEntityCount != s_iEntityCount !!!");
 		}
