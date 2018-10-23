@@ -145,6 +145,8 @@ void ABasePawn::PreInit() {
 	m_rightControllerInput = FEntityInputRegistrationParams();
 	m_leftControllerInput = FEntityInputRegistrationParams();
 
+
+	Msg(WCStr(this->GetHumanReadableName()));
 }
 
 bool ABasePawn::CanTeleportToLocation(const FVector& loc) {

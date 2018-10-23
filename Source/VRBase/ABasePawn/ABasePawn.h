@@ -20,7 +20,7 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 
 //------------------------------------------------------------------------------
 // ACTOR/PAWN/ENTITY OVERRIDES
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 	GENERATED_BODY()
 
 	ABasePawn();
@@ -66,9 +66,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
 	UStaticMesh*				m_pRightControllerMesh;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
 	ABaseController*			m_pLHand;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
 	ABaseController*			m_pRHand;
 
 
@@ -118,6 +118,7 @@ public:
 	// BY
 	KEY_INPUT(BY, Pressed, R);
 	KEY_INPUT(BY, Released, R);
+
 	//TODO KEY_INPUT(STICK, Released, R);
 	
 	//virtual void UpdateInput(float);

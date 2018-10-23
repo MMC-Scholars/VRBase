@@ -123,7 +123,7 @@ void AGameRules::InitializeAllEntities() {
 	//run post inits of all entities
 	Msg("Running all post-inits");
 	for (eindex i = 0; i < g_entList.Num(); i++)
-		g_entList[i]->PreInit();
+		g_entList[i]->PostInit();
 
 	//mark us as ready
 	m_bHasInitializedAllEntities = true;
