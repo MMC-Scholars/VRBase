@@ -69,7 +69,7 @@ public:
 	//This will cast a spline and circle while we are holding the button
 	void DefaultThink() override;
 
-	// Returns a null-terminated 
+	// Returns a null-terminated list of actors to ignored when raytracing for teleportation
 	void GetTraceIgnoredActors(TArray<AActor*>&);
 
 	//Retrieves the controller which is not this one
