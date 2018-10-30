@@ -36,6 +36,6 @@ void APickup::Pickup(ABaseController* controller) {
 void APickup::Drop(ABaseController* controller) {
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 	m_pPickupMeshComponent->SetSimulatePhysics(true);
-
+	
 	OnDrop(controller);
 }

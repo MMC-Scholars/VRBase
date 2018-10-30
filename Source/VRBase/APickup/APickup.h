@@ -23,15 +23,17 @@ public:
 
 public:
 	// Components
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup")
 	UStaticMeshComponent*	m_pPickupMeshComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Static Mesh")
-	
 	UStaticMesh*			staticMesh;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Materials")
-	
 	UMaterialInterface*		material0;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mass")
+	//float					m_fMass;
 
 // set static mesh and material dynamically from within the editor
 #if WITH_EDITOR
