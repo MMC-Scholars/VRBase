@@ -29,10 +29,16 @@ void CGlobalVars::reset() {
 		IBaseEntity* pEnt = g_entList[i];
 		AActor* pActor = pEnt->GetActor();
 		FString name = pActor->GetName();
-		if (name.StartsWith("Default")) {
+
+		//ignore templates for actors and child actors
+		//CAT stands for Child Actor Template,
+		//without these we get extra entities that sneak into the count
+		//	but don't ever run BeginPlay() or Tick()
+		if (name.StartsWith("Default") || name.EndsWith("CAT")) {
 			removedList.Add(pEnt);
 		}
 		else {
+			Msg(L"Incrementing for %s", WCStr(pActor->GetName()));
 			IBaseEntity::s_iEntityCount++;
 		}
 	}
