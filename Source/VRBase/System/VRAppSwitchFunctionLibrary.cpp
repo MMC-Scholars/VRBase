@@ -3,7 +3,7 @@
 #include "VRAppSwitchFunctionLibrary.h"
 #include "NLogger.h"
 
-#define FILENAME_APP_NEXT "vr_app_next.tmp"
+#define FILENAME_APP_NEXT "../../../vr_app_next.tmp"
 
 static bool g_bDidMarkNextProgram = false;
 
@@ -11,7 +11,7 @@ void UVRAppSwitchFunctionLibrary::markNextProgramName(FString name) {
 
 	//Convert FString to C string
 	char buffer[512];
-	const TCHAR* pwszName = &name[0];
+	const TCHAR* pwszName = name.Len() > 0 ? &name[0] : TEXT("");;
 	mbstate_t state;
 	wcsrtombs(buffer, &pwszName, 512, &state);
 
@@ -28,5 +28,7 @@ void UVRAppSwitchFunctionLibrary::exit() {
 	if (!g_bDidMarkNextProgram)
 		markNextProgramName("");
 
-	std::exit(0);
+	//GIsRequestingExit
+	FGenericPlatformMisc::RequestExit(false);
+	//std::exit(0);
 }
