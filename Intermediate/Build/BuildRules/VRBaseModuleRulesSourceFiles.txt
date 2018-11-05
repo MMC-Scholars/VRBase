@@ -1,3 +1,0 @@
-C:\Users\Chel\Unreal\VRBase\Source\VRBase\VRBase.Build.cs
-C:\Users\Chel\Unreal\VRBase\Source\VRBase.Target.cs
-C:\Users\Chel\Unreal\VRBase\Source\VRBaseEditor.Target.cs
