@@ -167,6 +167,7 @@ public:
 			bool			Use(ABaseEntity* pActivator);	//returns true on success, false if blocked
 	virtual void			OnUsed(ABaseEntity* pActivator)				{}
 	inline	bool			IsUseable()							const	{ return !HasFlags(FL_IGNORE_USE | FL_INGORE_INPUT); }
+	virtual	bool			IsUseableBy(const ABaseController*)	const	{ return true; }
 	inline	bool			IsInputEnabled()					const	{ return !HasFlags(FL_INGORE_INPUT); }
 	UInputComponent*		GetInput();
 	void					RegisterInputsToControllers();
@@ -175,6 +176,13 @@ public:
 	virtual FEntityInputRegistrationParams*			GetLeftControllerInputRegistrationParams() { return NULL; }
 	virtual FEntityInputRegistrationParams*			GetRightControllerInputRegistrationParams() { return NULL; }
 	
+	//---------------------------------------------------------------
+	//Transformation Shortcuts
+	//---------------------------------------------------------------
+	/*inline	FVector			GetLocation()								const { return GetActor()->GetActorLocation(); }
+	inline	vec				GetDistanceSquaredTo(IBaseEntity* pOther)	const { return (GetLocation() - pOther->GetLocation()).SizeSquared(); }
+	inline	vec				GetDistanceTo(IBaseEntity* pOther)			const { return sqrtf(GetDistanceSquaredTo(pOther)); }*/
+
 };
 
 //Finds a UStaticMesh by path

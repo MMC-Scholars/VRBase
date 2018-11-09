@@ -150,14 +150,12 @@ void ABaseController::OnButtonsChanged() {
 	//iterate through registered entities and check if any of them should be triggered.
 	for (i = 0; i < m_aRegisteredEntities.Num(); i++) {
 		SEntityInputTriggerRequirement* trig = &m_aRegisteredEntities[i];
-		bool buttonActivated = false;
-		if (trig->m_bOnReleased && (trig->m_iButton & m_iButtonsReleased)) {
-			buttonActivated = true;
-		}
-		else if (!trig->m_bOnReleased && (trig->m_iButton & m_iButtonsPressed)) {
-			buttonActivated = true;
-		}
-		if (buttonActivated) {
+		//Msg(L"Checking SEntityInputTriggerRequirement from %s", WCStr(trig->m_ent->GetActor()->GetName()));
+
+		bool buttonActivated = trig->m_bOnReleased && (trig->m_iButton & m_iButtonsReleased);
+		buttonActivated = buttonActivated || (!trig->m_bOnReleased && (trig->m_iButton & m_iButtonsPressed));
+
+		if (buttonActivated && trig->m_ent->IsUseable() && trig->m_ent->IsUseableBy(this)) {
 			trig->m_ent->Use(this);
 		}
 	}

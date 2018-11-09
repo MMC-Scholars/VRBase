@@ -56,6 +56,6 @@ struct EHANDLE;
 extern IBaseEntity* g_ppEntityList[];	//const-index list, don't iterate over this, don't modify
 extern TArray<IBaseEntity*> g_entList; //entity list, iterate through this instead. All entries guaranteed to be non-null.
 
-
+#define sqr(v) ((v)*(v))
 
 #endif //MMC_PREDEFS_H

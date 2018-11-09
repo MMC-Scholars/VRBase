@@ -49,14 +49,9 @@ public:
 	DECLARE_CLASS_SIMPLE(ABaseEntity, IBaseEntity)
 	GENERATED_BODY()
 
-		//not much to do here because most of the functionality is built into
-		//the IBaseEntity interface
-	ABaseEntity() : IBaseEntity() {
-		Tags.Add(TAG_BASEENTITY); 
-		m_pSelfAsActor = this;
-		bAllowTickBeforeBeginPlay = false;
-		SetActorTickEnabled(false);
-	}
+	//not much to do here because most of the functionality is built into
+	//the IBaseEntity interface
+	ABaseEntity();
 
 	virtual void OnUsed(ABaseEntity* pActivator) {}
 	virtual void DefaultThink() {}
@@ -88,4 +83,9 @@ public:
 	//These overrides expose our UPROPERTY variables to IBaseEntity
 	virtual FEntityInputRegistrationParams*			GetLeftControllerInputRegistrationParams() { return &m_leftControllerInput; }
 	virtual FEntityInputRegistrationParams*			GetRightControllerInputRegistrationParams() { return &m_rightControllerInput; }
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		float m_flUseMaxRadius;
+
+	virtual bool IsUseableBy(const ABaseController*) const override;
 };

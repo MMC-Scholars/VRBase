@@ -3,11 +3,16 @@
 #include "VRAppSwitchFunctionLibrary.h"
 #include "NLogger.h"
 
-#define FILENAME_APP_NEXT "../../../vr_app_next.tmp"
+#define FILENAME_APP_NEXT "../../../vr_app_next.tmp" //This is because the office application is actually nested deep inside the cooked folder
 
 static bool g_bDidMarkNextProgram = false;
 
 void UVRAppSwitchFunctionLibrary::markNextProgramName(FString name) {
+	//don't write the next program twice
+	//sometimes our hit events happen multiple times
+	if (g_bDidMarkNextProgram)
+		return;
+
 
 	//Convert FString to C string
 	char buffer[512];
