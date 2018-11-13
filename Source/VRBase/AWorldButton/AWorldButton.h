@@ -2,7 +2,9 @@
 
 #pragma once
 
+
 #include "CoreMinimal.h"
+#include "Components/StaticMeshComponent.h"
 #include "VRBase/ABaseEntity/ABaseEntity.h"
 #include "AWorldButton.generated.h"
 
@@ -15,6 +17,7 @@ class MMC_OFF_RECREATION_API AWorldButton : public ABaseEntity
 	GENERATED_BODY()
 
 public:
+	AWorldButton();
 
 	//On Use, do some extra things according to our settings.
 	//I.e. change material, play a sound, etc.
@@ -45,4 +48,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Button)
 	bool m_bOverlapRequired;
+
+	UFUNCTION()
+		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION(BlueprintImplementableEvent)
+		void OnPressed(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp);
 };
