@@ -172,6 +172,8 @@ public:
 	UInputComponent*		GetInput();
 	void					RegisterInputsToControllers();
 
+	ftime m_tLastTimeUsed;
+
 	//These functions are overriden by functions declared in ABaseEntity
 	virtual FEntityInputRegistrationParams*			GetLeftControllerInputRegistrationParams() { return NULL; }
 	virtual FEntityInputRegistrationParams*			GetRightControllerInputRegistrationParams() { return NULL; }

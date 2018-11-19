@@ -31,6 +31,8 @@ IBaseEntity::IBaseEntity() {
 
 	m_tConstructionTime = g_pGlobals->curtime;
 
+	m_tLastTimeUsed = -FLT_MAX;
+
 	//If we're in a cooked game, PostDuplicate isn't called so let's call it here
 	if (IsCookedBuild())
 		AddEntityToLists(this);
