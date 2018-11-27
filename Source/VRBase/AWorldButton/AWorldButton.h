@@ -5,7 +5,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/StaticMeshComponent.h"
-#include "VRBase/ABaseEntity/ABaseEntity.h"
+#include "ABaseEntity/ABaseEntity.h"
 #include "AWorldButton.generated.h"
 
 /**

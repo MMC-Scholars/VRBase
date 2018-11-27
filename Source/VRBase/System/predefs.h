@@ -14,6 +14,10 @@
 #define VRBASE_API
 #endif
 
+#ifndef MMC_OFF_RECREATION_API
+#define MMC_OFF_RECREATION_API
+#endif
+
 //Typedefs
 typedef unsigned char		byte;
 typedef unsigned short		ushort;
