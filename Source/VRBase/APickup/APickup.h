@@ -61,8 +61,9 @@ public:
 	void Drop(ABaseController*);
 
 	//Blueprint implementable events
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintNativeEvent)
 		void OnPickup(ABaseController* controller);
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintNativeEvent)
 		void OnDrop(ABaseController* controller);
+
 };

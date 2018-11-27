@@ -144,15 +144,6 @@ void ABasePawn::PreInit() {
 
 	m_rightControllerInput = FEntityInputRegistrationParams();
 	m_leftControllerInput = FEntityInputRegistrationParams();
-
-
-	FVector boxOrigin, boxExtent;
-	m_pTeleportBounds->GetActorBounds(false, boxOrigin, boxExtent);
-
-	Msg("BOUNDS^");
-	Msg(boxExtent);
-	Msg("ORIGIN^");
-	Msg(boxOrigin);
 }
 
 bool ABasePawn::CanTeleportToLocation(const FVector& loc) {

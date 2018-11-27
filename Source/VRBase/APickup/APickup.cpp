@@ -39,3 +39,7 @@ void APickup::Drop(ABaseController* controller) {
 	
 	OnDrop(controller);
 }
+
+// allows for overriding in C++ classes
+void APickup::OnPickup_Implementation(ABaseController* controller) {}
+void APickup::OnDrop_Implementation(ABaseController* controller) {}

@@ -23,6 +23,7 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 //------------------------------------------------------------------------------
 	GENERATED_BODY()
 
+public:
 	ABasePawn();
 
 	virtual void BeginPlay() override {
