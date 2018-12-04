@@ -52,7 +52,7 @@ public:
 	uint32 m_iButtons; //bitfield - which buttons are currently being pressed?
 	uint32 m_iButtonsPressed; //bitifield - which buttons were just pressed?
 	uint32 m_iButtonsReleased; //bitfield - which buttons were just released?
-	void OnButtonsChanged();
+	virtual void OnButtonsChanged();
 
 
 

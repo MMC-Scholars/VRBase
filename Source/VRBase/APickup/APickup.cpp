@@ -3,11 +3,10 @@
 #include "System/NLogger.h"
 #include "ABaseController/ABaseController.h"
 
-#define STATIC_CUBE L"StaticMesh'/Game/Geometry/Meshes/1M_Cube.1M_Cube'"
 
 APickup::APickup() {
 	// set default mesh
-	staticMesh = FindMesh(STATIC_CUBE);
+	staticMesh = NULL;
 
 	// static mesh component
 	m_pPickupMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("Static Mesh Component");

@@ -153,3 +153,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Teleportation")
 		AActor* m_pTeleportBounds;
 };
+
+extern UClass* g_pDefaultControllerClass;
+extern int	g_iDefaultControllerPriority;
+
+class ControllerClassGetter {
+public:
+	ControllerClassGetter(UClass* pClass, int priority) {
+		if (priority > g_iDefaultControllerPriority) {
+			g_pDefaultControllerClass = pClass;
+			g_iDefaultControllerPriority = priority;
+		}
+	}
+};

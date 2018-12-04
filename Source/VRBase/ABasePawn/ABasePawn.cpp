@@ -3,9 +3,6 @@
 #include "ABasePawn.h"
 #include "System/NLogger.h"
 
-#define OCULUS_TOUCH_CONTROLLER_MODEL_LEFT_PATH L"StaticMesh'/Game/Geometry/Controllers/oculus_cv1_controller_left.oculus_cv1_controller_left'"
-#define OCULUS_TOUCH_CONTROLLER_MODEL_RIGHT_PATH L"StaticMesh'/Game/Geometry/Controllers/oculus_cv1_controller_right.oculus_cv1_controller_right'"
-
 ABasePawn::ABasePawn() {
 	Tags.Add(TAG_BASEPAWN);
 	m_pSelfAsActor = this;
@@ -37,7 +34,7 @@ ABasePawn::ABasePawn() {
 
 	// L Child Actor
 	m_pLChildActor = CreateDefaultSubobject<UChildActorComponent>("Left Child Actor");
-	m_pLChildActor->SetChildActorClass(ABaseController::StaticClass());
+	m_pLChildActor->SetChildActorClass(g_pDefaultControllerClass);
 	m_pLChildActor->SetupAttachment(m_pLMotionController);
 
 	// R Motion Controller
@@ -47,13 +44,8 @@ ABasePawn::ABasePawn() {
 
 	// R Child Actor
 	m_pRChildActor = CreateDefaultSubobject<UChildActorComponent>("Right Child Actor");
-	m_pRChildActor->SetChildActorClass(ABaseController::StaticClass());
+	m_pRChildActor->SetChildActorClass(g_pDefaultControllerClass);
 	m_pRChildActor->SetupAttachment(m_pRMotionController);
-
-
-	//Set default controller models
-	m_pLeftControllerMesh = FindMesh(OCULUS_TOUCH_CONTROLLER_MODEL_LEFT_PATH);
-	m_pRightControllerMesh = FindMesh(OCULUS_TOUCH_CONTROLLER_MODEL_RIGHT_PATH);
 
 	// automatically possess pawn placed in world instead of generating a pawn
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
@@ -178,3 +170,8 @@ bool ABasePawn::TeleportPlayer(const FVector& loc) {
 	SetActorLocation(loc);
 	return true;
 }
+
+UClass* g_pDefaultControllerClass = NULL;
+int	g_iDefaultControllerPriority = -1;
+
+static ControllerClassGetter g_defaultControllerClassGetter(ABaseController::StaticClass(), 0);
