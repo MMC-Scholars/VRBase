@@ -28,7 +28,7 @@ APickup::APickup() {
 void APickup::Pickup(ABaseController* controller) {
 	m_pPickupMeshComponent->SetSimulatePhysics(false);
 	AttachToActor(controller, FAttachmentTransformRules::KeepWorldTransform);
-	
+
 	OnPickup(controller);
 }
 

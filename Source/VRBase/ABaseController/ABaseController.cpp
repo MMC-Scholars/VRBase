@@ -47,7 +47,7 @@ ABaseController::ABaseController() {
 // -----------------------------------------------------------------------------------------------------------------------------
 
 void ABaseController::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
-	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr)) {
+	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) && m_aOverlapActors.Find(OtherActor) == INDEX_NONE) {
 		// Add actor to TArray
 		m_aOverlapActors.Add(OtherActor);
 
@@ -82,6 +82,7 @@ void ABaseController::OnButtonsChanged() {
 	m_iButtons |= m_iButtonsPressed;
 	m_iButtons &= ~m_iButtonsReleased;
 
+	
 	// -----------------------------------------------------------------------------------------------------------------------------
 	// BUTTON PRESS
 	// -----------------------------------------------------------------------------------------------------------------------------
@@ -91,12 +92,14 @@ void ABaseController::OnButtonsChanged() {
 	}
 
 	if (m_iButtonsPressed & IN_TRIGGER) {
+		
 		// pick up all pickups
 		for (AActor* Actor : m_aOverlapActors) {
 
 			APickup* pPickupActor = Cast<APickup>(Actor);
 
 			if (pPickupActor) {
+				Msg("Buttons %d pressed on %s, performing pickup on %s...", m_iButtonsPressed, WCStr(GetName()), WCStr(pPickupActor->GetName()));
 				pPickupActor->Pickup(this);
 				m_aAttachActors.Add(pPickupActor);
 			}

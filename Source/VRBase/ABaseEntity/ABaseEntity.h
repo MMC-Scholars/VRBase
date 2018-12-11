@@ -61,7 +61,6 @@ public:
 	//for example, BeginPlay() might be called before 
 	// g_pGlobals->curtime is correctly set
 	virtual void BeginPlay() override {
-
 		g_pGlobals->checkReset();
 		AActor::BeginPlay();
 		ReportReady();
