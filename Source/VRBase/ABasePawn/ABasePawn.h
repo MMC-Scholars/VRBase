@@ -12,6 +12,7 @@
 #include "Components/ChildActorComponent.h"
 
 #include "ABaseController/ABaseController.h"
+#include "AGameRules/AGameRules.h"
 #include "System/Input.h"
 #include "ABasePawn.generated.h"
 
@@ -30,6 +31,12 @@ public:
 		g_pGlobals->checkReset();
 		APawn::BeginPlay();
 		ReportReady();
+
+		//If the game's already started, call initializations 
+		if (g_pGameRules->GameReady()) {
+			PreInit();
+			PostInit();
+		}
 	}
 
 	virtual void Tick(float deltaTime) override {}

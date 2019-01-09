@@ -38,7 +38,7 @@ void CGlobalVars::reset() {
 			removedList.Add(pEnt);
 		}
 		else {
-			Msg(L"Incrementing for %s", WCStr(pActor->GetName()));
+			//Msg(L"Incrementing for %s", WCStr(pActor->GetName()));
 			IBaseEntity::s_iEntityCount++;
 		}
 	}
@@ -48,6 +48,7 @@ void CGlobalVars::reset() {
 		IBaseEntity* ent = removedList.Pop();
 		ent->RemoveSelfFromLists();
 	}
+	worldcreated = true;
 }
 
 void CGlobalVars::checkReset() {
@@ -59,6 +60,7 @@ void CGlobalVars::checkReset() {
 void CGlobalVars::markReset() {
 	m_bReset = true;
 	ineditor = true;
+	worldcreated = false;
 
 	//clear all lists
 	Msg("Reseting entity counts.");

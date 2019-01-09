@@ -34,7 +34,8 @@ IBaseEntity::IBaseEntity() {
 	m_tLastTimeUsed = -FLT_MAX;
 
 	//If we're in a cooked game, PostDuplicate isn't called so let's call it here
-	if (IsCookedBuild())
+	//We'll also call it if all other other BeginPlay have been called.
+	if (IsCookedBuild() || g_pGlobals->worldcreated)
 		AddEntityToLists(this);
 }
 

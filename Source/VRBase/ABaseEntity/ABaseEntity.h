@@ -60,12 +60,7 @@ public:
 	//about how these interact with the new custom game flow
 	//for example, BeginPlay() might be called before 
 	// g_pGlobals->curtime is correctly set
-	virtual void BeginPlay() override {
-		g_pGlobals->checkReset();
-		AActor::BeginPlay();
-		ReportReady();
-	}
-
+	virtual void BeginPlay() override;
 	virtual void Tick(float deltaTime) override {  }
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override {}
 	virtual void PostDuplicate(EDuplicateMode::Type mode) override {

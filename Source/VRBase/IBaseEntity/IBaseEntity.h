@@ -43,7 +43,7 @@ public:
 			bool			DestroyEntity(); //destroys this Actor
 	inline	void			ReportReady() { 
 		s_iReadyEntityCount++;
-		Msg(L"Entity %s ready", WCStr(FString(GetActor()->GetName()))); 
+		//Msg(L"Entity %s ready", WCStr(FString(GetActor()->GetName()))); 
 	}
 	//---------------------------------------------------------------
 	// Entity indexing system
