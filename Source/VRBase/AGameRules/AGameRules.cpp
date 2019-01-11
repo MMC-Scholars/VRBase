@@ -1,7 +1,8 @@
 #include "AGameRules.h"
+#include "IGameRulesSystem/IGameRulesSystem.h"
 #include "FMovingVector/FMovingVector.h"
 
-AGameRules* g_pGameRules;
+AGameRules* g_pGameRules = NULL;
 AGameRules::AGameRules() : ABaseEntity() {
 	g_pGameRules = this;
 	//g_pGlobals->reset();
@@ -12,9 +13,6 @@ AGameRules::AGameRules() : ABaseEntity() {
 void AGameRules::Tick(float deltaTime) {
 	Super::Tick(deltaTime);
 
-	//Msg("AGameRules::Tick");
-	//NLogger::Blurp("%f - %f", g_pGlobals->curtime, m_tNextRoundRestart);
-	
 	//check for round restart
 	//here we also check for initialization of all entities, efficient place to do it
 	if (g_pGlobals->curtime > m_tNextRoundRestart) {
@@ -46,8 +44,15 @@ void AGameRules::Tick(float deltaTime) {
 		g_entList[i]->Think();
 	}
 
-	g_pGlobals->update();
+	//Call the IGameRulesSystem thinks
+	for (int32 i = 0; i < g_aGameRulesSystems.Num(); i++) {
+		if (g_aGameRulesSystems[i]->GetNextThinkTime() < g_pGlobals->curtime) {
+			g_aGameRulesSystems[i]->Think();
+		}
+	}
 
+	//Update globals
+	g_pGlobals->update();
 }
 
 void AGameRules::BeginPlay() {
@@ -56,11 +61,6 @@ void AGameRules::BeginPlay() {
 	if (s_iEntityCount != g_entList.Num()) {
 		NLogger::Fatal("\nIBaseEntity::s_iEntityCount != g_entList.Num()");
 	}
-	/*for (int i = 0; i < g_entList.Num(); i++) {
-		AActor* pEnt = g_entList[i]->GetActor();
-		FString name = pEnt->GetName();
-		MsgW(L"%s : %s : %p", WCStr(name), pEnt);
-	}*/
 	
 	m_bHasRestartedRound = false;
 	m_bHasInitializedAllEntities = false;
@@ -112,8 +112,13 @@ void AGameRules::InitializeAllEntities() {
 	//run pre inits of all entities
 	Msg("Running all pre-inits");
 	for (eindex i = 0; i < g_entList.Num(); i++) {
-		g_entList[i]->SetNextThink(FLT_MIN);
+		g_entList[i]->SetNextThink(FLT_MAX);
 		g_entList[i]->PreInit();
+	}
+
+	//call independent game system PreInit
+	for (int32 i = 0; i < g_aGameRulesSystems.Num(); i++) {
+		g_aGameRulesSystems[i]->PreInit();
 	}
 
 	//run global initializers in order
@@ -124,6 +129,11 @@ void AGameRules::InitializeAllEntities() {
 	Msg("Running all post-inits");
 	for (eindex i = 0; i < g_entList.Num(); i++)
 		g_entList[i]->PostInit();
+
+	//call independent game system PostInit
+	for (int32 i = 0; i < g_aGameRulesSystems.Num(); i++) {
+		g_aGameRulesSystems[i]->PostInit();
+	}
 
 	//mark us as ready
 	m_bHasInitializedAllEntities = true;

@@ -33,7 +33,7 @@ public:
 		ReportReady();
 
 		//If the game's already started, call initializations 
-		if (g_pGameRules->GameReady()) {
+		if (g_pGameRules && g_pGameRules->GameReady()) {
 			PreInit();
 			PostInit();
 		}
