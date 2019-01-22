@@ -28,14 +28,23 @@ APickup::APickup() {
 void APickup::Pickup(ABaseController* controller) {
 	m_pPickupMeshComponent->SetSimulatePhysics(false);
 	AttachToActor(controller, FAttachmentTransformRules::KeepWorldTransform);
+	m_aParentActors.Add(controller);
 
 	OnPickup(controller);
 }
 
 void APickup::Drop(ABaseController* controller) {
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-	m_pPickupMeshComponent->SetSimulatePhysics(true);
 	
+	// Attach to the next parent in line
+	m_aParentActors.Remove(controller);
+	if (m_aParentActors.Num() > 0) {
+		AttachToActor(m_aParentActors[0], FAttachmentTransformRules::KeepWorldTransform);
+	}
+	else {
+		m_pPickupMeshComponent->SetSimulatePhysics(true);
+	}
+
 	OnDrop(controller);
 }
 

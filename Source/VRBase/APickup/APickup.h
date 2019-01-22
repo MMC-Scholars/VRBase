@@ -22,6 +22,10 @@ public:
 	virtual void PreInit() override {};
 
 public:
+
+	// Variables
+	TArray<AActor*> m_aParentActors;
+
 	// Components
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup")
 	UStaticMeshComponent*	m_pPickupMeshComponent;
