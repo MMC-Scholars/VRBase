@@ -106,7 +106,7 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		//PlayerInputComponent->BindTouch(IE_Pressed, this, &ABasePawn::UpdateTouch(ETouchIndex::Type, FVector);
 
 		//TODO axis events?
-		//PlayerInputComponent->BindAxisKey(EKeys::MotionController_Left_Thumbstick_X, this, &ABasePawn::UpdateInput(float delta));
+		//PlayerInputComponent->BindAxisKey(EKeys::MotionController_Left_Thumbstick_X, this, &ABasePawn::UpdateInput);
 		
 		
 	}

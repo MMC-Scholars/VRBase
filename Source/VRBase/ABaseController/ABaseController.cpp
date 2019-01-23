@@ -53,8 +53,9 @@ void ABaseController::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 
 		APickup* pPickupActor = Cast<APickup>(OtherActor);
 		if (pPickupActor) {
-			// outline mesh
-			pPickupActor->m_pPickupMeshComponent->SetRenderCustomDepth(true);
+			// outline mesh if not held by anything
+			if (pPickupActor->m_aParentActors.Num() == 0)
+				pPickupActor->m_pPickupMeshComponent->SetRenderCustomDepth(true);
 		}
 	}
 }
@@ -102,6 +103,9 @@ void ABaseController::OnButtonsChanged() {
 				Msg("Buttons %d pressed on %s, performing pickup on %s...", m_iButtonsPressed, WCStr(GetName()), WCStr(pPickupActor->GetName()));
 				pPickupActor->Pickup(this);
 				m_aAttachActors.Add(pPickupActor);
+				// remove mesh outline
+				pPickupActor->m_pPickupMeshComponent->SetRenderCustomDepth(false);
+
 			}
 		}
 	}
