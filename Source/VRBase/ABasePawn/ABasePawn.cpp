@@ -34,7 +34,7 @@ ABasePawn::ABasePawn() {
 
 	// L Child Actor
 	m_pLChildActor = CreateDefaultSubobject<UChildActorComponent>("Left Child Actor");
-	m_pLChildActor->SetChildActorClass(g_pDefaultControllerClass);
+	m_pLChildActor->SetChildActorClass(ABaseController::StaticClass());
 	m_pLChildActor->SetupAttachment(m_pLMotionController);
 
 	// R Motion Controller
@@ -44,7 +44,7 @@ ABasePawn::ABasePawn() {
 
 	// R Child Actor
 	m_pRChildActor = CreateDefaultSubobject<UChildActorComponent>("Right Child Actor");
-	m_pRChildActor->SetChildActorClass(g_pDefaultControllerClass);
+	m_pRChildActor->SetChildActorClass(ABaseController::StaticClass());
 	m_pRChildActor->SetupAttachment(m_pRMotionController);
 
 	// automatically possess pawn placed in world instead of generating a pawn
@@ -170,8 +170,3 @@ bool ABasePawn::TeleportPlayer(const FVector& loc) {
 	SetActorLocation(loc);
 	return true;
 }
-
-UClass* g_pDefaultControllerClass = NULL;
-int	g_iDefaultControllerPriority = -1;
-
-static ControllerClassGetter g_defaultControllerClassGetter(ABaseController::StaticClass(), 0);
