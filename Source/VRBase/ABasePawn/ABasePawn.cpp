@@ -3,6 +3,10 @@
 #include "ABasePawn.h"
 #include "System/NLogger.h"
 
+#ifndef DEFAULT_CONTROLLER_CLASS
+#define DEFAULT_CONTROLLER_CLASS ABaseController
+#endif
+
 ABasePawn::ABasePawn() {
 	Tags.Add(TAG_BASEPAWN);
 	m_pSelfAsActor = this;
@@ -34,7 +38,7 @@ ABasePawn::ABasePawn() {
 
 	// L Child Actor
 	m_pLChildActor = CreateDefaultSubobject<UChildActorComponent>("Left Child Actor");
-	m_pLChildActor->SetChildActorClass(ABaseController::StaticClass());
+	m_pLChildActor->SetChildActorClass(DEFAULT_CONTROLLER_CLASS::StaticClass());
 	m_pLChildActor->SetupAttachment(m_pLMotionController);
 
 	// R Motion Controller
@@ -44,7 +48,7 @@ ABasePawn::ABasePawn() {
 
 	// R Child Actor
 	m_pRChildActor = CreateDefaultSubobject<UChildActorComponent>("Right Child Actor");
-	m_pRChildActor->SetChildActorClass(ABaseController::StaticClass());
+	m_pRChildActor->SetChildActorClass(DEFAULT_CONTROLLER_CLASS::StaticClass());
 	m_pRChildActor->SetupAttachment(m_pRMotionController);
 
 	// automatically possess pawn placed in world instead of generating a pawn
