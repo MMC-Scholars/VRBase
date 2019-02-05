@@ -50,11 +50,7 @@ public:
 
 	virtual void PreInit() override;
 
-
-	
-
-
-
+	virtual void SetControllerClass(UClass* LControllerClass, UClass* RControllerClass);
 
 //------------------------------------------------------------------------------
 // MEMBER VARIABLES FOR PLAYER/PAWN/VR SETUP
@@ -69,17 +65,38 @@ public:
 	UMotionControllerComponent* m_pRMotionController;
 	UChildActorComponent*		m_pRChildActor;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Controller Classes")
+	UClass* m_pLControllerClass;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Controller Classes")
+	UClass* m_pRControllerClass;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
 	UStaticMesh*				m_pLeftControllerMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
 	UStaticMesh*				m_pRightControllerMesh;
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
+
 	ABaseController*			m_pLHand;
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
 	ABaseController*			m_pRHand;
 
 
+// set controller classes dynamically from within the editor
+#if WITH_EDITOR
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) {
+
+		FName PropertyName = (PropertyChangedEvent.Property != nullptr)
+			? PropertyChangedEvent.Property->GetFName() : NAME_None;
+
+		if (m_pLControllerClass && m_pRControllerClass) {
+
+			SetControllerClass(m_pLControllerClass, m_pRControllerClass);
+			
+		}
+
+		Super::PostEditChangeProperty(PropertyChangedEvent);
+	}
+#endif
 
 
 //------------------------------------------------------------------------------
@@ -144,17 +161,12 @@ public:
 	virtual FEntityInputRegistrationParams*	GetRightControllerInputRegistrationParams() { return &m_rightControllerInput; }
 
 
-
-
-
-
-
 //------------------------------------------------------------------------------
 // PLAYER TELEPORT HANDLING
 //-----------------------------------------------------------------------------
-private:
+
 	bool CanTeleportToLocation(const FVector& loc);
-public:
+
 	bool TeleportPlayer(const FVector& loc);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Teleportation")

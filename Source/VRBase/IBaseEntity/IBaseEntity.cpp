@@ -40,6 +40,7 @@ IBaseEntity::IBaseEntity() {
 }
 
 bool IBaseEntity::DestroyEntity() {
+	RemoveSelfFromLists();
 	return GetActor()->Destroy();
 }
 

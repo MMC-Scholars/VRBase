@@ -96,11 +96,12 @@ void ABaseController::OnButtonsChanged() {
 		
 		// pick up all pickups
 		for (AActor* Actor : m_aOverlapActors) {
+			
 
 			APickup* pPickupActor = Cast<APickup>(Actor);
 
 			if (pPickupActor) {
-				Msg("Buttons %d pressed on %s, performing pickup on %s...", m_iButtonsPressed, WCStr(GetName()), WCStr(pPickupActor->GetName()));
+				//Msg("Buttons %d pressed on %s, performing pickup on %s...", m_iButtonsPressed, WCStr(GetName()), WCStr(pPickupActor->GetName()));
 				pPickupActor->Pickup(this);
 				m_aAttachActors.Add(pPickupActor);
 				// remove mesh outline
@@ -213,7 +214,7 @@ void ABaseController::DefaultThink() {
 		// Enable Haptics
 		GetWorld()->GetFirstPlayerController()->SetHapticsByValue(200.0f, 0.3f, m_eWhichHand);
 
-		SLineDrawParams rendered = { FColor::Red, 6.f, (ftime) 0.1f };
+		SLineDrawParams rendered = { FColor::Red, 6.f, (ftime) 0.0f };
 
 		FVector start = GetActorLocation();
 		FVector direction = GetActorForwardVector();
@@ -223,13 +224,22 @@ void ABaseController::DefaultThink() {
 		TArray<AActor*> ignoredActors;
 		GetTraceIgnoredActors(ignoredActors);
 		FVector force = FVector(0, 0, -0.08f);
+		// Initially render spline to calculate hit result
 		UTIL_TraceSpline(t, start, direction, force, 4096, &rendered, &ignoredActors[0]);
 
 		FVector loc = t.Location;
 		if (loc == FVector::ZeroVector)
 			loc = t.TraceEnd;
 
+		if (m_pOwnerPawn->CanTeleportToLocation(loc)) {
+			rendered = { FColor::Green, 6.f, (ftime) 0.1f };
+		}
+		else {
+			rendered = { FColor::Red, 6.f, (ftime) 0.1f };
+		}
+
 		//then render a circle at loc
+		UTIL_TraceSpline(t, start, direction, force, 4096, &rendered, &ignoredActors[0]);
 		UTIL_DrawCircle(loc, (vec) 30.f, &rendered);
 	}
 	

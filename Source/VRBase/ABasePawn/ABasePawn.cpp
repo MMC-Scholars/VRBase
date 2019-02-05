@@ -3,14 +3,17 @@
 #include "ABasePawn.h"
 #include "System/NLogger.h"
 
-#ifndef DEFAULT_CONTROLLER_CLASS
 #define DEFAULT_CONTROLLER_CLASS ABaseController
-#endif
+#define CAPSULE_HEIGHT 96.0
 
 ABasePawn::ABasePawn() {
 	Tags.Add(TAG_BASEPAWN);
 	m_pSelfAsActor = this;
 	m_pTeleportBounds = NULL;
+
+	// controller default class is ABaseController
+	m_pLControllerClass = DEFAULT_CONTROLLER_CLASS::StaticClass();
+	m_pRControllerClass = DEFAULT_CONTROLLER_CLASS::StaticClass();
 
 	// disable event tick
 	bAllowTickBeforeBeginPlay = false;
@@ -18,7 +21,7 @@ ABasePawn::ABasePawn() {
 
 	// Root Component Capsule
 	m_pRootCapsule = CreateDefaultSubobject<UCapsuleComponent>("Capsule");
-	m_pRootCapsule->InitCapsuleSize(16.0, 96.0);
+	m_pRootCapsule->InitCapsuleSize(16.0, CAPSULE_HEIGHT);
 	RootComponent = m_pRootCapsule;
 
 	// Player Root Scene Component
@@ -124,22 +127,45 @@ void ABasePawn::PreInit() {
 	auto HMD = GEngine->HMDDevice.Get();
 	HMD->SetTrackingOrigin(EHMDTrackingOrigin::Floor);
 
-	// Initialize ABaseController variables
-	m_pLHand = Cast<ABaseController>(m_pLChildActor->GetChildActor());
-	m_pLHand->SetWhichHand(EControllerHand::Left);
-	m_pLHand->SetStaticMesh(m_pLeftControllerMesh);
-	m_pLHand->m_pOwnerPawn = this;
+	FVector loc = GetActorLocation();
+	SetActorLocation(FVector(loc.X, loc.Y, loc.Z - CAPSULE_HEIGHT));
 
-	m_pRHand = Cast<ABaseController>(m_pRChildActor->GetChildActor());
-	m_pRHand->SetWhichHand(EControllerHand::Right);
-	m_pRHand->SetStaticMesh(m_pRightControllerMesh);
-	m_pRHand->m_pOwnerPawn = this;
-
-	m_pRHand->m_rightControllerInput = m_rightControllerInput;
-	m_pLHand->m_leftControllerInput = m_leftControllerInput;
+	SetControllerClass(m_pLControllerClass, m_pRControllerClass);
 
 	m_rightControllerInput = FEntityInputRegistrationParams();
 	m_leftControllerInput = FEntityInputRegistrationParams();
+}
+
+void ABasePawn::SetControllerClass(UClass* LControllerClass, UClass* RControllerClass) {
+
+	// if not null
+	if (LControllerClass && RControllerClass) {
+
+		// set child actors
+		m_pLChildActor->SetChildActorClass(LControllerClass);
+		m_pRChildActor->SetChildActorClass(RControllerClass);
+
+		// cast to ABaseController
+		m_pLHand = Cast<DEFAULT_CONTROLLER_CLASS>(m_pLChildActor->GetChildActor());
+		if (m_pLHand) {
+			m_pLHand->SetWhichHand(EControllerHand::Left);
+			m_pLHand->SetStaticMesh(m_pLeftControllerMesh);
+			m_pLHand->m_pOwnerPawn = this;
+		}
+
+		// cast to ABaseController
+		m_pRHand = Cast<DEFAULT_CONTROLLER_CLASS>(m_pRChildActor->GetChildActor());
+		if (m_pRHand) {
+			m_pRHand->SetWhichHand(EControllerHand::Right);
+			m_pRHand->SetStaticMesh(m_pRightControllerMesh);
+			m_pRHand->m_pOwnerPawn = this;
+		}
+		if (m_pLHand && m_pRHand) {
+			m_pLHand->m_leftControllerInput = m_leftControllerInput;
+			m_pRHand->m_rightControllerInput = m_rightControllerInput;
+		}
+	}
+
 }
 
 bool ABasePawn::CanTeleportToLocation(const FVector& loc) {
@@ -151,13 +177,10 @@ bool ABasePawn::CanTeleportToLocation(const FVector& loc) {
 	//Check if the given location is within our bounds
 	FVector boxOrigin, boxExtent;
 	m_pTeleportBounds->GetActorBounds(false, boxOrigin, boxExtent);
-	//FBox box;
-	//box.BuildAABB(boxOrigin, boxExtent);
-	//return box.IsInsideOrOn(loc);
 
 	// This is the logic IsInsideOrOn() should compute 
-	// but for some reason it returns a different answer than expected...
-	// This will have to do.
+	// but for some reason it returns a different answer than
+	// expected. This will have to do :')
 	return (
 		loc.X >= boxOrigin.X - boxExtent.X && loc.X <= boxOrigin.X + boxExtent.X &&
 		loc.Y >= boxOrigin.Y - boxExtent.Y && loc.Y <= boxOrigin.Y + boxExtent.Y &&
