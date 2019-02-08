@@ -6,12 +6,16 @@
 #include "ABaseEntity/ABaseEntity.h"
 #include "ABaseMoving.generated.h"
 
+//Fractional lerp value for measuring the open/closed status of a still door
+#define OPENCLOSE_MEASURE_TOLERANCE 0.05f
+#define OPENCLOSE_MOVING_MEASURE_TOLERANCE 0.001f
+
 /****************************************************************************
  * This class is an interface for anything that moves on 0.0-1.0 scale.
  *		Ex. Sliding door, pivoting door.
  *	Does not explicitly have to move between two settings but can also model
  *		a strength of a single setting
- *		Ex. Velocitu-scaled follower
+ *		Ex. Velocity-scaled follower
  ***************************************************************************/
 //TODO @Michael Implement all of this and add more functionality
 UCLASS()
@@ -22,18 +26,51 @@ public:
 	
 	ABaseMoving();
 	
-	virtual void PreInit() override {}
 
-	virtual void PostInit() override {}
+	virtual void PreInit() override;
+
+	virtual void PostInit() override;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
-	float m_lInitialLerp;
+	float m_lInitialLerp; //Start lerp value for when 
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
+	float m_flLerpSpeed;
+
+	UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+	virtual void SetLerpPosition(float _lLerp) { m_lCurrentLerp = _lLerp; }
+
+	UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+	float GetLerpPosition() const { return m_lCurrentLerp; }
+
+	UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+	void Open();
+
+	UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+	void Close();
+
+	UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+	bool IsOpen() const;
+
+	UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+	bool IsClosed() const;
+
+	UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+	bool IsOpening() const;
+
+	UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+	bool IsClosing() const;
+
+	UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+	bool IsMoving() const { return IsOpening() || IsClosing(); }
 
 private:
-	float m_lCurrentLerp;
+	lerp m_lCurrentLerp;
 
-	
+
+	void OpenThink();
+	void CloseThink();
+
 	
 	
 	

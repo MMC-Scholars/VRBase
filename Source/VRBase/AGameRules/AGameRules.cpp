@@ -41,7 +41,9 @@ void AGameRules::Tick(float deltaTime) {
 
 	//Execute all the pointer-based thinks
 	for (eindex i = 0; i < g_entList.Num(); i++) {
-		g_entList[i]->Think();
+		if (g_entList[i]->GetNextThink() > g_pGlobals->curtime) {
+			g_entList[i]->Think();
+		}
 	}
 
 	//Call the IGameRulesSystem thinks
