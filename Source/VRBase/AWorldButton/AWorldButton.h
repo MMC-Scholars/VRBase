@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Components/StaticMeshComponent.h"
 #include "ABaseEntity/ABaseEntity.h"
+#include "Sound/SoundCue.h"
+#include "Components/AudioComponent.h"
 #include "AWorldButton.generated.h"
 
 /**
@@ -24,22 +26,54 @@ public:
 	virtual void OnUsed(ABaseEntity*) override;
 	
 	//Visual component
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Button)
 	UStaticMeshComponent* m_pMeshComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Button)
+	UStaticMesh* m_pStaticMesh;
+	
+
+#if WITH_EDITOR
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) {
+
+		FName PropertyName = (PropertyChangedEvent.Property != nullptr)
+			? PropertyChangedEvent.Property->GetFName() : NAME_None;
+		// set static mesh and original material from the editor
+		if (m_pMeshComponent != nullptr &&
+			m_pStaticMesh != nullptr) {
+
+			m_pMeshComponent->SetStaticMesh(m_pStaticMesh);
+			if (PropertyName == FName(STRINGIZE(m_pStaticMesh))) {
+				m_pOriginalMaterial = m_pStaticMesh->GetMaterial(0);
+			}
+			m_pMeshComponent->SetMaterial(0, m_pOriginalMaterial);
+
+		}
+		// set sound cue from the editor
+		if (m_pOnPressSound != nullptr &&
+			m_pOnPressCue != nullptr) {
+
+			m_pOnPressSound->SetSound(m_pOnPressCue);
+		}
+
+		Super::PostEditChangeProperty(PropertyChangedEvent);
+	}
+#endif
 
 	//---------------------------------------------------------------
 	//"Use" Feedback response
 	//---------------------------------------------------------------
 
 	//Sound to play on press
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Button)
-	//USoundCue* m_pOnPress;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Button)
+	USoundCue* m_pOnPressCue;
+	UAudioComponent* m_pOnPressSound;
 
 	//Switch to this material for the duration of the press
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Button)
-	UMaterial* m_pOnPressMaterial;
+	UMaterialInterface* m_pOnPressMaterial;
 private:
-	UMaterial* m_pOriginalMaterial;
+	UPROPERTY(EditAnywhere, Category = Button)
+	UMaterialInterface* m_pOriginalMaterial;
 public:
 
 	//Buttons require for press
