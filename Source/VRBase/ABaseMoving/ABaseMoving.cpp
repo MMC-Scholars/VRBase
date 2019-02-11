@@ -15,6 +15,14 @@ void ABaseMoving::PostInit() {
 
 }
 
+void ABaseMoving::OnUsed(ABaseEntity*) {
+	SetThink(&ABaseMoving::AttachThink);
+}
+
+void ABaseMoving::SetPositionFromController(ABaseController* pController) {
+
+}
+
 void ABaseMoving::Open() {
 	if (IsOpen()) {
 		return;
@@ -75,4 +83,8 @@ void ABaseMoving::CloseThink(void* vpBaseMoving) {
 		//Also notify our child class that our position has changed, such that it can do the actual movement
 		pMoving->SetLerpPosition(pMoving->m_lCurrentLerp - pMoving->m_flLerpSpeed * g_pGlobals->frametime);
 	}
+}
+
+void ABaseMoving::AttachThink() {
+
 }

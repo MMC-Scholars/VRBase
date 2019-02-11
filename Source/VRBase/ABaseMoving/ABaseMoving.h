@@ -31,6 +31,10 @@ public:
 
 	virtual void PostInit() override;
 
+	virtual void OnUsed(ABaseEntity*) override;
+
+	virtual void SetPositionFromController(ABaseController*);
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
 		bool m_bAttachToController;
 
@@ -79,4 +83,5 @@ private:
 
 	static void OpenThink(void* vpBaseMoving);
 	static void CloseThink(void* vpBaseMoving);
+	static void AttachThink();
 };
