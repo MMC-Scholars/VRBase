@@ -55,6 +55,8 @@ private:
 protected:
 			void			PostDuplicate(EDuplicateMode::Type mode);
 	static	void			AddEntityToLists(IBaseEntity* pEnt);
+	static int	s_iReadyEntityCount;
+	static int	s_iEntityCount;
 
 	//---------------------------------------------------------------
 	// Intiailization system
@@ -84,21 +86,21 @@ protected:
 	//	-Think() is called if the entity has set one with SetThink(...)
 	//---------------------------------------------------------------
 public:
-	typedef void (IBaseEntity::* BASEPTR)(void);
+	typedef void (*BASEPTR)(void*);
 	virtual void			DefaultThink(); //this think function is always called
-	inline	void			Think()							{ if (m_pfnThink) (this->*m_pfnThink)(); }
+	inline	void			Think()							{ if (m_pfnThink) m_pfnThink(m_pThinkParam); }
 	inline	void			SetNextThink(ftime time)		{ m_tNextThink = time; }
 	inline	ftime			GetNextThink() const			{ return m_tNextThink; }
-	inline	void			SetThink(BASEPTR pProcedure)	{ m_pfnThink = pProcedure; }
+	inline	void			ThinkSet(BASEPTR pProcedure, void* pThinkParam) { m_pfnThink = pProcedure; m_pThinkParam = pThinkParam; }
+	inline	void			StopThink() { m_pfnThink = NULL; m_pThinkParam = NULL; }
+#define SetThinkEnt(func, ent) ent->ThinkSet((BASEPTR)(func), reinterpret_cast<void*>(ent))
+#define SetThink(func) SetThinkEnt(func, this)
 
 	static inline bool		AllEntitiesReady()				{ return s_iReadyEntityCount == s_iEntityCount; }
 private:
-	BASEPTR m_pfnThink		= nullptr;
-	ftime m_tNextThink;
-
-protected:
-	static int	s_iReadyEntityCount;
-	static int	s_iEntityCount;
+	BASEPTR		m_pfnThink		= nullptr;
+	void*		m_pThinkParam = nullptr;
+	ftime		m_tNextThink;
 
 
 
@@ -106,7 +108,7 @@ protected:
 	// Respawn system
 	//---------------------------------------------------------------
 public:
-	virtual void Respawn();
+	virtual	void			Respawn();
 	
 private:
 	ftime m_tLastRespawn;
@@ -186,6 +188,9 @@ public:
 	inline	vec				GetDistanceTo(IBaseEntity* pOther)			const { return sqrtf(GetDistanceSquaredTo(pOther)); }*/
 
 };
+
+template<class T>
+inline T* ExtractArg(void* pParam) { return reinterpret_cast<T*>(pParam); }
 
 //Finds a UStaticMesh by path
 UStaticMesh* FindMesh(const wchar_t* path);

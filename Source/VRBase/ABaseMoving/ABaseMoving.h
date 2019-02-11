@@ -32,6 +32,9 @@ public:
 	virtual void PostInit() override;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
+		bool m_bAttachToController;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
 	float m_lInitialLerp; //Start lerp value for when 
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
@@ -64,14 +67,16 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "BaseMoving")
 	bool IsMoving() const { return IsOpening() || IsClosing(); }
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "BaseMoving")
+	void OnFinishOpen();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "BaseMoving")
+	void OnFinishClose();
+
 private:
 	lerp m_lCurrentLerp;
+	ABaseController* m_pHoldingController; //What controller is holding on to us?
 
-
-	void OpenThink();
-	void CloseThink();
-
-	
-	
-	
+	static void OpenThink(void* vpBaseMoving);
+	static void CloseThink(void* vpBaseMoving);
 };
