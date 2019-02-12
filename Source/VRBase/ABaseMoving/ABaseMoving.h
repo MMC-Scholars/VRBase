@@ -83,5 +83,5 @@ private:
 
 	static void OpenThink(void* vpBaseMoving);
 	static void CloseThink(void* vpBaseMoving);
-	static void AttachThink();
+	static void AttachThink(void* vpBaseMoving);
 };

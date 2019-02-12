@@ -72,7 +72,7 @@ void ABaseMoving::OpenThink(void* vpBaseMoving){
 void ABaseMoving::CloseThink(void* vpBaseMoving) {
 	ABaseMoving* pMoving = ExtractArg<ABaseMoving>(vpBaseMoving);
 
-	//If we've finished opening, stop opening
+	//If we've finished closing, stop closing
 	if (pMoving->IsClosed()) {
 		pMoving->OnFinishClose();
 		pMoving->StopThink();
@@ -85,6 +85,14 @@ void ABaseMoving::CloseThink(void* vpBaseMoving) {
 	}
 }
 
-void ABaseMoving::AttachThink() {
+void ABaseMoving::AttachThink(void* vpBaseMoving) {
+	/*ABaseMoving* pMoving = ExtractArg<ABaseMoving>(vpBaseMoving);
 
+	if (pMoving->IsClosed() || pMoving->IsOpen() || pMoving-> ) {
+		pMoving->StopThink();
+	}
+
+	else {
+		pMoving->SetPositionFromController(pointer to ABaseController)
+	}*/
 }
