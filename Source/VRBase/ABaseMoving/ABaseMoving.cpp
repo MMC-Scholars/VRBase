@@ -86,13 +86,15 @@ void ABaseMoving::CloseThink(void* vpBaseMoving) {
 }
 
 void ABaseMoving::AttachThink(void* vpBaseMoving) {
-	/*ABaseMoving* pMoving = ExtractArg<ABaseMoving>(vpBaseMoving);
+	/*
+	ABaseMoving* pMoving = ExtractArg<ABaseMoving>(vpBaseMoving);
 
-	if (pMoving->IsClosed() || pMoving->IsOpen() || pMoving-> ) {
+	if (pMoving->IsClosed() || pMoving->IsOpen() || m_pHoldingController->m_iButtonsReleased) {
 		pMoving->StopThink();
 	}
-
+	
 	else {
-		pMoving->SetPositionFromController(pointer to ABaseController)
-	}*/
+		pMoving->SetPositionFromController(m_pHoldingController);
+	}
+	*/
 }
