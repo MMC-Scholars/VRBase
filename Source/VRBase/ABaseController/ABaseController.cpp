@@ -203,13 +203,12 @@ void ABaseController::SetStaticMesh(UStaticMesh* pMesh) {
 }
 
 void ABaseController::OnUsed(ABaseEntity* pActivator) {
-	
-	// insert code from method above once this works 
+
 	Msg(__FUNCTION__);
 }
 
 void ABaseController::DefaultThink() {
-
+	//TODO add editor editable ignored actors array?
 	if (m_bTeleportationActive) {
 		// Enable Haptics
 		GetWorld()->GetFirstPlayerController()->SetHapticsByValue(200.0f, 0.3f, m_eWhichHand);
