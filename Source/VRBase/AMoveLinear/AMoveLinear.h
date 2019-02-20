@@ -19,8 +19,4 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AMoveLinear")
 		FVector m_vDirection;
-
-	//FVector m_vLocation = this->GetLocation();
-	//float x = m_vDirection.X;
-
 };
