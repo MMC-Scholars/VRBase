@@ -121,6 +121,7 @@ void ABaseController::OnButtonsChanged() {
 		TArray<AActor*> ignoredActors;
 		GetTraceIgnoredActors(ignoredActors);
 
+
 		FHitResult t;
 		FVector force = FVector(0, 0, -0.08f);
 		UTIL_TraceSpline(t, start, direction, force, 4096, NULL, &ignoredActors[0]);
@@ -208,7 +209,7 @@ void ABaseController::OnUsed(ABaseEntity* pActivator) {
 }
 
 void ABaseController::DefaultThink() {
-	//TODO add editor editable ignored actors array?
+
 	if (m_bTeleportationActive) {
 		// Enable Haptics
 		GetWorld()->GetFirstPlayerController()->SetHapticsByValue(200.0f, 0.3f, m_eWhichHand);
@@ -257,6 +258,10 @@ void ABaseController::GetTraceIgnoredActors(TArray<AActor*>& ignoredActors) {
 	for (int i = 0; i < OtherController()->m_aAttachActors.Num(); i++) {
 		ignoredActors.Add(OtherController()->m_aAttachActors[i]);
 	}
+
+	// add navigation mesh bounds to list of ignored actors
+	ignoredActors.Add(g_pBasePawn->m_pTeleportBounds);
+
 	// nullptr denotes the end of the list
 	ignoredActors.Add(nullptr);
 }
