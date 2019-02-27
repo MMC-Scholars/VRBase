@@ -48,12 +48,6 @@ public:
 			m_pMeshComponent->SetMaterial(0, m_pOriginalMaterial);
 
 		}
-		// set sound cue from the editor
-		if (m_pOnPressSound != nullptr &&
-			m_pOnPressCue != nullptr) {
-
-			m_pOnPressSound->SetSound(m_pOnPressCue);
-		}
 
 		Super::PostEditChangeProperty(PropertyChangedEvent);
 	}
@@ -66,7 +60,6 @@ public:
 	//Sound to play on press
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Button)
 	USoundCue* m_pOnPressCue;
-	UAudioComponent* m_pOnPressSound;
 
 	//Switch to this material for the duration of the press
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Button)

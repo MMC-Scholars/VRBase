@@ -3,6 +3,7 @@
 #include "AWorldButton.h"
 #include "ABaseController/ABaseController.h"
 #include "System/NLogger.h"
+#include "Kismet/GameplayStatics.h"
 
 
 
@@ -10,9 +11,6 @@ AWorldButton::AWorldButton() {
 	m_pMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("Button Mesh");
 	m_pMeshComponent->SetStaticMesh(m_pStaticMesh);
 	m_pMeshComponent->SetMaterial(0, m_pOriginalMaterial);
-
-	m_pOnPressSound = CreateDefaultSubobject<UAudioComponent>("Sound");
-	m_pOnPressSound->bAutoActivate = false;
 
 	m_pMeshComponent->bGenerateOverlapEvents = true;
 	m_pMeshComponent->OnComponentBeginOverlap.AddDynamic(this, &AWorldButton::OnOverlapBegin);
@@ -36,9 +34,7 @@ void AWorldButton::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* O
 		m_pMeshComponent->SetMaterial(0, m_pOnPressMaterial);
 
 		// play sound
-		if (m_pOnPressCue) {
-			m_pOnPressSound->Play();
-		}
+		UGameplayStatics::PlaySoundAtLocation(this, m_pOnPressCue, GetActorLocation());
 
 		// fire event
 		OnUsed(Cast<ABaseEntity>(OtherActor));
