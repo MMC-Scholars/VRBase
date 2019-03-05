@@ -102,8 +102,8 @@ void ABaseController::OnButtonsChanged() {
 
 			if (pPickupActor) {
 				//Msg("Buttons %d pressed on %s, performing pickup on %s...", m_iButtonsPressed, WCStr(GetName()), WCStr(pPickupActor->GetName()));
-				pPickupActor->Pickup(this);
 				m_aAttachActors.Add(pPickupActor);
+				pPickupActor->Pickup(this);
 				// remove mesh outline
 				pPickupActor->m_pPickupMeshComponent->SetRenderCustomDepth(false);
 

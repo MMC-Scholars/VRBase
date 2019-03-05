@@ -61,8 +61,8 @@ public:
 #endif
 
 	// Functions
-	void Pickup(ABaseController*);
-	void Drop(ABaseController*);
+	virtual void Pickup(ABaseController*);
+	virtual void Drop(ABaseController*);
 
 	//Blueprint implementable events
 	UFUNCTION(BlueprintNativeEvent)
