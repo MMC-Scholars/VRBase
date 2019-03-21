@@ -25,7 +25,6 @@ public:
 	GENERATED_BODY()
 	
 	ABaseMoving();
-	
 
 	virtual void PreInit() override;
 
@@ -78,6 +77,7 @@ public:
 	void OnFinishClose();
 
 private:
+	bool m_binAttachThink;
 	lerp m_lCurrentLerp;
 	ABaseController* m_pHoldingController; //What controller is holding on to us?
 
