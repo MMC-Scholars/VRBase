@@ -11,6 +11,9 @@ ABasePawn::ABasePawn() {
 	m_pSelfAsActor = this;
 	m_pTeleportBounds = NULL;
 
+	m_pLHand = NULL;
+	m_pRHand = NULL;
+
 	// controller default class is ABaseController
 	m_pLControllerClass = DEFAULT_CONTROLLER_CLASS::StaticClass();
 	m_pRControllerClass = DEFAULT_CONTROLLER_CLASS::StaticClass();

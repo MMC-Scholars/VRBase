@@ -104,6 +104,10 @@ public:
 //-----------------------------------------------------------------------------
 #define KEY_INPUT(key, change, hand) \
 	void On##hand##_##key##_##change() { \
+		if (m_p##hand##Hand == NULL) { \
+			NLogger::Warning("ABasePawn hand is NULL"); \
+			return; \
+		} \
 		m_p##hand##Hand->m_iButtons##change |= IN_##key; \
 		m_p##hand##Hand->OnButtonsChanged(); \
 	}

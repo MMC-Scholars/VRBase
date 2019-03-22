@@ -1,11 +1,12 @@
 
-#include "ABaseController\ABaseController.h"
 #include "ABaseMoving.h"
+#include "ABaseController/ABaseController.h"
 
 ABaseMoving::ABaseMoving() {
 	m_lInitialLerp = 0;
 	m_flLerpSpeed = 10;
-	m_binAttachThink = false;
+	m_bInAttachThink = false;
+	m_pHoldingController = NULL;
 }
 
 void ABaseMoving::PreInit() {
@@ -16,14 +17,20 @@ void ABaseMoving::PostInit() {
 
 }
 
-void ABaseMoving::OnUsed(ABaseEntity*) {
-	if (!m_binAttachThink) {
-		SetThink(&ABaseMoving::AttachThink);
-		m_binAttachThink = true;
-	}
-	else {
-		StopThink();
-		m_binAttachThink = false;
+void ABaseMoving::OnUsed(ABaseEntity* pActivator) {
+	ABaseController* pController = dynamic_cast<ABaseController*>(pActivator);
+	if (pController) {
+
+		if (!m_bInAttachThink) {
+			m_pHoldingController = pController;
+			SetThink(&ABaseMoving::AttachThink);
+			m_bInAttachThink = true;
+		}
+		else if (pController == m_pHoldingController){
+			m_pHoldingController = NULL;
+			StopThink();
+			m_bInAttachThink = false;
+		}
 	}
 }
 
