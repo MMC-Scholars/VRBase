@@ -128,7 +128,7 @@ void ABaseController::OnButtonsChanged() {
 		FVector loc = t.Location;
 		if (loc == FVector::ZeroVector)
 			loc = t.TraceEnd;
-		m_pOwnerPawn->TeleportPlayer(loc);
+		m_pOwnerPawn->TeleportPlayer(loc, m_rTeleportationRot);
 		m_bTeleportationActive = false;
 
 		// Disable Haptics
@@ -230,16 +230,31 @@ void ABaseController::DefaultThink() {
 		if (loc == FVector::ZeroVector)
 			loc = t.TraceEnd;
 
-		if (m_pOwnerPawn->CanTeleportToLocation(loc)) {
-			rendered = { FColor::Green, 6.f, (ftime) 0.1f };
-		}
-		else {
-			rendered = { FColor::Red, 6.f, (ftime) 0.1f };
-		}
+		// spline color based on valid teleport location
+		if (m_pOwnerPawn->CanTeleportToLocation(loc)) rendered = { FColor::Green, 6.f, (ftime) 0.1f };
+		else rendered = { FColor::Red, 6.f, (ftime) 0.1f };
 
-		//then render a circle at loc
+		vec traceSize = (vec) 30.0f;
+
+		// trace spline and circle
 		UTIL_TraceSpline(t, start, direction, force, 4096, &rendered, &ignoredActors[0]);
-		UTIL_DrawCircle(loc, (vec) 30.f, &rendered);
+		UTIL_DrawCircle(loc, traceSize, &rendered);
+
+		// trace direction
+		direction.Z = 0;
+		direction = direction.GetSafeNormal();
+		direction.Normalize();
+
+		m_rTeleportationRot = FRotator(0, GetActorRotation().Roll, 0);
+
+		FVector vDest = (direction * traceSize);
+		vDest = m_rTeleportationRot.RotateVector(vDest);
+
+		UTIL_DrawLine(loc, loc + vDest, &rendered);
+	
+		// standardize rotation for pawn rotation
+		m_rTeleportationRot = FRotator(0, m_rTeleportationRot.RotateVector(direction).Rotation().Yaw, 0);
+
 	}
 	
 }

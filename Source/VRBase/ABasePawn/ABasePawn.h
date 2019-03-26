@@ -171,7 +171,7 @@ public:
 
 	bool CanTeleportToLocation(const FVector& loc);
 
-	bool TeleportPlayer(const FVector& loc);
+	bool TeleportPlayer(const FVector& loc, const FRotator& rot);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Teleportation")
 		AActor* m_pTeleportBounds;

@@ -66,7 +66,6 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	
 	if (PlayerInputComponent) {
-
 		// Left Input
 
 		// Trigger
@@ -180,9 +179,8 @@ bool ABasePawn::CanTeleportToLocation(const FVector& loc) {
 	FVector boxOrigin, boxExtent;
 	m_pTeleportBounds->GetActorBounds(false, boxOrigin, boxExtent);
 
-	// This is the logic IsInsideOrOn() should compute 
-	// but for some reason it returns a different answer than
-	// expected. This will have to do :')
+	// This is what IsInsideOrOn() should compute but (for an unknown reason)
+	// it returns a different answer than expected
 	return (
 		loc.X >= boxOrigin.X - boxExtent.X && loc.X <= boxOrigin.X + boxExtent.X &&
 		loc.Y >= boxOrigin.Y - boxExtent.Y && loc.Y <= boxOrigin.Y + boxExtent.Y &&
@@ -190,12 +188,15 @@ bool ABasePawn::CanTeleportToLocation(const FVector& loc) {
 	);
 }
 
-bool ABasePawn::TeleportPlayer(const FVector& loc) {
+bool ABasePawn::TeleportPlayer(const FVector& loc, const FRotator& rot) {
 	//First check if it is legal to enter this location
 	if (!CanTeleportToLocation(loc))
 		return false;
 
 	//Teleport with the offset
 	SetActorLocation(loc);
+	FRotator old = GetActorRotation();
+	SetActorRotation(FRotator(old.Pitch, rot.Yaw, old.Roll));
+
 	return true;
 }

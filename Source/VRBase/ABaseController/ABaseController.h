@@ -37,6 +37,7 @@ public:
 	TArray<AActor*>			m_aOverlapActors;
 	TArray<APickup*>		m_aAttachActors;
 	bool					m_bTeleportationActive;
+	FRotator				m_rTeleportationRot;
 
 	// Events
 	UFUNCTION()
