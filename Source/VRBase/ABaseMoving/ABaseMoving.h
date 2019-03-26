@@ -28,8 +28,6 @@ public:
 
 	virtual void PreInit() override;
 
-	virtual void PostInit() override;
-
 	virtual void OnUsed(ABaseEntity*) override;
 
 	virtual void SetPositionFromController(ABaseController*);

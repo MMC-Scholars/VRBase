@@ -66,7 +66,6 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	
 	if (PlayerInputComponent) {
-		
 
 		// Left Input
 

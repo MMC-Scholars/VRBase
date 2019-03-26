@@ -10,11 +10,8 @@ ABaseMoving::ABaseMoving() {
 }
 
 void ABaseMoving::PreInit() {
+	Super::PreInit();
 	SetLerpPosition(m_lInitialLerp);
-}
-
-void ABaseMoving::PostInit() {
-
 }
 
 void ABaseMoving::OnUsed(ABaseEntity* pActivator) {

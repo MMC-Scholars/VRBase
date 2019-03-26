@@ -75,7 +75,6 @@ void ABaseController::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* 
 	}
 }
 
-
 ABaseController* g_pLeftController;
 ABaseController* g_pRightController;
 
@@ -83,7 +82,6 @@ void ABaseController::OnButtonsChanged() {
 	m_iButtons |= m_iButtonsPressed;
 	m_iButtons &= ~m_iButtonsReleased;
 
-	
 	// -----------------------------------------------------------------------------------------------------------------------------
 	// BUTTON PRESS
 	// -----------------------------------------------------------------------------------------------------------------------------
@@ -145,13 +143,13 @@ void ABaseController::OnButtonsChanged() {
 		m_aAttachActors.Empty();
 	}
 
-	
-
 	//first, removed inputs from invalid entities
 	int32 i = 0;
 	while (i < m_aRegisteredEntities.Num()) {
-		if (!m_aRegisteredEntities[i].m_ent)
+		if (!m_aRegisteredEntities[i].m_ent) {
 			m_aRegisteredEntities.RemoveAt(i);
+		}
+			
 		else
 			i++;
 	}
@@ -165,6 +163,7 @@ void ABaseController::OnButtonsChanged() {
 		buttonActivated = buttonActivated || (!trig->m_bOnReleased && (trig->m_iButton & m_iButtonsPressed));
 
 		if (buttonActivated && trig->m_ent->IsUseable() && trig->m_ent->IsUseableBy(this)) {
+
 			trig->m_ent->Use(this);
 		}
 	}
