@@ -8,6 +8,9 @@ AMoveLinear::AMoveLinear() {
 }
 
 void AMoveLinear::SetPositionFromController(ABaseController* pController) {
+	//FPlane boundingPlane = FPlane(GetActorLocation(), m_vDirection);
+
+
 	FVector locThis = GetActorLocation();
 	FVector locController = pController->GetActorLocation();
 

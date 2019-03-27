@@ -15,8 +15,9 @@ void ABaseMoving::PreInit() {
 }
 
 void ABaseMoving::OnUsed(ABaseEntity* pActivator) {
+	Msg(__FUNCTION__);
 	ABaseController* pController = dynamic_cast<ABaseController*>(pActivator);
-	if (pController && pActivator->IsUseableBy(pController)) {
+	if (pController) {
 
 		if (!m_bInAttachThink) {
 			m_pHoldingController = pController;
@@ -98,12 +99,10 @@ void ABaseMoving::CloseThink(void* vpBaseMoving) {
 }
 
 void ABaseMoving::AttachThink(void* vpBaseMoving) {
-	static int frameCount = 0;
-	frameCount++;
-	if (frameCount == 100) {
-		frameCount = 0;
-		Msg(__FUNCTION__);
-	}
 	ABaseMoving* pMoving = ExtractArg<ABaseMoving>(vpBaseMoving);
+	if (!pMoving->IsUseableBy(pMoving->m_pHoldingController)) {
+		pMoving->StopThink();
+	}
+
 	pMoving->SetPositionFromController(pMoving->m_pHoldingController);
 }

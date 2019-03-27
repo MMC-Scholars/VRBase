@@ -79,6 +79,7 @@ ABaseController* g_pLeftController;
 ABaseController* g_pRightController;
 
 void ABaseController::OnButtonsChanged() {
+	Msg(__FUNCTION__);
 	m_iButtons |= m_iButtonsPressed;
 	m_iButtons &= ~m_iButtonsReleased;
 
