@@ -16,7 +16,7 @@ void ABaseMoving::PreInit() {
 
 void ABaseMoving::OnUsed(ABaseEntity* pActivator) {
 	ABaseController* pController = dynamic_cast<ABaseController*>(pActivator);
-	if (pController) {
+	if (pController && pActivator->IsUseableBy(pController)) {
 
 		if (!m_bInAttachThink) {
 			m_pHoldingController = pController;
