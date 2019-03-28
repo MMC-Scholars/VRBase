@@ -25,6 +25,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AMoveLinear")
 		UStaticMeshComponent* m_staticMesh;
 
-	
-
+	FVector startLoc;
+	FVector endLoc;
 };
