@@ -13,9 +13,11 @@ UCLASS()
 class VRBASE_API AMoveLinear : public ABaseMoving
 {
 	GENERATED_BODY()
+
 	
 public:
 	AMoveLinear();
+	void PreInit() override;
 
 	void SetPositionFromController(ABaseController* pController) override;
 	
@@ -25,6 +27,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AMoveLinear")
 		UStaticMeshComponent* m_staticMesh;
 
-	FVector startLoc;
-	FVector endLoc;
+	FVector m_startLoc;
+	FPlane m_startPlane;
+	FPlane m_endPlane;
 };

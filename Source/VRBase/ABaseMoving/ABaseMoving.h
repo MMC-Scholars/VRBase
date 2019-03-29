@@ -74,7 +74,7 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "BaseMoving")
 	void OnFinishClose();
 
-private:
+protected:
 	bool m_bInAttachThink;
 	lerp m_lCurrentLerp;
 	ABaseController* m_pHoldingController; //What controller is holding on to us?

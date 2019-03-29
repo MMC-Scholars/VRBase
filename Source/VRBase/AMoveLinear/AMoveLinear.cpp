@@ -5,21 +5,19 @@
 
 AMoveLinear::AMoveLinear() {
 	m_staticMesh = CreateDefaultSubobject<UStaticMeshComponent>("m_staticMeshComponent");
-	startLoc = GetActorLocation();
+}
+
+void AMoveLinear::PreInit() {
+	ABaseMoving::PreInit();
+	m_startLoc = GetActorLocation();
+	m_startPlane = FPlane(m_startLoc, m_vDirection);
+	m_endPlane = FPlane(m_startLoc + m_vDirection, -m_vDirection);
 }
 
 void AMoveLinear::SetPositionFromController(ABaseController* pController) {
-	//FVector Base, FVector Normal
-	//endLoc = startLoc + m_vDirection;
-	FPlane startPlane = FPlane(startLoc, m_vDirection);
-	//FPlane endPlane = FPlane(endLoc, m_vDirection);
-	/** PlaneDot(...)
-	* Calculates distance between plane and a point.
-	*
-	* @param P The other point.
-	* @return >0: point is in front of the plane, <0: behind, =0: on the plane.
-	*/
-	if (startPlane.PlaneDot(GetActorLocation()) >= 0) {
+
+	if (m_startPlane.PlaneDot(pController->GetActorLocation()) >= 0
+		&& m_endPlane.PlaneDot(pController->GetActorLocation()) >= 0) {
 		FVector locThis = GetActorLocation();
 		FVector locController = pController->GetActorLocation();
 
@@ -29,6 +27,9 @@ void AMoveLinear::SetPositionFromController(ABaseController* pController) {
 		FVector locAlongAxis = proj + locThis;
 
 		SetActorLocation(locAlongAxis);
+
+		m_lCurrentLerp = (GetActorLocation() - m_startLoc).Size() / m_vDirection.Size();
+		Msg("%f", GetLerpPosition());
 	}
 }
 
