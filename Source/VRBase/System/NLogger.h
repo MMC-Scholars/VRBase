@@ -29,3 +29,7 @@ void Msg(const wchar_t* pszFormat, ...);
 inline void Msg(const FVector& v) {
 	Msg("(%f,%f,%f)", v.X, v.Y, v.Z);
 }
+
+inline void Msg(const FRotator& r) {
+	Msg("(%f,%f,%f)", r.Pitch, r.Yaw, r.Roll);
+}

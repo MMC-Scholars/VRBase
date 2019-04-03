@@ -195,8 +195,9 @@ bool ABasePawn::TeleportPlayer(const FVector& loc, const FRotator& rot) {
 
 	//Teleport with the offset
 	SetActorLocation(loc);
-	FRotator old = GetActorRotation();
-	SetActorRotation(FRotator(old.Pitch, rot.Yaw, old.Roll));
-
+	FRotator rPrev = GetActorRotation();
+	FRotator rHMD = m_pCamera->GetComponentRotation();
+	SetActorRotation(FRotator(rPrev.Pitch, rPrev.Yaw - rHMD.Yaw + rot.Yaw, rPrev.Roll));
+	
 	return true;
 }
