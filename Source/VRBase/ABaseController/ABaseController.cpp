@@ -79,7 +79,7 @@ ABaseController* g_pLeftController;
 ABaseController* g_pRightController;
 
 void ABaseController::OnButtonsChanged() {
-	Msg(__FUNCTION__);
+	//Msg(__FUNCTION__);
 	m_iButtons |= m_iButtonsPressed;
 	m_iButtons &= ~m_iButtonsReleased;
 
@@ -205,7 +205,7 @@ void ABaseController::SetStaticMesh(UStaticMesh* pMesh) {
 
 void ABaseController::OnUsed(ABaseEntity* pActivator) {
 
-	Msg(__FUNCTION__);
+	//Msg(__FUNCTION__);
 }
 
 void ABaseController::DefaultThink() {
@@ -237,22 +237,34 @@ void ABaseController::DefaultThink() {
 
 		vec traceSize = (vec) 30.0f;
 
-		// trace spline and circle
+		// draw trace spline and circle
 		UTIL_TraceSpline(t, start, direction, force, 4096, &rendered, &ignoredActors[0]);
 		UTIL_DrawCircle(loc, traceSize, &rendered);
 
-		// trace direction
+		// draw trace arrow direction
 		direction.Z = 0;
 		direction = direction.GetSafeNormal();
 		direction.Normalize();
 
 		m_rTeleportationRot = FRotator(0, GetActorRotation().Roll, 0);
 
-		FVector vDest = (direction * traceSize);
-		vDest = m_rTeleportationRot.RotateVector(vDest);
+		FVector vDelta = direction * traceSize * 2;
+		vDelta = m_rTeleportationRot.RotateVector(vDelta);
 
-		UTIL_DrawLine(loc, loc + vDest, &rendered);
-	
+		FVector vDest = loc + vDelta;
+
+		UTIL_DrawLine(loc, vDest, &rendered);
+
+		// draw trace arrow lines
+		float fLineAngle = 50.0f;
+		FVector vLineAngleDir = -1 * direction * traceSize * 0.6;
+
+		FVector vRightLine = FRotator(0, GetActorRotation().Roll - fLineAngle, 0).RotateVector(vLineAngleDir);
+		UTIL_DrawLine(vDest, vDest + vRightLine, &rendered);
+
+		FVector vLeftLine = FRotator(0, GetActorRotation().Roll + fLineAngle, 0).RotateVector(vLineAngleDir);
+		UTIL_DrawLine(vDest, vDest + vLeftLine, &rendered);
+
 		// standardize rotation for pawn rotation
 		m_rTeleportationRot = FRotator(0, m_rTeleportationRot.RotateVector(direction).Rotation().Yaw, 0);
 
@@ -274,8 +286,9 @@ void ABaseController::GetTraceIgnoredActors(TArray<AActor*>& ignoredActors) {
 		ignoredActors.Add(OtherController()->m_aAttachActors[i]);
 	}
 
-	// add navigation mesh bounds to list of ignored actors
-	ignoredActors.Add(g_pBasePawn->m_pTeleportBounds);
+	// add all navigation mesh bounds to list of ignored actors
+	for (int i = 0; i < g_pBasePawn->m_aTeleportBounds.Num(); i++)
+		if (g_pBasePawn->m_aTeleportBounds[i]) ignoredActors.Add(g_pBasePawn->m_aTeleportBounds[i]);
 
 	// nullptr denotes the end of the list
 	ignoredActors.Add(nullptr);

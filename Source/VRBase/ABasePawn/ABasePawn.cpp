@@ -9,8 +9,7 @@
 ABasePawn::ABasePawn() {
 	Tags.Add(TAG_BASEPAWN);
 	m_pSelfAsActor = this;
-	m_pTeleportBounds = NULL;
-
+	
 	m_pLHand = NULL;
 	m_pRHand = NULL;
 
@@ -108,7 +107,7 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 
 		//TODO PlayerInputComponent->BindKey(EKeys::MotionController_Left_Thumbstick, IE_Pressed, this, &ABasePawn::OnL_STICK_Pressed);
-		//TODO PlayerInputComponent->BindKey(EKeys::MotionController_Left_Thumbstick, IE_Released, this, &ABasePawn::OnL_STICK_Released);		
+		//TODO PlayerInputComponent->BindKey(EKeys::MotionController_Left_Thumbstick, IE_Released, this, &ABasePawn::OnL_STICK_Released);
 
 		//TODO touch events?
 		//PlayerInputComponent->BindTouch(IE_Pressed, this, &ABasePawn::UpdateTouch(ETouchIndex::Type, FVector);
@@ -172,29 +171,42 @@ void ABasePawn::SetControllerClass(UClass* LControllerClass, UClass* RController
 
 }
 
-bool ABasePawn::CanTeleportToLocation(const FVector& loc) {
-	//If we don't have a bounds, return true
-	// This will help unexperienced VR developers avoid problems
-	if (!m_pTeleportBounds)
-		return true;
-
-	//Check if the given location is within our bounds
-	FVector boxOrigin, boxExtent;
-	m_pTeleportBounds->GetActorBounds(false, boxOrigin, boxExtent);
-
+bool ABasePawn::IsWithinTeleportBounds(const FVector& loc, const FVector& bOrigin, const FVector& bExtent) {
 	// This is what IsInsideOrOn() should compute but (for an unknown reason)
 	// it returns a different answer than expected
 	return (
-		loc.X >= boxOrigin.X - boxExtent.X && loc.X <= boxOrigin.X + boxExtent.X &&
-		loc.Y >= boxOrigin.Y - boxExtent.Y && loc.Y <= boxOrigin.Y + boxExtent.Y &&
-		loc.Z >= boxOrigin.Z - boxExtent.Z && loc.Z <= boxOrigin.Z + boxExtent.Z
+		loc.X >= bOrigin.X - bExtent.X && loc.X <= bOrigin.X + bExtent.X &&
+		loc.Y >= bOrigin.Y - bExtent.Y && loc.Y <= bOrigin.Y + bExtent.Y &&
+		loc.Z >= bOrigin.Z - bExtent.Z && loc.Z <= bOrigin.Z + bExtent.Z
 	);
+}
+
+
+bool ABasePawn::CanTeleportToLocation(const FVector& loc) {
+	//If we don't have a bounds, return true
+	// This will help unexperienced VR developers avoid problems
+	if (!m_aTeleportBounds.Num())
+		return true;
+
+	bool bLocValid = false;
+	FVector boxOrigin, boxExtent;
+	int i = 0;
+
+	while (i < m_aTeleportBounds.Num() && !bLocValid) {
+		if (g_pBasePawn->m_aTeleportBounds[i])
+			m_aTeleportBounds[i]->GetActorBounds(false, boxOrigin, boxExtent);
+		//Check if the given location is within our bounds
+		if (g_pBasePawn->m_aTeleportBounds[i])
+			bLocValid = bLocValid || IsWithinTeleportBounds(loc, boxOrigin, boxExtent);
+		i++;
+	}
+
+	return bLocValid;
 }
 
 bool ABasePawn::TeleportPlayer(const FVector& loc, const FRotator& rot) {
 	//First check if it is legal to enter this location
-	if (!CanTeleportToLocation(loc))
-		return false;
+	if (!CanTeleportToLocation(loc)) return false;
 
 	//Teleport with the offset
 	SetActorLocation(loc);

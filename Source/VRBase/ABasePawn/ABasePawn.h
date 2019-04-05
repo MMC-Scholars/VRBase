@@ -169,10 +169,12 @@ public:
 // PLAYER TELEPORT HANDLING
 //-----------------------------------------------------------------------------
 
+	bool IsWithinTeleportBounds(const FVector& loc, const FVector& bOrigin, const FVector& bExtent);
+
 	bool CanTeleportToLocation(const FVector& loc);
 
 	bool TeleportPlayer(const FVector& loc, const FRotator& rot);
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Teleportation")
-		AActor* m_pTeleportBounds;
+	TArray<AActor*> m_aTeleportBounds;
 };
