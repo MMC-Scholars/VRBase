@@ -17,6 +17,7 @@ class VRBASE_API AMoveLinear : public ABaseMoving
 	
 public:
 	AMoveLinear();
+
 	void PreInit() override;
 
 	void SetPositionFromController(ABaseController* pController) override;
