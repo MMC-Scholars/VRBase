@@ -28,6 +28,10 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AMoveLinear")
 		UStaticMeshComponent* m_staticMesh;
 
+	void SetLerpPosition(float _lerp) override;
+
+	void DefaultThink() override;
+
 	FVector m_startLoc;
 	FPlane m_startPlane;
 	FPlane m_endPlane;

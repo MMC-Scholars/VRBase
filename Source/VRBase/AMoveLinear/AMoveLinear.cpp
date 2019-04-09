@@ -8,10 +8,11 @@ AMoveLinear::AMoveLinear() {
 }
 
 void AMoveLinear::PreInit() {
-	ABaseMoving::PreInit();
+
 	m_startLoc = GetActorLocation();
 	m_startPlane = FPlane(m_startLoc, m_vDirection);
 	m_endPlane = FPlane(m_startLoc + m_vDirection, -m_vDirection);
+	ABaseMoving::PreInit();
 }
 
 void AMoveLinear::SetPositionFromController(ABaseController* pController) {
@@ -33,7 +34,15 @@ void AMoveLinear::SetPositionFromController(ABaseController* pController) {
 	}
 }
 
+void AMoveLinear::SetLerpPosition(float _lerp) {
+	Super::SetLerpPosition(_lerp);
+	SetActorLocation(m_startLoc + _lerp * m_vDirection);
+}
 
+void AMoveLinear::DefaultThink() {
+	Super::DefaultThink();
+	
+}
 
 
 

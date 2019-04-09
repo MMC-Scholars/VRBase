@@ -54,7 +54,7 @@ public:
 	ABaseEntity();
 
 	virtual void OnUsed(ABaseEntity* pActivator) {}
-	virtual void DefaultThink() {}
+	virtual void DefaultThink() { /*Msg(__FUNCTION__);*/ }
 
 	//you can override these if you want, but there's no guarantees
 	//about how these interact with the new custom game flow
