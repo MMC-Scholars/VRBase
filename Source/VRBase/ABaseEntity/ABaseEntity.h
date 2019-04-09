@@ -25,6 +25,8 @@ struct FEntityInputRegistrationButtons {
 		bool m_GRIP;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 		bool m_MENU;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+		bool m_STICK;
 };
 
 //This has two sets of booleans - one for released, one for pressed.

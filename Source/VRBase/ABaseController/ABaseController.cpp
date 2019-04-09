@@ -88,7 +88,8 @@ void ABaseController::OnButtonsChanged() {
 	// -----------------------------------------------------------------------------------------------------------------------------
 
 	if (m_iButtonsPressed & IN_AX && !OtherController()->m_bTeleportationActive) {
-		m_bTeleportationActive = true;
+		if (g_pBasePawn && g_pBasePawn->m_bTeleportationEnabled) 
+			m_bTeleportationActive = true;
 	}
 
 	if (m_iButtonsPressed & IN_TRIGGER) {

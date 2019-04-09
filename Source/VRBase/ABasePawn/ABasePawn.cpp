@@ -2,7 +2,6 @@
 
 #include "ABasePawn.h"
 #include "System/NLogger.h"
-
 #define DEFAULT_CONTROLLER_CLASS ABaseController
 #define CAPSULE_HEIGHT 96.0
 
@@ -56,6 +55,9 @@ ABasePawn::ABasePawn() {
 	m_pRChildActor->SetChildActorClass(DEFAULT_CONTROLLER_CLASS::StaticClass());
 	m_pRChildActor->SetupAttachment(m_pRMotionController);
 
+	// teleportation enabled
+	m_bTeleportationEnabled = true;
+
 	// automatically possess pawn placed in world instead of generating a pawn
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
@@ -84,6 +86,9 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		// BY
 		PlayerInputComponent->BindKey(EKeys::MotionController_Left_FaceButton2, IE_Pressed, this, &ABasePawn::OnL_BY_Pressed);
 		PlayerInputComponent->BindKey(EKeys::MotionController_Left_FaceButton2, IE_Released, this, &ABasePawn::OnL_BY_Released);
+		// Thumbstick
+		PlayerInputComponent->BindKey(EKeys::MotionController_Left_Thumbstick, IE_Pressed, this, &ABasePawn::OnL_STICK_Pressed);
+		PlayerInputComponent->BindKey(EKeys::MotionController_Left_Thumbstick, IE_Released, this, &ABasePawn::OnL_STICK_Released);
 
 		// Right Input
 
@@ -104,10 +109,9 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		// BY
 		PlayerInputComponent->BindKey(EKeys::MotionController_Right_FaceButton2, IE_Pressed, this, &ABasePawn::OnR_BY_Pressed);
 		PlayerInputComponent->BindKey(EKeys::MotionController_Right_FaceButton2, IE_Released, this, &ABasePawn::OnR_BY_Released);
-
-
-		//TODO PlayerInputComponent->BindKey(EKeys::MotionController_Left_Thumbstick, IE_Pressed, this, &ABasePawn::OnL_STICK_Pressed);
-		//TODO PlayerInputComponent->BindKey(EKeys::MotionController_Left_Thumbstick, IE_Released, this, &ABasePawn::OnL_STICK_Released);
+		// Thumbstick
+		PlayerInputComponent->BindKey(EKeys::MotionController_Right_Thumbstick, IE_Pressed, this, &ABasePawn::OnR_STICK_Pressed);
+		PlayerInputComponent->BindKey(EKeys::MotionController_Right_Thumbstick, IE_Released, this, &ABasePawn::OnR_STICK_Released);
 
 		//TODO touch events?
 		//PlayerInputComponent->BindTouch(IE_Pressed, this, &ABasePawn::UpdateTouch(ETouchIndex::Type, FVector);
@@ -192,12 +196,13 @@ bool ABasePawn::CanTeleportToLocation(const FVector& loc) {
 	FVector boxOrigin, boxExtent;
 	int i = 0;
 
+	// use a while loop to ensure loop runs <= n times
 	while (i < m_aTeleportBounds.Num() && !bLocValid) {
-		if (g_pBasePawn->m_aTeleportBounds[i])
-			m_aTeleportBounds[i]->GetActorBounds(false, boxOrigin, boxExtent);
 		//Check if the given location is within our bounds
-		if (g_pBasePawn->m_aTeleportBounds[i])
+		if (m_aTeleportBounds[i]) {
+			m_aTeleportBounds[i]->GetActorBounds(false, boxOrigin, boxExtent);
 			bLocValid = bLocValid || IsWithinTeleportBounds(loc, boxOrigin, boxExtent);
+		}
 		i++;
 	}
 
@@ -208,8 +213,12 @@ bool ABasePawn::TeleportPlayer(const FVector& loc, const FRotator& rot) {
 	//First check if it is legal to enter this location
 	if (!CanTeleportToLocation(loc)) return false;
 
-	//Teleport with the offset
-	SetActorLocation(loc);
+	// location
+	FVector lPrev = GetActorLocation();
+	FVector lHMD = m_pCamera->GetComponentLocation();
+	SetActorLocation(FVector(lPrev.X - lHMD.X + loc.X, lPrev.Y - lHMD.Y + loc.Y, lPrev.Z));
+
+	// rotation
 	FRotator rPrev = GetActorRotation();
 	FRotator rHMD = m_pCamera->GetComponentRotation();
 	SetActorRotation(FRotator(rPrev.Pitch, rPrev.Yaw - rHMD.Yaw + rot.Yaw, rPrev.Roll));

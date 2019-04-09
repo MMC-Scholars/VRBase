@@ -10,7 +10,6 @@
 #include "HeadMountedDisplay.h"
 #include "MotionControllerComponent.h"
 #include "Components/ChildActorComponent.h"
-
 #include "ABaseController/ABaseController.h"
 #include "AGameRules/AGameRules.h"
 #include "System/Input.h"
@@ -66,15 +65,15 @@ public:
 	UChildActorComponent*		m_pRChildActor;
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Controller Classes")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Left Controller", DisplayName = "Controller Class")
 	UClass* m_pLControllerClass;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Controller Classes")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Right Controller", DisplayName = "Controller Class")
 	UClass* m_pRControllerClass;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Left Controller", DisplayName = "Controller Mesh")
 	UStaticMesh*				m_pLeftControllerMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Controllers)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Right Controller", DisplayName = "Controller Mesh")
 	UStaticMesh*				m_pRightControllerMesh;
 
 	ABaseController*			m_pLHand;
@@ -129,6 +128,9 @@ public:
 	// BY
 	KEY_INPUT(BY, Pressed, L);
 	KEY_INPUT(BY, Released, L);
+	// Thumbstick
+	KEY_INPUT(STICK, Pressed, L);
+	KEY_INPUT(STICK, Released, L);
 
 	// Right Input
 
@@ -147,8 +149,9 @@ public:
 	// BY
 	KEY_INPUT(BY, Pressed, R);
 	KEY_INPUT(BY, Released, R);
-
-	//TODO KEY_INPUT(STICK, Released, R);
+	// Thumbstick
+	KEY_INPUT(STICK, Pressed, R);
+	KEY_INPUT(STICK, Released, R);
 	
 	//virtual void UpdateInput(float);
 	//virtual void UpdateTouch(ETouchIndex::Type, FVector);
@@ -175,6 +178,9 @@ public:
 
 	bool TeleportPlayer(const FVector& loc, const FRotator& rot);
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Teleportation")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Teleportation", DisplayName = "Teleportation Enabled")
+	bool m_bTeleportationEnabled;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Teleportation", DisplayName = "Teleportation Bounds")
 	TArray<AActor*> m_aTeleportBounds;
+
 };

@@ -9,6 +9,7 @@
 #define FL_IGNORE_USE			BF(4)	//if set, this entity ignores generic "+Use" functionality
 #define FL_INGORE_INPUT			BF(5)	//if set, this entity ignores all player controller input whatsoever
 #define FL_IS_COOL				BF(6)	//Sam's idea
+#define FL_EXTRA				BF(7)
 
 
 #endif //IBASEENTITY_FLAGS

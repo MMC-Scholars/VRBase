@@ -19,10 +19,13 @@ void UVRAppSwitchFunctionLibrary::markNextProgramName(FString name) {
 	char buffer[512];
 	const TCHAR* pwszName = name.Len() > 0 ? &name[0] : TEXT("");;
 	mbstate_t state;
-	wcsrtombs(buffer, &pwszName, 512, &state);
+	//wcsrtombs(buffer, &pwszName, 512, &state);
+	size_t ret;
+	wcsrtombs_s(&ret, buffer, 512, &pwszName, 512, &state);
 
-
-	FILE* pFile = fopen(FILENAME_APP_NEXT, "w");
+	//FILE* pFile = fopen(FILENAME_APP_NEXT, "w");
+	FILE* pFile;
+	fopen_s(&pFile, FILENAME_APP_NEXT, "w");
 	if (pFile) {
 		g_bDidMarkNextProgram = true;
 		fprintf(pFile, buffer);

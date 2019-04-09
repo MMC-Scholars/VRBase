@@ -27,13 +27,13 @@ public:
 	TArray<AActor*> m_aParentActors;
 
 	// Components
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup")
+	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup")
 	UStaticMeshComponent*	m_pPickupMeshComponent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Static Mesh")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mesh", DisplayName = "Static Mesh")
 	UStaticMesh*			staticMesh;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Materials")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mesh", DisplayName = "Material")
 	UMaterialInterface*		material0;
 
 	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mass")

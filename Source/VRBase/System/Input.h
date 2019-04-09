@@ -22,6 +22,7 @@ extern ABasePawn*		g_pBasePawn;
 #define IN_TRIGGER			BF(3)
 #define IN_GRIP				BF(4)
 #define IN_MENU				BF(5)
+#define IN_STICK			BF(6)
 
 //Describes a specific setting of when a given entity is to be triggered
 //by a controller

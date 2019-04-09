@@ -10,7 +10,6 @@
 #include "ConstructorHelpers.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/SphereComponent.h"
-
 #include "APickup/APickup.h"
 #include "ABaseController.generated.h"
 
@@ -36,14 +35,15 @@ public:
 	bool					m_bPerformedPositionFixup;
 	TArray<AActor*>			m_aOverlapActors;
 	TArray<APickup*>		m_aAttachActors;
+
 	bool					m_bTeleportationActive;
 	FRotator				m_rTeleportationRot;
 
 	// Events
 	UFUNCTION()
-		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION()
-		void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 protected:
 

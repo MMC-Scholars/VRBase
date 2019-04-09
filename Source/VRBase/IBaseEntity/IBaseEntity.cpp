@@ -205,6 +205,8 @@ void IBaseEntity::RegisterInputsToControllers() {
 			pController->RegisterEntityInput(this, IN_MENU, bOnRelease);
 		if (pButtons->m_TRIGGER)
 			pController->RegisterEntityInput(this, IN_TRIGGER, bOnRelease);
+		if (pButtons->m_STICK)
+			pController->RegisterEntityInput(this, IN_STICK, bOnRelease);
 	};
 
 	auto registerToController = [&](ABaseController* pController, FEntityInputRegistrationParams* params) {
