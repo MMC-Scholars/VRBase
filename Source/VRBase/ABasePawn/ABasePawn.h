@@ -13,6 +13,7 @@
 #include "ABaseController/ABaseController.h"
 #include "AGameRules/AGameRules.h"
 #include "System/Input.h"
+#include "FPawnInstruction.h"
 #include "ABasePawn.generated.h"
 
 UCLASS()
@@ -170,7 +171,7 @@ public:
 
 //------------------------------------------------------------------------------
 // PLAYER TELEPORT HANDLING
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 	bool IsWithinTeleportBounds(const FVector& loc, const FVector& bOrigin, const FVector& bExtent);
 
@@ -182,5 +183,13 @@ public:
 	bool m_bTeleportationEnabled;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Teleportation", DisplayName = "Teleportation Bounds")
 	TArray<AActor*> m_aTeleportBounds;
+
+
+//------------------------------------------------------------------------------
+// PLAYER TELEPORT HANDLING
+//------------------------------------------------------------------------------
+
+	UPROPERTY(EditAnywhere, Category = "Instructions", DisplayName = "Pawn Instructions")
+	TArray<FPawnInstruction> m_aInstructions;
 
 };

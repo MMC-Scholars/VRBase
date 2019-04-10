@@ -57,7 +57,7 @@ ABasePawn::ABasePawn() {
 
 	// teleportation enabled
 	m_bTeleportationEnabled = true;
-
+	
 	// automatically possess pawn placed in world instead of generating a pawn
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
