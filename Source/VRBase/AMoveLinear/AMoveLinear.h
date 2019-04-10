@@ -32,6 +32,7 @@ public:
 
 	void DefaultThink() override;
 
+	//FVector m_parentLoc;
 	FVector m_startLoc;
 	FPlane m_startPlane;
 	FPlane m_endPlane;

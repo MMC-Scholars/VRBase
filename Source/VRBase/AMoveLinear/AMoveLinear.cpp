@@ -8,7 +8,7 @@ AMoveLinear::AMoveLinear() {
 }
 
 void AMoveLinear::PreInit() {
-
+	//m_parentLoc = GetOwner()->GetRootComponent()->GetAttachParent()->GetOwner()->GetActorLocation();
 	m_startLoc = GetActorLocation();
 	m_startPlane = FPlane(m_startLoc, m_vDirection);
 	m_endPlane = FPlane(m_startLoc + m_vDirection, -m_vDirection);
@@ -16,7 +16,11 @@ void AMoveLinear::PreInit() {
 }
 
 void AMoveLinear::SetPositionFromController(ABaseController* pController) {
-
+	/*m_startLoc = GetActorLocation();
+	m_startPlane = FPlane(m_startLoc, m_vDirection);
+	m_endPlane = FPlane(m_startLoc + m_vDirection, -m_vDirection);
+	*/
+	//Edit this or ABaseMoving, glitch with grabbing.
 	if (m_startPlane.PlaneDot(pController->GetActorLocation()) >= 0
 		&& m_endPlane.PlaneDot(pController->GetActorLocation()) >= 0) {
 		FVector locThis = GetActorLocation();
