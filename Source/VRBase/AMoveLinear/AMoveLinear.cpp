@@ -34,7 +34,7 @@ void AMoveLinear::SetPositionFromController(ABaseController* pController) {
 		SetActorLocation(locAlongAxis);
 
 		m_lCurrentLerp = (GetActorLocation() - m_startLoc).Size() / m_vDirection.Size();
-		Msg("%f", GetLerpPosition());
+		//Msg("%f", GetLerpPosition());
 	}
 }
 

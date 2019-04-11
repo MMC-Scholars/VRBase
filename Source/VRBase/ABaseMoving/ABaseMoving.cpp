@@ -32,6 +32,12 @@ void ABaseMoving::OnUsed(ABaseEntity* pActivator) {
 	}
 }
 
+bool ABaseMoving::IsUseableBy(const ABaseController* pController) const {
+	if (pController->m_iButtonsReleased && !m_pHoldingController)
+		return false;
+	return Super::IsUseableBy(pController);
+}
+
 void ABaseMoving::SetPositionFromController(ABaseController* pController) {
 
 }

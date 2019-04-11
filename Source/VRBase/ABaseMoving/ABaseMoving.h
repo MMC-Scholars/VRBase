@@ -30,6 +30,8 @@ public:
 
 	virtual void OnUsed(ABaseEntity*) override;
 
+	virtual bool IsUseableBy(const ABaseController*) const override;
+
 	virtual void SetPositionFromController(ABaseController*);
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
