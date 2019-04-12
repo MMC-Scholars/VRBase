@@ -8,20 +8,39 @@ AMoveLinear::AMoveLinear() {
 }
 
 void AMoveLinear::PreInit() {
-	//m_parentLoc = GetOwner()->GetRootComponent()->GetAttachParent()->GetOwner()->GetActorLocation();
-	m_startLoc = GetActorLocation();
-	m_startPlane = FPlane(m_startLoc, m_vDirection);
-	m_endPlane = FPlane(m_startLoc + m_vDirection, -m_vDirection);
+	m_vOriginalDirection = m_vDirection;
+	m_hasParent = GetRootComponent()->GetAttachParent();
+	if (m_hasParent) {
+		FTransform parentTransform = GetRootComponent()->GetAttachParent()->GetOwner()->GetActorTransform();
+		m_startLoc = GetActorLocation() - parentTransform.GetLocation();
+		m_startPlane = FPlane(GetActorLocation(), m_vDirection);
+		m_endPlane = FPlane(GetActorLocation() + m_vDirection, -m_vDirection);
+	}
+	else {
+		m_startLoc = GetActorLocation();
+		m_startPlane = FPlane(m_startLoc, m_vDirection);
+		m_endPlane = FPlane(m_startLoc + m_vDirection, -m_vDirection);
+	}
+
 	ABaseMoving::PreInit();
 }
-
+// Work on AMoveLinear, find out recalculating startPlane and endPlane
 void AMoveLinear::SetPositionFromController(ABaseController* pController) {
+	if (m_hasParent) {
+		FTransform parentTransform = GetRootComponent()->GetAttachParent()->GetOwner()->GetActorTransform();
+		
+		
+		m_vDirection = parentTransform.Rotator().RotateVector(m_vOriginalDirection);
+		m_startPlane = FPlane(m_startLoc, m_vDirection);
+	}
+
+
 	/*m_startLoc = GetActorLocation();
 	m_startPlane = FPlane(m_startLoc, m_vDirection);
 	m_endPlane = FPlane(m_startLoc + m_vDirection, -m_vDirection);
 	*/
 	//Edit this or ABaseMoving, glitch with grabbing.
-	if (m_startPlane.PlaneDot(pController->GetActorLocation()) >= 0
+	/*if (m_startPlane.PlaneDot(pController->GetActorLocation()) >= 0
 		&& m_endPlane.PlaneDot(pController->GetActorLocation()) >= 0) {
 		FVector locThis = GetActorLocation();
 		FVector locController = pController->GetActorLocation();
@@ -33,9 +52,9 @@ void AMoveLinear::SetPositionFromController(ABaseController* pController) {
 
 		SetActorLocation(locAlongAxis);
 
-		m_lCurrentLerp = (GetActorLocation() - m_startLoc).Size() / m_vDirection.Size();
+		//m_lCurrentLerp = (GetActorLocation() - m_startLoc).Size() / m_vDirection.Size();
 		//Msg("%f", GetLerpPosition());
-	}
+	}*/
 }
 
 void AMoveLinear::SetLerpPosition(float _lerp) {

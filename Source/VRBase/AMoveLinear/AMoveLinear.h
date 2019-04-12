@@ -24,6 +24,7 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AMoveLinear")
 		FVector m_vDirection;
+	FVector m_vOriginalDirection;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AMoveLinear")
 		UStaticMeshComponent* m_staticMesh;
@@ -36,4 +37,5 @@ public:
 	FVector m_startLoc;
 	FPlane m_startPlane;
 	FPlane m_endPlane;
+	bool m_hasParent;
 };
