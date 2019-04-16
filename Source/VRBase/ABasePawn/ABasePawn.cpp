@@ -58,6 +58,27 @@ ABasePawn::ABasePawn() {
 	// teleportation enabled
 	m_bTeleportationEnabled = true;
 	
+	// instructions
+	float instrScale = 0.2;
+
+	// L text instructions
+	m_pLTextInstr = CreateDefaultSubobject<UTextRenderComponent>("Left Text Instructions");
+	m_pLTextInstr->SetupAttachment(m_pLChildActor);
+	m_pLTextInstr->SetXScale(instrScale);
+	m_pLTextInstr->SetYScale(instrScale);
+	m_pLTextInstr->SetHorizontalAlignment(EHTA_Center);
+	m_pLTextInstr->SetVerticalAlignment(EVRTA_TextBottom);
+	m_pLTextInstr->SetWorldRotation(FRotator(0, 180, 0));
+
+	// R text instructions
+	m_pRTextInstr = CreateDefaultSubobject<UTextRenderComponent>("Right Text Instructions");
+	m_pRTextInstr->SetupAttachment(m_pRChildActor);
+	m_pRTextInstr->SetXScale(instrScale);
+	m_pRTextInstr->SetYScale(instrScale);
+	m_pRTextInstr->SetHorizontalAlignment(EHTA_Center);
+	m_pRTextInstr->SetVerticalAlignment(EVRTA_TextBottom);
+	m_pRTextInstr->SetWorldRotation(FRotator(0, 180, 0));
+
 	// automatically possess pawn placed in world instead of generating a pawn
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
@@ -141,6 +162,18 @@ void ABasePawn::PreInit() {
 
 	m_rightControllerInput = FEntityInputRegistrationParams();
 	m_leftControllerInput = FEntityInputRegistrationParams();
+
+	// teleport pawn/hmd to correct(ed) location
+	TeleportPlayer(GetActorLocation(), GetActorRotation());
+	// set blank instructions
+	m_pLTextInstr->SetText(FText::FromString(""));
+	m_pRTextInstr->SetText(FText::FromString(""));
+
+	//todo move this elsewhere
+	for (int i = 0; i < m_aInstr.Num(); i++) {
+		SetInstruction(m_aInstr[i]);
+	}
+
 }
 
 void ABasePawn::SetControllerClass(UClass* LControllerClass, UClass* RControllerClass) {
@@ -172,6 +205,20 @@ void ABasePawn::SetControllerClass(UClass* LControllerClass, UClass* RController
 			m_pRHand->m_rightControllerInput = m_rightControllerInput;
 		}
 	}
+
+}
+
+void ABasePawn::SetInstruction(FPawnInstruction instr) {
+	UTextRenderComponent* component;
+	// left hand
+	if (instr.hand == EControllerHand::Left)
+		component = m_pLTextInstr;
+	// right hand
+	else
+		component = m_pRTextInstr;
+
+	component->SetText(instr.text);
+	component->SetTextRenderColor(instr.color);
 
 }
 

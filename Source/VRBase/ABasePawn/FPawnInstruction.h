@@ -4,16 +4,24 @@
 #include "CoreMinimal.h"
 #include "Engine.h"
 #include "EngineMinimal.h"
-#include "Components/TextRenderComponent.h"
 #include "FPawnInstruction.generated.h"
 
 USTRUCT(BlueprintType)
 struct FPawnInstruction {
 	GENERATED_BODY()
 
-	UTextRenderComponent* m_pTextRender;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName = "Instruction")
+	FText text;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName="Instruction Text")
-		FString m_pInstruction;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName = "Instruction Color")
+	FColor color = FColor::White;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName = "Display Hand")
+	EControllerHand hand = EControllerHand::Left;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName = "Change on Button Press")
+	bool changeOnButtonPress = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName = "Change Time")
+	float timedChange = 5.0;
 };

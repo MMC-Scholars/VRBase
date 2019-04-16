@@ -14,6 +14,7 @@
 #include "AGameRules/AGameRules.h"
 #include "System/Input.h"
 #include "FPawnInstruction.h"
+#include "Components/TextRenderComponent.h"
 #include "ABasePawn.generated.h"
 
 UCLASS()
@@ -189,7 +190,11 @@ public:
 // PLAYER TELEPORT HANDLING
 //------------------------------------------------------------------------------
 
-	UPROPERTY(EditAnywhere, Category = "Instructions", DisplayName = "Pawn Instructions")
-	TArray<FPawnInstruction> m_aInstructions;
+	UTextRenderComponent*		m_pRTextInstr;
+	UTextRenderComponent*		m_pLTextInstr;
 
+	UPROPERTY(EditAnywhere, Category = "Instructions", DisplayName = "Pawn Instructions")
+	TArray<FPawnInstruction>	m_aInstr;
+
+	void SetInstruction(FPawnInstruction instr);
 };
