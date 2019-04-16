@@ -145,6 +145,13 @@ void ABaseController::OnButtonsChanged() {
 		m_aAttachActors.Empty();
 	}
 
+	// change pawn instruction if applicable
+	if (m_iButtonsPressed && g_pBasePawn->m_aInstr.Num()) {
+		if (g_pBasePawn->m_aInstr[0].changeOnButtonPress) {
+			g_pBasePawn->NextInstruction();
+		}
+	}
+
 	//first, removed inputs from invalid entities
 	int32 i = 0;
 	while (i < m_aRegisteredEntities.Num()) {

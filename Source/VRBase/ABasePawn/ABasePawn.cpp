@@ -59,7 +59,7 @@ ABasePawn::ABasePawn() {
 	m_bTeleportationEnabled = true;
 	
 	// instructions
-	float instrScale = 0.2;
+	float instrScale = 0.1;
 
 	// L text instructions
 	m_pLTextInstr = CreateDefaultSubobject<UTextRenderComponent>("Left Text Instructions");
@@ -69,6 +69,7 @@ ABasePawn::ABasePawn() {
 	m_pLTextInstr->SetHorizontalAlignment(EHTA_Center);
 	m_pLTextInstr->SetVerticalAlignment(EVRTA_TextBottom);
 	m_pLTextInstr->SetWorldRotation(FRotator(0, 180, 0));
+	m_pLTextInstr->AddRelativeLocation(FVector(0, 0, 2));
 
 	// R text instructions
 	m_pRTextInstr = CreateDefaultSubobject<UTextRenderComponent>("Right Text Instructions");
@@ -78,6 +79,7 @@ ABasePawn::ABasePawn() {
 	m_pRTextInstr->SetHorizontalAlignment(EHTA_Center);
 	m_pRTextInstr->SetVerticalAlignment(EVRTA_TextBottom);
 	m_pRTextInstr->SetWorldRotation(FRotator(0, 180, 0));
+	m_pRTextInstr->AddRelativeLocation(FVector(0, 0, 2));
 
 	// automatically possess pawn placed in world instead of generating a pawn
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
@@ -163,16 +165,11 @@ void ABasePawn::PreInit() {
 	m_rightControllerInput = FEntityInputRegistrationParams();
 	m_leftControllerInput = FEntityInputRegistrationParams();
 
-	// teleport pawn/hmd to correct(ed) location
-	TeleportPlayer(GetActorLocation(), GetActorRotation());
 	// set blank instructions
 	m_pLTextInstr->SetText(FText::FromString(""));
 	m_pRTextInstr->SetText(FText::FromString(""));
-
-	//todo move this elsewhere
-	for (int i = 0; i < m_aInstr.Num(); i++) {
-		SetInstruction(m_aInstr[i]);
-	}
+	// display first instruction
+	if (m_aInstr.Num())	SetInstruction(m_aInstr[0]);
 
 }
 
@@ -205,20 +202,6 @@ void ABasePawn::SetControllerClass(UClass* LControllerClass, UClass* RController
 			m_pRHand->m_rightControllerInput = m_rightControllerInput;
 		}
 	}
-
-}
-
-void ABasePawn::SetInstruction(FPawnInstruction instr) {
-	UTextRenderComponent* component;
-	// left hand
-	if (instr.hand == EControllerHand::Left)
-		component = m_pLTextInstr;
-	// right hand
-	else
-		component = m_pRTextInstr;
-
-	component->SetText(instr.text);
-	component->SetTextRenderColor(instr.color);
 
 }
 
@@ -271,4 +254,50 @@ bool ABasePawn::TeleportPlayer(const FVector& loc, const FRotator& rot) {
 	SetActorRotation(FRotator(rPrev.Pitch, rPrev.Yaw - rHMD.Yaw + rot.Yaw, rPrev.Roll));
 	
 	return true;
+}
+
+void ABasePawn::SetInstruction(FPawnInstruction instr) {
+	UTextRenderComponent* component;
+	// left hand
+	if (instr.hand == EControllerHand::Left) {
+		component = m_pLTextInstr;
+		m_pRTextInstr->SetText(FText::FromString(""));
+	}
+	// right hand
+	else {
+		component = m_pRTextInstr;
+		m_pLTextInstr->SetText(FText::FromString(""));
+	}
+
+	component->SetText(instr.text);
+	component->SetTextRenderColor(instr.color);
+
+	if (!instr.changeOnButtonPress) m_fInstrChangeTime = g_pGlobals->curtime + instr.timedChange;
+
+	m_sInstr = &instr;
+}
+
+void ABasePawn::NextInstruction() {
+	// verify there is an instruction to switch to
+	if (m_aInstr.Num() > 1) {
+		SetInstruction(m_aInstr[1]);
+		m_sInstr = &m_aInstr[1];
+		m_aInstr.RemoveAt(0);
+	}
+	// clear instructions if no instructions exist
+	else {
+		m_pLTextInstr->SetText(FText::FromString(""));
+		m_pRTextInstr->SetText(FText::FromString(""));
+		m_sInstr = nullptr;
+	}
+
+}
+
+void ABasePawn::DefaultThink() {
+	// change instruction in timely manner
+	if (m_sInstr && !m_sInstr->changeOnButtonPress) {
+		if (g_pGlobals->curtime - m_fInstrChangeTime >= 0) {
+			NextInstruction();
+		}
+	}
 }

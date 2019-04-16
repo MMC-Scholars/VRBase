@@ -50,6 +50,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	virtual void PreInit() override;
+	virtual void DefaultThink() override;
 
 	virtual void SetControllerClass(UClass* LControllerClass, UClass* RControllerClass);
 
@@ -190,6 +191,8 @@ public:
 // PLAYER TELEPORT HANDLING
 //------------------------------------------------------------------------------
 
+	float						m_fInstrChangeTime;
+	FPawnInstruction*			m_sInstr;
 	UTextRenderComponent*		m_pRTextInstr;
 	UTextRenderComponent*		m_pLTextInstr;
 
@@ -197,4 +200,5 @@ public:
 	TArray<FPawnInstruction>	m_aInstr;
 
 	void SetInstruction(FPawnInstruction instr);
+	void NextInstruction();
 };
