@@ -62,7 +62,7 @@ void AMoveLinear::SetPositionFromController(ABaseController* pController) {
 
 void AMoveLinear::SetLerpPosition(float _lerp) {
 	Super::SetLerpPosition(_lerp);
-	SetActorLocation(m_startLoc + _lerp * m_vDirection);
+	// SetActorLocation(m_startLoc + _lerp * m_vDirection);
 }
 
 void AMoveLinear::DefaultThink() {
