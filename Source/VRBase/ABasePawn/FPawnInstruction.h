@@ -17,11 +17,17 @@ struct FPawnInstruction {
 	FColor color = FColor::White;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName = "Display Hand")
-	EControllerHand hand = EControllerHand::Left;
+	EControllerHand hand = EControllerHand::Right;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName = "Change on Button Press")
 	bool changeOnButtonPress = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName = "Change Time")
 	float timedChange = 5.0;
+
+	FPawnInstruction() {}
+
+	FPawnInstruction(FString string) {
+		text = FText::FromString(string);
+	}
 };

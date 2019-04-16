@@ -81,6 +81,11 @@ ABasePawn::ABasePawn() {
 	m_pRTextInstr->SetWorldRotation(FRotator(0, 180, 0));
 	m_pRTextInstr->AddRelativeLocation(FVector(0, 0, 2));
 
+	// default instructions
+	m_aInstr.Add(FPawnInstruction("Press and hold the A or X buttons to teleport on Oculus Rift"));
+	m_aInstr.Add(FPawnInstruction("While teleporting rotate your wrist to indicate the teleportation direction"));
+	m_aInstr.Add(FPawnInstruction("Press the index finger triggers near objects to pick them up or interact"));
+
 	// automatically possess pawn placed in world instead of generating a pawn
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
