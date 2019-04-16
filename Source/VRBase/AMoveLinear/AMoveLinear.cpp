@@ -9,7 +9,7 @@ AMoveLinear::AMoveLinear() {
 
 void AMoveLinear::PreInit() {
 	m_vOriginalDirection = m_vDirection;
-	m_hasParent = GetRootComponent()->GetAttachParent();
+	m_hasParent = GetRootComponent()->GetAttachParent() != nullptr;
 	// Whenever this is attached to another actor, this is not at its start loc
 	if (m_hasParent) {
 		Msg("HAS PARENT");
