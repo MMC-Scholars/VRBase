@@ -17,7 +17,7 @@
  * 
  */
 UCLASS()
-class MMC_OFF_RECREATION_API ABaseController : public ABaseEntity {
+class VRBASE_API ABaseController : public ABaseEntity {
 	GENERATED_BODY()
 	
 public:

@@ -11,7 +11,7 @@
  * 
  */
 UCLASS()
-class MMC_OFF_RECREATION_API UVRAppSwitchFunctionLibrary : public UBlueprintFunctionLibrary
+class VRBASE_API UVRAppSwitchFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 

@@ -78,7 +78,7 @@ public:
 
 protected:
 	bool m_bInAttachThink;
-	lerp m_lCurrentLerp;
+	float m_lCurrentLerp;
 	ABaseController* m_pHoldingController; //What controller is holding on to us?
 
 	static void OpenThink(void* vpBaseMoving);

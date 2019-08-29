@@ -1,46 +1,41 @@
-// This software is under partial ownership by The Ohio State University, 
-//for it is a product of student employees. For official policy, see
-//https://tco.osu.edu/wp-content/uploads/2013/09/PatentCopyrightPolicy.pdf 
-//or contact The Ohio State University's Office of Legal Affairs
+/**
+ * This software is under partial ownership by The Ohio State University, 
+ * for it is a product of student employees. For official policy, see
+ * https://tco.osu.edu/sites/default/files/pdfs/IP-Policy.pdf 
+ * or contact The Ohio State University's Office of Legal Affairs.
+ */
 
-//-------------------------------------------------------------------------------------
-// The purpose of this file is to define and alias things which are useful all-around
-//-------------------------------------------------------------------------------------
-#ifndef MMC_PREDEFS_H
-#define MMC_PREDEFS_H
+// predefs.h creates commonly-used aliases and definitions throughout the project.
+
+#ifndef VRBASE_PREDEFS_H
+#define VRBASE_PREDEFS_H
 
 #include "CoreMinimal.h"
+
 #ifndef VRBASE_API
 #define VRBASE_API
 #endif
 
-#ifndef MMC_OFF_RECREATION_API
-#define MMC_OFF_RECREATION_API
-#endif
+typedef unsigned char							byte;
+typedef unsigned short						ushort;
+typedef unsigned int							uint;
+typedef unsigned long long				ulong;
 
-//Typedefs
-typedef unsigned char		byte;
-typedef unsigned short		ushort;
-typedef unsigned int		uint;
-typedef unsigned long long	ulong;
+typedef float											ftime; // time
+typedef float											vec; // float representing world space (used by vectors)
+typedef unsigned short						eindex; // entity index
 
-typedef float			ftime; //denotes time variable
-typedef unsigned long	hcode; //denotes a ulong which is a unique hashcode
-typedef float			vec; //denotes a float used by vectors; represents world space
-typedef unsigned short	eindex;
-typedef float			lerp;
+// TODO remove later?
+#define STRINGIZE(tokens) #tokens // stringifies a token
 
-//Syntax aliases
-#define STRINGIZE_INTERNAL(tokens) #tokens
-#define STRINGIZE(tokens) STRINGIZE_INTERNAL(tokens)
+#define until(condition) while (!(condition)) // simplifies thinking in many contexts
+#define abstract_class class // abstract class never directly constructed
 
-#define until(condition) while (!(condition)) //simplifies thinking in some contexts
-#define abstract_class class //denotes a class as one which should not be directly constructed
 #define DECLARE_CLASS_SIMPLE(ChildClass, ParentClass) \
 	typedef ChildClass ThisClass; \
 	typedef ParentClass BaseClass;
 
-//forward declarations of classes so that other classes can contain pointers to them in their header files
+// forward declarations of classes so that other classes can use them in header files
 class IBaseEntity;
 class ABaseEntity;
 class ABasePawn;
@@ -48,18 +43,14 @@ class ABaseCharacter;
 class CTakeDamageInfo;
 struct EHANDLE;
 
-//tags denoting our Unreal-to-entity classes
-#define TAG_BASEENTITY		"MMC_BaseEntity"
-#define TAG_BASEPAWN		"MMC_BasePawn"
-#define TAG_BASECHARACTER	"MMC_BaseCharacter"
+// tags denoting Unreal-to-entity classes
+#define TAG_BASEENTITY						"VRBASE_BaseEntity"
+#define TAG_BASEPAWN							"VRBASE_BasePawn"
+#define TAG_BASECHARACTER					"VRBASE_BaseCharacter"
 
-
-
-//Forward declaration of global entity lists
+// forward declaration of global entity lists
 #define MAX_ENTITY_COUNT 2048
-extern IBaseEntity* g_ppEntityList[];	//const-index list, don't iterate over this, don't modify
-extern TArray<IBaseEntity*> g_entList; //entity list, iterate through this instead. All entries guaranteed to be non-null.
+extern IBaseEntity* g_ppEntityList[];	// const-index list, don't iterate over this, don't modify
+extern TArray<IBaseEntity*> g_entList; // entity list, iterate through this instead. All entries guaranteed to be non-null
 
-#define sqr(v) ((v)*(v))
-
-#endif //MMC_PREDEFS_H
+#endif // VRBASE_PREDEFS_H

@@ -27,5 +27,5 @@ void ABaseEntity::BeginPlay() {
 }
 
 bool ABaseEntity::IsUseableBy(const ABaseController* pController) const {
-	return GetSquaredDistanceTo(pController) < sqr(m_flUseMaxRadius);
+	return GetSquaredDistanceTo(pController) < (m_flUseMaxRadius * m_flUseMaxRadius);
 }

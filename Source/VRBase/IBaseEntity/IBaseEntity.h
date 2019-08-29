@@ -1,7 +1,9 @@
-// This software is under partial ownership by The Ohio State University, 
-//for it is a product of student employees. For official policy, see
-//https://tco.osu.edu/wp-content/uploads/2013/09/PatentCopyrightPolicy.pdf 
-//or contact The Ohio State University's Office of Legal Affairs
+/**
+ * This software is under partial ownership by The Ohio State University, 
+ * for it is a product of student employees. For official policy, see
+ * https://tco.osu.edu/sites/default/files/pdfs/IP-Policy.pdf 
+ * or contact The Ohio State University's Office of Legal Affairs.
+ */
 
 #ifndef IBASENTITY_H
 #define IBASENTITY_H
@@ -18,17 +20,16 @@
 #include "System/EHandle.h"
 #include "UObject/ConstructorHelpers.h"
 
-
-
-/**********************************************************************
-* IBaseEntity
-* Declares functionality common to all "Base" types and defines some
-*		of it.
-* Derived types are, for example:
-*	class ABaseEntity	 :	public AActor, public IBaseEntity {...};
-*	class ABasePawn      :	public APawn, public IBaseEntity {...};
-*	class ABaseCharacter :	public ACharacter, public IBaseEntity {...};
-**********************************************************************/
+/**
+ *****************************************************************************
+ * IBaseEntity
+ * Declares functionality common to all "Base" types and defines some of it.
+ * Derived types are, for example:
+ *	class ABaseEntity	   :	public AActor, public IBaseEntity {...};
+ *	class ABasePawn      :	public APawn, public IBaseEntity {...};
+ *	class ABaseCharacter :	public ACharacter, public IBaseEntity {...};
+ *****************************************************************************
+ */
 abstract_class IBaseEntity {
 public:
 	friend class CGlobalVars;

@@ -14,7 +14,7 @@
  * 
  */
 UCLASS()
-class MMC_OFF_RECREATION_API AWorldButton : public ABaseEntity
+class VRBASE_API AWorldButton : public ABaseEntity
 {
 	GENERATED_BODY()
 

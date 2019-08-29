@@ -103,7 +103,7 @@ void UTIL_DrawSpline(FVector start, FVector end, FVector force,
 	FVector vectorStep = start;
 	FVector previousStep = vectorStep;
 	while (step < len) {
-		lerp forceScale = 1.0f - 4 * sqr((step / len) - 0.5f);
+		float forceScale = 1.0f - 4 * sqr((step / len) - 0.5f);
 		vectorStep = start + displacement * step / len;
 		vectorStep += force * forceScale;
 		lb->DrawLine(previousStep, vectorStep, c, SDPG_World, thickness, life);

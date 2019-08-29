@@ -12,7 +12,7 @@
  * 
  */
 UCLASS()
-class MMC_OFF_RECREATION_API APickup : public ABaseEntity
+class VRBASE_API APickup : public ABaseEntity
 {
 	GENERATED_BODY()
 	
