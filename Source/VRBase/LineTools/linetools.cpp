@@ -7,15 +7,14 @@
 #define sqr(a) ((a)*(a))
 #define SPLINE_STEP 5.f
 
-#define CHN_WORLDSTATIC		(1 << ECC_WorldStatic)
-#define CHN_WORLDDYNAMIC	(1 << ECC_WorldDynamic)
-#define CHN_PAWN			(1 << ECC_Pawn)
-#define CHN_VISIBILITY		(1 << ECC_Visibility)
-#define CHN_CAMERA			(1 << ECC_Camera)
-#define CHN_PHYSICSBODY		(1 << ECC_PhysicsBody)
-#define CHN_DESTRUCTIBLE	(1 << ECC_Destructible)
-#define CHN_ALL				(CHN_WORLDSTATIC | CHN_WORLDDYNAMIC | CHN_PAWN | CHN_CAMERA | CHN_PHYSICSBODY | CHN_DESTRUCTIBLE)
-
+#define CHN_WORLDSTATIC				(1 << ECC_WorldStatic)
+#define CHN_WORLDDYNAMIC			(1 << ECC_WorldDynamic)
+#define CHN_PAWN							(1 << ECC_Pawn)
+#define CHN_VISIBILITY				(1 << ECC_Visibility)
+#define CHN_CAMERA						(1 << ECC_Camera)
+#define CHN_PHYSICSBODY				(1 << ECC_PhysicsBody)
+#define CHN_DESTRUCTIBLE			(1 << ECC_Destructible)
+#define CHN_ALL								(CHN_WORLDSTATIC | CHN_WORLDDYNAMIC | CHN_PAWN | CHN_CAMERA | CHN_PHYSICSBODY | CHN_DESTRUCTIBLE)
 
 FCollisionObjectQueryParams g_coqpDefault = FCollisionObjectQueryParams(FCollisionObjectQueryParams::AllObjects);
 
@@ -66,13 +65,13 @@ void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FV
 		force += origForce * iterations;
 		direction += step;
 	};
+
 	if (rendered) {
 		while (iterations <= maxIterations && t.Time > 0.9999f) {
 			pfTraceOp();
 			g_pGameRules->GetWorld()->LineBatcher->DrawLine(t.TraceStart, t.TraceEnd, rendered->Color, SDPG_World, rendered->Thickness, rendered->Duration);
 		}
-	}
-	else {
+	} else {
 		while (iterations <= maxIterations && t.Time > 0.9999f) {
 			pfTraceOp();
 		}
@@ -80,7 +79,6 @@ void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FV
 }
 
 void UTIL_DrawLine(FVector start, FVector end, SLineDrawParams* rendered) {
-	//Msg("Checking drawing line!\n");
 	if (!LineToolsReady() || !g_pGameRules->GetWorld()->LineBatcher)
 		return;
 	g_pGameRules->GetWorld()->LineBatcher->DrawLine(start, end, rendered->Color, SDPG_World, rendered->Thickness, rendered->Duration);
@@ -91,10 +89,6 @@ void UTIL_DrawSpline(FVector start, FVector end, FVector force,
 	if (!LineToolsReady() || !g_pGameRules->GetWorld()->LineBatcher)
 		return;
 
-	//NLogger::Blurp("(%f, %f, %f)", end.X, end.Y, end.Z);
-	//return;
-
-	//Msg("Drawing spline");
 	ULineBatchComponent* lb = g_pGameRules->GetWorld()->LineBatcher;
 
 	FVector displacement = end - start;
