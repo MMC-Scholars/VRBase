@@ -3,8 +3,6 @@
 
 TArray<CStaticInitializer*> CStaticInitializer::s_pInitializers[(unsigned long long)EPriority::NUM];
 
-
-
 CStaticInitializer::CStaticInitializer(EPriority priority) {
 	s_pInitializers[(unsigned long long)priority].Add(this);
 }
@@ -16,8 +14,6 @@ void CStaticInitializer::InvokeAllInOrder() {
 		}
 	}
 }
-
-
 
 STATIC_INTIALIZE(log_priority_first, FIRST) {
 	Msg("Static Initializer Priority 1");

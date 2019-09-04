@@ -1,3 +1,10 @@
+/**
+ * This software is under partial ownership by The Ohio State University, 
+ * for it is a product of student employees. For official policy, see
+ * https://tco.osu.edu/sites/default/files/pdfs/IP-Policy.pdf 
+ * or contact The Ohio State University's Office of Legal Affairs.
+ */
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -6,18 +13,18 @@
 
 namespace NLogger {
 
-			void Message(const FString&);
-			void Message(const char* pszFormat, ...);
-			void Message(FColor c, ftime duration, const char* pszFormat, ...);
+	void Message(const FString&);
+	void Message(const char* pszFormat, ...);
+	void Message(FColor c, ftime duration, const char* pszFormat, ...);
 
-			void Blurp(const FString&);
-			void Blurp(const char* pszFormat, ...);
+	void Blurp(const FString&);
+	void Blurp(const char* pszFormat, ...);
 
-			void Warning(const FString&);
-			void Warning(const char* pszFormat, ...);
+	void Warning(const FString&);
+	void Warning(const char* pszFormat, ...);
 
-			void Fatal(const FString&);
-			void Fatal(const char* pszFormat, ...);
+	void Fatal(const FString&);
+	void Fatal(const char* pszFormat, ...);
 
 }
 
@@ -26,11 +33,12 @@ void Msg(const char* pszFormat, ...);
 void Msg(const wchar_t* pszFormat, ...);
 inline void Msg(const FString& str) { Msg(WCStr(str)); }
 
-// Shortcut messaging for structures
+// shortcuts for structures
+
 inline void Msg(const FVector& v) {
-	Msg("(%f,%f,%f)", v.X, v.Y, v.Z);
+	Msg("FVector(%f,%f,%f)", v.X, v.Y, v.Z);
 }
 
 inline void Msg(const FRotator& r) {
-	Msg("(%f,%f,%f)", r.Pitch, r.Yaw, r.Roll);
+	Msg("FRotator(%f,%f,%f)", r.Pitch, r.Yaw, r.Roll);
 }

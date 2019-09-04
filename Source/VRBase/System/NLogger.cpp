@@ -1,14 +1,15 @@
 #include "NLogger.h"
 #include "predefs.h"
 
-
-
 namespace NLogger {
+	#define BUFFER_SIZE 512
 
-	//---------------------------------------------------
-	// Implementation functions
-	//---------------------------------------------------
-#define BUFFER_SIZE 512
+	/*
+	 *****************************************************
+	 * Implementation functions
+	 *****************************************************
+	 */
+
 	char buffer[BUFFER_SIZE];
 	static void VMsgMaster(FColor c, ftime duration, const char* pszFormat, va_list args) {
 		if (GEngine) {
@@ -18,7 +19,6 @@ namespace NLogger {
 		}
 	}
 
-#define BUFFER_SIZE 512
 	wchar_t wbuffer[BUFFER_SIZE];
 	static void VWMsgMaster(FColor c, ftime duration, const wchar_t* pszFormat, va_list args) {
 		if (GEngine) {
@@ -28,16 +28,18 @@ namespace NLogger {
 		}
 	}
 
-
 	inline void MsgMaster(FColor c, ftime duration, const FString& str) {
 		if (GEngine) {
 			GEngine->AddOnScreenDebugMessage(-1, duration, c, str);
 		}
 	}
 
-	//---------------------------------------------------
-	// Public interface
-	//---------------------------------------------------
+	/*
+	 *****************************************************
+	 * Public Interface
+	 *****************************************************
+	 */
+
 	void Message(const FString& str) {
 		MsgMaster(FColor::Cyan , 15.0f, str);
 	}
@@ -92,7 +94,6 @@ void Msg(const char* pszFormat, ...) {
 	NLogger::VMsgMaster(FColor::Cyan, 10.0f, pszFormat, args);
 	va_end(args);
 }
-
 void Msg(const wchar_t* pszFormat, ...) {
 	va_list args;
 	va_start(args, pszFormat);
