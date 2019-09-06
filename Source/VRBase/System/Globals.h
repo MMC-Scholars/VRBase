@@ -11,6 +11,7 @@
 #include "CoreMinimal.h"
 #include "predefs.h"
 #include <ctime>
+#include "NLogger.h"
 
 extern UWorld* g_pWorld;
 
