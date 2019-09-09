@@ -22,8 +22,8 @@
 #include "IBaseEntity_flags.h"
 #endif
 
-UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Input)
-SEntityInputRegistrationParams m_leftControllerInput;
+// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Input)
+// SEntityInputRegistrationParams m_leftControllerInput;
 
-UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Input)
-SEntityInputRegistrationParams m_leftControllerInput;
+// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Input)
+// SEntityInputRegistrationParams m_leftControllerInput;
