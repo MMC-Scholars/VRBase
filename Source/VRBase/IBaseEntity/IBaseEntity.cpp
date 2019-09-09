@@ -1,18 +1,12 @@
-// This software is under partial ownership by The Ohio State University, 
-//for it is a product of student employees. For official policy, see
-//https://tco.osu.edu/wp-content/uploads/2013/09/PatentCopyrightPolicy.pdf 
-//or contact The Ohio State University's Office of Legal Affairs
-
+#include "CoreMinimal.h"
 #include "IBaseEntity.h"
 #include "ABaseEntity/ABaseEntity.h"
 #include "ABasePawn/ABasePawn.h"
-#include "CoreMinimal.h"
 
 IBaseEntity* g_ppEntityList[MAX_ENTITY_COUNT] = { NULL };
 TArray<IBaseEntity*> g_entList;
 
-//a global index which keeps track of where we last inserted 
-//an entity into the list
+// a global index which keeps track of where we last inserted an entity into the list
 static eindex g_iEntityCounter = 0; 
 
 //-------------------------------------------------------------------------------------
@@ -27,14 +21,12 @@ EHANDLE::EHANDLE(const IBaseEntity* pEnt) : m_iEnt(0) {
 // IBaseEntity Constructor & helpers
 //-------------------------------------------------------------------------------------
 IBaseEntity::IBaseEntity() {
-	//AddEntityToLists(this);
-
 	m_tConstructionTime = g_pGlobals->curtime;
 
 	m_tLastTimeUsed = -FLT_MAX;
 
-	//If we're in a cooked game, PostDuplicate isn't called so let's call it here
-	//We'll also call it if all other other BeginPlay have been called.
+	// in a cooked game PostDuplicate is not called so let's call it here
+	// we'll also call it if all other other BeginPlays have been called
 	if (IsCookedBuild() || g_pGlobals->worldcreated)
 		AddEntityToLists(this);
 }
@@ -50,7 +42,6 @@ void IBaseEntity::RemoveSelfFromLists() {
 }
 
 void IBaseEntity::PostDuplicate(EDuplicateMode::Type mode) {
-	//Msg("Calling IBaseEntity::PostDuplicate");
 	if (mode != EDuplicateMode::Normal) {
 		AddEntityToLists(this);
 		g_pGlobals->ineditor = false;
@@ -58,36 +49,34 @@ void IBaseEntity::PostDuplicate(EDuplicateMode::Type mode) {
 }
 
 void IBaseEntity::AddEntityToLists(IBaseEntity* pEnt) {
-	//Msg("Adding entity to lists");
 	g_entList.Add(pEnt);
 	s_iEntityCount++;
 
-	//now add it to the const-index array
-	//find an empty slot
+	// now add it to the const-index array
 	eindex slot = -1;
 
-	//This code finds an empty slot for us, if one exists
+	// finds an empty slot if one exists
 	int checkCount = 0;
 	for (; ++g_iEntityCounter < MAX_ENTITY_COUNT && g_ppEntityList[g_iEntityCounter]; checkCount++);
+	
 	if (g_iEntityCounter != MAX_ENTITY_COUNT) {
 		slot = g_iEntityCounter;
-	}
-	else {
+	}	else {
 		g_iEntityCounter = 0;
 		checkCount = MAX_ENTITY_COUNT - checkCount;
+
 		for (; ++g_iEntityCounter < checkCount && g_ppEntityList[g_iEntityCounter];);
 
 		if (g_iEntityCounter != checkCount) {
 			slot = g_iEntityCounter;
 		}
-	} //
+	}
 
-	//check if we found a valid slot
+	// if a valid slot was not found
 	if (slot == -1) {
 		UE_LOG(LogTemp, Error, TEXT("Could not find slot for new entity!\nThis most likely means that there are too many entities!"));
-	}
-	else {
-		//we're good to go - assign things
+	} else {
+		// assign entities
 		g_ppEntityList[slot] = pEnt;
 		pEnt->m_iEntIndex = slot;
 	}
@@ -99,8 +88,7 @@ void IBaseEntity::PostInit() {
 }
 
 IBaseEntity* IBaseEntity::FromActor(AActor* pActor) {
-	//Epic disabled RTTI so we use this janky and hacky
-	//method instead
+	// Epic disabled RTTI so we use this janky and hacky method instead
 	IBaseEntity* pEnt = NULL;
 	if (pActor->ActorHasTag(TAG_BASEENTITY))
 		pEnt = (IBaseEntity*) static_cast<ABaseEntity*>(pActor);
@@ -109,31 +97,28 @@ IBaseEntity* IBaseEntity::FromActor(AActor* pActor) {
 	return pEnt;
 }
 
-//---------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 // Think system
-//---------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 void IBaseEntity::DefaultThink() {
-	if (g_pGlobals->curtime > m_tNextRespawn) {
+	if (g_pGlobals->curtime > m_tNextRespawn)
 		Respawn();
-	}
-	//Msg(__FUNCTION__);
 }
 
 int IBaseEntity::s_iEntityCount = 0;
 int IBaseEntity::s_iReadyEntityCount = 0;
 
-//---------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 // Respawn system
-//---------------------------------------------------------------
+//-------------------------------------------------------------------------------------
 void IBaseEntity::Respawn() {
 	m_iHealth = m_iSpawnHealth;
 	m_iFlags = m_iSpawnFlags;
-	//m_bThinkReady = true;
 }
 
-//---------------------------------------------------------------
-// Health System
-//---------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+// Health system
+//-------------------------------------------------------------------------------------
 void IBaseEntity::SetHealth(int health) {
 	if (IsNotDamageable())
 		return;
@@ -149,11 +134,9 @@ void IBaseEntity::TraceAttack(const CTakeDamageInfo& info) {
 	if (IsNotDamageable())
 		return;
 	
-	//get damage amount
+	// get damage amount
 	int damage = info.GetBaseDamage();
 
-	//subtract damage from health
-	//SetHealth(m_iHealth - info.GetBaseDamage());
 	if (!IsInvincible())
 		m_iHealth -= damage;
 
@@ -163,28 +146,23 @@ void IBaseEntity::TraceAttack(const CTakeDamageInfo& info) {
 void IBaseEntity::CheckDamageEvents(int deltaHealth, const CTakeDamageInfo* info) {
 	if (deltaHealth > 0) {
 		OnHealed(info);
-	}
-	else {
+	} else {
 		OnTakeDamage(info);
 		if (IsDead()) {
 			OnKilled(info);
 			if (info && info->GetAttacker()) info->GetAttacker()->OnKilled_Other(*info);
-		}
-		else {
+		} else {
 			OnTakeDamage_Alive(info);
 		}
 	}
 }
 
-//---------------------------------------------------------------
-//Generic "Use" System
-//---------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+//Generic "use" system
+//-------------------------------------------------------------------------------------
 bool IBaseEntity::Use(ABaseEntity* pActivator) {
-	if (IsUseable()) {
-		OnUsed(pActivator);
-		return true;
-	}
-	return false;
+	if (IsUseable()) OnUsed(pActivator);
+	return IsUseable();
 }
 
 void IBaseEntity::RegisterInputsToControllers() {
