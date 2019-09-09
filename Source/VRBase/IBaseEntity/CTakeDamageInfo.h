@@ -5,11 +5,8 @@
  * or contact The Ohio State University's Office of Legal Affairs.
  */
 
-//-------------------------------------------------------------------------------------
-// The purpose of this file is to declare a class which contains damage information.
-//		Does not contain much cool functionality yet, but provides an entity point
-//		to add into later.
-//-------------------------------------------------------------------------------------
+// CTakeDamageInfo.h declares a class which contains damage information.
+
 #ifndef CTAKEDAMAGEINFO_H
 #define CTAKEDAMAGEINFO_H
 
@@ -20,7 +17,6 @@ private:
 	ushort m_iBaseDamage;
 	EHANDLE m_hReceiver; //entity who "receives" this attack
 	EHANDLE m_hAttacker;
-	//EHANDLE m_pWeapon;
 
 public:
 	CTakeDamageInfo(ushort damage, EHANDLE receiver, EHANDLE attacker)

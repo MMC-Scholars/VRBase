@@ -1,19 +1,38 @@
-# VRBase
+# VRBase Library
 
-VRBase is a C++ Unreal Engine library designed to improve virtual reality programming in Unreal. It includes a variety of different classes, each of which perform different functions and improve overall user experience.
+VRBase is a C++ Unreal Engine library designed to simplify virtual reality programming in Unreal. It includes a variety of different classes, each of which perform different functions to improve overall user experience.
+
+The VRBase Library implements the Blueprint VR Template in C++. You will not need to program the camera or controllers; this lets you focus on programming your game.
 
 ## Table of Contents
-1. [Guidelines](#guide)
+1. [Installation/Setup](#setup)
 2. [Initialization Order](#order)
-3. [Setup](#setup)
-4. [Class Specification](#spec)
+3. [Class Specification](#spec)
 
-## Guidelines <a name="guide"></a>
-- Generally, functions which exist in Blueprint also exist in C++, although they may not be as easy to find or use.
-- Types which exist in Blueprint are also used in C++; however, they may go by different names. For example, the Unreal class for Vector is FVector; the class for an Array is TArray<T>.
-- Be able to differentiate between what is standard C++ and what is Unreal-specific code.
-- Understand the capabilities and limits of the Unreal Header Tool.
-- Use the Unreal Header Tool to expose your variables and functions to blueprints.
+## Installation/Setup <a name="setup"></a>
+
+**Since this is only a library, VRBase should be added to an existing project via a repository link.**
+
+1. Clone VRBase into your project under the directory _Source/PROJECTNAME/VRBase_.
+1. Right-click the Unreal project in the main root directory and select _Generate Visual Studio Project Files_ in order for the library to appear in the Visual Studio Solution.
+3. Update the _PROJECTNAME.Build.cs_ file to include VRBase. This file is located in the _Source/PROJECTNAME/_ directory. This snippet can be copied and pasted into the file, making sure to change the project name:
+```cs
+using System.IO;
+using UnrealBuildTool;
+
+public class PROJECTNAME : ModuleRules {
+	public PROJECTNAME(ReadOnlyTargetRules Target) : base(Target) {
+		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Slate", "SlateCore" });
+        PrivateDependencyModuleNames.AddRange(new string[] { "HeadMountedDisplay", "SteamVR" });
+        
+        PublicIncludePaths.Add(Path.GetFullPath(Path.Combine(ModuleDirectory, "VRBase")));
+    }
+}
+```
+
+4. After opening the project, VRBase **requires** an instance of AGameRules included in the level for VRBase to function. The VRBase classes will not work otherwise.
 
 ## Initialization Order <a name="order"></a>
 
@@ -35,27 +54,6 @@ The default object initialization order in Unreal is as follows:
 7. `IBaseEntity::PreInit()` is called on all IBaseEntity-derived actors.
 8. `IBaseEntity::DefaultThink()` and `IBaseEntity::Think()` both begin to be called for each actor and each continue to be called every frame. `IBaseEntity::DefaultThink()` will always be called before `IBaseEntity::Think()` on each frame.
 9. `AActor::Tick()` is also called on every frame of the game. On any given frame it may happen before, during, or after `IBaseEntity::DefaultThink()` and `IBaseEntity::Think()`.
-
-## Setup <a name="setup"></a>
-
-There is no need to start virtual reality from scratch; we have already done so.
-
-The VRBase Library implements the Blueprint VR Template in C++. You will not need to program the camera or controllers; this lets you focus on programming your game.
-
-Since this is only a library, VRBase should be added to an existing project via a repository link.
-
-- After cloning VRBase, you will need to right-click the Unreal project and select _Generate Visual Studio Project Files_ in order for the library to appear in the Visual Studio Project.
-- You will need to update the _Build.cs_ file with the following dependencies:
-  ```cs
-  PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Slate", "SlateCore" });
-		PrivateDependencyModuleNames.AddRange(new string[] { "HeadMountedDisplay", "SteamVR" });
-
-  // PublicIncludePaths.Add("C:/Users/Public/Public Projects/MMC_Office_Recreation/Source/MMC_Off_Recreation/VRBase");
-  PublicIncludePaths.Add("C:/Users/Public/Public Projects/MMC-Office-Recreation/Source/MMC_Off_Recreation/VRBase");
-  ```
-- To start using VRBase classes, an instance of AGameRules **must** be included in the level. The VRBase classes will not work otherwise.
-
-**Do not directly edit the VRBase library**. If you find a bug or wish to add a feature, consult someone with the authority to edit the library.
 
 ## Class Specification <a name="spec"></a>
 
