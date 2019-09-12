@@ -59,19 +59,27 @@ The default object initialization order in Unreal is as follows:
 
 ![VRBase Class Diagram](./Doc/ClassDiagram.png "VRBase Class Diagram")
 
-[ABaseCharacter](Doc/ABaseCharacter.md)  
-[ABaseController](Doc/ABaseController.md)  
-[ABaseEntity](Doc/ABaseEntity.md)  
-[ABaseMoving](Doc/ABaseMoving.md)  
-[ABasePawn](Doc/ABasePawn.md)  
-[AGameRules](Doc/AGameRules.md)  
-[AHMDTeleportationTarget](Doc/AHMDTeleportationTarget.md)  
-[AMoveLinear](Doc/AMoveLinear.md)  
-[APickup](Doc/APickup.md)  
-[AWorldButton](Doc/AWorldButton.md)  
-[FMovingVector](Doc/FMovingVector.md)  
-[IBaseEntity](Doc/IBaseEntity.md)  
-[IGameRulesSystem](Doc/IGameRulesSystem.md)  
-[LineTools](Doc/LineTools.md)  
-[System](Doc/System.md)  
-[CGlobalVars](Doc/CGlobalVars.md)  
+### Interfaces:
+- [IBaseEntity](Doc/IBaseEntity.md)
+
+### Classes:
+- [ABaseCharacter](Doc/ABaseCharacter.md)
+- [ABaseEntity](Doc/ABaseEntity.md)
+  - [ABaseController](Doc/ABaseController.md)
+  - [ABaseMoving](Doc/ABaseMoving.md)
+    - [AMoveLinear](Doc/AMoveLinear.md)
+  - [AGameRules](Doc/AGameRules.md)
+  - [AHMDTeleportationTarget](Doc/AHMDTeleportationTarget.md)
+  - [APickup](Doc/APickup.md)
+  - [AWorldButton](Doc/AWorldButton.md)
+- [ABasePawn](Doc/ABasePawn.md)
+- [IGameRulesSystem](Doc/IGameRulesSystem.md)
+
+### Utilities:
+- [CGlobalVars](Doc/CGlobalVars.md)
+- [EHandle](Doc/EHandle.md)
+- [FMovingVector](Doc/FMovingVector.md)
+- [LineTools](Doc/LineTools.md)
+- [NLogger](Doc/NLogger.md)
+
+### [Types](Doc/types.md)

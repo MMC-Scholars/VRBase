@@ -23,7 +23,6 @@
  *	class ABaseCharacter :	public ACharacter, 		public IBaseEntity {...};
  *-------------------------------------------------------------------------------------
  */
-
 abstract_class IBaseEntity {
 	public:
 		friend class CGlobalVars;
@@ -66,7 +65,7 @@ abstract_class IBaseEntity {
 // may occur, or something worse!
 
 	public:
-		bool								IsBaseEntity()					const	{ return GetActor()->ActorHasTag(TAG_BASEENTITY); }
+		// bool								IsBaseEntity()					const	{ return GetActor()->ActorHasTag(TAG_BASEENTITY); }
 		bool								IsBasePawn()					const	{ return GetActor()->ActorHasTag(TAG_BASEPAWN); }
 		bool								IsBaseCharacter()				const	{ return GetActor()->ActorHasTag(TAG_BASECHARACTER); }
 		static IBaseEntity*					FromActor(AActor* pActor);

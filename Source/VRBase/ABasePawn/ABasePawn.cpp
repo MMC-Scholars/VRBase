@@ -1,5 +1,3 @@
-
-
 #include "ABasePawn.h"
 #include "System/NLogger.h"
 #define DEFAULT_CONTROLLER_CLASS ABaseController
@@ -38,7 +36,6 @@ ABasePawn::ABasePawn() {
 	m_pLMotionController = CreateDefaultSubobject<UMotionControllerComponent>("Left Motion Controller");
 	m_pLMotionController->Hand = EControllerHand::Left;
 	m_pLMotionController->SetupAttachment(m_pPlayerRoot);
-
 
 	// L Child Actor
 	m_pLChildActor = CreateDefaultSubobject<UChildActorComponent>("Left Child Actor");
@@ -90,12 +87,13 @@ ABasePawn::ABasePawn() {
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
 
-// Called to bind functionality to input
+// bind functionality to input
 void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	
 	if (PlayerInputComponent) {
-		// Left Input
+
+		// left input
 
 		// Trigger
 		PlayerInputComponent->BindKey(EKeys::MotionController_Left_Trigger, IE_Pressed, this, &ABasePawn::OnL_TRIGGER_Pressed);
@@ -118,7 +116,7 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		PlayerInputComponent->BindKey(EKeys::MotionController_Left_Thumbstick, IE_Pressed, this, &ABasePawn::OnL_STICK_Pressed);
 		PlayerInputComponent->BindKey(EKeys::MotionController_Left_Thumbstick, IE_Released, this, &ABasePawn::OnL_STICK_Released);
 
-		// Right Input
+		// right input
 
 		// Trigger
 		PlayerInputComponent->BindKey(EKeys::MotionController_Right_Trigger, IE_Pressed, this, &ABasePawn::OnR_TRIGGER_Pressed);
@@ -147,7 +145,6 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		//TODO axis events?
 		//PlayerInputComponent->BindAxisKey(EKeys::MotionController_Left_Thumbstick_X, this, &ABasePawn::UpdateInput);
 		
-		
 	}
 }
 
@@ -155,7 +152,7 @@ ABasePawn* g_pBasePawn = NULL;
 void ABasePawn::PreInit() {
 	g_pBasePawn = this;
 
-	//Set tracking origin to floor
+	// set tracking origin to floor
 	auto HMD = GEngine->HMDDevice.Get();
 	if (HMD)
 		HMD->SetTrackingOrigin(EHMDTrackingOrigin::Floor);
@@ -170,24 +167,22 @@ void ABasePawn::PreInit() {
 	m_rightControllerInput = FEntityInputRegistrationParams();
 	m_leftControllerInput = FEntityInputRegistrationParams();
 
-	// set blank instructions
 	m_pLTextInstr->SetText(FText::FromString(""));
 	m_pRTextInstr->SetText(FText::FromString(""));
+
 	// display first instruction
 	if (m_aInstr.Num())	SetInstruction(m_aInstr[0]);
-
 }
 
 void ABasePawn::SetControllerClass(UClass* LControllerClass, UClass* RControllerClass) {
-
-	// if not null
 	if (LControllerClass && RControllerClass) {
 
 		// set child actors
 		m_pLChildActor->SetChildActorClass(LControllerClass);
 		m_pRChildActor->SetChildActorClass(RControllerClass);
 
-		// cast to ABaseController
+		// casts to ABaseController
+		
 		m_pLHand = Cast<DEFAULT_CONTROLLER_CLASS>(m_pLChildActor->GetChildActor());
 		if (m_pLHand) {
 			m_pLHand->SetWhichHand(EControllerHand::Left);
@@ -195,13 +190,13 @@ void ABasePawn::SetControllerClass(UClass* LControllerClass, UClass* RController
 			m_pLHand->m_pOwnerPawn = this;
 		}
 
-		// cast to ABaseController
 		m_pRHand = Cast<DEFAULT_CONTROLLER_CLASS>(m_pRChildActor->GetChildActor());
 		if (m_pRHand) {
 			m_pRHand->SetWhichHand(EControllerHand::Right);
 			m_pRHand->SetStaticMesh(m_pRightControllerMesh);
 			m_pRHand->m_pOwnerPawn = this;
 		}
+
 		if (m_pLHand && m_pRHand) {
 			m_pLHand->m_leftControllerInput = m_leftControllerInput;
 			m_pRHand->m_rightControllerInput = m_rightControllerInput;
@@ -211,7 +206,7 @@ void ABasePawn::SetControllerClass(UClass* LControllerClass, UClass* RController
 }
 
 bool ABasePawn::IsWithinTeleportBounds(const FVector& loc, const FVector& bOrigin, const FVector& bExtent) {
-	// This is what IsInsideOrOn() should compute but (for an unknown reason)
+	// this is what APawn::IsInsideOrOn() should compute but (for an unknown reason)
 	// it returns a different answer than expected
 	return (
 		loc.X >= bOrigin.X - bExtent.X && loc.X <= bOrigin.X + bExtent.X &&
@@ -220,10 +215,8 @@ bool ABasePawn::IsWithinTeleportBounds(const FVector& loc, const FVector& bOrigi
 	);
 }
 
-
 bool ABasePawn::CanTeleportToLocation(const FVector& loc) {
-	//If we don't have a bounds, return true
-	// This will help unexperienced VR developers avoid problems
+	// if no bounds exist return true
 	if (!m_aTeleportBounds.Num())
 		return true;
 
@@ -233,7 +226,7 @@ bool ABasePawn::CanTeleportToLocation(const FVector& loc) {
 
 	// use a while loop to ensure loop runs <= n times
 	while (i < m_aTeleportBounds.Num() && !bLocValid) {
-		//Check if the given location is within our bounds
+		// if within bounds
 		if (m_aTeleportBounds[i]) {
 			m_aTeleportBounds[i]->GetActorBounds(false, boxOrigin, boxExtent);
 			bLocValid = bLocValid || IsWithinTeleportBounds(loc, boxOrigin, boxExtent);
@@ -245,7 +238,6 @@ bool ABasePawn::CanTeleportToLocation(const FVector& loc) {
 }
 
 bool ABasePawn::TeleportPlayer(const FVector& loc, const FRotator& rot) {
-	//First check if it is legal to enter this location
 	if (!CanTeleportToLocation(loc)) return false;
 
 	// location
@@ -263,11 +255,13 @@ bool ABasePawn::TeleportPlayer(const FVector& loc, const FRotator& rot) {
 
 void ABasePawn::SetInstruction(FPawnInstruction instr) {
 	UTextRenderComponent* component;
+
 	// left hand
 	if (instr.hand == EControllerHand::Left) {
 		component = m_pLTextInstr;
 		m_pRTextInstr->SetText(FText::FromString(""));
 	}
+
 	// right hand
 	else {
 		component = m_pRTextInstr;
@@ -277,32 +271,27 @@ void ABasePawn::SetInstruction(FPawnInstruction instr) {
 	component->SetText(instr.text);
 	component->SetTextRenderColor(instr.color);
 
-	if (!instr.changeOnButtonPress) m_fInstrChangeTime = g_pGlobals->curtime + instr.timedChange;
+	if (!instr.changeOnButtonPress) m_tInstrChangeTime = g_pGlobals->curtime + instr.timedChange;
 
 	m_sInstr = &instr;
 }
 
 void ABasePawn::NextInstruction() {
-	// verify there is an instruction to switch to
-	if (m_aInstr.Num() > 1) {
+	if (m_aInstr.Num() > 1) { // verify there is an instruction to switch to
 		SetInstruction(m_aInstr[1]);
 		m_sInstr = &m_aInstr[1];
 		m_aInstr.RemoveAt(0);
-	}
-	// clear instructions if no instructions exist
-	else {
+	} else { // clear instructions if no instructions exist
 		m_pLTextInstr->SetText(FText::FromString(""));
 		m_pRTextInstr->SetText(FText::FromString(""));
 		m_sInstr = nullptr;
 	}
-
 }
 
 void ABasePawn::DefaultThink() {
 	// change instruction in timely manner
 	if (m_sInstr && !m_sInstr->changeOnButtonPress) {
-		if (g_pGlobals->curtime - m_fInstrChangeTime >= 0) {
+		if (g_pGlobals->curtime - m_tInstrChangeTime >= 0)
 			NextInstruction();
-		}
 	}
 }

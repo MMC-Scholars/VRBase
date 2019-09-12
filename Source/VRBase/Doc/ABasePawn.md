@@ -1,29 +1,50 @@
 # `ABasePawn` Class
 
-`inherits APawn`, [`IBaseEntity`](IBaseEntity.md)
+`extends` `APawn`, [`IBaseEntity`](IBaseEntity.md)
 
-`ABasePawn` works as a basic possessable virtual reality pawn. This class automatically comes with an HMD and two [`ABaseController`](ABaseController.md) motion controllers. 
-
-<!-- `ABasePawn` is a concrete class which inherits from `IBaseEntity` and `APawn` and links the two interfaces together. It works as a virtual reality camera and also spawns a pair of `ABaseController` virtual reality controllers. `ABasePawn` is the class embodiment of the user. -->
-
-
-
-## UProperties
+`ABasePawn` works as a basic possessable virtual reality pawn. It is most commonly used to represent the virtual reality player character in world space. This class automatically comes with an HMD and two [`ABaseController`](ABaseController.md) motion controllers.
 
 ## Variables
 
 |  | Name | Description |
 | --- | --- | --- |
+| `TArray`<`AActor*`> | m_aTeleportBounds | Bounds of the actor(s) specify the bounds in which the player can teleport. `AVolumes` work best. Accessible via UProperty |
+| `bool` | m_bTeleportationEnabled | True if teleportation is enabled. Accessible via UProperty |
+| [`FEntityInputRegistrationParams`](./defs.md) | m_leftControllerInput | __. Accessible via UProperty |
+| `UCameraComponent*` | m_pCamera | The virtual reality camera |
+| `UStaticMesh*` | m_pLeftControllerMesh | The static mesh of the left controller. Accessible via UProperty |
+| `UChildActorComponent*` | m_pLChildActor | The actor representing the left hand of the player |
+| `UClass*` | m_pLControllerClass | The left controller class. Accessible via UProperty |
+| `UMotionControllerComponent*` | m_pLMotionController | The left motion controller |
+| `UTextRenderComponent*` | m_pLTextInstr | The text component to render the left instruction |
+| `USceneComponent*` | m_pPlayerRoot | Origin of the player |
+| `UStaticMesh*` | m_pRightControllerMesh | The static mesh of the right controller. Accessible via UProperty |
+| `UChildActorComponent*` | m_pRChildActor | The actor representing the right hand of the player |
+| `UClass*` | m_pRControllerClass | The right controller class. Accessible via UProperty |
+| `UMotionControllerComponent*` | m_pRMotionController | The right motion controller |
+| `UCapsuleComponent*` | m_pRootCapsule | The capsule the player resides within |
+| `UTextRenderComponent*` | m_pRTextInstr | The text component to render the right instruction |
+| [`FEntityInputRegistrationParams`](./defs.md) | m_rightControllerInput | __. Accessible via UProperty |
+| [`ftime`](./defs.md) | m_tInstrChangeTime | Time it takes to switch between instructions if instruction time switching is enabled |
+| `TArray`<[`FPawnInstruction`](./defs.md)> | m_aInstr | Array of instructions to display in order. Accessible via UProperty |
 
 ## Functions
 
 |  | Name | Description |
 | -- | --- | --- |
-| `void` | SetControllerClass(`UClass`* leftControllerClass, `UClass`* rightControllerClass) | Sets classes to be used by motion controllers. Both must be classes which inherit from `ABaseController`. These can also be changed via `UProperty`. |
-| `bool` | IsWithinTeleportBounds(const `FVector`& location, const `FVector`& bOrigin, const `FVector`& bExtent) | |
-|	`bool` | CanTeleportToLocation(const `FVector`& loc) | |
-|	`bool` | TeleportPlayer(const `FVector`& loc, const `FRotator`& rot) | |
+|	`bool` | CanTeleportToLocation(`const` `FVector&` loc) | Returns true if player is able to teleport to location |
+| `bool` | IsWithinTeleportBounds(`const` `FVector&` location, `const` `FVector&` bOrigin, `const` `FVector&` bExtent) | Returns true if the player is within the specified teleportation bounds |
+| `void` | NextInstruction() | Switches the current instruction to the next instruction in the `m_aInstr` array |
+| `virtual void` | SetControllerClass(`UClass*` LControllerClass, `UClass*` RControllerClass) | Sets classes to be used by motion controllers. Both must be classes which inherit from [`ABaseController`](./ABaseController.md) |
+| `void` | SetInstruction([`FPawnInstruction`](./defs.md) instr) | Sets the currently displayed instruction |
+|	`bool` | TeleportPlayer(`const` `FVector&` loc, `const` `FRotator&` rot) | Teleports the player to the given location. Returns true if successful |
 
-<!-- void SetInstruction(FPawnInstruction instr);
-void NextInstruction(); -->
+## Overridden
 
+|  | Name | Description |
+| --- | --- | --- |
+| [`IBaseEntity`](./IBaseEntity.md) | | |
+| `virtual void` | DefaultThink() | __ |
+| `virtual` [`FEntityInputRegistrationParams`](./defs.md) | GetLeftControllerInputRegistrationParams() | __ |
+| `virtual` [`FEntityInputRegistrationParams`](./defs.md) | GetRightControllerInputRegistrationParams() | __ |
+| `virtual void` | PreInit() | __ |

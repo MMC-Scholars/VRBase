@@ -1,0 +1,1 @@
+# `CTakeDamageInfo` class
