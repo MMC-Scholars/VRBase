@@ -1,5 +1,3 @@
-
-
 #include "ABaseController.h"
 #include "System/NLogger.h"
 #include "LineTools/linetools.h"
@@ -42,13 +40,12 @@ ABaseController::ABaseController() {
 	m_bTeleportationActive = false;
 }
 
-// -----------------------------------------------------------------------------------------------------------------------------
-// OVERLAP BEGIN
-// -----------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+// Overlap begin
+//-------------------------------------------------------------------------------------
 
 void ABaseController::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) && m_aOverlapActors.Find(OtherActor) == INDEX_NONE) {
-		// Add actor to TArray
 		m_aOverlapActors.Add(OtherActor);
 
 		APickup* pPickupActor = Cast<APickup>(OtherActor);
@@ -60,12 +57,11 @@ void ABaseController::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 	}
 }
 
-// -----------------------------------------------------------------------------------------------------------------------------
-// OVERLAP END
-// -----------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+// Overlap end
+//-------------------------------------------------------------------------------------
 
 void ABaseController::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
-	// Remove actor from TArray
 	m_aOverlapActors.Remove(OtherActor);
 
 	APickup *pPickupActor = Cast<APickup>(OtherActor);
@@ -79,13 +75,12 @@ ABaseController* g_pLeftController;
 ABaseController* g_pRightController;
 
 void ABaseController::OnButtonsChanged() {
-	//Msg(__FUNCTION__);
 	m_iButtons |= m_iButtonsPressed;
 	m_iButtons &= ~m_iButtonsReleased;
 
-	// -----------------------------------------------------------------------------------------------------------------------------
-	// BUTTON PRESS
-	// -----------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+// Button press
+//-------------------------------------------------------------------------------------
 
 	if (m_iButtonsPressed & IN_AX && !OtherController()->m_bTeleportationActive) {
 		if (g_pBasePawn && g_pBasePawn->m_bTeleportationEnabled) 
@@ -93,27 +88,25 @@ void ABaseController::OnButtonsChanged() {
 	}
 
 	if (m_iButtonsPressed & IN_TRIGGER) {
-		
+
 		// pick up all pickups
 		for (AActor* Actor : m_aOverlapActors) {
-			
 
 			APickup* pPickupActor = Cast<APickup>(Actor);
 
 			if (pPickupActor) {
-				//Msg("Buttons %d pressed on %s, performing pickup on %s...", m_iButtonsPressed, WCStr(GetName()), WCStr(pPickupActor->GetName()));
 				m_aAttachActors.Add(pPickupActor);
 				pPickupActor->Pickup(this);
 				// remove mesh outline
 				pPickupActor->m_pPickupMeshComponent->SetRenderCustomDepth(false);
-
 			}
 		}
 	}
 
-	// -----------------------------------------------------------------------------------------------------------------------------
-	// BUTTON RELEASE
-	// -----------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------
+// Button release
+//-------------------------------------------------------------------------------------
+
 	if (m_iButtonsReleased & IN_AX && m_bTeleportationActive) {
 		FVector start = GetActorLocation();
 		FVector direction = GetActorForwardVector();
@@ -121,19 +114,17 @@ void ABaseController::OnButtonsChanged() {
 		TArray<AActor*> ignoredActors;
 		GetTraceIgnoredActors(ignoredActors);
 
-
 		FHitResult t;
 		FVector force = FVector(0, 0, -0.08f);
 		UTIL_TraceSpline(t, start, direction, force, 4096, NULL, &ignoredActors[0]);
 
-		//loc will be where we hit
-		FVector loc = t.Location;
+		FVector loc = t.Location; // where the trace has hit
 		if (loc == FVector::ZeroVector)
 			loc = t.TraceEnd;
 		m_pOwnerPawn->TeleportPlayer(loc, m_rTeleportationRot);
 		m_bTeleportationActive = false;
 
-		// Disable Haptics
+		// disable haptics
 		GetWorld()->GetFirstPlayerController()->SetHapticsByValue(0.0f, 0.0f, m_eWhichHand);
 	}
 
@@ -152,43 +143,37 @@ void ABaseController::OnButtonsChanged() {
 		}
 	}
 
-	//first, removed inputs from invalid entities
+	// remove inputs from invalid entities
 	int32 i = 0;
 	while (i < m_aRegisteredEntities.Num()) {
 		if (!m_aRegisteredEntities[i].m_ent) {
 			m_aRegisteredEntities.RemoveAt(i);
-		}
-			
-		else
+		}	else {
 			i++;
+		}
 	}
 
-	//iterate through registered entities and check if any of them should be triggered.
+	// iterate through registered entities and check if any of them should be triggered
 	for (i = 0; i < m_aRegisteredEntities.Num(); i++) {
 		SEntityInputTriggerRequirement* trig = &m_aRegisteredEntities[i];
-		//Msg(L"Checking SEntityInputTriggerRequirement from %s", WCStr(trig->m_ent->GetActor()->GetName()));
 
 		bool buttonActivated = trig->m_bOnReleased && (trig->m_iButton & m_iButtonsReleased);
 		buttonActivated = buttonActivated || (!trig->m_bOnReleased && (trig->m_iButton & m_iButtonsPressed));
 
 		if (buttonActivated && trig->m_ent->IsUseable() && trig->m_ent->IsUseableBy(this)) {
-
 			trig->m_ent->Use(this);
 		}
 	}
 
-	//reset our trackers for button changes
+	// reset trackers for button changes
 	m_iButtonsPressed = m_iButtonsReleased = 0;
 }
 
 void ABaseController::RegisterEntityInput(IBaseEntity* pEnt, uint32 iButton, bool bOnReleased) {
-	//construct an input requirement and add it to ourselves.
+	// construct an input requirement and add it to this
 	m_aRegisteredEntities.Emplace(SEntityInputTriggerRequirement{ pEnt->GetEHandle(), iButton, bOnReleased });
 }
 
-/**
- * setWhichHand
- */
 void ABaseController::SetWhichHand(EControllerHand h) {
 	m_eWhichHand = h;
 	bool fixup = !m_bPerformedPositionFixup;
@@ -200,11 +185,9 @@ void ABaseController::SetWhichHand(EControllerHand h) {
 		NLogger::Warning("Unknown controller registered with EControllerHand == %i", h);
 		fixup = false;
 	}
-		
-	if (fixup) {
+
+	if (fixup)
 		m_bPerformedPositionFixup = true;
-		
-	}
 }
 
 void ABaseController::SetStaticMesh(UStaticMesh* pMesh) {
@@ -212,14 +195,12 @@ void ABaseController::SetStaticMesh(UStaticMesh* pMesh) {
 }
 
 void ABaseController::OnUsed(ABaseEntity* pActivator) {
-
 	//Msg(__FUNCTION__);
 }
 
 void ABaseController::DefaultThink() {
-
 	if (m_bTeleportationActive) {
-		// Enable Haptics
+		// enable haptics
 		GetWorld()->GetFirstPlayerController()->SetHapticsByValue(200.0f, 0.3f, m_eWhichHand);
 
 		SLineDrawParams rendered = { FColor::Red, 6.f, (ftime) 0.0f };
@@ -232,7 +213,8 @@ void ABaseController::DefaultThink() {
 		TArray<AActor*> ignoredActors;
 		GetTraceIgnoredActors(ignoredActors);
 		FVector force = FVector(0, 0, -0.08f);
-		// Initially render spline to calculate hit result
+		
+		// initially render spline to calculate hit result
 		UTIL_TraceSpline(t, start, direction, force, 4096, &rendered, &ignoredActors[0]);
 
 		FVector loc = t.Location;
@@ -275,9 +257,7 @@ void ABaseController::DefaultThink() {
 
 		// standardize rotation for pawn rotation
 		m_rTeleportationRot = FRotator(0, m_rTeleportationRot.RotateVector(direction).Rotation().Yaw, 0);
-
 	}
-	
 }
 
 void ABaseController::GetTraceIgnoredActors(TArray<AActor*>& ignoredActors) {
@@ -285,6 +265,7 @@ void ABaseController::GetTraceIgnoredActors(TArray<AActor*>& ignoredActors) {
 	ignoredActors.Add(g_pBasePawn);
 	ignoredActors.Add(g_pLeftController);
 	ignoredActors.Add(g_pRightController);
+
 	// held pickups
 	for (int i = 0; i < m_aAttachActors.Num(); i++) {
 		ignoredActors.Add(m_aAttachActors[i]);

@@ -1,73 +1,69 @@
+/**
+ * This software is under partial ownership by The Ohio State University, 
+ * for it is a product of student employees. For official policy, see
+ * https://tco.osu.edu/sites/default/files/pdfs/IP-Policy.pdf 
+ * or contact The Ohio State University's Office of Legal Affairs.
+ */
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "VRBase/ABaseEntity/ABaseEntity.h"
-
 #include "Components/StaticMeshComponent.h"
-
 #include "APickup.generated.h"
 
-/**
- * 
- */
 UCLASS()
-class VRBASE_API APickup : public ABaseEntity
-{
+class VRBASE_API APickup : public ABaseEntity {
 	GENERATED_BODY()
 	
-public:
-	APickup();
-	
-	virtual void PreInit() override {};
+	public:
+		APickup();
 
-public:
+		virtual void PreInit() override {};
 
-	// Variables
-	TArray<AActor*> m_aParentActors;
+	private:
+		TArray<AActor*> 							m_aParentActors;
+		UStaticMeshComponent*					m_pPickupMeshComponent;
 
-	// Components
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup")
-	UStaticMeshComponent*	m_pPickupMeshComponent;
+	public:
+		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mesh", DisplayName = "Static Mesh")
+		UStaticMesh*									staticMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mesh", DisplayName = "Static Mesh")
-	UStaticMesh*			staticMesh;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mesh", DisplayName = "Material")
-	UMaterialInterface*		material0;
+		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mesh", DisplayName = "Material")
+		UMaterialInterface*						material0;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mass")
-	//float					m_fMass;
+		// UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mass")
+		// float											m_fMass;
 
-// set static mesh and material dynamically from within the editor
 #if WITH_EDITOR
-	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) {
+		// set static mesh and material dynamically from within the editor
+		virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) {
 
-		FName PropertyName = (PropertyChangedEvent.Property != nullptr)
-			? PropertyChangedEvent.Property->GetFName() : NAME_None;
+			FName PropertyName = 
+				(PropertyChangedEvent.Property != nullptr)
+				? PropertyChangedEvent.Property->GetFName() 
+				: NAME_None;
 
-		if (m_pPickupMeshComponent	!= nullptr && 
-			staticMesh				!= nullptr) {
+			if (m_pPickupMeshComponent != nullptr && staticMesh != nullptr) {
 
-			m_pPickupMeshComponent->SetStaticMesh(staticMesh);
-			if (PropertyName == FName(STRINGIZE(staticMesh))) {
-				material0 = staticMesh->GetMaterial(0);
+				m_pPickupMeshComponent->SetStaticMesh(staticMesh);
+				
+				if (PropertyName == FName(STRINGIZE(staticMesh))) {
+					material0 = staticMesh->GetMaterial(0);
+				}
+
+				m_pPickupMeshComponent->SetMaterial(0, material0);
 			}
-			m_pPickupMeshComponent->SetMaterial(0, material0);
+		
+			Super::PostEditChangeProperty(PropertyChangedEvent);
 		}
-	
-		Super::PostEditChangeProperty(PropertyChangedEvent);
-	}
 #endif
 
-	// Functions
-	virtual void Pickup(ABaseController*);
-	virtual void Drop(ABaseController*);
+		virtual void Pickup(ABaseController*);
+		virtual void Drop(ABaseController*);
 
-	//Blueprint implementable events
-	UFUNCTION(BlueprintNativeEvent)
+		UFUNCTION(BlueprintNativeEvent)
 		void OnPickup(ABaseController* controller);
-	UFUNCTION(BlueprintNativeEvent)
+		UFUNCTION(BlueprintNativeEvent)
 		void OnDrop(ABaseController* controller);
-
 };

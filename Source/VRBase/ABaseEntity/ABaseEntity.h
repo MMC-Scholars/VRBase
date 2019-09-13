@@ -41,9 +41,11 @@ struct FEntityInputRegistrationParams {
 };
 
 /**
+ *-------------------------------------------------------------------------------------
  * ABaseEntity
  * Master base class for anything that is not controlled by the player
  * (i.e. anything that is not an APawn or an ACharacter)
+ *-------------------------------------------------------------------------------------
  */
 UCLASS()
 class VRBASE_API ABaseEntity : public AActor, public IBaseEntity {

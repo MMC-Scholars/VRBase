@@ -1,4 +1,9 @@
-
+/**
+ * This software is under partial ownership by The Ohio State University, 
+ * for it is a product of student employees. For official policy, see
+ * https://tco.osu.edu/sites/default/files/pdfs/IP-Policy.pdf 
+ * or contact The Ohio State University's Office of Legal Affairs.
+ */
 
 #pragma once
 
@@ -13,70 +18,62 @@
 #include "APickup/APickup.h"
 #include "ABaseController.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class VRBASE_API ABaseController : public ABaseEntity {
 	GENERATED_BODY()
 	
-public:
-	ABaseController();
+	private:
+		FRotator												m_rTeleportationRot;
 
-	// Components
-	USceneComponent*		m_pHandScene;
-	UStaticMeshComponent*	m_pHandMeshComponent;
-	USphereComponent*		m_pControllerCollision;
+	public:
+		ABaseController();
 
-	ABasePawn*				m_pOwnerPawn;
+		USceneComponent*								m_pHandScene;
+		UStaticMeshComponent*						m_pHandMeshComponent;
+		USphereComponent*								m_pControllerCollision;
 
-	// Variables
-	EControllerHand			m_eWhichHand;
-	bool					m_bPerformedPositionFixup;
-	TArray<AActor*>			m_aOverlapActors;
-	TArray<APickup*>		m_aAttachActors;
+		ABasePawn*											m_pOwnerPawn;
 
-	bool					m_bTeleportationActive;
-	FRotator				m_rTeleportationRot;
+		EControllerHand									m_eWhichHand;
+		bool														m_bPerformedPositionFixup;
+		TArray<AActor*>									m_aOverlapActors;
+		TArray<APickup*>								m_aAttachActors;
 
-	// Events
-	UFUNCTION()
-	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	UFUNCTION()
-	void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+		bool														m_bTeleportationActive;
 
-protected:
+		UFUNCTION()
+		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+		UFUNCTION()
+		void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
-	TArray<SEntityInputTriggerRequirement> m_aRegisteredEntities; //Which entites are listening to buttons on this controller?
+	protected:
+		TArray<SEntityInputTriggerRequirement> m_aRegisteredEntities; // which entites are listening to buttons on this controller?
 
-public:
-	uint32 m_iButtons; //bitfield - which buttons are currently being pressed?
-	uint32 m_iButtonsPressed; //bitifield - which buttons were just pressed?
-	uint32 m_iButtonsReleased; //bitfield - which buttons were just released?
-	virtual void OnButtonsChanged();
+	public:
+		uint32 m_iButtons; // which buttons are currently being pressed?
+		uint32 m_iButtonsPressed; // which buttons were just pressed?
+		uint32 m_iButtonsReleased; // which buttons were just released?
+		virtual void OnButtonsChanged();
 
+		uint32 ButtonsPressed() const { return m_iButtons; } // returns bitfield of buttons currently pressed on this controller
+		void RegisterEntityInput(IBaseEntity*, uint32 iButton, bool bOnReleased);
+		void SetWhichHand(EControllerHand);
 
+		void SetStaticMesh(UStaticMesh*);
 
-	uint32 ButtonsPressed() const { return m_iButtons; } //Returns bitfield of buttons currently pressed on this controller
-	void RegisterEntityInput(IBaseEntity*, uint32 iButton, bool bOnReleased);
-	void SetWhichHand(EControllerHand);
-	
-	void SetStaticMesh(UStaticMesh*);
+		// called when holding the teleport button
+		void OnUsed(ABaseEntity* pActivator) override;
 
+		// casts a spline and circle while holding the teleport button
+		void DefaultThink() override;
 
-	//These are called when we hold the teleport button
-	void OnUsed(ABaseEntity* pActivator) override;
+		// returns a null-terminated list of actors to ignored when raytracing for teleportation
+		void GetTraceIgnoredActors(TArray<AActor*>&);
 
-	//This will cast a spline and circle while we are holding the button
-	void DefaultThink() override;
-
-	// Returns a null-terminated list of actors to ignored when raytracing for teleportation
-	void GetTraceIgnoredActors(TArray<AActor*>&);
-
-	//Retrieves the controller which is not this one
-	inline ABaseController* OtherController() {
-		return this == g_pLeftController ? g_pRightController : g_pLeftController;
-	}
+		// retrieves the controller which is not this one
+		inline ABaseController* OtherController() {
+			return this == g_pLeftController ? g_pRightController : g_pLeftController;
+		}
 };
 
 extern ABaseController* g_pLeftController;

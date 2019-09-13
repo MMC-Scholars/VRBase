@@ -1,4 +1,3 @@
-
 #include "ABaseMoving.h"
 #include "ABaseController/ABaseController.h"
 
@@ -39,13 +38,12 @@ bool ABaseMoving::IsUseableBy(const ABaseController* pController) const {
 }
 
 void ABaseMoving::SetPositionFromController(ABaseController* pController) {
-
+	Msg(__FUNCTION__);
 }
 
 void ABaseMoving::Open() {
-	if (IsOpen()) {
+	if (IsOpen())
 		return;
-	}
 
 	SetThink(&ABaseMoving::OpenThink);
 }
@@ -75,15 +73,15 @@ bool ABaseMoving::IsClosing() const {
 void ABaseMoving::OpenThink(void* vpBaseMoving){
 	ABaseMoving* pMoving = ExtractArg<ABaseMoving>(vpBaseMoving);
 
-	//If we've finished opening, stop opening
+	// if finished opening, stop opening
 	if (pMoving->IsOpen()) {
 		pMoving->OnFinishOpen();
 		pMoving->StopThink();
 	}
-	//Otherwise, follow the lerp speed
+	// otherwise, follow the lerp speed
 	else {
-		//Calculate next lerp position based on speed and time
-		//Also notify our child class that our position has changed, such that it can do the actual movement
+		// calculate next lerp position based on speed and time
+		// also notify our child class that our position has changed, such that it can do the actual movement
 		pMoving->SetLerpPosition(pMoving->m_lCurrentLerp + pMoving->m_flLerpSpeed * g_pGlobals->frametime);
 	}
 }
@@ -91,15 +89,15 @@ void ABaseMoving::OpenThink(void* vpBaseMoving){
 void ABaseMoving::CloseThink(void* vpBaseMoving) {
 	ABaseMoving* pMoving = ExtractArg<ABaseMoving>(vpBaseMoving);
 
-	//If we've finished closing, stop closing
+	// if finished closing, stop closing
 	if (pMoving->IsClosed()) {
 		pMoving->OnFinishClose();
 		pMoving->StopThink();
 	}
-	//Otherwise, follow the lerp speed
+	// otherwise, follow the lerp speed
 	else {
-		//Calculate next lerp position based on speed and time
-		//Also notify our child class that our position has changed, such that it can do the actual movement
+		// calculate next lerp position based on speed and time
+		// also notify our child class that our position has changed, such that it can do the actual movement
 		pMoving->SetLerpPosition(pMoving->m_lCurrentLerp - pMoving->m_flLerpSpeed * g_pGlobals->frametime);
 	}
 }
