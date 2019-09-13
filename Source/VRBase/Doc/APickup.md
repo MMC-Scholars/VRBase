@@ -9,6 +9,8 @@
 |  | Name | Description |
 | --- | --- | --- |
 | `UMaterialInterface*` | material0 | The material of the pickup mesh. Accessible via UProperty |
+| `TArray`<`AActor*`> | m_aParentActors | Array of parent actors which the pickup is attached to |
+| `UStaticMeshComponent*` | m_pPickupMeshComponent | The mesh component of the pickup |
 | `UStaticMesh*` | staticMesh | The static mesh of the pickup. Accessible via UProperty |
 
 ## Functions

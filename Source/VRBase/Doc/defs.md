@@ -37,4 +37,4 @@ VRBase uses unique definitions to describe commonly used types present throughou
   | `FColor` | color | The instruction color. Default is white. Accessible via UProperty |
   | `EControllerHand` | hand | The hand the instruction should be displayed near. Default is `Right`. Accessible via UProperty |
   | `FText` | text | The instruction text to display. Accessible via UProperty |
-  | `ftime` | timedChange | The time needed to switch instructions. Default is 5. Accessible via UProperty |
+  | `float` | timedChange | The time needed to switch instructions. Default is 5. Accessible via UProperty |

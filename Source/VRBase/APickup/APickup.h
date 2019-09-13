@@ -21,11 +21,9 @@ class VRBASE_API APickup : public ABaseEntity {
 
 		virtual void PreInit() override {};
 
-	private:
 		TArray<AActor*> 							m_aParentActors;
 		UStaticMeshComponent*					m_pPickupMeshComponent;
 
-	public:
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mesh", DisplayName = "Static Mesh")
 		UStaticMesh*									staticMesh;
 

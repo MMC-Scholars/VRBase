@@ -4,7 +4,6 @@
 #include "CoreMinimal.h"
 #include "Engine.h"
 #include "EngineMinimal.h"
-#include "System/predefs.h"
 #include "FPawnInstruction.generated.h"
 
 USTRUCT(BlueprintType)
@@ -24,7 +23,7 @@ struct FPawnInstruction {
 	bool changeOnButtonPress = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, DisplayName = "Change Time")
-	ftime timedChange = 5.0;
+	float timedChange = 5.0;
 
 	FPawnInstruction() {}
 
