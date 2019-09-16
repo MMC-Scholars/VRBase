@@ -69,7 +69,6 @@ The default object initialization order in Unreal is as follows:
   - [ABaseMoving](Doc/ABaseMoving.md)
     - [AMoveLinear](Doc/AMoveLinear.md)
   - [AGameRules](Doc/AGameRules.md)
-  - [AHMDTeleportationTarget](Doc/AHMDTeleportationTarget.md)
   - [APickup](Doc/APickup.md)
   - [AWorldButton](Doc/AWorldButton.md)
 - [ABasePawn](Doc/ABasePawn.md)
