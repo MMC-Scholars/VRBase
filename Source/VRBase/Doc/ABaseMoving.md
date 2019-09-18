@@ -27,7 +27,7 @@ An [`ABaseEntity`](./ABaseEntity.md)-derived interface for other concrete classe
 | `void` | OnFinishOpen() | Called once the actor has stopped opening. Accessible via UFunction |
 | `void` | Open() | Opens the actor. Accessible via UFunction |
 | `virtual void` | SetLerpPosition(`float` fLerp) | Sets the current lerp position. Accessible via UFunction |
-| `virtual void` | SetPositionFromController([`ABaseController`](./ABaseController.md)) | Sets the position based on the position of an [`ABaseController`](./ABaseController.md) |
+| `virtual void` | SetPositionFromController([`ABaseController`](./ABaseController.md) controller) | Sets the position based on the position of an [`ABaseController`](./ABaseController.md) |
 
 ## Overridden
 |  | Name | Description |

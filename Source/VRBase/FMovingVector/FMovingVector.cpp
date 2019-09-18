@@ -1,9 +1,8 @@
 #include "FMovingVector.h"
 #include "System/Globals.h"
 
-//----------------------------------------------------------------------------
-// All FMovingVector constructors register the vector into the global list
-//----------------------------------------------------------------------------
+// all FMovingVector constructors register the vector into the global list
+
 FMovingVector::FMovingVector(const FVector& v) : FVector(v), velocity(0,0,0) {
 	addSelf();
 }
@@ -22,8 +21,6 @@ FMovingVector::FMovingVector(vec x, vec y, vec z, vec dx, vec dy, vec dz) : FVec
 
 bool FMovingVector::s_bDeletingAll = false;
 TArray<FMovingVector*> FMovingVector::s_pVectors;
-
-
 
 void IMovingVectorManager::UpdateAll() {
 	ftime dt = g_pGlobals->frametime;

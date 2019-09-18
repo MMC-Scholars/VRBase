@@ -6,30 +6,30 @@ The `IBaseEntity` abstract class is the most important part of the library. It d
 
 |  | Name | Description |
 | --- | --- | --- |
-| [`ftime`](./defs.md) | m_tConstructionTime | The amount of elapsed time (in seconds) from the start of the game to the construction of the entity |
-| [`ftime`](./defs.md) | m_tLastTimeUsed | The time (in seconds) since the start of the game that the entity was Used. If never used, returns the minimum value of a float |
+| [`ftime`](./typedefs.md) | m_tConstructionTime | The amount of elapsed time (in seconds) from the start of the game to the construction of the entity |
+| [`ftime`](./typedefs.md) | m_tLastTimeUsed | The time (in seconds) since the start of the game that the entity was Used. If never used, returns the minimum value of a float |
 
 ## Functions
 
 |  | Name | Description |
 | -- | --- | --- |
-| `void` | AddFlags([`ulong`](./defs.md) flags) | Adds the specified flags |
+| `void` | AddFlags([`ulong`](./typedefs.md) flags) | Adds the specified flags |
 | `virtual void` | DefaultThink() | Called every frame following all PreInit() calls |
 | `bool` | DestroyEntity() | Destroys this actor. Returns true if already destroyed or already marked for destruction, false if indestructible |
-| [`eindex`](./defs.md) | EntIndex() | Returns the entity index |
+| [`eindex`](./typedefs.md) | EntIndex() | Returns the entity index |
 | `static IBaseEntity*` | FromActor(`AActor*` pActor) | Converts a given `AActor` to a [`BaseEntity`](./ABaseEntity.md) |
 | `AActor*` | GetActor() | Returns a pointer to the actor. _Note that this is not protected by an [`EHandle`](./EHandle.md)_ |
 | [`EHANDLE`](EHandle.md) | GetEHandle() | Returns an [EHandle](EHandle.md) to the entity |
-| [`ulong`](./defs.md) | GetFlags() | Returns the entity's set flags |
+| [`ulong`](./typedefs.md) | GetFlags() | Returns the entity's set flags |
 | `int` | GetHealth() | Returns the health of the entity |
 | `UInputComponent*` | GetInput() | Returns input as a `UInputComponent` pointer |
-| `virtual` [`FEntityInputRegistrationParams*`](./defs.md) | GetLeftControllerInputRegistrationParams() | __ |
+| `virtual` [`FEntityInputRegistrationParams*`](./typedefs.md) | GetLeftControllerInputRegistrationParams() | __ |
 | `ftime` | GetNextThink() | __ |
-| `virtual` [`FEntityInputRegistrationParams*`](./defs.md) | GetRightControllerInputRegistrationParams() | __ |
+| `virtual` [`FEntityInputRegistrationParams*`](./typedefs.md) | GetRightControllerInputRegistrationParams() | __ |
 | `IBaseEntity&` | GetRef() | Returns a reference to `this` |
 | `int` | GetSpawnHealth() | Returns the spawn health of the entity |
-| `bool` | HasFlags([`ulong`](./defs.md) flags) | Returns true if the specified flags are set |
-| `bool` | HasFlagsAll([`ulong`](./defs.md) flags) | Returns true if all flags are set |
+| `bool` | HasFlags([`ulong`](./typedefs.md) flags) | Returns true if the specified flags are set |
+| `bool` | HasFlagsAll([`ulong`](./typedefs.md) flags) | Returns true if all flags are set |
 | `bool` | IsBaseCharacter() | Returns true if the entity is a [BaseCharacter](./ABaseCharacter.md) |
 | `bool` | IsBaseEntity() | Returns true if the entity is a [BaseEntity](./ABaseEntity.md) |
 | `bool` | IsBasePawn() | Returns true if the entity is a [BasePawn](./ABasePawn.md)
@@ -42,7 +42,7 @@ The `IBaseEntity` abstract class is the most important part of the library. It d
 | `virtual void` | PostInit() | Called after all static initializers |
 | `virtual void` | PreInit() | Called before all static intializers |
 | `void` | RegisterInputsToControllers() | __ |
-| `void` | RemoveFlags([`ulong`](./defs.md) flags) | Removes the specified flags |
+| `void` | RemoveFlags([`ulong`](./typedefs.md) flags) | Removes the specified flags |
 | `void` | RemoveSelfFromLists() | Removes entity from entity lists, invalidating [`EHANDLES`](./EHandle.md) (but not modifying static counts) |
 | `void` | ReportReady() | Increments the ready entities count (should never be called by a user) |
 | `void` | ResetFlags() | Resets flags to the initial flags at spawn |
@@ -52,7 +52,7 @@ The `IBaseEntity` abstract class is the most important part of the library. It d
 | `void` | StopThink() | __ |
 | `void` | Think() | Called every frame after DefaultThink(), if enabled via __ |
 | `void` | ThinkSet(BASEPTR pProcedure, `void*` pThinkParam) | __ |
-| `void` | ToggleFlags([`ulong`](./defs.md) flags) | Toggles or inverts the specified flags |
+| `void` | ToggleFlags([`ulong`](./typedefs.md) flags) | Toggles or inverts the specified flags |
 | `virtual void` | TraceAttack(`const` [`CTakeDamageInfo&`](./CTakeDamageInfo.md) info) | __ |
 | `bool` | Use([`ABaseEntity*`](./ABaseEntity.md) pActivator) | Uses a given entity. Returns true on success, false if blocked |
 

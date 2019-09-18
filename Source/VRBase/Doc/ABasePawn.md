@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | `TArray`<`AActor*`> | m_aTeleportBounds | Bounds of the actor(s) specify the bounds in which the player can teleport. `AVolumes` work best. Accessible via UProperty |
 | `bool` | m_bTeleportationEnabled | True if teleportation is enabled. Accessible via UProperty |
-| [`FEntityInputRegistrationParams`](./defs.md) | m_leftControllerInput | __. Accessible via UProperty |
+| [`FEntityInputRegistrationParams`](./typedefs.md) | m_leftControllerInput | __. Accessible via UProperty |
 | `UCameraComponent*` | m_pCamera | The virtual reality camera |
 | `UStaticMesh*` | m_pLeftControllerMesh | The static mesh of the left controller. Accessible via UProperty |
 | `UChildActorComponent*` | m_pLChildActor | The actor representing the left hand of the player |
@@ -24,9 +24,9 @@
 | `UMotionControllerComponent*` | m_pRMotionController | The right motion controller |
 | `UCapsuleComponent*` | m_pRootCapsule | The capsule the player resides within |
 | `UTextRenderComponent*` | m_pRTextInstr | The text component to render the right instruction |
-| [`FEntityInputRegistrationParams`](./defs.md) | m_rightControllerInput | __. Accessible via UProperty |
-| [`ftime`](./defs.md) | m_tInstrChangeTime | Time it takes to switch between instructions if instruction time switching is enabled |
-| `TArray`<[`FPawnInstruction`](./defs.md)> | m_aInstr | Array of instructions to display in order. Accessible via UProperty |
+| [`FEntityInputRegistrationParams`](./typedefs.md) | m_rightControllerInput | __. Accessible via UProperty |
+| [`ftime`](./typedefs.md) | m_tInstrChangeTime | Time it takes to switch between instructions if instruction time switching is enabled |
+| `TArray`<[`FPawnInstruction`](./typedefs.md)> | m_aInstr | Array of instructions to display in order. Accessible via UProperty |
 
 ## Functions
 
@@ -36,7 +36,7 @@
 | `bool` | IsWithinTeleportBounds(`const` `FVector&` location, `const` `FVector&` bOrigin, `const` `FVector&` bExtent) | Returns true if the player is within the specified teleportation bounds |
 | `void` | NextInstruction() | Switches the current instruction to the next instruction in the `m_aInstr` array |
 | `virtual void` | SetControllerClass(`UClass*` LControllerClass, `UClass*` RControllerClass) | Sets classes to be used by motion controllers. Both must be classes which inherit from [`ABaseController`](./ABaseController.md) |
-| `void` | SetInstruction([`FPawnInstruction`](./defs.md) instr) | Sets the currently displayed instruction |
+| `void` | SetInstruction([`FPawnInstruction`](./typedefs.md) instr) | Sets the currently displayed instruction |
 |	`bool` | TeleportPlayer(`const` `FVector&` loc, `const` `FRotator&` rot) | Teleports the player to the given location. Returns true if successful |
 
 ## Overridden
@@ -45,6 +45,6 @@
 | --- | --- | --- |
 | [`IBaseEntity`](./IBaseEntity.md) | | |
 | `virtual void` | DefaultThink() | __ |
-| `virtual` [`FEntityInputRegistrationParams`](./defs.md) | GetLeftControllerInputRegistrationParams() | __ |
-| `virtual` [`FEntityInputRegistrationParams`](./defs.md) | GetRightControllerInputRegistrationParams() | __ |
+| `virtual` [`FEntityInputRegistrationParams`](./typedefs.md) | GetLeftControllerInputRegistrationParams() | __ |
+| `virtual` [`FEntityInputRegistrationParams`](./typedefs.md) | GetRightControllerInputRegistrationParams() | __ |
 | `virtual void` | PreInit() | __ |

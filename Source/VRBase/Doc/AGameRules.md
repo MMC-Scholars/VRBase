@@ -9,6 +9,6 @@
 |  | Name | Description |
 | --- | --- | --- |
 | `bool` | GameReady() | Returns true when all entities have been initialized |
-| [`ftime`](./defs.md) | GetNextResetRount() | __ |
+| [`ftime`](./typedefs.md) | GetNextResetRount() | __ |
 | `virtual void` | RestartRound() | __ |
-| `void` | SetNextRoundRestart([`ftime`](./defs.md) next) | __ |
+| `void` | SetNextRoundRestart([`ftime`](./typedefs.md) next) | __ |

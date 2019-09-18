@@ -4,6 +4,8 @@ VRBase is a C++ Unreal Engine library designed to simplify virtual reality progr
 
 The VRBase Library implements the Blueprint VR Template in C++. You will not need to program the camera or controllers; this lets you focus on programming your game.
 
+A demo project exhibiting the features of VRBase can be found [here](https://github.com/mmc-scholars/VRBaseDemo).
+
 ## Table of Contents
 1. [Installation/Setup](#setup)
 2. [Initialization Order](#order)
@@ -11,11 +13,11 @@ The VRBase Library implements the Blueprint VR Template in C++. You will not nee
 
 ## Installation/Setup <a name="setup"></a>
 
-**Since this is only a library, VRBase should be added to an existing project via a repository link.**
+_(Since this is only a library, VRBase should be added to an existing project.)_
 
-1. Clone VRBase into your project under the directory _Source/PROJECTNAME/VRBase_.
-1. Right-click the Unreal project in the main root directory and select _Generate Visual Studio Project Files_ in order for the library to appear in the Visual Studio Solution.
-3. Update the _PROJECTNAME.Build.cs_ file to include VRBase. This file is located in the _Source/PROJECTNAME/_ directory. This snippet can be copied and pasted into the file, making sure to change the project name:
+1. Clone VRBase into your project under the directory `Source/PROJECTNAME/VRBase`.
+2. Right-click the Unreal project in the main root directory and select _Generate Visual Studio Project Files_ in order for the library to appear in the Visual Studio Solution.
+3. Update the `PROJECTNAME.Build.cs` file to include VRBase. This file is located in the `Source/PROJECTNAME/` directory. This snippet can be copied and pasted into the file. **Be sure to change the project name**:
 ```cs
 using System.IO;
 using UnrealBuildTool;
@@ -32,7 +34,7 @@ public class PROJECTNAME : ModuleRules {
 }
 ```
 
-4. After opening the project, VRBase **requires** an instance of AGameRules included in the level for VRBase to function. The VRBase classes will not work otherwise.
+4. After opening the project, VRBase **requires** an instance of AGameRules included in the level for VRBase to function. VRBase classes will not work otherwise.
 
 ## Initialization Order <a name="order"></a>
 
@@ -59,8 +61,7 @@ The default object initialization order in Unreal is as follows:
 
 ![VRBase Class Diagram](./Doc/ClassDiagram.png "VRBase Class Diagram")
 
-### Interfaces:
-- [IBaseEntity](Doc/IBaseEntity.md)
+### [Globals](Doc/globals.md)
 
 ### Classes:
 - [ABaseCharacter](Doc/ABaseCharacter.md)
@@ -72,13 +73,32 @@ The default object initialization order in Unreal is as follows:
   - [APickup](Doc/APickup.md)
   - [AWorldButton](Doc/AWorldButton.md)
 - [ABasePawn](Doc/ABasePawn.md)
-- [IGameRulesSystem](Doc/IGameRulesSystem.md)
+
+### Interfaces:
+- [IBaseEntity](Doc/IBaseEntity.md)
+- [IMovingVectorManager](Doc/IMovingVectorManager.md)
+
+### Types
+
+- [FMovingVector](Doc/FMovingVector.md)
+
+_Be sure to also look at VRBase defined [typedefs](Doc/typedefs.md)._
 
 ### Utilities:
-- [CGlobalVars](Doc/CGlobalVars.md)
+
+
+
+### TODO
+
+- [IGameRulesSystem](Doc/IGameRulesSystem.md)
 - [EHandle](Doc/EHandle.md)
-- [FMovingVector](Doc/FMovingVector.md)
 - [LineTools](Doc/LineTools.md)
 - [NLogger](Doc/NLogger.md)
-
-### [Types](Doc/types.md)
+- FPawnInstruction?
+- EHandles?
+- NLogger?
+- IGameRules?
+- LineTools?
+  - LineDrawer?
+- Predefs/typedefs?
+- VRAppSwitchFunction

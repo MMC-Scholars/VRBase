@@ -9,8 +9,8 @@
 |  | Name | Description |
 | --- | --- | --- |
 | `float` | m_flUseMaxRadius | __. Accessible via UProperty |
-| [`FEntityInputRegistrationParams`](./defs.md) | m_leftControllerInput | __. Accessible via UProperty |
-| [`FEntityInputRegistrationParams`](./defs.md) | m_rightControllerInput | __. Accessible via UProperty |
+| [`FEntityInputRegistrationParams`](./typedefs.md) | m_leftControllerInput | __. Accessible via UProperty |
+| [`FEntityInputRegistrationParams`](./typedefs.md) | m_rightControllerInput | __. Accessible via UProperty |
 
 ## Overridden
 
@@ -18,8 +18,8 @@
 | --- | --- | --- |
 | [`IBaseEntity`](./IBaseEntity.md) | | |
 | `virtual void` | DefaultThink() | __ |
-| `virtual` [`FEntityInputRegistrationParams`](./defs.md) | GetLeftControllerInputRegistrationParams() | __ |
-| `virtual` [`FEntityInputRegistrationParams`](./defs.md) | GetRightControllerInputRegistrationParams() | __ |
+| `virtual` [`FEntityInputRegistrationParams`](./typedefs.md) | GetLeftControllerInputRegistrationParams() | __ |
+| `virtual` [`FEntityInputRegistrationParams`](./typedefs.md) | GetRightControllerInputRegistrationParams() | __ |
 | `virtual void` | OnUsed(`ABaseEntity*` pActivator) | __ |
 | `virtual bool` | IsUseableBy(`const` `ABaseController*`) | __ |
 

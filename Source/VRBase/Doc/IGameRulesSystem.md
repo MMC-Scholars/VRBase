@@ -1,1 +1,2 @@
-# IGameRulesSystem
+# `IGameRulesSystem` Interface
+

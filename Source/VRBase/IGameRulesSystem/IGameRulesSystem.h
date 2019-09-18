@@ -1,3 +1,10 @@
+/**
+ * This software is under partial ownership by The Ohio State University, 
+ * for it is a product of student employees. For official policy, see
+ * https://tco.osu.edu/sites/default/files/pdfs/IP-Policy.pdf 
+ * or contact The Ohio State University's Office of Legal Affairs.
+ */
+
 #pragma once
 
 #include "UnrealEngine.h"
@@ -7,7 +14,7 @@ class IGameRulesSystem;
 extern TArray<IGameRulesSystem*> g_aGameRulesSystems;
 
 class IGameRulesSystem {
-public:
+	public:
 
 	//Called on DLL load
 	IGameRulesSystem() {
@@ -26,19 +33,10 @@ public:
 	virtual void Think() {}
 
 	//Sets the next time this system to think
-	void SetNextThinkTime(ftime t) {
-		m_tNextThink = t;
+	void SetNextThinkTime(ftime t) { m_tNextThink = t; }
 
-		//Insertion sort - determine where we should be in the sorted list of IGameRulesSystem
-		/*int32 index = 0;
-		while (index < g_aGameRulesSystems.Num() && g_aGameRulesSystems[index]->m_tNextThink < m_tNextThink) index++;
-		g_aGameRulesSystems.Insert(this, index);*/
-	}
+	ftime GetNextThinkTime() { return m_tNextThink; }
 
-	ftime GetNextThinkTime() {
-		return m_tNextThink;
-	}
-
-private:
-	ftime m_tNextThink;
+	private:
+		ftime m_tNextThink;
 };

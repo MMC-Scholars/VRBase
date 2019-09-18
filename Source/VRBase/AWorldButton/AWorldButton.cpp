@@ -1,11 +1,7 @@
-
-
 #include "AWorldButton.h"
 #include "ABaseController/ABaseController.h"
 #include "System/NLogger.h"
 #include "Kismet/GameplayStatics.h"
-
-
 
 AWorldButton::AWorldButton() {
 	m_pMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("Button Mesh");
@@ -20,10 +16,8 @@ AWorldButton::AWorldButton() {
 
 void AWorldButton::OnUsed(ABaseEntity* pActivator) {
 	ABaseController* pController = dynamic_cast<ABaseController*>(pActivator);
-	if (pController && (m_iOverlapped || !m_bOverlapRequired)) {
-		//Msg(L"Used by %s", WCStr(pActivator->GetName()));
+	if (pController && (m_iOverlapped || !m_bOverlapRequired))
 		OnPressed(pController);
-	}
 }
 
 void AWorldButton::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
@@ -38,7 +32,6 @@ void AWorldButton::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* O
 
 		// fire event
 		OnUsed(Cast<ABaseEntity>(OtherActor));
-
 	}
 }
 
@@ -50,4 +43,3 @@ void AWorldButton::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* Oth
 		m_pMeshComponent->SetMaterial(0, m_pOriginalMaterial);
 	}
 }
-
