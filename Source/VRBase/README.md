@@ -90,7 +90,6 @@ _Be sure to also look at VRBase defined [typedefs](Doc/typedefs.md)._
 
 ### TODO
 
-- [IGameRulesSystem](Doc/IGameRulesSystem.md)
 - [EHandle](Doc/EHandle.md)
 - [LineTools](Doc/LineTools.md)
 - [NLogger](Doc/NLogger.md)

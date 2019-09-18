@@ -1,5 +1,4 @@
 #include "AGameRules.h"
-#include "IGameRulesSystem/IGameRulesSystem.h"
 #include "FMovingVector/FMovingVector.h"
 
 AGameRules* g_pGameRules = NULL;
@@ -42,13 +41,6 @@ void AGameRules::Tick(float deltaTime) {
 	for (eindex i = 0; i < g_entList.Num(); i++) {
 		if (g_entList[i]->GetNextThink() > g_pGlobals->curtime) {
 			g_entList[i]->Think();
-		}
-	}
-
-	// call the IGameRulesSystem thinks
-	for (int32 i = 0; i < g_aGameRulesSystems.Num(); i++) {
-		if (g_aGameRulesSystems[i]->GetNextThinkTime() < g_pGlobals->curtime) {
-			g_aGameRulesSystems[i]->Think();
 		}
 	}
 
@@ -116,11 +108,6 @@ void AGameRules::InitializeAllEntities() {
 		g_entList[i]->PreInit();
 	}
 
-	// call independent game system PreInit
-	for (int32 i = 0; i < g_aGameRulesSystems.Num(); i++) {
-		g_aGameRulesSystems[i]->PreInit();
-	}
-
 	// run global initializers in order
 	Msg("Running all static initializers");
 	CStaticInitializer::InvokeAllInOrder();
@@ -129,11 +116,6 @@ void AGameRules::InitializeAllEntities() {
 	Msg("Running all post-inits");
 	for (eindex i = 0; i < g_entList.Num(); i++)
 		g_entList[i]->PostInit();
-
-	// call independent game system PostInit
-	for (int32 i = 0; i < g_aGameRulesSystems.Num(); i++) {
-		g_aGameRulesSystems[i]->PostInit();
-	}
 
 	// mark as ready
 	m_bHasInitializedAllEntities = true;
