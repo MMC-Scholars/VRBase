@@ -35,6 +35,10 @@ inline void Msg(const FString& str) { Msg(WCStr(str)); }
 
 // shortcuts for Unreal structures
 
+inline void Msg(const AActor* actor) {
+	Msg(actor->GetHumanReadableName());
+}
+
 inline void Msg(const FVector& v) {
 	Msg("FVector(%f,%f,%f)", v.X, v.Y, v.Z);
 }

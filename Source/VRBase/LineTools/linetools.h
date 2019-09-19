@@ -9,7 +9,6 @@
 
 #include "UnrealEngine.h"
 #include "System/predefs.h"
-#include "ABaseController/ABaseController.h"
 
 // contains parameters used for drawing lines and splines in the world
 struct SLineDrawParams {

@@ -13,18 +13,18 @@
 #include "System/predefs.h"
 
 class CTakeDamageInfo {
-private:
-	ushort m_iBaseDamage;
-	EHANDLE m_hReceiver; //entity who "receives" this attack
-	EHANDLE m_hAttacker;
+	private:
+		ushort m_iBaseDamage;
+		EHANDLE m_hReceiver; //entity who "receives" this attack
+		EHANDLE m_hAttacker;
 
-public:
-	CTakeDamageInfo(ushort damage, EHANDLE receiver, EHANDLE attacker)
-		: m_iBaseDamage(damage), m_hReceiver(receiver), m_hAttacker(attacker) {}
+	public:
+		CTakeDamageInfo(ushort damage, EHANDLE receiver, EHANDLE attacker)
+			: m_iBaseDamage(damage), m_hReceiver(receiver), m_hAttacker(attacker) {}
 
-	ushort GetBaseDamage() const { return m_iBaseDamage; }
-	EHANDLE GetReceiver() const { return m_hReceiver; }
-	EHANDLE GetAttacker() const { return m_hAttacker; }
+		ushort GetBaseDamage() const { return m_iBaseDamage; }
+		EHANDLE GetReceiver() const { return m_hReceiver; }
+		EHANDLE GetAttacker() const { return m_hAttacker; }
 };
 
 #endif // CTAKEDAMAGEINFO_H
