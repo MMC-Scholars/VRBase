@@ -1,2 +1,0 @@
-# `IGameRulesSystem` Interface
-

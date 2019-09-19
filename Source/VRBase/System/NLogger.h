@@ -33,7 +33,7 @@ void Msg(const char* pszFormat, ...);
 void Msg(const wchar_t* pszFormat, ...);
 inline void Msg(const FString& str) { Msg(WCStr(str)); }
 
-// shortcuts for structures
+// shortcuts for Unreal structures
 
 inline void Msg(const FVector& v) {
 	Msg("FVector(%f,%f,%f)", v.X, v.Y, v.Z);

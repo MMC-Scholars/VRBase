@@ -4,11 +4,9 @@
 namespace NLogger {
 	#define BUFFER_SIZE 512
 
-	/*
-	 *****************************************************
-	 * Implementation functions
-	 *****************************************************
-	 */
+//-------------------------------------------------------------------------------------
+// Implementation functions
+//-------------------------------------------------------------------------------------
 
 	char buffer[BUFFER_SIZE];
 	static void VMsgMaster(FColor c, ftime duration, const char* pszFormat, va_list args) {
@@ -34,11 +32,9 @@ namespace NLogger {
 		}
 	}
 
-	/*
-	 *****************************************************
-	 * Public Interface
-	 *****************************************************
-	 */
+//-------------------------------------------------------------------------------------
+// Public interface
+//-------------------------------------------------------------------------------------
 
 	void Message(const FString& str) {
 		MsgMaster(FColor::Cyan , 15.0f, str);
@@ -49,7 +45,6 @@ namespace NLogger {
 		VMsgMaster(FColor::Cyan, 5.0f, pszFormat, args);
 		va_end(args);
 	}
-
 	void Message(FColor c, ftime duration, const char* pszFormat, ...) {
 		va_list args;
 		va_start(args, pszFormat);
