@@ -8,7 +8,14 @@
 #ifndef IBASENTITY_H
 #define IBASENTITY_H
 
-#include "IBaseEntity_shared.h"
+#include "CoreMinimal.h"
+#include "UnrealEngine.h"
+#include "GameFramework/Actor.h"
+#include "System/predefs.h"
+#include "System/Globals.h"
+#include "System/static_initialize.h"
+#include "System/EHandle.h"
+#include "IBaseEntity_flags.h"
 #include "UObject/ConstructorHelpers.h"
 #include "System/Input.h"
 #include "CTakeDamageInfo.h"

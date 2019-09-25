@@ -10,7 +10,6 @@
 
 #include "CoreMinimal.h"
 #include "ABaseEntity/ABaseEntity.h"
-#include "ABaseCharacter/ABaseCharacter.h"
 #include "ABasePawn/ABasePawn.h"
 #include "AGameRules/AGameRules.h"
 #include "FMovingVector/FMovingVector.h"

@@ -33,3 +33,5 @@ UTIL_DrawLine(myActor->GetComponentLocation(), FVector(0, 0, 0), &lineProps);
 | `void` | UTIL_DrawSpline(`FVector` start, `FVector` end, `FVector` force, `FColor` c, `float` thickness, [`ftime`](typedefs.md) life) | Draws a spline curve in the world. The direction and magnitude of force determines the curvature of the spline |
 | `void` | UTIL_DrawCircle(`FVector` loc, [`vec`](typedefs.md) radius, `SLineDrawParams*` lineParams) | Renders a circle in the world |
 | [`vec`](typedefs.md) | UTIL_DistanceToLine(`FVector` vDirection, `FVector` vOrigin, `FVector` point) | Finds the distance between that worldline and the given point. The magnitude of vDirection does not affect the returned value |
+
+[Main](../README.md)

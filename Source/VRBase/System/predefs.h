@@ -38,7 +38,6 @@ typedef unsigned short							eindex; // entity index
 class IBaseEntity;
 class ABaseEntity;
 class ABasePawn;
-class ABaseCharacter;
 class CTakeDamageInfo;
 struct EHANDLE;
 

@@ -58,10 +58,9 @@ VRBase has its own default initialization order. Use the following initializatio
 
 ## Class Specification <a name="spec"></a>
 
-![VRBase Class Diagram](./Doc/ClassDiagram.png "VRBase Class Diagram")
+![VRBase Class Diagram](./Doc/ClassDiagram.svg "VRBase Class Diagram")
 
 ### Classes:
-- [ABaseCharacter](Doc/ABaseCharacter.md)
 - [ABaseEntity](Doc/ABaseEntity.md)
   - [ABaseController](Doc/ABaseController.md)
   - [ABaseMoving](Doc/ABaseMoving.md)
