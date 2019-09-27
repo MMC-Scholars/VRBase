@@ -24,6 +24,7 @@ typedef unsigned long long						ulong;
 typedef float									ftime; 	// time
 typedef float									vec; 	// float representing world space (used by vectors)
 typedef unsigned short							eindex; // entity index
+typedef float									lerp;	// linear interpolation
 
 #define STRINGIZE(tokens) #tokens 						// stringifies a token
 
