@@ -2,7 +2,7 @@
 
 `extends` `FVector`
 
-An `FMovingVector` is a general purpose moving vector.
+An `FMovingVector` is a general purpose moving vector. This works closely with [`IMovingVectorManager`](IMovingVectorManager.md).
 
 ## Constructors
 ```cpp
