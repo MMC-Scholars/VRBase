@@ -16,7 +16,7 @@
 #include "ASign.generated.h"
 
 UCLASS()
-class VRBASEDEMO_API ASign : public ABaseEntity {
+class VRBASE_API ASign : public ABaseEntity {
 	GENERATED_BODY()
 
 	public:
