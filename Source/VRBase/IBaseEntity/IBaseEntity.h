@@ -190,5 +190,6 @@ inline T* ExtractArg(void* pParam) { return reinterpret_cast<T*>(pParam); }
 
 // finds a UStaticMesh by path
 UStaticMesh* FindMesh(const wchar_t* path);
+UStaticMesh* FindMesh(const char* path);
 
 #endif // IBASEENTITY_H

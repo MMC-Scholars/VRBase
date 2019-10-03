@@ -200,3 +200,12 @@ UStaticMesh* FindMesh(const wchar_t* path) {
 	ConstructorHelpers::FObjectFinder<UStaticMesh> meshFinder(path);
 	return meshFinder.Object;
 }
+
+UStaticMesh* FindMesh(const char* path) {
+	size_t pathLen = strlen(path) + 1;
+	wchar_t* wcharPath = new wchar_t[pathLen];
+	size_t outputSize;
+	mbstowcs_s(&outputSize, wcharPath, pathLen, path, pathLen - 1);
+
+	return FindMesh(wcharPath);
+}
