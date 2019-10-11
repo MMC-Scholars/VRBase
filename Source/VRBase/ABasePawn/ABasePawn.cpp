@@ -67,6 +67,7 @@ ABasePawn::ABasePawn() {
 	m_pLTextInstr->SetVerticalAlignment(EVRTA_TextBottom);
 	m_pLTextInstr->SetWorldRotation(FRotator(0, 180, 0));
 	m_pLTextInstr->AddRelativeLocation(FVector(0, 0, 2));
+	m_pLTextInstr->SetText(FText::FromString(""));
 
 	// R text instructions
 	m_pRTextInstr = CreateDefaultSubobject<UTextRenderComponent>("Right Text Instructions");
@@ -77,6 +78,7 @@ ABasePawn::ABasePawn() {
 	m_pRTextInstr->SetVerticalAlignment(EVRTA_TextBottom);
 	m_pRTextInstr->SetWorldRotation(FRotator(0, 180, 0));
 	m_pRTextInstr->AddRelativeLocation(FVector(0, 0, 2));
+	m_pRTextInstr->SetText(FText::FromString(""));
 
 	// default instructions
 	m_aInstr.Add(FPawnInstruction("Press and hold the A or X buttons to teleport on Oculus Rift"));
@@ -85,6 +87,9 @@ ABasePawn::ABasePawn() {
 
 	// automatically possess pawn placed in world instead of generating a pawn
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
+
+	// initial transform
+	m_tInitialTransform = FTransform(GetActorRotation(), GetActorLocation(), GetActorScale());
 }
 
 // bind functionality to input
@@ -167,11 +172,11 @@ void ABasePawn::PreInit() {
 	m_rightControllerInput = FEntityInputRegistrationParams();
 	m_leftControllerInput = FEntityInputRegistrationParams();
 
-	m_pLTextInstr->SetText(FText::FromString(""));
-	m_pRTextInstr->SetText(FText::FromString(""));
-
 	// display first instruction
 	if (m_aInstr.Num())	SetInstruction(m_aInstr[0]);
+
+	/// TODO move actual HMD to player start location
+	TeleportPlayer(getInitialLocation(), getInitialRotation());
 }
 
 void ABasePawn::SetControllerClass(UClass* LControllerClass, UClass* RControllerClass) {

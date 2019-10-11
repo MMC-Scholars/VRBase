@@ -9,6 +9,9 @@ ABaseEntity::ABaseEntity() : IBaseEntity() {
 	SetActorTickEnabled(false);
 
 	m_flUseMaxRadius = FLT_MAX;
+
+	// initial transform
+	m_tInitialTransform = FTransform(GetActorRotation(), GetActorLocation(), GetActorScale());
 }
 
 void ABaseEntity::BeginPlay() {

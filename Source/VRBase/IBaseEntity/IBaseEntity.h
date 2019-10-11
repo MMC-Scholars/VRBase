@@ -83,6 +83,17 @@ abstract_class IBaseEntity {
 		AActor* m_pSelfAsActor;
 
 //-------------------------------------------------------------------------------------
+// Initial transform
+//-------------------------------------------------------------------------------------
+	protected:
+		FTransform							m_tInitialTransform;
+	public:
+		FTransform							getInitialTransform() { return m_tInitialTransform; };
+		FVector								getInitialScale() { return m_tInitialTransform.GetScale3D(); };
+		FRotator							getInitialRotation() { return m_tInitialTransform.Rotator(); };
+		FVector								getInitialLocation() { return m_tInitialTransform.GetLocation(); };
+
+//-------------------------------------------------------------------------------------
 // Think System
 //-------------------------------------------------------------------------------------
 
