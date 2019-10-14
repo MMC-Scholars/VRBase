@@ -13,7 +13,7 @@
 #include <ctime>
 #include "NLogger.h"
 
-extern UWorld* g_pWorld;
+// extern UWorld* g_pWorld;
 
 class CGlobalVars {
 	public:

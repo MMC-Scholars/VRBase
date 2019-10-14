@@ -1,6 +1,6 @@
 # Globals
 
-Globals are variables or methods accessible from any method of any class. Globals are accessed via the `g_pGlobals*` specifier. It does not inherit from any other class and acts as a wrapper.
+Globals are variables or methods accessible from any method of any class. Globals are generally accessed via the `g_pGlobals*` specifier (with some exceptions below). It does not inherit from any other class and acts as a wrapper.
 
 ## Variables
 
@@ -19,3 +19,14 @@ Globals are variables or methods accessible from any method of any class. Global
 | `void` | markReset() | __ |
 | `void` | reset() | __ |
 | `void` | update() | __ |
+
+## Variables (**NOT** accessed via the `g_pGlobals*` specifier)
+
+|  | Name | Description |
+| --- | --- | --- |
+| `UWorld*` | GetWorld() | a reference to the game world |
+| `TArray`<[`IBaseEntity*`](IBaseEntity.md)> | g_entList | a complete iterable entity list. All entries guaranteed to be non-null |
+| [`ABasePawn*`](ABasePawn.md) | g_pBasePawn | a reference to the main virtual reality pawn |
+| [`AGameRules*`](AGameRules.md) | g_pGameRules | a reference to the world [`AGameRules`](AGameRules.md) |
+| [`ABaseController*`](ABaseController.md) | g_pLeftController | a reference to the [`ABasePawn`](ABasePawn.md) left motion controller |
+| [`ABaseController*`](ABaseController.md) | g_pRightController | a reference to the [`ABasePawn`](ABasePawn.md) right motion controller |

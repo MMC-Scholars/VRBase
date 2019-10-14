@@ -3,7 +3,7 @@
 #include "AGameRules/AGameRules.h"
 #include "NLogger.h"
 
-UWorld* g_pWorld;
+// UWorld* g_pWorld;
 
 static CGlobalVars g_vars;
 CGlobalVars* g_pGlobals = &g_vars;
