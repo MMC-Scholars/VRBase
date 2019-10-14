@@ -87,9 +87,6 @@ ABasePawn::ABasePawn() {
 
 	// automatically possess pawn placed in world instead of generating a pawn
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
-
-	// initial transform
-	m_tInitialTransform = FTransform(GetActorRotation(), GetActorLocation(), GetActorScale());
 }
 
 // bind functionality to input
@@ -175,8 +172,11 @@ void ABasePawn::PreInit() {
 	// display first instruction
 	if (m_aInstr.Num())	SetInstruction(m_aInstr[0]);
 
+	// initial world transform (rotation, location, scale)
+	m_tInitialTransform = FTransform(m_pRootCapsule->GetComponentRotation(), GetActorLocation(), GetActorScale());
+
 	/// TODO move actual HMD to player start location
-	TeleportPlayer(getInitialLocation(), getInitialRotation());
+//	TeleportPlayer(getInitialLocation(), getInitialRotation());
 }
 
 void ABasePawn::SetControllerClass(UClass* LControllerClass, UClass* RControllerClass) {

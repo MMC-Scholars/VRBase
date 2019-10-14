@@ -44,5 +44,5 @@ inline void Msg(const FVector& v) {
 }
 
 inline void Msg(const FRotator& r) {
-	Msg("FRotator(%f,%f,%f)", r.Pitch, r.Yaw, r.Roll);
+	Msg("FRotator(%f,%f,%f)", r.Roll, r.Pitch, r.Yaw);
 }

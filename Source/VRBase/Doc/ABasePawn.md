@@ -45,6 +45,7 @@
 | --- | --- | --- |
 | [`IBaseEntity`](./IBaseEntity.md) | | |
 | `virtual void` | DefaultThink() | __ |
+| `FVector` | GetInitialLocation() | Returns the starting world location of the pawn where the Z axis value represents the location of the player feet, or the bottom of the capsule |
 | `virtual` [`FEntityInputRegistrationParams`](./typedefs.md) | GetLeftControllerInputRegistrationParams() | __ |
 | `virtual` [`FEntityInputRegistrationParams`](./typedefs.md) | GetRightControllerInputRegistrationParams() | __ |
 | `virtual void` | PreInit() | __ |

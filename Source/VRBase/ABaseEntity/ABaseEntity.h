@@ -56,7 +56,6 @@ class VRBASE_API ABaseEntity : public AActor, public IBaseEntity {
 		ABaseEntity();
 
 		virtual void OnUsed(ABaseEntity* pActivator) {}
-		virtual void DefaultThink() { /*Msg(__FUNCTION__);*/ }
 
 		// unrecommended to override AActor functions
 		virtual void BeginPlay() override;

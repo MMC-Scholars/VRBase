@@ -1,6 +1,7 @@
 #include "ABaseEntity.h"
 #include "AGameRules/AGameRules.h"
 #include "ABaseController/ABaseController.h"
+#include "System/NLogger.h"
 
 ABaseEntity::ABaseEntity() : IBaseEntity() {
 	Tags.Add(TAG_BASEENTITY);
@@ -9,9 +10,6 @@ ABaseEntity::ABaseEntity() : IBaseEntity() {
 	SetActorTickEnabled(false);
 
 	m_flUseMaxRadius = FLT_MAX;
-
-	// initial transform
-	m_tInitialTransform = FTransform(GetActorRotation(), GetActorLocation(), GetActorScale());
 }
 
 void ABaseEntity::BeginPlay() {
@@ -24,6 +22,9 @@ void ABaseEntity::BeginPlay() {
 		PreInit();
 		PostInit();
 	}
+
+	// initial world transform (rotation, location, scale)
+	m_tInitialTransform = FTransform(GetActorRotation(), GetActorLocation(), GetActorScale());
 }
 
 bool ABaseEntity::IsUseableBy(const ABaseController* pController) const {

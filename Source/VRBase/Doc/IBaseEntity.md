@@ -22,6 +22,9 @@ The `IBaseEntity` abstract class is the most important part of the library. It d
 | [`EHANDLE`](EHandle.md) | GetEHandle() | Returns an [EHandle](EHandle.md) to the entity |
 | [`ulong`](./typedefs.md) | GetFlags() | Returns the entity's set flags |
 | `int` | GetHealth() | Returns the health of the entity |
+| `FVector` | GetInitialLocation() | Returns the starting world location of the entity |
+| `FRotator` | GetInitialRotation() | Returns the starting world rotation of the entity |
+| `FVector` | GetInitialScale() | Returns the starting world scale of the entity |
 | `UInputComponent*` | GetInput() | Returns input as a `UInputComponent` pointer |
 | `virtual` [`FEntityInputRegistrationParams*`](./typedefs.md) | GetLeftControllerInputRegistrationParams() | __ |
 | `ftime` | GetNextThink() | __ |

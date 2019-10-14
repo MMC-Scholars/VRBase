@@ -19,8 +19,6 @@ class VRBASE_API APickup : public ABaseEntity {
 	public:
 		APickup();
 
-		virtual void PreInit() override {};
-
 		TArray<AActor*> 							m_aParentActors;
 		UStaticMeshComponent*					m_pPickupMeshComponent;
 
