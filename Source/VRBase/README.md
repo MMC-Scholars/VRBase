@@ -52,7 +52,7 @@ VRBase has its own default initialization order. Use the following initializatio
 4. All global Static Initializer Priority 1 functions are called. Between files, order is not guaranteed, but within a file, order is in definition order.
 5. All global Static Initializer Priority 2 functions are called; see above.
 6. All global Static Initializer Priority 3 functions are called; see above.
-7. `IBaseEntity::PreInit()` is called on all [IBaseEntity](Doc/IBaseEntity.md)-derived actors.
+7. `IBaseEntity::PostInit()` is called on all [IBaseEntity](Doc/IBaseEntity.md)-derived actors.
 8. `IBaseEntity::DefaultThink()` and `IBaseEntity::Think()` both begin to be called for each actor and each continue to be called every frame. `IBaseEntity::DefaultThink()` will always be called before `IBaseEntity::Think()` on each frame.
 9. `AActor::Tick()` is also called on every frame of the game. On any given frame it may happen before, during, or after `IBaseEntity::DefaultThink()` and `IBaseEntity::Think()`.
 
