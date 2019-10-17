@@ -20,7 +20,7 @@ Globals are variables or methods accessible from any method of any class. Global
 | `void` | reset() | __ |
 | `void` | update() | __ |
 
-## Variables (**NOT** accessed via the `g_pGlobals*` specifier)
+## Variables (accessible **without** the `g_pGlobals*` specifier)
 
 |  | Name | Description |
 | --- | --- | --- |

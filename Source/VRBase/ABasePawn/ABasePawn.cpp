@@ -175,8 +175,8 @@ void ABasePawn::PreInit() {
 	// initial world transform (rotation, location, scale)
 	m_tInitialTransform = FTransform(m_pRootCapsule->GetComponentRotation(), GetActorLocation(), GetActorScale());
 
-	/// TODO move actual HMD to player start location
-//	TeleportPlayer(getInitialLocation(), getInitialRotation());
+	// move HMD to actual player start location
+	TeleportPlayer(getInitialLocation(), getInitialRotation());
 }
 
 void ABasePawn::SetControllerClass(UClass* LControllerClass, UClass* RControllerClass) {
