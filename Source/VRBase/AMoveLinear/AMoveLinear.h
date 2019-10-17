@@ -28,12 +28,12 @@ class VRBASE_API AMoveLinear : public ABaseMoving {
 		FVector										m_vOriginalDirection;
 
 		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AMoveLinear")
-		UStaticMeshComponent*			m_staticMesh;
+		UStaticMeshComponent*						m_staticMesh;
 	
-		// FVector								m_parentLoc;
+		// FVector									m_parentLoc;
 		FVector										m_parentToThis;
 		FVector										m_startLoc;
 		FPlane										m_startPlane;
 		FPlane										m_endPlane;
-		bool											m_hasParent;
+		bool										m_hasParent;
 };

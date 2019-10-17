@@ -8,13 +8,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ConstructorHelpers.h"
 #include "VRBase/ABaseEntity/ABaseEntity.h"
 #include "System/Input.h"
 #include "Haptics/HapticFeedbackEffect_Base.h"
 #include "Components/SceneComponent.h"
-#include "ConstructorHelpers.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/SphereComponent.h"
+#include "LineTools/linetools.h"
 #include "APickup/APickup.h"
 #include "ABaseController.generated.h"
 

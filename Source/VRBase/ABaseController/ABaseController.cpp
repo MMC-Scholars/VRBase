@@ -1,7 +1,7 @@
 #include "ABaseController.h"
 #include "System/NLogger.h"
-#include "LineTools/linetools.h"
 #include "ABasePawn/ABasePawn.h"
+#include "AMoveLinear/AMoveLinear.h"
 
 ABaseController::ABaseController() {
 
@@ -48,12 +48,22 @@ void ABaseController::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) && m_aOverlapActors.Find(OtherActor) == INDEX_NONE) {
 		m_aOverlapActors.Add(OtherActor);
 
+		// pickup handling
+
 		APickup* pPickupActor = Cast<APickup>(OtherActor);
 		if (pPickupActor) {
 			// outline mesh if not held by anything
 			if (pPickupActor->m_aParentActors.Num() == 0)
 				pPickupActor->m_pPickupMeshComponent->SetRenderCustomDepth(true);
 		}
+
+		// movelinear handling
+
+		AMoveLinear* pMoveLinearActor = Cast<AMoveLinear>(OtherActor);
+		if (pMoveLinearActor) {
+			pMoveLinearActor->m_staticMesh->SetRenderCustomDepth(true);
+		}
+
 	}
 }
 
@@ -64,11 +74,21 @@ void ABaseController::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 void ABaseController::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
 	m_aOverlapActors.Remove(OtherActor);
 
+	// pickup handling
+
 	APickup *pPickupActor = Cast<APickup>(OtherActor);
 	if (pPickupActor) {
 		// remove mesh outline
 		pPickupActor->m_pPickupMeshComponent->SetRenderCustomDepth(false);
 	}
+
+	// movelinear handling
+
+	AMoveLinear* pMoveLinearActor = Cast<AMoveLinear>(OtherActor);
+	if (pMoveLinearActor) {
+		pMoveLinearActor->m_staticMesh->SetRenderCustomDepth(false);
+	}
+
 }
 
 ABaseController* g_pLeftController;
