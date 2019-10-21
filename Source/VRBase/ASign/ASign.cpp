@@ -1,5 +1,7 @@
+// This software is under partial ownership by The Ohio State University, for it is a product of student employees. For official policy, see https://tco.osu.edu/sites/default/files/pdfs/IP-Policy.pdf or contact The Ohio State University Office of Legal Affairs.
+
 #include "ASign.h"
-#include "Components/TextRenderComponent.h"
+#include "ABasePawn/ABasePawn.h"
 
 #define DEFAULT_WIDTH 200
 #define DEFAULT_HEIGHT 100
@@ -15,6 +17,9 @@ ASign::ASign() {
 //-------------------------------------------------------------------------------------
 // UProperties
 //-------------------------------------------------------------------------------------
+
+	m_string = FString("Hello world!");
+	m_fFontSize = 1.0f;
 
 	m_bMeshHiddenInGame = true;
 
@@ -75,15 +80,29 @@ ASign::ASign() {
 // Text render
 //-------------------------------------------------------------------------------------
 
-	UTextRenderComponent* m_pLTextInstr = CreateDefaultSubobject<UTextRenderComponent>("Text");
-	m_pLTextInstr->SetupAttachment(RootComponent);
-	m_pLTextInstr->SetXScale(1);
-	m_pLTextInstr->SetYScale(1);
-	m_pLTextInstr->SetHorizontalAlignment(EHTA_Center);
-	m_pLTextInstr->SetVerticalAlignment(EVRTA_TextBottom);
-	m_pLTextInstr->SetWorldRotation(FRotator(0, 180, 0));
-	m_pLTextInstr->AddRelativeLocation(FVector(0, 0, 2));
+	m_pTextRender = CreateDefaultSubobject<UTextRenderComponent>("text render");
+	m_pTextRender->SetupAttachment(RootComponent);
 
-	m_pLTextInstr->SetText(FText::FromString("Hello this is a test of text"));
+	m_pTextRender->SetRelativeLocation(FVector(-0.1f, DEFAULT_WIDTH / -2, DEFAULT_HEIGHT / 2));
 
+	m_pTextRender->SetXScale(m_fFontSize);
+	m_pTextRender->SetYScale(m_fFontSize);
+	m_pTextRender->SetHorizontalAlignment(EHTA_Left);
+	m_pTextRender->SetVerticalAlignment(EVRTA_TextTop);
+	m_pTextRender->SetWorldRotation(FRotator(0, 180, 0));
+	m_pTextRender->AddRelativeLocation(FVector(0, 0, 2));
+
+	m_pTextRender->SetText(FText::FromString(m_string));
+}
+
+void ASign::DefaultThink() {
+	if (m_bAlwaysFacePlayer) {
+		FVector vLocCurrent = GetActorLocation();
+		FVector vLocPlayer = g_pBasePawn->GetActorLocation();
+
+		FVector forward = vLocCurrent- vLocPlayer;
+		FRotator rot = forward.ToOrientationRotator();
+
+		SetActorRotation(rot);
+	}
 }
