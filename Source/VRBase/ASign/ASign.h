@@ -25,7 +25,8 @@ class VRBASE_API ASign : public ABaseEntity {
 		UTextRenderComponent* m_pTextRender;
 
 	public:
-		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Text", DisplayName = "Text")
+		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Text", DisplayName = "Text", meta=(MultiLine=true))
+//		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Text", DisplayName = "Text")
 		FString m_string;
 
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Text", DisplayName = "Font Size")
@@ -37,22 +38,26 @@ class VRBASE_API ASign : public ABaseEntity {
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Rendering", DisplayName = "Always Face Player?")
 		bool m_bAlwaysFacePlayer;
 
+	private:
+		void TextWrap(FString);
+
+	public:
+
 //-------------------------------------------------------------------------------------
 // UProperty editor handling
 //-------------------------------------------------------------------------------------
 
 #if WITH_EDITOR
 		virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) {
+			// set procedural mesh hidden
 			m_pMesh->bHiddenInGame = m_bMeshHiddenInGame;
 
+			// scale text
 			m_pTextRender->SetXScale(m_fFontSize);
 			m_pTextRender->SetYScale(m_fFontSize);
 
-			m_pTextRender->SetText(FText::FromString(m_string));
-
-			int baseFontSize = 12;
-
-			Msg("overflow");
+			// wrap string text
+			TextWrap(m_string);
 
 			Super::PostEditChangeProperty(PropertyChangedEvent);
 		}

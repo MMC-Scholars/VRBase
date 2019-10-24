@@ -92,7 +92,7 @@ ASign::ASign() {
 	m_pTextRender->SetWorldRotation(FRotator(0, 180, 0));
 	m_pTextRender->AddRelativeLocation(FVector(0, 0, 2));
 
-	m_pTextRender->SetText(FText::FromString(m_string));
+	TextWrap(m_string);
 }
 
 void ASign::DefaultThink() {
@@ -105,4 +105,47 @@ void ASign::DefaultThink() {
 
 		SetActorRotation(rot);
 	}
+}
+
+void ASign::TextWrap(FString input) {
+	const int BASE_FONT_SIZE = 10.5;
+
+	const char* lineBreak = "<br>";
+	int maxLen = input.Len() * strlen(lineBreak);
+	rsize_t size = maxLen;
+
+	char* initialText = TCHAR_TO_ANSI(*input);
+
+	Msg("\n%s", initialText);
+
+	char* wrappedText = new char[maxLen];
+	memset(wrappedText, 0, maxLen);
+	char* lineText = new char[maxLen];
+	memset(lineText, 0, maxLen);
+
+	const char* delimiters = " <>";
+	char* word;
+	char* state;
+
+	word = strtok_s(initialText, delimiters, &state);
+	
+	while (word != NULL) {
+		int width = (strlen(lineText) + strlen(word)) * BASE_FONT_SIZE * m_fFontSize;
+		if (width >= DEFAULT_WIDTH || strcmp(word, "br") == 0) {
+			strcat_s(wrappedText, size, lineText);
+			strcat_s(wrappedText, size, lineBreak);
+
+			memset(lineText, 0, maxLen);
+		}
+		if (strcmp(word, "br") != 0) {
+			strcat_s(lineText, size, word);
+			strcat_s(lineText, size, " ");
+		}
+		word = strtok_s(NULL, delimiters, &state);
+	}
+	strcat_s(wrappedText, size, lineText);
+	m_pTextRender->SetText(FText::FromString(wrappedText));
+
+	delete[] lineText;
+	delete[] wrappedText;
 }
