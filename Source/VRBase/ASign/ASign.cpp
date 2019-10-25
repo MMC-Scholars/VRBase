@@ -17,8 +17,8 @@ ASign::ASign() {
 //-------------------------------------------------------------------------------------
 // UProperties
 //-------------------------------------------------------------------------------------
-
-	m_string = FString("Hello world!");
+	
+	m_string = FString();
 	m_fFontSize = 1.0f;
 
 	m_bMeshHiddenInGame = true;
@@ -92,7 +92,7 @@ ASign::ASign() {
 	m_pTextRender->SetWorldRotation(FRotator(0, 180, 0));
 	m_pTextRender->AddRelativeLocation(FVector(0, 0, 2));
 
-	TextWrap(m_string);
+	//TextWrap(m_string);
 }
 
 void ASign::DefaultThink() {
@@ -114,10 +114,14 @@ void ASign::TextWrap(FString input) {
 	int maxLen = input.Len() * strlen(lineBreak);
 	rsize_t size = maxLen;
 
-	char* initialText = TCHAR_TO_ANSI(*input);
+	wchar_t* initialWideText = &input[0];
 
-	Msg("\n%s", initialText);
+	size_t i;
+	char* initialText = new char[maxLen];
+	size_t wTextSize = input.Len() + 1; // null terminator
 
+	wcstombs_s(&i, initialText, wTextSize, initialWideText, wTextSize);
+	
 	char* wrappedText = new char[maxLen];
 	memset(wrappedText, 0, maxLen);
 	char* lineText = new char[maxLen];
