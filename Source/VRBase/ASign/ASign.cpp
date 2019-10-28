@@ -82,17 +82,19 @@ ASign::ASign() {
 
 	m_pTextRender = CreateDefaultSubobject<UTextRenderComponent>("text render");
 	m_pTextRender->SetupAttachment(RootComponent);
-
 	m_pTextRender->SetRelativeLocation(FVector(-0.1f, DEFAULT_WIDTH / -2, DEFAULT_HEIGHT / 2));
 
-	m_pTextRender->SetXScale(m_fFontSize);
-	m_pTextRender->SetYScale(m_fFontSize);
 	m_pTextRender->SetHorizontalAlignment(EHTA_Left);
 	m_pTextRender->SetVerticalAlignment(EVRTA_TextTop);
 	m_pTextRender->SetWorldRotation(FRotator(0, 180, 0));
 	m_pTextRender->AddRelativeLocation(FVector(0, 0, 2));
 
-	//TextWrap(m_string);
+	m_pTextRender->SetXScale(m_fFontSize);
+	m_pTextRender->SetYScale(m_fFontSize);
+}
+
+void ASign::PreInit() {
+	TextWrap(m_string);
 }
 
 void ASign::DefaultThink() {
@@ -100,7 +102,7 @@ void ASign::DefaultThink() {
 		FVector vLocCurrent = GetActorLocation();
 		FVector vLocPlayer = g_pBasePawn->GetActorLocation();
 
-		FVector forward = vLocCurrent- vLocPlayer;
+		FVector forward = vLocCurrent - vLocPlayer;
 		FRotator rot = forward.ToOrientationRotator();
 
 		SetActorRotation(rot);
@@ -108,7 +110,7 @@ void ASign::DefaultThink() {
 }
 
 void ASign::TextWrap(FString input) {
-	const int BASE_FONT_SIZE = 10.5;
+	const int BASE_FONT_SIZE = 11;
 
 	const char* lineBreak = "<br>";
 	int maxLen = input.Len() * strlen(lineBreak);
@@ -134,8 +136,9 @@ void ASign::TextWrap(FString input) {
 	word = strtok_s(initialText, delimiters, &state);
 	
 	while (word != NULL) {
+		float fWidthScale = GetActorScale3D().Y;
 		int width = (strlen(lineText) + strlen(word)) * BASE_FONT_SIZE * m_fFontSize;
-		if (width >= DEFAULT_WIDTH || strcmp(word, "br") == 0) {
+		if (width >= DEFAULT_WIDTH * fWidthScale || strcmp(word, "br") == 0) {
 			strcat_s(wrappedText, size, lineText);
 			strcat_s(wrappedText, size, lineBreak);
 
@@ -148,6 +151,9 @@ void ASign::TextWrap(FString input) {
 		word = strtok_s(NULL, delimiters, &state);
 	}
 	strcat_s(wrappedText, size, lineText);
+	m_pTextRender->SetWorldScale3D(FVector(1, 1, 1));
+	m_pTextRender->SetXScale(m_fFontSize);
+	m_pTextRender->SetYScale(m_fFontSize);
 	m_pTextRender->SetText(FText::FromString(wrappedText));
 
 	delete[] lineText;

@@ -17,14 +17,14 @@ class VRBASE_API ASign : public ABaseEntity {
 	public:
 		ASign();
 
-		virtual void PreInit() override {};
+		virtual void PreInit() override;
 		virtual void DefaultThink() override;
 
 	private:
 		UProceduralMeshComponent* m_pMesh;
 		UTextRenderComponent* m_pTextRender;
 
-	public:
+	public:		
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Text", DisplayName = "Text", meta=(MultiLine=true))
 		FString m_string;
 
@@ -59,6 +59,10 @@ class VRBASE_API ASign : public ABaseEntity {
 			TextWrap(m_string);
 
 			Super::PostEditChangeProperty(PropertyChangedEvent);
+		}
+
+		void PostEditMove(bool bFinished) {
+			TextWrap(m_string);
 		}
 #endif
 
