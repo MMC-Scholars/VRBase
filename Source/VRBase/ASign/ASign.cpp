@@ -91,6 +91,9 @@ ASign::ASign() {
 
 	m_pTextRender->SetXScale(m_fFontSize);
 	m_pTextRender->SetYScale(m_fFontSize);
+
+	// set text display
+	TextWrap(m_string);
 }
 
 void ASign::PreInit() {
@@ -137,15 +140,22 @@ void ASign::TextWrap(FString input) {
 
 	word = strtok_s(initialText, delimiters, &state);
 	
-	while (word != NULL) {
+	while (word != NULL) { // for each word
 		float fWidthScale = GetActorScale3D().Y;
 		int width = (strlen(lineText) + strlen(word)) * BASE_FONT_SIZE * m_fFontSize;
+
+		// if the width of the line is bigger than the mesh width
 		if (width >= DEFAULT_WIDTH * fWidthScale || strcmp(word, "br") == 0) {
 			strcat_s(wrappedText, size, lineText);
-			strcat_s(wrappedText, size, lineBreak);
+	
+			if (strlen(wrappedText) > 0) {
+				strcat_s(wrappedText, size, lineBreak);
+			}
 
 			memset(lineText, 0, maxLen);
 		}
+		
+		// if the world is not already <br>, add it to the line text
 		if (strcmp(word, "br") != 0) {
 			strcat_s(lineText, size, word);
 			strcat_s(lineText, size, " ");
