@@ -18,7 +18,7 @@ ASign::ASign() {
 // UProperties
 //-------------------------------------------------------------------------------------
 	
-	m_string = FString();
+	m_string = FString("hello world");
 	m_fFontSize = 1.0f;
 
 	m_bMeshHiddenInGame = true;
@@ -110,12 +110,14 @@ void ASign::DefaultThink() {
 }
 
 void ASign::TextWrap(FString input) {
+	if (input.Len() == 0) return;
+
 	const int BASE_FONT_SIZE = 11;
 
 	const char* lineBreak = "<br>";
 	int maxLen = input.Len() * strlen(lineBreak);
 	rsize_t size = maxLen;
-
+	
 	wchar_t* initialWideText = &input[0];
 
 	size_t i;
@@ -150,12 +152,17 @@ void ASign::TextWrap(FString input) {
 		}
 		word = strtok_s(NULL, delimiters, &state);
 	}
-	strcat_s(wrappedText, size, lineText);
-	m_pTextRender->SetWorldScale3D(FVector(1, 1, 1));
-	m_pTextRender->SetXScale(m_fFontSize);
-	m_pTextRender->SetYScale(m_fFontSize);
-	m_pTextRender->SetText(FText::FromString(wrappedText));
 
+	strcat_s(wrappedText, size, lineText);
+
+	if (m_pTextRender != nullptr) {
+		m_pTextRender->SetWorldScale3D(FVector(1, 1, 1));
+		m_pTextRender->SetXScale(m_fFontSize);
+		m_pTextRender->SetYScale(m_fFontSize);
+		m_pTextRender->SetText(FText::FromString(wrappedText));
+	}
+
+	// restore
 	delete[] lineText;
 	delete[] wrappedText;
 }

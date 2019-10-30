@@ -48,22 +48,26 @@ class VRBASE_API ASign : public ABaseEntity {
 
 #if WITH_EDITOR
 		virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) {
-			// set procedural mesh hidden
-			m_pMesh->bHiddenInGame = m_bMeshHiddenInGame;
+			if (m_pMesh && m_pTextRender) {
+				m_pMesh->bHiddenInGame = m_bMeshHiddenInGame;
 
-			// scale text
-			m_pTextRender->SetXScale(m_fFontSize);
-			m_pTextRender->SetYScale(m_fFontSize);
+				m_pTextRender->SetXScale(m_fFontSize);
+				m_pTextRender->SetYScale(m_fFontSize);
 
-			// set text
-			TextWrap(m_string);
+				TextWrap(m_string);
+			}
 
 			Super::PostEditChangeProperty(PropertyChangedEvent);
 		}
-
+		
 		void PostEditMove(bool bFinished) {
-			TextWrap(m_string);
+			Super::PostEditMove(bFinished);
+			
+			if (m_pMesh && m_pTextRender) {
+				TextWrap(m_string);
+			}
 		}
+		
 #endif
 
 };
