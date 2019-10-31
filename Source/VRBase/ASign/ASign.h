@@ -17,6 +17,9 @@ class VRBASE_API ASign : public ABaseEntity {
 	public:
 		ASign();
 
+		// set text display since uproperties seem to reset to default values on editor start
+		virtual void OnConstruction(const FTransform& Transform) override { TextWrap(m_string); };
+		
 		virtual void PreInit() override;
 		virtual void DefaultThink() override;
 
