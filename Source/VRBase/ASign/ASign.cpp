@@ -21,6 +21,7 @@ ASign::ASign() {
 	m_string = FString("hello world");
 	m_fFontSize = 1.0f;
 
+	m_sColor = FColor::White;
 	m_bMeshHiddenInGame = true;
 
 //-------------------------------------------------------------------------------------
@@ -82,28 +83,52 @@ ASign::ASign() {
 
 	m_pTextRender = CreateDefaultSubobject<UTextRenderComponent>("text render");
 	m_pTextRender->SetupAttachment(RootComponent);
-	m_pTextRender->SetRelativeLocation(FVector(-0.1f, DEFAULT_WIDTH / -2, DEFAULT_HEIGHT / 2));
-
-	m_pTextRender->SetHorizontalAlignment(EHTA_Left);
-	m_pTextRender->SetVerticalAlignment(EVRTA_TextTop);
+	
 	m_pTextRender->SetWorldRotation(FRotator(0, 180, 0));
-	m_pTextRender->AddRelativeLocation(FVector(0, 0, 2));
 
-	m_pTextRender->SetXScale(m_fFontSize);
-	m_pTextRender->SetYScale(m_fFontSize);
+	// reload text
+	TextReload();
+}
 
-	// set text display
+void ASign::TextReload() {
+	float x = DEFAULT_WIDTH / -2;
+	float y = DEFAULT_HEIGHT / 2;
+
+	m_pTextRender->SetHorizontalAlignment(m_eAlignX);
+
+	if (m_eAlignX == EHorizTextAligment::EHTA_Center) {
+		x = 0;
+	}
+	else if (m_eAlignX == EHorizTextAligment::EHTA_Right) {
+		x = DEFAULT_WIDTH / 2;
+	}
+
+	m_pTextRender->SetVerticalAlignment(m_eAlignY);
+	if (m_eAlignY == EVerticalTextAligment::EVRTA_TextCenter) {
+		y = 0;
+	}
+	else if (m_eAlignY == EVerticalTextAligment::EVRTA_TextBottom) {
+		y = DEFAULT_HEIGHT / -2;
+	}
+
+	m_pTextRender->SetRelativeLocation(FVector(-0.1f, x, y));
+	m_pTextRender->AddRelativeLocation(FVector(0, 0, 2)); // necessary in order to prevent actor rotation from hiding the text in the mesh
+
+	m_pTextRender->SetTextRenderColor(m_sColor);
+
+	// setup text
 	TextWrap(m_string);
 }
 
 void ASign::PreInit() {
-	TextWrap(m_string);
+	// reload text
+	TextReload();
 }
 
 void ASign::DefaultThink() {
 	if (m_bAlwaysFacePlayer) {
 		FVector vLocCurrent = GetActorLocation();
-		FVector vLocPlayer = g_pBasePawn->GetActorLocation();
+		FVector vLocPlayer = g_pBasePawn->m_pCamera->GetComponentLocation();
 
 		FVector forward = vLocCurrent - vLocPlayer;
 		FRotator rot = forward.ToOrientationRotator();
@@ -115,8 +140,8 @@ void ASign::DefaultThink() {
 void ASign::TextWrap(FString input) {
 	if (input.Len() == 0) return;
 
-	const int BASE_FONT_SIZE = 11;
-
+	const float BASE_FONT_SIZE = 10.8;
+	
 	const char* lineBreak = "<br>";
 	int maxLen = input.Len() * strlen(lineBreak);
 	rsize_t size = maxLen;
@@ -139,13 +164,13 @@ void ASign::TextWrap(FString input) {
 	char* state;
 
 	word = strtok_s(initialText, delimiters, &state);
-	
+
 	while (word != NULL) { // for each word
-		float fWidthScale = GetActorScale3D().Y;
-		int width = (strlen(lineText) + strlen(word)) * BASE_FONT_SIZE * m_fFontSize;
+		float fMeshWidth = DEFAULT_WIDTH * GetActorScale3D().Y;
+		float fLineWidth = (strlen(lineText) + strlen(word)) * BASE_FONT_SIZE * m_fFontSize;
 
 		// if the width of the line is bigger than the mesh width
-		if (width >= DEFAULT_WIDTH * fWidthScale || strcmp(word, "br") == 0) {
+		if (fLineWidth > fMeshWidth || strcmp(word, "br") == 0) {
 			strcat_s(wrappedText, size, lineText);
 	
 			if (strlen(wrappedText) > 0) {
