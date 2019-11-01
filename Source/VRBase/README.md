@@ -67,6 +67,7 @@ VRBase has its own default initialization order. Use the following initializatio
     - [AMoveLinear](Doc/AMoveLinear.md)
   - [AGameRules](Doc/AGameRules.md)
   - [APickup](Doc/APickup.md)
+  - [ASign](Doc/ASign.md)
   - [AWorldButton](Doc/AWorldButton.md)
 - [ABasePawn](Doc/ABasePawn.md)
 
