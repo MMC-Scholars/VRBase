@@ -5,6 +5,7 @@
 
 AWorldButton::AWorldButton() {
 	m_pMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("Button Mesh");
+	RootComponent = m_pMeshComponent;
 	m_pMeshComponent->SetStaticMesh(m_pStaticMesh);
 	m_pMeshComponent->SetMaterial(0, m_pOriginalMaterial);
 
@@ -16,7 +17,7 @@ AWorldButton::AWorldButton() {
 
 void AWorldButton::OnUsed(ABaseEntity* pActivator) {
 	ABaseController* pController = dynamic_cast<ABaseController*>(pActivator);
-	if (pController && (m_iOverlapped || !m_bOverlapRequired))
+	if (pController && m_iOverlapped)
 		OnPressed(pController);
 }
 
@@ -36,10 +37,13 @@ void AWorldButton::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* O
 }
 
 void AWorldButton::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
-	if (OtherActor && dynamic_cast<ABaseController*>(OtherActor)) {
+	ABaseController* pController = dynamic_cast<ABaseController*>(OtherActor);
+	if (pController) {
 		m_iOverlapped--;
 		
 		// revert material
 		m_pMeshComponent->SetMaterial(0, m_pOriginalMaterial);
+
+		OffPressed(pController);
 	}
 }
