@@ -8,7 +8,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ABaseEntity/ABaseEntity.h"
+#include "APickup/APickup.h"
 #include "ABaseMoving.generated.h"
 
 // fractional lerp value for measuring the open/closed status of a still door
@@ -25,7 +25,7 @@
  *-------------------------------------------------------------------------------------
  */
 UCLASS()
-class VRBASE_API ABaseMoving : public ABaseEntity {
+class VRBASE_API ABaseMoving : public APickup {
 	public:
 		GENERATED_BODY()
 
@@ -34,6 +34,9 @@ class VRBASE_API ABaseMoving : public ABaseEntity {
 		virtual void PreInit() override;
 		virtual void OnUsed(ABaseEntity*) override;
 		virtual bool IsUseableBy(const ABaseController*) const override;
+
+		virtual void Pickup(ABaseController* pController) override;
+		virtual void Drop(ABaseController* pController) override;
 
 		virtual void SetPositionFromController(ABaseController*);
 

@@ -6,11 +6,41 @@ ABaseMoving::ABaseMoving() {
 	m_flLerpSpeed = 10;
 	m_bInAttachThink = false;
 	m_pHoldingController = NULL;
+
+	RootComponent = m_pPickupMeshComponent;
+	m_pPickupMeshComponent->SetSimulatePhysics(false);
 }
 
 void ABaseMoving::PreInit() {
 	Super::PreInit();
 	SetLerpPosition(m_lInitialLerp);
+}
+
+void ABaseMoving::Pickup(ABaseController* pController) {
+/*
+	m_pPickupMeshComponent->SetSimulatePhysics(false);
+	AttachToActor(controller, FAttachmentTransformRules::KeepWorldTransform);
+	m_aParentActors.Add(controller);
+
+	OnPickup(controller);
+*/
+}
+
+void ABaseMoving::Drop(ABaseController* pController) {
+	/*
+	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+
+	// Attach to the next parent in line
+	m_aParentActors.Remove(controller);
+	if (m_aParentActors.Num() > 0) {
+		AttachToActor(m_aParentActors[0], FAttachmentTransformRules::KeepWorldTransform);
+	}
+	else {
+		m_pPickupMeshComponent->SetSimulatePhysics(true);
+	}
+
+	OnDrop(controller);
+	*/
 }
 
 void ABaseMoving::OnUsed(ABaseEntity* pActivator) {

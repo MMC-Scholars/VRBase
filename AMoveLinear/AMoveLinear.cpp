@@ -2,8 +2,8 @@
 #include "ABaseController/ABaseController.h"
 
 AMoveLinear::AMoveLinear() {
-	m_staticMesh = CreateDefaultSubobject<UStaticMeshComponent>("m_staticMeshComponent");
-	RootComponent = m_staticMesh;
+//	m_staticMesh = CreateDefaultSubobject<UStaticMeshComponent>("m_staticMeshComponent");
+//	RootComponent = m_staticMesh;
 }
 
 void AMoveLinear::PreInit() {
