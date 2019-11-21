@@ -32,7 +32,7 @@ class VRBASE_API ABaseMoving : public APickup {
 		ABaseMoving();
 
 		virtual void PreInit() override;
-		virtual void OnUsed(ABaseEntity*) override;
+//		virtual void OnUsed(ABaseEntity*) override;
 		virtual bool IsUseableBy(const ABaseController*) const override;
 
 		virtual void Pickup(ABaseController* pController) override;

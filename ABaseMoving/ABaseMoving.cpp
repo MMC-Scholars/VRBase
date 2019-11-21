@@ -17,32 +17,37 @@ void ABaseMoving::PreInit() {
 }
 
 void ABaseMoving::Pickup(ABaseController* pController) {
-/*
-	m_pPickupMeshComponent->SetSimulatePhysics(false);
-	AttachToActor(controller, FAttachmentTransformRules::KeepWorldTransform);
-	m_aParentActors.Add(controller);
+	AttachToActor(pController, FAttachmentTransformRules::KeepWorldTransform);
+	m_aParentActors.Add(pController);
 
-	OnPickup(controller);
-*/
+	if (!m_bInAttachThink) {
+		m_pHoldingController = pController;
+		SetThink(&ABaseMoving::AttachThink);
+		m_bInAttachThink = true;
+	}
+
+	OnPickup(pController);
 }
 
 void ABaseMoving::Drop(ABaseController* pController) {
-	/*
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 
-	// Attach to the next parent in line
-	m_aParentActors.Remove(controller);
+	m_aParentActors.Remove(pController);
 	if (m_aParentActors.Num() > 0) {
 		AttachToActor(m_aParentActors[0], FAttachmentTransformRules::KeepWorldTransform);
 	}
 	else {
-		m_pPickupMeshComponent->SetSimulatePhysics(true);
+		if (pController == m_pHoldingController) {
+			m_pHoldingController = NULL;
+			StopThink();
+			m_bInAttachThink = false;
+		}
 	}
 
-	OnDrop(controller);
-	*/
-}
 
+	OnDrop(pController);
+}
+/*
 void ABaseMoving::OnUsed(ABaseEntity* pActivator) {
 	Msg(__FUNCTION__);
 	ABaseController* pController = dynamic_cast<ABaseController*>(pActivator);
@@ -60,7 +65,7 @@ void ABaseMoving::OnUsed(ABaseEntity* pActivator) {
 		}
 	}
 }
-
+*/
 bool ABaseMoving::IsUseableBy(const ABaseController* pController) const {
 	if (pController->m_iButtonsReleased && !m_pHoldingController)
 		return false;
@@ -68,7 +73,7 @@ bool ABaseMoving::IsUseableBy(const ABaseController* pController) const {
 }
 
 void ABaseMoving::SetPositionFromController(ABaseController* pController) {
-	Msg(__FUNCTION__);
+//	Msg(__FUNCTION__);
 }
 
 void ABaseMoving::Open() {
