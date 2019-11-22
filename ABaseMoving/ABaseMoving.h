@@ -41,8 +41,6 @@ class VRBASE_API ABaseMoving : public APickup {
 
 		virtual void SetPositionFromController(ABaseController*);
 
-		USceneComponent*				m_pMovingRoot;
-
 		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
 		bool m_bAttachToController;
 
@@ -89,7 +87,10 @@ class VRBASE_API ABaseMoving : public APickup {
 		bool m_bInAttachThink;
 		float m_lCurrentLerp;
 		ABaseController* m_pHoldingController; // what controller is holding on to us?
-		AActor* m_pOriginalAttachment; // where was it originally attached to?
+
+//		FVector m_vOrgAttachLoc;
+//		FVector m_vCurAttachLoc;
+		FVector m_vTempAttachLoc; // the position of the object if it were not constrained (e.g. the position of the controller during movement)
 
 		static void OpenThink(void* vpBaseMoving);
 		static void CloseThink(void* vpBaseMoving);

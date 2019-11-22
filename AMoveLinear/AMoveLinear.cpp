@@ -4,6 +4,7 @@
 AMoveLinear::AMoveLinear() {
 	m_pAxis = CreateDefaultSubobject<USplineComponent>("spline axis");
 	RootComponent = m_pAxis;
+	m_pPickupMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 }
 
 void AMoveLinear::PreInit() {
@@ -29,34 +30,8 @@ void AMoveLinear::PreInit() {
 void AMoveLinear::SetPositionFromController(ABaseController* pController) {
 	Msg("setting position from controlller");
 
-	FVector loc = GetActorLocation();
-	Msg(m_pPickupMeshComponent->GetComponentLocation());
-
-//	m_pAxis->FindLocationClosestToWorldLocation();
-
-	/*
-if (m_hasParent) {
-		FTransform parentTransform = GetRootComponent()->GetAttachParent()->GetOwner()->GetActorTransform();
-		m_vDirection = parentTransform.Rotator().RotateVector(m_vOriginalDirection);
-		m_parentToThis = parentTransform.Rotator().RotateVector(m_startLoc);
-		m_startPlane = FPlane(parentTransform.GetLocation() + m_parentToThis, m_vDirection);
-		m_endPlane = FPlane(parentTransform.GetLocation() + m_parentToThis + m_vDirection, -m_vDirection);
-	}
-
-	if (m_startPlane.PlaneDot(pController->GetActorLocation()) >= 0
-		&& m_endPlane.PlaneDot(pController->GetActorLocation()) >= 0) {
-		FVector locThis = GetActorLocation();
-		FVector locController = pController->GetActorLocation();
-
-		FVector thisToController = locController - locThis;
-
-		FVector proj = thisToController.ProjectOnTo(m_vDirection);
-		FVector locAlongAxis = proj + locThis;
-
-		SetActorLocation(locAlongAxis);
-	}
-
-	*/
+	FVector pos = m_pAxis->FindLocationClosestToWorldLocation(m_vTempAttachLoc, ESplineCoordinateSpace::World);
+	m_pPickupMeshComponent->SetWorldLocation(pos);
 }
 
 void AMoveLinear::SetLerpPosition(float _lerp) {

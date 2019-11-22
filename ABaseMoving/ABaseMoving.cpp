@@ -6,11 +6,6 @@ ABaseMoving::ABaseMoving() {
 	m_flLerpSpeed = 10;
 	m_bInAttachThink = false;
 	m_pHoldingController = NULL;
-	m_pOriginalAttachment = NULL;
-
-	m_pMovingRoot = CreateDefaultSubobject<USceneComponent>("scene root");
-	RootComponent = m_pMovingRoot;
-	m_pPickupMeshComponent->SetupAttachment(m_pMovingRoot);
 
 	m_pPickupMeshComponent->SetSimulatePhysics(false);
 }
@@ -21,14 +16,6 @@ void ABaseMoving::PreInit() {
 }
 
 void ABaseMoving::Pickup(ABaseController* pController) {
-	// save the original attachment (the hot air balloon)
-	m_pOriginalAttachment = this->GetAttachParentActor();
-
-	// attach to the controller
-//	m_pPickupMeshComponent
-	AttachToActor(pController, FAttachmentTransformRules::KeepWorldTransform);
-	m_aParentActors.Add(pController);
-	
 	// start think
 	m_pHoldingController = pController;
 	SetThink(&ABaseMoving::AttachThink);
@@ -38,23 +25,10 @@ void ABaseMoving::Pickup(ABaseController* pController) {
 }
 
 void ABaseMoving::Drop(ABaseController* pController) {
-	// detach from controller
-	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-
-	// if attached to another controller
-	m_aParentActors.Remove(pController);
-	if (m_aParentActors.Num() > 0) AttachToActor(m_aParentActors[0], FAttachmentTransformRules::KeepWorldTransform);
-	
-	else {
-		// attach back to original attachment if applicable
-		if (m_pOriginalAttachment) AttachToActor(m_pOriginalAttachment, FAttachmentTransformRules::KeepWorldTransform);
-		m_pOriginalAttachment = NULL;
-
-		// stop think
-		m_pHoldingController = NULL;
-		StopThink();
-		m_bInAttachThink = false;
-	}
+	// stop think
+	m_pHoldingController = NULL;
+	StopThink();
+	m_bInAttachThink = false;
 
 	OnDrop(pController);
 }
@@ -133,6 +107,10 @@ void ABaseMoving::AttachThink(void* vpBaseMoving) {
 	if (!pMoving->IsUseableBy(pMoving->m_pHoldingController)) {
 		pMoving->StopThink();
 	}
+
+//	pMoving->m_vOrgAttachLoc = pMoving->m_pPickupMeshComponent->GetComponentLocation();
+//	pMoving->m_vCurAttachLoc = pMoving->m_pHoldingController->GetActorLocation();
+	pMoving->m_vTempAttachLoc = pMoving->m_pHoldingController->GetActorLocation();
 
 	pMoving->SetPositionFromController(pMoving->m_pHoldingController);
 }
