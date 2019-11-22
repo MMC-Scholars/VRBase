@@ -52,6 +52,9 @@ ABasePawn::ABasePawn() {
 	m_pRChildActor->SetChildActorClass(DEFAULT_CONTROLLER_CLASS::StaticClass());
 	m_pRChildActor->SetupAttachment(m_pRMotionController);
 
+	// controller collision radii
+	m_fControllerCollisionRadius = 12.0f;
+
 	// teleportation enabled
 	m_bTeleportationEnabled = true;
 	
@@ -187,12 +190,13 @@ void ABasePawn::SetControllerClass(UClass* LControllerClass, UClass* RController
 		m_pRChildActor->SetChildActorClass(RControllerClass);
 
 		// casts to ABaseController
-		
 		m_pLHand = Cast<DEFAULT_CONTROLLER_CLASS>(m_pLChildActor->GetChildActor());
 		if (m_pLHand) {
 			m_pLHand->SetWhichHand(EControllerHand::Left);
 			m_pLHand->SetStaticMesh(m_pLeftControllerMesh);
 			m_pLHand->m_pOwnerPawn = this;
+			if (m_pLHand->m_pControllerCollision)
+				m_pLHand->m_pControllerCollision->SetSphereRadius(m_fControllerCollisionRadius);
 		}
 
 		m_pRHand = Cast<DEFAULT_CONTROLLER_CLASS>(m_pRChildActor->GetChildActor());
@@ -200,6 +204,8 @@ void ABasePawn::SetControllerClass(UClass* LControllerClass, UClass* RController
 			m_pRHand->SetWhichHand(EControllerHand::Right);
 			m_pRHand->SetStaticMesh(m_pRightControllerMesh);
 			m_pRHand->m_pOwnerPawn = this;
+			if (m_pRHand->m_pControllerCollision)
+				m_pRHand->m_pControllerCollision->SetSphereRadius(m_fControllerCollisionRadius);
 		}
 
 		if (m_pLHand && m_pRHand) {

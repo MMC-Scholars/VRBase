@@ -6,6 +6,7 @@ ABaseMoving::ABaseMoving() {
 	m_flLerpSpeed = 10;
 	m_bInAttachThink = false;
 	m_pHoldingController = NULL;
+	m_pOriginalAttachment = NULL;
 
 	RootComponent = m_pPickupMeshComponent;
 	m_pPickupMeshComponent->SetSimulatePhysics(false);
@@ -17,64 +18,50 @@ void ABaseMoving::PreInit() {
 }
 
 void ABaseMoving::Pickup(ABaseController* pController) {
+	// save the original attachment (the hot air balloon)
+	m_pOriginalAttachment = this->GetAttachParentActor();
+
+	// attach to the controller
 	AttachToActor(pController, FAttachmentTransformRules::KeepWorldTransform);
 	m_aParentActors.Add(pController);
-
-	if (!m_bInAttachThink) {
-		m_pHoldingController = pController;
-		SetThink(&ABaseMoving::AttachThink);
-		m_bInAttachThink = true;
-	}
+	
+	// start think
+	m_pHoldingController = pController;
+	SetThink(&ABaseMoving::AttachThink);
+	m_bInAttachThink = true;
 
 	OnPickup(pController);
 }
 
 void ABaseMoving::Drop(ABaseController* pController) {
+	// detach from controller
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 
+	// if attached to another controller
 	m_aParentActors.Remove(pController);
-	if (m_aParentActors.Num() > 0) {
-		AttachToActor(m_aParentActors[0], FAttachmentTransformRules::KeepWorldTransform);
-	}
+	if (m_aParentActors.Num() > 0) AttachToActor(m_aParentActors[0], FAttachmentTransformRules::KeepWorldTransform);
+	
 	else {
-		if (pController == m_pHoldingController) {
-			m_pHoldingController = NULL;
-			StopThink();
-			m_bInAttachThink = false;
-		}
-	}
+		// attach back to original attachment if applicable
+		if (m_pOriginalAttachment) AttachToActor(m_pOriginalAttachment, FAttachmentTransformRules::KeepWorldTransform);
+		m_pOriginalAttachment = NULL;
 
+		// stop think
+		m_pHoldingController = NULL;
+		StopThink();
+		m_bInAttachThink = false;
+	}
 
 	OnDrop(pController);
 }
-/*
-void ABaseMoving::OnUsed(ABaseEntity* pActivator) {
-	Msg(__FUNCTION__);
-	ABaseController* pController = dynamic_cast<ABaseController*>(pActivator);
-	if (pController) {
 
-		if (!m_bInAttachThink) {
-			m_pHoldingController = pController;
-			SetThink(&ABaseMoving::AttachThink);
-			m_bInAttachThink = true;
-		}
-		else if (pController == m_pHoldingController){
-			m_pHoldingController = NULL;
-			StopThink();
-			m_bInAttachThink = false;
-		}
-	}
-}
-*/
 bool ABaseMoving::IsUseableBy(const ABaseController* pController) const {
 	if (pController->m_iButtonsReleased && !m_pHoldingController)
 		return false;
 	return Super::IsUseableBy(pController);
 }
 
-void ABaseMoving::SetPositionFromController(ABaseController* pController) {
-//	Msg(__FUNCTION__);
-}
+void ABaseMoving::SetPositionFromController(ABaseController* pController) {}
 
 void ABaseMoving::Open() {
 	if (IsOpen())

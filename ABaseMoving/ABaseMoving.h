@@ -9,6 +9,7 @@
 
 #include "CoreMinimal.h"
 #include "APickup/APickup.h"
+#include "System/NLogger.h"
 #include "ABaseMoving.generated.h"
 
 // fractional lerp value for measuring the open/closed status of a still door
@@ -32,7 +33,6 @@ class VRBASE_API ABaseMoving : public APickup {
 		ABaseMoving();
 
 		virtual void PreInit() override;
-//		virtual void OnUsed(ABaseEntity*) override;
 		virtual bool IsUseableBy(const ABaseController*) const override;
 
 		virtual void Pickup(ABaseController* pController) override;
@@ -86,6 +86,7 @@ class VRBASE_API ABaseMoving : public APickup {
 		bool m_bInAttachThink;
 		float m_lCurrentLerp;
 		ABaseController* m_pHoldingController; // what controller is holding on to us?
+		AActor* m_pOriginalAttachment; // where was it originally attached to?
 
 		static void OpenThink(void* vpBaseMoving);
 		static void CloseThink(void* vpBaseMoving);
