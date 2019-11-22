@@ -2,12 +2,14 @@
 #include "ABaseController/ABaseController.h"
 
 AMoveLinear::AMoveLinear() {
+	m_pAxis = CreateDefaultSubobject<USplineComponent>("spline axis");
+	RootComponent = m_pAxis;
 }
 
 void AMoveLinear::PreInit() {
 	m_vOriginalDirection = m_vDirection;
 	m_hasParent = GetRootComponent()->GetAttachParent() != nullptr;
-	
+
 	// when attached to another actor, this is not at its start loc
 	if (m_hasParent) {
 		FTransform parentTransform = GetRootComponent()->GetAttachParent()->GetOwner()->GetActorTransform();
@@ -25,7 +27,15 @@ void AMoveLinear::PreInit() {
 }
 
 void AMoveLinear::SetPositionFromController(ABaseController* pController) {
-	if (m_hasParent) {
+	Msg("setting position from controlller");
+
+	FVector loc = GetActorLocation();
+	Msg(m_pPickupMeshComponent->GetComponentLocation());
+
+//	m_pAxis->FindLocationClosestToWorldLocation();
+
+	/*
+if (m_hasParent) {
 		FTransform parentTransform = GetRootComponent()->GetAttachParent()->GetOwner()->GetActorTransform();
 		m_vDirection = parentTransform.Rotator().RotateVector(m_vOriginalDirection);
 		m_parentToThis = parentTransform.Rotator().RotateVector(m_startLoc);
@@ -45,6 +55,8 @@ void AMoveLinear::SetPositionFromController(ABaseController* pController) {
 
 		SetActorLocation(locAlongAxis);
 	}
+
+	*/
 }
 
 void AMoveLinear::SetLerpPosition(float _lerp) {

@@ -8,7 +8,10 @@ ABaseMoving::ABaseMoving() {
 	m_pHoldingController = NULL;
 	m_pOriginalAttachment = NULL;
 
-	RootComponent = m_pPickupMeshComponent;
+	m_pMovingRoot = CreateDefaultSubobject<USceneComponent>("scene root");
+	RootComponent = m_pMovingRoot;
+	m_pPickupMeshComponent->SetupAttachment(m_pMovingRoot);
+
 	m_pPickupMeshComponent->SetSimulatePhysics(false);
 }
 
@@ -22,6 +25,7 @@ void ABaseMoving::Pickup(ABaseController* pController) {
 	m_pOriginalAttachment = this->GetAttachParentActor();
 
 	// attach to the controller
+//	m_pPickupMeshComponent
 	AttachToActor(pController, FAttachmentTransformRules::KeepWorldTransform);
 	m_aParentActors.Add(pController);
 	

@@ -9,6 +9,7 @@
 
 #include "CoreMinimal.h"
 #include "APickup/APickup.h"
+#include "Components/SceneComponent.h"
 #include "System/NLogger.h"
 #include "ABaseMoving.generated.h"
 
@@ -39,6 +40,8 @@ class VRBASE_API ABaseMoving : public APickup {
 		virtual void Drop(ABaseController* pController) override;
 
 		virtual void SetPositionFromController(ABaseController*);
+
+		USceneComponent*				m_pMovingRoot;
 
 		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
 		bool m_bAttachToController;
