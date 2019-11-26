@@ -32,6 +32,7 @@ class VRBASE_API ABaseMoving : public APickup {
 		GENERATED_BODY()
 
 		ABaseMoving();
+		virtual void OnConstruction(const FTransform& Transform) override; // sets all in-editor properties
 
 		virtual void PreInit() override;
 		virtual bool IsUseableBy(const ABaseController*) const override;
@@ -41,13 +42,11 @@ class VRBASE_API ABaseMoving : public APickup {
 
 		virtual void SetPositionFromController(ABaseController*);
 
-		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
 		bool m_bAttachToController;
 
 		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
 		float m_lInitialLerp;
 
-		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
 		float m_flLerpSpeed;
 
 		UFUNCTION(BlueprintCallable, Category = "BaseMoving")

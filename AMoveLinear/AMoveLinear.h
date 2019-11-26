@@ -14,6 +14,7 @@ class VRBASE_API AMoveLinear : public ABaseMoving {
 
 	public:
 		AMoveLinear();
+		virtual void OnConstruction(const FTransform& transform) override;
 
 		void PreInit() override;
 		void DefaultThink() override;
@@ -22,7 +23,6 @@ class VRBASE_API AMoveLinear : public ABaseMoving {
 
 		USplineComponent*							m_pAxis;
 
-		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "AMoveLinear")
 		FVector										m_vDirection;
 		FVector										m_vOriginalDirection;
 

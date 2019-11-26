@@ -7,6 +7,14 @@ AMoveLinear::AMoveLinear() {
 	m_pPickupMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
 }
 
+void AMoveLinear::OnConstruction(const FTransform& transform) {
+	Super::OnConstruction(transform);
+
+	// set mesh initial lerp
+	m_vTempAttachLoc = m_pAxis->GetLocationAtSplineInputKey(m_lInitialLerp, ESplineCoordinateSpace::World);
+	SetPositionFromController(NULL);
+}
+
 void AMoveLinear::PreInit() {
 	m_vOriginalDirection = m_vDirection;
 	m_hasParent = GetRootComponent()->GetAttachParent() != nullptr;
