@@ -1,5 +1,4 @@
 #include "ABaseController.h"
-#include "System/NLogger.h"
 #include "ABasePawn/ABasePawn.h"
 #include "AMoveLinear/AMoveLinear.h"
 
@@ -57,13 +56,6 @@ void ABaseController::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 				pPickupActor->m_pPickupMeshComponent->SetRenderCustomDepth(true);
 		}
 
-		// movelinear handling
-
-		AMoveLinear* pMoveLinearActor = Cast<AMoveLinear>(OtherActor);
-		if (pMoveLinearActor) {
-			pMoveLinearActor->m_staticMesh->SetRenderCustomDepth(true);
-		}
-
 	}
 }
 
@@ -80,13 +72,6 @@ void ABaseController::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* 
 	if (pPickupActor) {
 		// remove mesh outline
 		pPickupActor->m_pPickupMeshComponent->SetRenderCustomDepth(false);
-	}
-
-	// movelinear handling
-
-	AMoveLinear* pMoveLinearActor = Cast<AMoveLinear>(OtherActor);
-	if (pMoveLinearActor) {
-		pMoveLinearActor->m_staticMesh->SetRenderCustomDepth(false);
 	}
 
 }

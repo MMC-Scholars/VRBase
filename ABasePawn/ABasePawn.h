@@ -20,6 +20,7 @@
 #include "System/Input.h"
 #include "FPawnInstruction.h"
 #include "Components/TextRenderComponent.h"
+#include "System/NLogger.h"
 #include "ABasePawn.generated.h"
 
 UCLASS()
@@ -56,44 +57,47 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 //-------------------------------------------------------------------------------------
 
 	public:
-		UCapsuleComponent*			m_pRootCapsule;
-		USceneComponent*			m_pPlayerRoot;
-		UCameraComponent*			m_pCamera;
-		UMotionControllerComponent* m_pLMotionController;
-		UChildActorComponent*		m_pLChildActor;
-		UMotionControllerComponent* m_pRMotionController;
-		UChildActorComponent*		m_pRChildActor;
+		UCapsuleComponent*				m_pRootCapsule;
+		USceneComponent*				m_pPlayerRoot;
+		UCameraComponent*				m_pCamera;
+		UMotionControllerComponent*		m_pLMotionController;
+		UChildActorComponent*			m_pLChildActor;
+		UMotionControllerComponent*		m_pRMotionController;
+		UChildActorComponent*			m_pRChildActor;
 
 
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Left Controller", DisplayName = "Controller Class")
-		UClass* m_pLControllerClass;
+		UClass*							m_pLControllerClass;
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Right Controller", DisplayName = "Controller Class")
-		UClass* m_pRControllerClass;
+		UClass*							m_pRControllerClass;
 
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Left Controller", DisplayName = "Controller Mesh")
-		UStaticMesh*				m_pLeftControllerMesh;
-
+		UStaticMesh*					m_pLeftControllerMesh;
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Right Controller", DisplayName = "Controller Mesh")
-		UStaticMesh*				m_pRightControllerMesh;
+		UStaticMesh*					m_pRightControllerMesh;
+
+		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Controllers", DisplayName = "Collision Radius")
+		float							m_fControllerCollisionRadius;
 
 	private:
-		ABaseController*			m_pLHand;
-		ABaseController*			m_pRHand;
+		ABaseController*				m_pLHand;
+		ABaseController*				m_pRHand;
 
-// set controller classes dynamically from within the editor
+//-------------------------------------------------------------------------------------
+// Editor Post Edit properties
+//-------------------------------------------------------------------------------------
+
 #if WITH_EDITOR
-virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) {
+		virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) {
 
-	FName PropertyName = 
-		(PropertyChangedEvent.Property != nullptr)
-		? PropertyChangedEvent.Property->GetFName() 
-		: NAME_None;
+			FName PropertyName = PropertyChangedEvent.Property ? PropertyChangedEvent.Property->GetFName() : NAME_None;
 
-	if (m_pLControllerClass && m_pRControllerClass)
-		SetControllerClass(m_pLControllerClass, m_pRControllerClass);
+			// set controller classes dynamically from within the editor
+			if (m_pLControllerClass && m_pRControllerClass) 
+				SetControllerClass(m_pLControllerClass, m_pRControllerClass);
 
-	Super::PostEditChangeProperty(PropertyChangedEvent);
-}
+			Super::PostEditChangeProperty(PropertyChangedEvent);
+		}
 #endif
 
 //-------------------------------------------------------------------------------------
@@ -102,11 +106,11 @@ virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 
 #define KEY_INPUT(key, change, hand) 									\
 	void On##hand##_##key##_##change() { 								\
-		if (m_p##hand##Hand == NULL) { 										\
-			NLogger::Warning("ABasePawn hand is NULL"); 		\
-			return; 																				\
-		} 																								\
-		m_p##hand##Hand->m_iButtons##change |= IN_##key; 	\
+		if (m_p##hand##Hand == NULL) { 									\
+			NLogger::Warning("ABasePawn hand is NULL"); 				\
+			return; 													\
+		} 																\
+		m_p##hand##Hand->m_iButtons##change |= IN_##key; 				\
 		m_p##hand##Hand->OnButtonsChanged(); 							\
 	}
 
@@ -146,9 +150,9 @@ virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 
 		// "Use" controller input
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-		FEntityInputRegistrationParams m_leftControllerInput;
+		FEntityInputRegistrationParams	m_leftControllerInput;
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-		FEntityInputRegistrationParams m_rightControllerInput;
+		FEntityInputRegistrationParams	m_rightControllerInput;
 
 		//These overrides expose our UProperty variables to IBaseEntity
 		virtual FEntityInputRegistrationParams*	GetLeftControllerInputRegistrationParams() { return &m_leftControllerInput; }
@@ -164,9 +168,9 @@ virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 		bool TeleportPlayer(const FVector& loc, const FRotator& rot);
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Teleportation", DisplayName = "Teleportation Enabled")
-		bool m_bTeleportationEnabled;
+		bool							m_bTeleportationEnabled;
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Teleportation", DisplayName = "Teleportation Bounds")
-		TArray<AActor*> m_aTeleportBounds;
+		TArray<AActor*>					m_aTeleportBounds;
 
 //-------------------------------------------------------------------------------------
 // Controller instructions
@@ -176,12 +180,12 @@ virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 		FPawnInstruction*				m_sInstr;
 
 	public:
-		ftime										m_tInstrChangeTime;
-		UTextRenderComponent*		m_pRTextInstr;
-		UTextRenderComponent*		m_pLTextInstr;
+		ftime							m_tInstrChangeTime;
+		UTextRenderComponent*			m_pRTextInstr;
+		UTextRenderComponent*			m_pLTextInstr;
 
 		UPROPERTY(EditAnywhere, Category = "Instructions", DisplayName = "Pawn Instructions")
-		TArray<FPawnInstruction>	m_aInstr;
+		TArray<FPawnInstruction>		m_aInstr;
 
 		void SetInstruction(FPawnInstruction instr);
 		void NextInstruction();

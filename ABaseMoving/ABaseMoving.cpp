@@ -6,29 +6,40 @@ ABaseMoving::ABaseMoving() {
 	m_flLerpSpeed = 10;
 	m_bInAttachThink = false;
 	m_pHoldingController = NULL;
+
+	m_pPickupMeshComponent->SetStaticMesh(m_pStaticMesh);
+	m_pPickupMeshComponent->SetSimulatePhysics(false);
+}
+
+void ABaseMoving::OnConstruction(const FTransform& Transform) {
+	// set static mesh
+	m_pPickupMeshComponent->SetStaticMesh(m_pStaticMesh);
+	// set initial lerp value
+	SetLerpPosition(m_lInitialLerp);
 }
 
 void ABaseMoving::PreInit() {
 	Super::PreInit();
+	m_pPickupMeshComponent->SetStaticMesh(m_pStaticMesh);
 	SetLerpPosition(m_lInitialLerp);
 }
 
-void ABaseMoving::OnUsed(ABaseEntity* pActivator) {
-	Msg(__FUNCTION__);
-	ABaseController* pController = dynamic_cast<ABaseController*>(pActivator);
-	if (pController) {
+void ABaseMoving::Pickup(ABaseController* pController) {
+	// start think
+	m_pHoldingController = pController;
+	SetThink(&ABaseMoving::AttachThink);
+	m_bInAttachThink = true;
 
-		if (!m_bInAttachThink) {
-			m_pHoldingController = pController;
-			SetThink(&ABaseMoving::AttachThink);
-			m_bInAttachThink = true;
-		}
-		else if (pController == m_pHoldingController){
-			m_pHoldingController = NULL;
-			StopThink();
-			m_bInAttachThink = false;
-		}
-	}
+	OnPickup(pController);
+}
+
+void ABaseMoving::Drop(ABaseController* pController) {
+	// stop think
+	m_pHoldingController = NULL;
+	StopThink();
+	m_bInAttachThink = false;
+
+	OnDrop(pController);
 }
 
 bool ABaseMoving::IsUseableBy(const ABaseController* pController) const {
@@ -37,9 +48,7 @@ bool ABaseMoving::IsUseableBy(const ABaseController* pController) const {
 	return Super::IsUseableBy(pController);
 }
 
-void ABaseMoving::SetPositionFromController(ABaseController* pController) {
-	Msg(__FUNCTION__);
-}
+void ABaseMoving::SetPositionFromController(ABaseController* pController) {}
 
 void ABaseMoving::Open() {
 	if (IsOpen())
@@ -108,5 +117,7 @@ void ABaseMoving::AttachThink(void* vpBaseMoving) {
 		pMoving->StopThink();
 	}
 
+	// get the current position of the controller as a temporary attach location
+	pMoving->m_vTempAttachLoc = pMoving->m_pHoldingController->GetActorLocation();
 	pMoving->SetPositionFromController(pMoving->m_pHoldingController);
 }

@@ -20,35 +20,31 @@ class VRBASE_API APickup : public ABaseEntity {
 		APickup();
 
 		TArray<AActor*> 							m_aParentActors;
-		UStaticMeshComponent*					m_pPickupMeshComponent;
+		UStaticMeshComponent*						m_pPickupMeshComponent;
 
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mesh", DisplayName = "Static Mesh")
-		UStaticMesh*									staticMesh;
+		UStaticMesh*								m_pStaticMesh;
 
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mesh", DisplayName = "Material")
-		UMaterialInterface*						material0;
+		UMaterialInterface*							m_pMat;
 
 		// UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mass")
-		// float											m_fMass;
+		// float									m_fMass;
 
 #if WITH_EDITOR
 		// set static mesh and material dynamically from within the editor
 		virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) {
 
-			FName PropertyName = 
-				(PropertyChangedEvent.Property != nullptr)
-				? PropertyChangedEvent.Property->GetFName() 
-				: NAME_None;
+			FName PropertyName = PropertyChangedEvent.Property ? PropertyChangedEvent.Property->GetFName() : NAME_None;
 
-			if (m_pPickupMeshComponent != nullptr && staticMesh != nullptr) {
+			if (m_pPickupMeshComponent && m_pStaticMesh) {
 
-				m_pPickupMeshComponent->SetStaticMesh(staticMesh);
+				m_pPickupMeshComponent->SetStaticMesh(m_pStaticMesh);
 				
-				if (PropertyName == FName(STRINGIZE(staticMesh))) {
-					material0 = staticMesh->GetMaterial(0);
-				}
+				if (PropertyName == FName(STRINGIZE(m_pStaticMesh))) 
+					m_pMat = m_pStaticMesh->GetMaterial(0);
 
-				m_pPickupMeshComponent->SetMaterial(0, material0);
+				m_pPickupMeshComponent->SetMaterial(0, m_pMat);
 			}
 		
 			Super::PostEditChangeProperty(PropertyChangedEvent);

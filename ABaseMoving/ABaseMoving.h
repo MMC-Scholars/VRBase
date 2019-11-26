@@ -8,7 +8,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ABaseEntity/ABaseEntity.h"
+#include "APickup/APickup.h"
+#include "Components/SceneComponent.h"
+#include "System/NLogger.h"
 #include "ABaseMoving.generated.h"
 
 // fractional lerp value for measuring the open/closed status of a still door
@@ -25,25 +27,26 @@
  *-------------------------------------------------------------------------------------
  */
 UCLASS()
-class VRBASE_API ABaseMoving : public ABaseEntity {
+class VRBASE_API ABaseMoving : public APickup {
 	public:
 		GENERATED_BODY()
 
 		ABaseMoving();
+		virtual void OnConstruction(const FTransform& Transform) override; // sets all in-editor properties
 
 		virtual void PreInit() override;
-		virtual void OnUsed(ABaseEntity*) override;
 		virtual bool IsUseableBy(const ABaseController*) const override;
+
+		virtual void Pickup(ABaseController* pController) override;
+		virtual void Drop(ABaseController* pController) override;
 
 		virtual void SetPositionFromController(ABaseController*);
 
-		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
 		bool m_bAttachToController;
 
 		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
 		float m_lInitialLerp;
 
-		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
 		float m_flLerpSpeed;
 
 		UFUNCTION(BlueprintCallable, Category = "BaseMoving")
@@ -83,6 +86,8 @@ class VRBASE_API ABaseMoving : public ABaseEntity {
 		bool m_bInAttachThink;
 		float m_lCurrentLerp;
 		ABaseController* m_pHoldingController; // what controller is holding on to us?
+
+		FVector m_vTempAttachLoc; // the position of the object if it were not constrained (e.g. the position of the controller during movement)
 
 		static void OpenThink(void* vpBaseMoving);
 		static void CloseThink(void* vpBaseMoving);

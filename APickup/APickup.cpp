@@ -6,14 +6,14 @@
 
 APickup::APickup() {
 	// set default mesh
-	staticMesh = NULL;
+	m_pStaticMesh = NULL;
 
 	// static mesh component
 	m_pPickupMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("Static Mesh Component");
-	m_pPickupMeshComponent->SetStaticMesh(staticMesh);
+	m_pPickupMeshComponent->SetStaticMesh(m_pStaticMesh);
 
 	// set default material
-	material0 = m_pPickupMeshComponent->GetMaterial(0);
+	m_pMat = m_pPickupMeshComponent->GetMaterial(0);
 	
 	// set root component
 	RootComponent = m_pPickupMeshComponent;
@@ -38,12 +38,9 @@ void APickup::Drop(ABaseController* controller) {
 	
 	// Attach to the next parent in line
 	m_aParentActors.Remove(controller);
-	if (m_aParentActors.Num() > 0) {
-		AttachToActor(m_aParentActors[0], FAttachmentTransformRules::KeepWorldTransform);
-	}
-	else {
-		m_pPickupMeshComponent->SetSimulatePhysics(true);
-	}
+
+	if (m_aParentActors.Num() > 0) AttachToActor(m_aParentActors[0], FAttachmentTransformRules::KeepWorldTransform);
+	else m_pPickupMeshComponent->SetSimulatePhysics(true);
 
 	OnDrop(controller);
 }
