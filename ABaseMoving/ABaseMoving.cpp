@@ -108,9 +108,7 @@ void ABaseMoving::AttachThink(void* vpBaseMoving) {
 		pMoving->StopThink();
 	}
 
-//	pMoving->m_vOrgAttachLoc = pMoving->m_pPickupMeshComponent->GetComponentLocation();
-//	pMoving->m_vCurAttachLoc = pMoving->m_pHoldingController->GetActorLocation();
+	// get the current position of the controller as a temporary attach location
 	pMoving->m_vTempAttachLoc = pMoving->m_pHoldingController->GetActorLocation();
-
 	pMoving->SetPositionFromController(pMoving->m_pHoldingController);
 }

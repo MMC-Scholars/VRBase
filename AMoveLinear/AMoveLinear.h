@@ -26,7 +26,6 @@ class VRBASE_API AMoveLinear : public ABaseMoving {
 		FVector										m_vDirection;
 		FVector										m_vOriginalDirection;
 
-		// FVector									m_parentLoc;
 		FVector										m_parentToThis;
 		FVector										m_startLoc;
 		FPlane										m_startPlane;

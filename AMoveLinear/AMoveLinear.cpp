@@ -30,8 +30,13 @@ void AMoveLinear::PreInit() {
 void AMoveLinear::SetPositionFromController(ABaseController* pController) {
 	Msg("setting position from controlller");
 
+	// set world location
 	FVector pos = m_pAxis->FindLocationClosestToWorldLocation(m_vTempAttachLoc, ESplineCoordinateSpace::World);
 	m_pPickupMeshComponent->SetWorldLocation(pos);
+
+	float points = (float) m_pAxis->GetNumberOfSplinePoints() - 1;
+	Msg("points: %f", points);
+	//	SetLerpPosition();
 }
 
 void AMoveLinear::SetLerpPosition(float _lerp) {
