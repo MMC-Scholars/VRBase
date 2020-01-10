@@ -262,7 +262,7 @@ bool ABasePawn::TeleportPlayer(const FVector& loc, const FRotator& rot) {
 	// location
 	FVector lPrev = GetActorLocation();
 	FVector lHMD = m_pCamera->GetComponentLocation();
-	SetActorRelativeLocation(FVector(lPrev.X - lHMD.X + loc.X, lPrev.Y - lHMD.Y + loc.Y, lPrev.Z));
+	SetActorLocation(FVector(lPrev.X - lHMD.X + loc.X, lPrev.Y - lHMD.Y + loc.Y, lPrev.Z));
 
 	// rotation
 	FRotator rPrev = GetActorRotation();
@@ -271,6 +271,23 @@ bool ABasePawn::TeleportPlayer(const FVector& loc, const FRotator& rot) {
 	
 	return true;
 }
+
+bool ABasePawn::TeleportPlayerRelative(const FVector& loc, const FRotator& rot) {
+	if (!CanTeleportToLocation(loc)) return false;
+
+	// location
+	FVector lPrev = GetActorLocation();
+	FVector lHMD = m_pCamera->GetComponentLocation();
+	SetActorRelativeLocation(FVector(lPrev.X - lHMD.X + loc.X, lPrev.Y - lHMD.Y + loc.Y, lPrev.Z));
+
+	// rotation
+	FRotator rPrev = GetActorRotation();
+	FRotator rHMD = m_pCamera->GetComponentRotation();
+	SetActorRotation(FRotator(rPrev.Pitch, rPrev.Yaw - rHMD.Yaw + rot.Yaw, rPrev.Roll));
+
+	return true;
+}
+
 
 //-------------------------------------------------------------------------------------
 // Instructions

@@ -166,6 +166,7 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 		bool IsWithinTeleportBounds(const FVector& loc, const FVector& bOrigin, const FVector& bExtent);
 		bool CanTeleportToLocation(const FVector& loc);
 		bool TeleportPlayer(const FVector& loc, const FRotator& rot);
+		bool TeleportPlayerRelative(const FVector& loc, const FRotator& rot);
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Teleportation", DisplayName = "Teleportation Enabled")
 		bool							m_bTeleportationEnabled;
