@@ -204,6 +204,11 @@ void ABaseController::OnUsed(ABaseEntity* pActivator) {
 }
 
 void ABaseController::DefaultThink() {
+
+//-------------------------------------------------------------------------------------
+// Teleportation
+//-------------------------------------------------------------------------------------
+
 	if (m_bTeleportationActive) {
 		// enable haptics
 		GetWorld()->GetFirstPlayerController()->SetHapticsByValue(200.0f, 0.3f, m_eWhichHand);

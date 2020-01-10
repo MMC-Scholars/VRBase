@@ -92,6 +92,10 @@ ABasePawn::ABasePawn() {
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
 
+//-------------------------------------------------------------------------------------
+// Input
+//-------------------------------------------------------------------------------------
+
 // bind functionality to input
 void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -216,6 +220,10 @@ void ABasePawn::SetControllerClass(UClass* LControllerClass, UClass* RController
 
 }
 
+//-------------------------------------------------------------------------------------
+// Teleportation
+//-------------------------------------------------------------------------------------
+
 bool ABasePawn::IsWithinTeleportBounds(const FVector& loc, const FVector& bOrigin, const FVector& bExtent) {
 	// this is what APawn::IsInsideOrOn() should compute but (for an unknown reason)
 	// it returns a different answer than expected
@@ -254,7 +262,7 @@ bool ABasePawn::TeleportPlayer(const FVector& loc, const FRotator& rot) {
 	// location
 	FVector lPrev = GetActorLocation();
 	FVector lHMD = m_pCamera->GetComponentLocation();
-	SetActorLocation(FVector(lPrev.X - lHMD.X + loc.X, lPrev.Y - lHMD.Y + loc.Y, lPrev.Z));
+	SetActorRelativeLocation(FVector(lPrev.X - lHMD.X + loc.X, lPrev.Y - lHMD.Y + loc.Y, lPrev.Z));
 
 	// rotation
 	FRotator rPrev = GetActorRotation();
@@ -263,6 +271,10 @@ bool ABasePawn::TeleportPlayer(const FVector& loc, const FRotator& rot) {
 	
 	return true;
 }
+
+//-------------------------------------------------------------------------------------
+// Instructions
+//-------------------------------------------------------------------------------------
 
 void ABasePawn::SetInstruction(FPawnInstruction instr) {
 	UTextRenderComponent* component;
