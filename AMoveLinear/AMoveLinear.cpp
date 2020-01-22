@@ -4,7 +4,7 @@
 AMoveLinear::AMoveLinear() {
 	m_pAxis = CreateDefaultSubobject<USplineComponent>("spline axis");
 	RootComponent = m_pAxis;
-	m_pPickupMeshComponent->AttachToComponent(RootComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);
+	m_pPickupMeshComponent->SetupAttachment(RootComponent);
 }
 
 void AMoveLinear::OnConstruction(const FTransform& transform) {
