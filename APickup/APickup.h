@@ -11,6 +11,7 @@
 #include "VRBase/ABaseEntity/ABaseEntity.h"
 #include "Components/StaticMeshComponent.h"
 #include "ProceduralMeshComponent.h"
+#include "System/NLogger.h"
 #include "APickup.generated.h"
 
 UCLASS()
@@ -47,14 +48,13 @@ class VRBASE_API APickup : public ABaseEntity {
 					m_pMat = m_pStaticMesh->GetMaterial(0);
 
 				m_pPickupMeshComponent->SetMaterial(0, m_pMat);
-				/*
-				if (m_pStaticMesh) {
-					m_pProcMeshComponent->SetVisibility(false);
-				}
-				else {
-					m_pProcMeshComponent->SetVisibility(true);
-				}
-				*/
+
+				m_pProcMeshComponent->SetVisibility(false);
+				
+			}
+			else {
+				m_pPickupMeshComponent->SetStaticMesh(NULL);
+				m_pProcMeshComponent->SetVisibility(true);
 			}
 		
 			Super::PostEditChangeProperty(PropertyChangedEvent);
