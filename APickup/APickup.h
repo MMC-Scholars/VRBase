@@ -50,10 +50,14 @@ class VRBASE_API APickup : public ABaseEntity {
 				m_pPickupMeshComponent->SetMaterial(0, m_pMat);
 
 				m_pProcMeshComponent->SetVisibility(false);
-				
 			}
+			// static mesh is not explicitly set
 			else {
 				m_pPickupMeshComponent->SetStaticMesh(NULL);
+				
+				m_pMat = nullptr;
+				m_pPickupMeshComponent->SetMaterial(0, m_pMat);
+
 				m_pProcMeshComponent->SetVisibility(true);
 			}
 		

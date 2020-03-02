@@ -17,8 +17,13 @@ APickup::APickup() {
 
 	// set default material
 	m_pMat = m_pPickupMeshComponent->GetMaterial(0);
-	
-	m_pProcMeshComponent = CreateDefaultSubobject<UProceduralMeshComponent>("ProdMesh name");
+
+	// set root component
+	RootComponent = m_pPickupMeshComponent;
+
+// procedural mesh placeholder
+#if WITH_EDITOR
+	m_pProcMeshComponent = CreateDefaultSubobject<UProceduralMeshComponent>("ProceduralMeshComponent");
 	// create procedural mesh
 	// Depth, Height, Width
 	FVector cornerBBL = FVector(DEFAULT_SIZE / -2, DEFAULT_SIZE / -2, DEFAULT_SIZE / -2);
@@ -96,76 +101,12 @@ APickup::APickup() {
 	Triangles.Add(7);
 	Triangles.Add(6);
 
-	TArray<FVector> Normals;
-	/*
-	// back normal
-	Normals.Add(FVector(0, -1, 0));
-	Normals.Add(FVector(0, -1, 0));
-	Normals.Add(FVector(0, -1, 0));
-
-	Normals.Add(FVector(0, -1, 0));
-	Normals.Add(FVector(0, -1, 0));
-	Normals.Add(FVector(0, -1, 0));
-
-	// left normals
-	Normals.Add(FVector(-1, 0, 0));
-	Normals.Add(FVector(-1, 0, 0));
-	Normals.Add(FVector(-1, 0, 0));
-
-	Normals.Add(FVector(-1, 0, 0));
-	Normals.Add(FVector(-1, 0, 0));
-	Normals.Add(FVector(-1, 0, 0));
-
-	// right normals
-	Normals.Add(FVector(1, 0, 0));
-	Normals.Add(FVector(1, 0, 0));
-	Normals.Add(FVector(1, 0, 0));
-
-	Normals.Add(FVector(1, 0, 0));
-	Normals.Add(FVector(1, 0, 0));
-	Normals.Add(FVector(1, 0, 0));
-
-	// bottom normals
-	Normals.Add(FVector(0, 0, -1));
-	Normals.Add(FVector(0, 0, -1));
-	Normals.Add(FVector(0, 0, -1));
-
-	Normals.Add(FVector(0, 0, -1));
-	Normals.Add(FVector(0, 0, -1));
-	Normals.Add(FVector(0, 0, -1));
-
-	// top normals
-	Normals.Add(FVector(0, 0, 1));
-	Normals.Add(FVector(0, 0, 1));
-	Normals.Add(FVector(0, 0, 1));
-
-	Normals.Add(FVector(0, 0, 1));
-	Normals.Add(FVector(0, 0, 1));
-	Normals.Add(FVector(0, 0, 1));
-
-	// front normals
-	Normals.Add(FVector(0, 1, 0));
-	Normals.Add(FVector(0, 1, 0));
-	Normals.Add(FVector(0, 1, 0));
-
-	Normals.Add(FVector(0, 1, 0));
-	Normals.Add(FVector(0, 1, 0));
-	Normals.Add(FVector(0, 1, 0));
-	*/
-
 	// generate mesh
-	m_pProcMeshComponent->CreateMeshSection_LinearColor(0, Vertices, Triangles, Normals, TArray<FVector2D>(), TArray<FLinearColor>(), TArray<FProcMeshTangent>(), true);
-
-	// FProceduralMeshComponentDetails::ClickedOnConvertToStaticMesh
-
-	//UMaterialInstanceDynamic* pMatInst = CreateDefaultSubobject<UMaterialInstanceDynamic>("Blank Texture");
-	//pProcMeshComponent->SetMaterial(0, pMatInst);
-
-	// set root component
-	RootComponent = m_pPickupMeshComponent;
-
+	m_pProcMeshComponent->CreateMeshSection_LinearColor(0, Vertices, Triangles, TArray<FVector>(), TArray<FVector2D>(), TArray<FLinearColor>(), TArray<FProcMeshTangent>(), true);
+	
 	// attach procedural mesh
 	m_pProcMeshComponent->SetupAttachment(RootComponent);
+#endif
 
 	// enable overlap
 	m_pPickupMeshComponent->bGenerateOverlapEvents = true;
