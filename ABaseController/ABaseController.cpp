@@ -2,7 +2,7 @@
 #include "ABasePawn/ABasePawn.h"
 #include "AMoveLinear/AMoveLinear.h"
 
-#define DEFAULT_SIZE 20
+#define DEFAULT_SIZE 12
 
 ABaseController::ABaseController() {
 
