@@ -15,6 +15,7 @@
 #include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/SphereComponent.h"
+#include "ProceduralMeshComponent.h"
 #include "LineTools/linetools.h"
 #include "APickup/APickup.h"
 #include "ABaseController.generated.h"
@@ -30,8 +31,9 @@ class VRBASE_API ABaseController : public ABaseEntity {
 		ABaseController();
 
 		USceneComponent*								m_pHandScene;
-		UStaticMeshComponent*						m_pHandMeshComponent;
+		UStaticMeshComponent*							m_pHandMeshComponent;
 		USphereComponent*								m_pControllerCollision;
+		UProceduralMeshComponent*						m_pProcMeshComponent;
 
 		ABasePawn*											m_pOwnerPawn;
 

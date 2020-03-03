@@ -201,6 +201,11 @@ void ABasePawn::SetControllerClass(UClass* LControllerClass, UClass* RController
 			m_pLHand->m_pOwnerPawn = this;
 			if (m_pLHand->m_pControllerCollision)
 				m_pLHand->m_pControllerCollision->SetSphereRadius(m_fControllerCollisionRadius);
+
+			if (m_pLeftControllerMesh)
+				m_pLHand->m_pProcMeshComponent->SetVisibility(false);
+			else
+				m_pLHand->m_pProcMeshComponent->SetVisibility(true);
 		}
 
 		m_pRHand = Cast<DEFAULT_CONTROLLER_CLASS>(m_pRChildActor->GetChildActor());
@@ -210,6 +215,11 @@ void ABasePawn::SetControllerClass(UClass* LControllerClass, UClass* RController
 			m_pRHand->m_pOwnerPawn = this;
 			if (m_pRHand->m_pControllerCollision)
 				m_pRHand->m_pControllerCollision->SetSphereRadius(m_fControllerCollisionRadius);
+
+			if (m_pRightControllerMesh)
+				m_pRHand->m_pProcMeshComponent->SetVisibility(false);
+			else
+				m_pLHand->m_pProcMeshComponent->SetVisibility(true);
 		}
 
 		if (m_pLHand && m_pRHand) {

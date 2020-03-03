@@ -93,7 +93,7 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 			FName PropertyName = PropertyChangedEvent.Property ? PropertyChangedEvent.Property->GetFName() : NAME_None;
 
 			// set controller classes dynamically from within the editor
-			if (m_pLControllerClass && m_pRControllerClass) 
+			if (m_pLControllerClass && m_pRControllerClass)
 				SetControllerClass(m_pLControllerClass, m_pRControllerClass);
 
 			Super::PostEditChangeProperty(PropertyChangedEvent);
