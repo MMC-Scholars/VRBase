@@ -2,6 +2,8 @@
 #include "ABasePawn/ABasePawn.h"
 #include "AMoveLinear/AMoveLinear.h"
 
+#define DEFAULT_SIZE 12
+
 ABaseController::ABaseController() {
 
 	bool bLeft = false;
@@ -34,6 +36,90 @@ ABaseController::ABaseController() {
 	m_pControllerCollision->bGenerateOverlapEvents = true;
 	m_pControllerCollision->OnComponentBeginOverlap.AddDynamic(this, &ABaseController::OnOverlapBegin);
 	m_pControllerCollision->OnComponentEndOverlap.AddDynamic(this, &ABaseController::OnOverlapEnd);
+
+	// create procedural mesh
+	m_pProcMeshComponent = CreateDefaultSubobject<UProceduralMeshComponent>("Controller Default Mesh");
+	// Depth, Height, Width
+	FVector cornerBBL = FVector(DEFAULT_SIZE / -2, DEFAULT_SIZE / -2, DEFAULT_SIZE / -2);
+	FVector cornerBBR = FVector(DEFAULT_SIZE / 2, DEFAULT_SIZE / -2, DEFAULT_SIZE / -2);
+	FVector cornerBTL = FVector(DEFAULT_SIZE / -2, DEFAULT_SIZE / -2, DEFAULT_SIZE / 2);
+	FVector cornerBTR = FVector(DEFAULT_SIZE / 2, DEFAULT_SIZE / -2, DEFAULT_SIZE / 2);
+	FVector cornerFBL = FVector(DEFAULT_SIZE / -2, DEFAULT_SIZE / 2, DEFAULT_SIZE / -2);
+	FVector cornerFBR = FVector(DEFAULT_SIZE / 2, DEFAULT_SIZE / 2, DEFAULT_SIZE / -2);
+	FVector cornerFTL = FVector(DEFAULT_SIZE / -2, DEFAULT_SIZE / 2, DEFAULT_SIZE / 2);
+	FVector cornerFTR = FVector(DEFAULT_SIZE / 2, DEFAULT_SIZE / 2, DEFAULT_SIZE / 2);
+
+	TArray<FVector> Vertices;
+	Vertices.Add(cornerBBL); // 0
+	Vertices.Add(cornerBBR); // 1
+	Vertices.Add(cornerBTL); // 2
+	Vertices.Add(cornerBTR); // 3
+	Vertices.Add(cornerFBL); // 4
+	Vertices.Add(cornerFBR); // 5
+	Vertices.Add(cornerFTL); // 6
+	Vertices.Add(cornerFTR); // 7
+
+	// declare vertices ccw to face outwards
+	TArray<int32> Triangles;
+	// back
+	Triangles.Add(1);
+	Triangles.Add(0);
+	Triangles.Add(3);
+
+	Triangles.Add(0);
+	Triangles.Add(2);
+	Triangles.Add(3);
+
+	// left
+	Triangles.Add(0);
+	Triangles.Add(4);
+	Triangles.Add(6);
+
+	Triangles.Add(0);
+	Triangles.Add(6);
+	Triangles.Add(2);
+
+	// right
+	Triangles.Add(1);
+	Triangles.Add(3);
+	Triangles.Add(5);
+
+	Triangles.Add(3);
+	Triangles.Add(7);
+	Triangles.Add(5);
+
+	// bottom
+	Triangles.Add(0);
+	Triangles.Add(1);
+	Triangles.Add(5);
+
+	Triangles.Add(0);
+	Triangles.Add(5);
+	Triangles.Add(4);
+
+	// top
+	Triangles.Add(3);
+	Triangles.Add(2);
+	Triangles.Add(6);
+
+	Triangles.Add(3);
+	Triangles.Add(6);
+	Triangles.Add(7);
+
+	// front
+	Triangles.Add(4);
+	Triangles.Add(5);
+	Triangles.Add(6);
+
+	Triangles.Add(5);
+	Triangles.Add(7);
+	Triangles.Add(6);
+
+	// generate mesh
+	m_pProcMeshComponent->CreateMeshSection_LinearColor(0, Vertices, Triangles, TArray<FVector>(), TArray<FVector2D>(), TArray<FLinearColor>(), TArray<FProcMeshTangent>(), true);
+
+	// attach procedural mesh
+	m_pProcMeshComponent->SetupAttachment(RootComponent);
 
 	//m_bButtonHeld = false;
 	m_bTeleportationActive = false;

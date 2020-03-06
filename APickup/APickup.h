@@ -10,6 +10,8 @@
 #include "CoreMinimal.h"
 #include "VRBase/ABaseEntity/ABaseEntity.h"
 #include "Components/StaticMeshComponent.h"
+#include "ProceduralMeshComponent.h"
+#include "System/NLogger.h"
 #include "APickup.generated.h"
 
 UCLASS()
@@ -21,6 +23,7 @@ class VRBASE_API APickup : public ABaseEntity {
 
 		TArray<AActor*> 							m_aParentActors;
 		UStaticMeshComponent*						m_pPickupMeshComponent;
+		UProceduralMeshComponent*					m_pProcMeshComponent;
 
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mesh", DisplayName = "Static Mesh")
 		UStaticMesh*								m_pStaticMesh;
@@ -45,6 +48,17 @@ class VRBASE_API APickup : public ABaseEntity {
 					m_pMat = m_pStaticMesh->GetMaterial(0);
 
 				m_pPickupMeshComponent->SetMaterial(0, m_pMat);
+
+				m_pProcMeshComponent->SetVisibility(false);
+			}
+			// static mesh is not explicitly set
+			else {
+				m_pPickupMeshComponent->SetStaticMesh(NULL);
+				
+				m_pMat = nullptr;
+				m_pPickupMeshComponent->SetMaterial(0, m_pMat);
+
+				m_pProcMeshComponent->SetVisibility(true);
 			}
 		
 			Super::PostEditChangeProperty(PropertyChangedEvent);
