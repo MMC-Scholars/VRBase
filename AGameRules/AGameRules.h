@@ -1,9 +1,4 @@
-/**
- * This software is under partial ownership by The Ohio State University, 
- * for it is a product of student employees. For official policy, see
- * https://tco.osu.edu/sites/default/files/pdfs/IP-Policy.pdf 
- * or contact The Ohio State University's Office of Legal Affairs.
- */
+// This software is under partial ownership by The Ohio State University, for it is a product of student employees. For official policy, see https://tco.osu.edu/sites/default/files/pdfs/IP-Policy.pdf or contact The Ohio State University's Office of Legal Affairs.
 
 #pragma once
 
@@ -14,15 +9,13 @@
 /**
  *-------------------------------------------------------------------------------------
  * AGameRules
- * An interface for global game logic.
- * Also handles default global variables (gpGlobals) and common game logic.
+ * AGameRules handles default global variables (gpGlobals) and common game logic.
  * Override its game functions for whatever kind of game you want.
  *-------------------------------------------------------------------------------------
  */
 UCLASS()
 class VRBASE_API AGameRules : public ABaseEntity {
 	public:
-		DECLARE_CLASS_SIMPLE(AGameRules, ABaseEntity);
 		GENERATED_BODY()
 
 		AGameRules();

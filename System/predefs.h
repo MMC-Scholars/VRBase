@@ -31,10 +31,6 @@ typedef float									lerp;	// linear interpolation
 #define until(condition) while (!(condition)) 			// simplifies thinking in many contexts
 #define abstract_class class 							// abstract class never directly constructed
 
-#define DECLARE_CLASS_SIMPLE(ChildClass, ParentClass) 	\
-	typedef ChildClass ThisClass; 						\
-	typedef ParentClass BaseClass;
-
 // forward declarations of classes so that other classes can use them in header files
 class IBaseEntity;
 class ABaseEntity;

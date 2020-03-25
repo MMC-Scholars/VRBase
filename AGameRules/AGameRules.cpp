@@ -49,7 +49,7 @@ void AGameRules::Tick(float deltaTime) {
 }
 
 void AGameRules::BeginPlay() {
-	BaseClass::BeginPlay();
+	Super::BeginPlay();
 	Msg("AGameRules::BeginPlay\n");
 	if (s_iEntityCount != g_entList.Num()) {
 		NLogger::Fatal("\nIBaseEntity::s_iEntityCount != g_entList.Num()");
