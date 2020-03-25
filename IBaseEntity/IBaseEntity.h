@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UnrealEngine.h"
 #include "GameFramework/Actor.h"
 #include "System/predefs.h"
 #include "System/Globals.h"
@@ -17,14 +16,11 @@
 /**
  *-------------------------------------------------------------------------------------
  * IBaseEntity
- * Declares functionality common to all "Base" types and defines some of it.
- * Derived types are, for example:
- *	class ABaseEntity    :	public AActor, 			public IBaseEntity {...};
- *	class ABasePawn      :	public APawn, 			public IBaseEntity {...};
- *	class ABaseCharacter :	public ACharacter, 		public IBaseEntity {...};
+ * IBaseEntity is an interface which declares functionality common to all "Base" types 
+ * and defines some of the most basic functions.
  *-------------------------------------------------------------------------------------
  */
-abstract_class IBaseEntity {
+INTERFACE IBaseEntity {
 	public:
 		friend class CGlobalVars;
 		IBaseEntity();

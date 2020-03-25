@@ -1,12 +1,6 @@
-/**
- * This software is under partial ownership by The Ohio State University, 
- * for it is a product of student employees. For official policy, see
- * https://tco.osu.edu/sites/default/files/pdfs/IP-Policy.pdf 
- * or contact The Ohio State University's Office of Legal Affairs.
- */
+// This software is under partial ownership by The Ohio State University, for it is a product of student employees. For official policy, see https://tco.osu.edu/sites/default/files/pdfs/IP-Policy.pdf or contact The Ohio State University's Office of Legal Affairs.
 
-#ifndef IBASEENTITY_FLAGS
-#define IBASEENTITY_FLAGS
+#pragma once
 
 #define BF(i) (1UL << i)
 #define FL_NODAMAGE         BF(0)	// ignores all damage whatsoever
@@ -17,5 +11,3 @@
 #define FL_INGORE_INPUT     BF(5)	// entity ignores all player controller input whatsoever
 #define FL_EXTRA            BF(6)
 #define FL_EXTRA_2          BF(7)
-
-#endif // IBASEENTITY_FLAGS

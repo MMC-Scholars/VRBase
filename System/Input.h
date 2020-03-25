@@ -14,7 +14,7 @@
 #include "predefs.h"
 #include "EHandle.h"
 
-abstract_class IBaseEntity;
+INTERFACE IBaseEntity;
 class ABaseController;
 
 extern ABaseController* g_pLeftController;

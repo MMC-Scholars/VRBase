@@ -29,7 +29,7 @@ typedef float									lerp;	// linear interpolation
 #define STRINGIZE(tokens) #tokens 						// stringifies a token
 
 #define until(condition) while (!(condition)) 			// simplifies thinking in many contexts
-#define abstract_class class 							// abstract class never directly constructed
+#define INTERFACE class 							// abstract class never directly constructed
 
 // forward declarations of classes so that other classes can use them in header files
 class IBaseEntity;
