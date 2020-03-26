@@ -1,0 +1,47 @@
+// diagrams were generated from https://yuml.me/ using the following properties:
+
+// type: class diagram
+// theme: boring
+// size: normal size
+// direction: top down
+// svg
+
+// ----------------------------------------------
+// VRBase Class Diagram
+// ----------------------------------------------
+
+[IMovingVectorManager{bg:lightgreen}]
+[AActor{bg:skyblue}]->[APawn{bg:skyblue}]
+[IBaseEntity{bg:lightgreen}]
+
+[IBaseEntity]->[ABaseEntity]
+[AActor]->[ABaseEntity]
+[IBaseEntity]->[ABasePawn]
+[APawn]->[ABasePawn]
+
+[ABaseEntity]->[ABaseController]
+[ABaseEntity]->[ABaseMoving]
+[ABaseEntity]->[AGameRules]
+[ABaseEntity]->[APickup]
+[ABaseEntity]->[ASign]
+[ABaseEntity]->[AWorldButton]
+
+[ABaseMoving]->[AMoveLinear]
+
+// ----------------------------------------------
+// VRBase Entity Lifecycle
+// ----------------------------------------------
+
+[constructor{bg:lightgreen}]
+
+[AActor::BeginPlay(){bg:skyblue}]
+[AActor::BeginPlay()]->[PreInit(){bg:skyblue}]
+[PreInit()]->[PostInit(){bg:skyblue}]
+
+[start frame]->[DefaultThink(){bg:orange}]
+[DefaultThink()]->[Think(){bg:orange}]
+[Think()]->[end frame]
+
+[start frame]->[AActor::Tick(){bg:orange}]->[end frame]
+
+[DestroyEntity(){bg:pink}]->[AActor::Destroy(){bg:pink}]
