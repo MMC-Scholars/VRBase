@@ -11,7 +11,6 @@
 #include "IBaseEntity_flags.h"
 #include "UObject/ConstructorHelpers.h"
 #include "System/Input.h"
-#include "CTakeDamageInfo.h"
 
 /**
  *-------------------------------------------------------------------------------------
@@ -22,7 +21,7 @@
  */
 INTERFACE IBaseEntity {
 	public:
-		friend class CGlobalVars;
+		friend class CGlobalVars; // allow CGlobalVars to access s_iEntityCount
 		IBaseEntity();
 		virtual	~IBaseEntity() 														{ RemoveSelfFromLists(); }
 
@@ -125,19 +124,10 @@ INTERFACE IBaseEntity {
 		int									GetSpawnHealth()				const	{ return m_iSpawnHealth; }
 		void								SetHealth(int health);
 
-		virtual void						TraceAttack(const CTakeDamageInfo& info);
 		inline bool							IsInvincible()					const	{ return HasFlags(FL_INVINCIBLE); }
 		inline bool							IsNotDamageable()				const	{ return HasFlags(FL_NODAMAGE); }
 
-	private:
-		void									CheckDamageEvents(int deltaHealth, const CTakeDamageInfo* pInfo);
-
-	protected: // for these functions with pointers, info is not guaranteed to be non-null
-		virtual void						OnHealed(const CTakeDamageInfo* info)					{}
-		virtual void						OnTakeDamage(const CTakeDamageInfo* info)				{}
-		virtual void						OnTakeDamage_Alive(const CTakeDamageInfo* info) 		{}
-		virtual void						OnKilled(const CTakeDamageInfo* info)					{}
-		virtual void						OnKilled_Other(const CTakeDamageInfo& info)				{}
+	protected:
 		inline bool							IsAlive()										const	{ return m_iHealth > 0; }
 		inline bool							IsDead()										const	{ return !IsAlive(); }
 

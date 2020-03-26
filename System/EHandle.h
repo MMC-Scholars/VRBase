@@ -22,7 +22,7 @@ struct EHANDLE {
 		eindex m_iEnt = 0;
 
 	public:
-		EHANDLE(const IBaseEntity* pEnt);
+		EHANDLE(const IBaseEntity* pEnt); // defined later in IBaseEntity
 		EHANDLE(eindex iEnt) : m_iEnt(iEnt) {}
 
 		inline EHANDLE& operator=(const IBaseEntity* pEnt) { return (*this = EHANDLE(pEnt)); }

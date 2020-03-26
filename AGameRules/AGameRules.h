@@ -17,7 +17,6 @@ UCLASS()
 class VRBASE_API AGameRules : public ABaseEntity {
 	public:
 		GENERATED_BODY()
-
 		AGameRules();
 
 		// UE4 Overrides create a new gamerules flow. AGameRules does not use 

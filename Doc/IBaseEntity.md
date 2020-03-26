@@ -25,6 +25,7 @@ The `IBaseEntity` abstract class is the most important part of the library. It d
 | `FVector` | GetInitialLocation() | Returns the starting world location of the entity |
 | `FRotator` | GetInitialRotation() | Returns the starting world rotation of the entity |
 | `FVector` | GetInitialScale() | Returns the starting world scale of the entity |
+| `FTransform` | getInitialTransform() | Returns the starting transform of the entity |
 | `UInputComponent*` | GetInput() | Returns input as a `UInputComponent` pointer |
 | `virtual` [`FEntityInputRegistrationParams*`](./typedefs.md) | GetLeftControllerInputRegistrationParams() | __ |
 | `ftime` | GetNextThink() | __ |
@@ -56,7 +57,6 @@ The `IBaseEntity` abstract class is the most important part of the library. It d
 | `void` | Think() | Called every frame after DefaultThink(), if enabled via __ |
 | `void` | ThinkSet(BASEPTR pProcedure, `void*` pThinkParam) | __ |
 | `void` | ToggleFlags([`ulong`](./typedefs.md) flags) | Toggles or inverts the specified flags |
-| `virtual void` | TraceAttack(`const` [`CTakeDamageInfo&`](./CTakeDamageInfo.md) info) | __ |
 | `bool` | Use([`ABaseEntity*`](./ABaseEntity.md) pActivator) | Uses a given entity. Returns true on success, false if blocked |
 
 

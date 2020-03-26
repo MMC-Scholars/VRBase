@@ -13,8 +13,7 @@ static eindex g_iEntityCounter = 0;
 // EHANDLE constructor
 //-------------------------------------------------------------------------------------
 EHANDLE::EHANDLE(const IBaseEntity* pEnt) : m_iEnt(0) { 
-	if (pEnt)
-		m_iEnt = pEnt->EntIndex();
+	if (pEnt) m_iEnt = pEnt->EntIndex();
 }
 
 //-------------------------------------------------------------------------------------
@@ -126,35 +125,6 @@ void IBaseEntity::SetHealth(int health) {
 
 	if (!IsInvincible())
 		m_iHealth = health;
-
-	CheckDamageEvents(deltaHealth, nullptr);
-}
-
-void IBaseEntity::TraceAttack(const CTakeDamageInfo& info) {
-	if (IsNotDamageable())
-		return;
-	
-	// get damage amount
-	int damage = info.GetBaseDamage();
-
-	if (!IsInvincible())
-		m_iHealth -= damage;
-
-	CheckDamageEvents(-damage, &info);
-}
-
-void IBaseEntity::CheckDamageEvents(int deltaHealth, const CTakeDamageInfo* info) {
-	if (deltaHealth > 0) {
-		OnHealed(info);
-	} else {
-		OnTakeDamage(info);
-		if (IsDead()) {
-			OnKilled(info);
-			if (info && info->GetAttacker()) info->GetAttacker()->OnKilled_Other(*info);
-		} else {
-			OnTakeDamage_Alive(info);
-		}
-	}
 }
 
 //-------------------------------------------------------------------------------------

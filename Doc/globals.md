@@ -27,7 +27,7 @@ other class.
 | `UStaticMesh*` | FindMesh(`const` `wchar_t*` path) | |
 | `void` | g_pGlobals->markReset() | Marks the game ready for a reset. In most projects you will never need to call this |
 | `void` | g_pGlobals->reset() | Resets the game entity counts, time, and initializations. In most projects you will never need to call this  |
-| `void` | g_pGlobals->update() | Manually updates the global time. This is periodically called automatically regardless of subsequent calls. In most projects you will never need to call this |
+| `void` | g_pGlobals->update() | Manually updates the global variables. This is periodically called automatically regardless of subsequent calls. In most projects you will never need to call this |
 
 The functions below are useful vanilla Unreal globals.
 
