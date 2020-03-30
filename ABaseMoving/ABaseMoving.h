@@ -44,7 +44,7 @@ class VRBASE_API ABaseMoving : public APickup {
 
 		bool m_bAttachToController;
 
-		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
+		UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving", DisplayName = "Lerp", meta = (ClampMin = "0", ClampMax = "1"))
 		float m_lInitialLerp;
 
 		float m_flLerpSpeed;
