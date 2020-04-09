@@ -6,7 +6,8 @@ VRBase implements all basic virtual reality actors (such as the player pawn) C++
 
 ## Table of Contents
 1. [Installation](#install)
-2. [Documentation](#doc)
+2. [VRBase Projects](#projects)
+3. [Documentation](#doc)
 
 ## Installation <a name="install"></a>
 
@@ -31,6 +32,14 @@ public class YOURPROJECTNAME : ModuleRules {
 }
 ```
 4. After opening the Unreal project in the editor, VRBase **requires** an instance of [AGameRules](Doc/AGameRules.md) to be included in the level UMap for VRBase to function properly. VRBase classes may not work otherwise.
+
+## VRBase Projects <a name="projects"></a>
+
+Below is a list of projects in which VRBase has been used:
+
+- [Archery](https://github.com/bossley9/Archery)
+- [The Great Balloon Race](https://github.com/MMC-Scholars/TheGreatBalloonRace)
+- [Office Recreation](https://github.com/MMC-Scholars/OfficeRecreation)
 
 ## Documentation <a name="doc"></a>
 
