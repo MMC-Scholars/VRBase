@@ -3,19 +3,22 @@
 #include "Assert.h"
 #include "NLogger.h"
 
-void Assert(bool bResult, const char* pszFormat, ...) {
-  if (!bResult) {
-    va_list args;
-	  va_start(args, pszFormat);
+#define BUFFER_SIZE 512
+
+void Assert(bool bAssertion, const char* pszFormat, ...) {
+	if (!bAssertion) {
+		va_list args;
+		va_start(args, pszFormat);
+
+		// convert variadic args to FString
+
+		char buffer[BUFFER_SIZE];
+		vsnprintf_s(buffer, BUFFER_SIZE, BUFFER_SIZE - 1, pszFormat, args);
+		FString str = buffer;
+
     
-    Msg(pszFormat, args);
+		Msg(str);
 
-	  va_end(args);
-  }
-}
-
-void Assert(bool bResult) {
-  if (!bResult) {
-    Assert(false, "");
-  }
+		va_end(args);
+	}
 }

@@ -6,7 +6,8 @@
 #include "MessageLog.h"
 #include "TokenizedMessage.h"
 
-void Assert(bool bResult, const char* pszFormat, ...);
-void Assert(bool bResult);
+void Assert(bool bAssertion, const char* pszFormat, ...);
+// TODO overload
+//void Assert(bool bAssertion);
 
 #endif // ASSERT_H
