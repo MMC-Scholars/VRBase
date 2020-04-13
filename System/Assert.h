@@ -3,11 +3,12 @@
 #ifndef ASSERT_H
 #define ASSERT_H
 
+#include "CoreMinimal.h"
 #include "MessageLog.h"
 #include "TokenizedMessage.h"
 
-void Assert(bool bAssertion, const char* pszFormat, ...);
-// TODO overload
-//void Assert(bool bAssertion);
+void _Assert(const char* function, const char* file, long line, bool bAssertion, const char* str);
+
+#define Assert(bAssertion, str) _Assert(__FUNCTION__, __FILE__, __LINE__, bAssertion, str)
 
 #endif // ASSERT_H
