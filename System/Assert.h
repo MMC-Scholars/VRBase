@@ -3,7 +3,7 @@
 #ifndef ASSERT_H
 #define ASSERT_H
 
-#include "CoreMinimal.h"
+#include "Globals.h"
 #include "MessageLog.h"
 #include "TokenizedMessage.h"
 

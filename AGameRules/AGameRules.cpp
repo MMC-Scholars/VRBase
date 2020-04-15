@@ -48,6 +48,7 @@ void AGameRules::Tick(float deltaTime) {
 	g_pGlobals->update();
 }
 
+UWorld* g_pWorld = NULL;
 void AGameRules::BeginPlay() {
 	Super::BeginPlay();
 	Msg("AGameRules::BeginPlay\n");
@@ -59,6 +60,8 @@ void AGameRules::BeginPlay() {
 	m_bHasInitializedAllEntities = false;
 
 	m_tNextRoundRestart = -FLT_MAX;
+
+	g_pWorld = GetWorld();
 }
 
 void AGameRules::EndPlay(const EEndPlayReason::Type EndPlayReason) {
