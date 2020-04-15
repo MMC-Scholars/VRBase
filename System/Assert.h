@@ -7,8 +7,9 @@
 #include "MessageLog.h"
 #include "TokenizedMessage.h"
 
-void _Assert(const char* function, const char* file, long line, bool bAssertion, const char* str);
+void _Assert(const char* function, const char* file, long line, bool bAssertion, const char* pszFormat, ...);
+// implement pszFormat with const wchar_t* ?
 
-#define Assert(bAssertion, str) _Assert(__FUNCTION__, __FILE__, __LINE__, bAssertion, str)
+#define Assert(bAssertion, pszFormat, ...) _Assert(__FUNCTION__, __FILE__, __LINE__, bAssertion, pszFormat, __VA_ARGS__)
 
 #endif // ASSERT_H
