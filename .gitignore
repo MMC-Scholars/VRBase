@@ -1,0 +1,23 @@
+# development
+.nvim/
+.vs/
+.vscode/
+
+# generated files
+Binaries/
+Intermediate/
+Saved/
+*.code
+*.code-workspace
+*.kdev4
+*.pri
+*.pro
+*.sln
+*.suo
+*.workspace
+
+# compilation
+CMakeLists.txt
+Makefile
+*CodeCompletionFolders.txt
+*CodeLitePreProcessor.txt
