@@ -9,7 +9,7 @@
 
 using namespace std::chrono;
 
-class VRBASE_API CGlobalVars {
+class VRBASE_API Globals {
 	public:
 		ftime curtime;
 		ftime frametime;
@@ -26,7 +26,7 @@ class VRBASE_API CGlobalVars {
 		bool m_bReset = true;
 };
 
-extern VRBASE_API CGlobalVars* g_pGlobals;
+extern VRBASE_API Globals* g;
 extern VRBASE_API UWorld* g_pWorld;
 
 inline bool IsCookedBuild() {

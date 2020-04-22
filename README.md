@@ -1,8 +1,7 @@
 # VRBase Plugin v3.0.0
 
 VRBase is a C++ Unreal Engine plugin designed to simplify virtual reality development in Unreal. It includes a variety of different classes, each of which perform specific functionality designed to improve overall ease of development.
-
-VRBase implements all basic virtual reality actors (such as the player pawn) in C++. You will not need to program the camera or controllers, allowing greater flexibility in game development.
+It implements all basic virtual reality actors (such as a player pawn) in C++. You will not need to program the camera or controllers, allowing greater flexibility in game development.
 
 ## Table of Contents
 1. [Installation](#install)
@@ -11,11 +10,11 @@ VRBase implements all basic virtual reality actors (such as the player pawn) in 
 
 ## Installation <a name="install"></a>
 
-VRBase is only a game plugin and therefore can only be added to an existing Unreal project.
-
-1. Clone VRBase into an Unreal project under the directory `Plugins/VRBase`.
+1. Clone VRBase into an existing Unreal project in the directory `Plugins/VRBase`.
 2. Right-click the Unreal `uproject` file in the main root directory and select _Generate Visual Studio Project Files_ to regenerate a clean Visual Studio `sln` file.
-3. After opening the Unreal project in the editor, VRBase **requires** an instance of [GameRules](Source/VRBase/Doc/AGameRules.md) to be included in the level UMap for VRBase to function properly. VRBase classes may not work otherwise.
+3. Open the Visual Studio `sln` and compile all VRBase classes with `CTRL+SHIFT+b`. If prompted, do not disable the VRBase plugin.
+4. After opening the Unreal project in the editor, make sure `View Options > Show Plugin Content` is enabled in the bottom right corner of the Content Browser, or VRBase classes will not display otherwise.
+5. VRBase requires a single instance of [GameRules](Source/VRBase/Doc/AGameRules.md) to be included in the world for VRBase to function properly. VRBase classes will not work properly otherwise.
 
 ## VRBase Projects <a name="projects"></a>
 

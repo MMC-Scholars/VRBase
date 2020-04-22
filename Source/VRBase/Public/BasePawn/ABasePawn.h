@@ -31,7 +31,7 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 		ABasePawn();
 
 		virtual void BeginPlay() override {
-			g_pGlobals->checkReset();
+			g->checkReset();
 			APawn::BeginPlay();
 			ReportReady();
 

@@ -13,7 +13,7 @@ ABaseEntity::ABaseEntity() : IBaseEntity() {
 }
 
 void ABaseEntity::BeginPlay() {
-	g_pGlobals->checkReset();
+	g->checkReset();
 	AActor::BeginPlay();
 	ReportReady();
 

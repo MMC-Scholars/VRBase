@@ -321,7 +321,7 @@ void ABasePawn::SetInstruction(FPawnInstruction instr) {
 	component->SetText(instr.text);
 	component->SetTextRenderColor(instr.color);
 
-	if (!instr.changeOnButtonPress) m_tInstrChangeTime = g_pGlobals->curtime + instr.timedChange;
+	if (!instr.changeOnButtonPress) m_tInstrChangeTime = g->curtime + instr.timedChange;
 
 	m_sInstr = &instr;
 }
@@ -341,7 +341,7 @@ void ABasePawn::NextInstruction() {
 void ABasePawn::DefaultThink() {
 	// change instruction in timely manner
 	if (m_sInstr && !m_sInstr->changeOnButtonPress) {
-		if (g_pGlobals->curtime - m_tInstrChangeTime >= 0)
+		if (g->curtime - m_tInstrChangeTime >= 0)
 			NextInstruction();
 	}
 }

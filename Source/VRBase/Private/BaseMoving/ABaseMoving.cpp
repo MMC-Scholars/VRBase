@@ -91,7 +91,7 @@ void ABaseMoving::OpenThink(void* vpBaseMoving){
 	else {
 		// calculate next lerp position based on speed and time
 		// also notify our child class that our position has changed, such that it can do the actual movement
-		pMoving->SetLerpPosition(pMoving->m_lCurrentLerp + pMoving->m_flLerpSpeed * g_pGlobals->frametime);
+		pMoving->SetLerpPosition(pMoving->m_lCurrentLerp + pMoving->m_flLerpSpeed * g->frametime);
 	}
 }
 
@@ -107,7 +107,7 @@ void ABaseMoving::CloseThink(void* vpBaseMoving) {
 	else {
 		// calculate next lerp position based on speed and time
 		// also notify our child class that our position has changed, such that it can do the actual movement
-		pMoving->SetLerpPosition(pMoving->m_lCurrentLerp - pMoving->m_flLerpSpeed * g_pGlobals->frametime);
+		pMoving->SetLerpPosition(pMoving->m_lCurrentLerp - pMoving->m_flLerpSpeed * g->frametime);
 	}
 }
 

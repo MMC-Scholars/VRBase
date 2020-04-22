@@ -20,13 +20,13 @@ EHANDLE::EHANDLE(const IBaseEntity* pEnt) : m_iEnt(0) {
 // IBaseEntity Constructor & helpers
 //-------------------------------------------------------------------------------------
 IBaseEntity::IBaseEntity() {
-	m_tConstructionTime = g_pGlobals->curtime;
+	m_tConstructionTime = g->curtime;
 
 	m_tLastTimeUsed = -FLT_MAX;
 
 	// in a cooked game PostDuplicate is not called so let's call it here
 	// we'll also call it if all other other BeginPlays have been called
-	if (IsCookedBuild() || g_pGlobals->worldcreated)
+	if (IsCookedBuild() || g->worldcreated)
 		AddEntityToLists(this);
 }
 
@@ -43,7 +43,7 @@ void IBaseEntity::RemoveSelfFromLists() {
 void IBaseEntity::PostDuplicate(EDuplicateMode::Type mode) {
 	if (mode != EDuplicateMode::Normal) {
 		AddEntityToLists(this);
-		g_pGlobals->ineditor = false;
+		g->ineditor = false;
 	}
 }
 
@@ -100,7 +100,7 @@ IBaseEntity* IBaseEntity::FromActor(AActor* pActor) {
 // Think system
 //-------------------------------------------------------------------------------------
 void IBaseEntity::DefaultThink() {
-	if (g_pGlobals->curtime > m_tNextRespawn)
+	if (g->curtime > m_tNextRespawn)
 		Respawn();
 }
 

@@ -22,7 +22,7 @@
  */
 INTERFACE VRBASE_API IBaseEntity {
 	public:
-		friend class CGlobalVars; // allow CGlobalVars to access s_iEntityCount
+		friend class Globals; // allow CGlobalVars to access s_iEntityCount
 		IBaseEntity();
 		virtual	~IBaseEntity() 														{ RemoveSelfFromLists(); }
 

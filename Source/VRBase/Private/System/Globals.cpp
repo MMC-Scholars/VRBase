@@ -2,17 +2,17 @@
 #include "GameRules/AGameRules.h"
 #include "System/NLogger.h"
 
-static CGlobalVars g_vars;
-CGlobalVars* g_pGlobals = &g_vars;
+static Globals g_vars;
+Globals* g = &g_vars;
 
-void CGlobalVars::update() {
+void Globals::update() {
 	steady_clock::time_point newclock = steady_clock::now();
 	duration<float> time_elapsed = duration_cast<duration<float>>(newclock - m_tPrevious);
 	
 	curtime = time_elapsed.count();;
 }
 
-void CGlobalVars::reset() {
+void Globals::reset() {
 	m_bReset = false;
 	Msg("CGlobalVars::reset\n");
 	
@@ -48,13 +48,13 @@ void CGlobalVars::reset() {
 	worldcreated = true;
 }
 
-void CGlobalVars::checkReset() {
+void Globals::checkReset() {
 	if (m_bReset) {
 		reset();
 	}
 }
 
-void CGlobalVars::markReset() {
+void Globals::markReset() {
 	m_bReset = true;
 	ineditor = true;
 	worldcreated = false;

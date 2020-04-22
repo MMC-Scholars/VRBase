@@ -23,7 +23,7 @@ bool FMovingVector::s_bDeletingAll = false;
 TArray<FMovingVector*> FMovingVector::s_pVectors;
 
 void IMovingVectorManager::UpdateAll() {
-	ftime dt = g_pGlobals->frametime;
+	ftime dt = g->frametime;
 	for (int i = 0; i < FMovingVector::s_pVectors.Num(); i++) {
 		FMovingVector& v = *(FMovingVector::s_pVectors[i]);
 		v.X += v.velocity.X * dt;

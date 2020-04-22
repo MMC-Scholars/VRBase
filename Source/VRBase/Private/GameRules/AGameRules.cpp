@@ -13,7 +13,7 @@ void AGameRules::Tick(float deltaTime) {
 
 	// check for round restart
 	// also check for initialization of all entities (efficient place to do it)
-	if (g_pGlobals->curtime > m_tNextRoundRestart) {
+	if (g->curtime > m_tNextRoundRestart) {
 		Msg("Executing round restart statement");
 		Msg("ReadyEntityCount = %i/%i\n", s_iReadyEntityCount, s_iEntityCount);
 		if (!m_bHasInitializedAllEntities && AllEntitiesReady()) {
@@ -39,13 +39,13 @@ void AGameRules::Tick(float deltaTime) {
 
 	// execute all the pointer-based thinks
 	for (eindex i = 0; i < g_entList.Num(); i++) {
-		if (g_entList[i]->GetNextThink() > g_pGlobals->curtime) {
+		if (g_entList[i]->GetNextThink() > g->curtime) {
 			g_entList[i]->Think();
 		}
 	}
 
 	// update globals
-	g_pGlobals->update();
+	g->update();
 }
 
 UWorld* g_pWorld = NULL;
@@ -67,7 +67,7 @@ void AGameRules::BeginPlay() {
 void AGameRules::EndPlay(const EEndPlayReason::Type EndPlayReason) {
 	Msg(__FUNCTION__);
 	m_bHasInitializedAllEntities = false;
-	g_pGlobals->markReset();
+	g->markReset();
 }
 
 void AGameRules::RestartRound() {
