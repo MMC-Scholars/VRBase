@@ -7,7 +7,11 @@ public class VRBase : ModuleRules
 	public VRBase(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-		
+        
+        // added to reduce compilation times
+        bFasterWithoutUnity = true;
+        bEnforceIWYU = true;
+
 		PublicIncludePaths.AddRange(
 			new string[] {
 				"VRBase/Public"
@@ -18,7 +22,7 @@ public class VRBase : ModuleRules
 		
 		PrivateIncludePaths.AddRange(
 			new string[] {
-				"VRBase/Private",
+				"VRBase/Private"
 				// ... add other private include paths required here ...
 			}
 			);
@@ -56,5 +60,8 @@ public class VRBase : ModuleRules
 				// ... add any modules that your module loads dynamically here ...
 			}
 			);
+
+        Definitions.Add("Assert(bAssertion, pszFormat, ...)=_Assert(__FUNCTION__, __FILE__, __LINE__, bAssertion, pszFormat, __VA_ARGS__)");
+
 	}
 }

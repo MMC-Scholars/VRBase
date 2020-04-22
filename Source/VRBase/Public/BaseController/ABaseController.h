@@ -20,10 +20,12 @@
 #include "Pickup/APickup.h"
 #include "ABaseController.generated.h"
 
+ 
+
 UCLASS()
 class VRBASE_API ABaseController : public ABaseEntity {
 	GENERATED_BODY()
-	
+
 	private:
 		FRotator												m_rTeleportationRot;
 
@@ -73,14 +75,18 @@ class VRBASE_API ABaseController : public ABaseEntity {
 		// returns a null-terminated list of actors to ignored when raytracing for teleportation
 		void GetTraceIgnoredActors(TArray<AActor*>&);
 
+		
 		// retrieves the controller which is not this one
 		inline ABaseController* OtherController() {
 			return this == g_pLeftController ? g_pRightController : g_pLeftController;
 		}
+		
 };
 
-extern ABaseController* g_pLeftController;
-extern ABaseController* g_pRightController;
+//extern VRBASE_API ABaseController* g_pLeftController;
+//extern VRBASE_API ABaseController* g_pRightController;
+
+// Delete?
 inline bool ControllersReady() {
 	return g_pRightController && g_pLeftController;
 }

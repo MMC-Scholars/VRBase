@@ -191,3 +191,5 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 		void SetInstruction(FPawnInstruction instr);
 		void NextInstruction();
 };
+
+//extern VRBASE_API ABasePawn* g_pBasePawn;

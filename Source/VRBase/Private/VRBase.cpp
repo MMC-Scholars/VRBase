@@ -24,6 +24,9 @@ void FVRBaseModule::ShutdownModule()
 
 #undef LOCTEXT_NAMESPACE
 
+IMPLEMENT_MODULE(FVRBaseModule, VRBase)
+
+/*
 #if WITH_EDITOR
 // implement as game module for hot reload
 IMPLEMENT_PRIMARY_GAME_MODULE(FDefaultGameModuleImpl, VRBase, "VRBase")
@@ -31,3 +34,4 @@ IMPLEMENT_PRIMARY_GAME_MODULE(FDefaultGameModuleImpl, VRBase, "VRBase")
 // implement as plugin
 IMPLEMENT_MODULE(FVRBaseModule, VRBase)
 #endif
+*/

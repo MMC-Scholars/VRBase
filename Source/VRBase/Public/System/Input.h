@@ -17,9 +17,9 @@
 INTERFACE IBaseEntity;
 class ABaseController;
 
-extern ABaseController* g_pLeftController;
-extern ABaseController* g_pRightController;
-extern ABasePawn*		g_pBasePawn;
+extern VRBASE_API ABaseController* g_pLeftController;
+extern VRBASE_API ABaseController* g_pRightController;
+extern VRBASE_API ABasePawn* g_pBasePawn;
 
 // Bitfields offset for button inputs.
 // These are used by the bitwise math in order to 

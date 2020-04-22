@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BaseEntity/ABaseEntity.h"
+#include "System/Assert.h"
 #include "AGameRules.generated.h"
 
 /**
@@ -45,4 +46,6 @@ class VRBASE_API AGameRules : public ABaseEntity {
 		ftime	m_tNextRoundRestart;
 };
 
-extern AGameRules* g_pGameRules;
+extern VRBASE_API AGameRules* g_pGameRules;
+// TODO: This is not global; cannot be accessed without including AGameRules in file
+//			Re-organize VRBase or otherwise to make global

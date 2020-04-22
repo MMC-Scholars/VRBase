@@ -11,6 +11,7 @@
 #include "BaseEntity/IBaseEntity_flags.h"
 #include "UObject/ConstructorHelpers.h"
 #include "System/Input.h"
+#include "System/Assert.h"
 
 /**
  *-------------------------------------------------------------------------------------
@@ -19,7 +20,7 @@
  * and defines some of the most basic functions.
  *-------------------------------------------------------------------------------------
  */
-INTERFACE IBaseEntity {
+INTERFACE VRBASE_API IBaseEntity {
 	public:
 		friend class CGlobalVars; // allow CGlobalVars to access s_iEntityCount
 		IBaseEntity();
@@ -109,7 +110,7 @@ INTERFACE IBaseEntity {
 //-------------------------------------------------------------------------------------
 
 	public:
-		virtual	void						Respawn();
+		virtual void						Respawn();
 
 	private:
 		ftime 								m_tLastRespawn;
@@ -180,5 +181,5 @@ template<class T>
 inline T* ExtractArg(void* pParam) { return reinterpret_cast<T*>(pParam); }
 
 // finds a UStaticMesh by path
-UStaticMesh* FindMesh(const wchar_t* path);
-UStaticMesh* FindMesh(const char* path);
+VRBASE_API UStaticMesh* FindMesh(const wchar_t* path);
+VRBASE_API UStaticMesh* FindMesh(const char* path);
