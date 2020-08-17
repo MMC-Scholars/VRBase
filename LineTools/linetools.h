@@ -1,27 +1,31 @@
 /**
- * This software is under partial ownership by The Ohio State University, 
+ * This software is under partial ownership by The Ohio State University,
  * for it is a product of student employees. For official policy, see
- * https://tco.osu.edu/sites/default/files/pdfs/IP-Policy.pdf 
+ * https://tco.osu.edu/sites/default/files/pdfs/IP-Policy.pdf
  * or contact The Ohio State University's Office of Legal Affairs.
  */
 
 #pragma once
 
-#include "UnrealEngine.h"
 #include "System/predefs.h"
+#include "UnrealEngine.h"
+
 
 // contains parameters used for drawing lines and splines in the world
 struct SLineDrawParams {
-	FColor Color;
-	float Thickness;
-	ftime Duration;
+  FColor Color;
+  float Thickness;
+  ftime Duration;
 };
 
 /*
- * Given a start position, direction, null-terminated list of ignored actors, 
- * and max distance, performs a ray cast and stores the result in the given FHitResult
+ * Given a start position, direction, null-terminated list of ignored actors,
+ * and max distance, performs a ray cast and stores the result in the given
+ * FHitResult
  */
-void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction, AActor** ppIgnoredActors = NULL, float maxDistance = (float) INT32_MAX);
+void UTIL_TraceLine(FHitResult &t, const FVector &start, FVector direction,
+                    AActor **ppIgnoredActors = NULL,
+                    float maxDistance = (float)INT32_MAX);
 
 /* Given a start position, direction, force, and maximum number of iterations
  * performs a spline cast and stores the result in the given FHitResult.
@@ -29,26 +33,30 @@ void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction, AAct
  * The direction and magnitude of force determines the curvature of the spline;
  * i.e. the force vector causes an acceleration on the spline curve.
  */
-void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction, FVector force, uint16 maxIterations = 4096, SLineDrawParams* rendered = NULL, AActor** ppIgnoredActors = NULL);
+void UTIL_TraceSpline(FHitResult &t, const FVector &start, FVector direction,
+                      FVector force, uint16 maxIterations = 4096,
+                      SLineDrawParams *rendered = NULL,
+                      AActor **ppIgnoredActors = NULL);
 
 /*
- * Given a start position, end position, color, thickness, and lifetime, 
+ * Given a start position, end position, color, thickness, and lifetime,
  * draws a line in the world.
  */
-void UTIL_DrawLine(FVector start, FVector end, SLineDrawParams* rendered);
+void UTIL_DrawLine(FVector start, FVector end, SLineDrawParams *rendered);
 
 /*
- * Given a start position, end position, force, color, thickness, 
+ * Given a start position, end position, force, color, thickness,
  * and lifetime, draws a spline curve in the world.
  * The direction and magnitude of force determines the curvature of the spline.
  */
-void UTIL_DrawSpline(FVector start, FVector end, FVector force, FColor c, float thickness, ftime life);
+void UTIL_DrawSpline(FVector start, FVector end, FVector force, FColor c,
+                     float thickness, ftime life);
 
 /*
- * Given a start position, radius, and render parameters, 
+ * Given a start position, radius, and render parameters,
  * renders a circle in the world.
  */
-void UTIL_DrawCircle(FVector loc, vec radius, SLineDrawParams*);
+void UTIL_DrawCircle(FVector loc, vec radius, SLineDrawParams *);
 
 /*
  * Given a vector vDirection originating from vOrigin, finds the distance
