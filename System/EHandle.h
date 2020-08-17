@@ -23,21 +23,21 @@
 
 struct EHANDLE {
 private:
-  eindex m_iEnt = 0;
+    eindex m_iEnt = 0;
 
 public:
-  EHANDLE(const IBaseEntity *pEnt); // defined later in IBaseEntity
-  EHANDLE(eindex iEnt) : m_iEnt(iEnt) {}
+    EHANDLE(const IBaseEntity* pEnt); // defined later in IBaseEntity
+    EHANDLE(eindex iEnt) : m_iEnt(iEnt) {}
 
-  inline EHANDLE &operator=(const IBaseEntity *pEnt) {
-    return (*this = EHANDLE(pEnt));
-  }
+    inline EHANDLE& operator=(const IBaseEntity* pEnt) {
+        return (*this = EHANDLE(pEnt));
+    }
 
-  inline IBaseEntity *Get() const { return g_ppEntityList[m_iEnt]; }
+    inline IBaseEntity* Get() const { return g_ppEntityList[m_iEnt]; }
 
-  inline eindex EntIndex() const { return m_iEnt; }
-  inline operator IBaseEntity *() const { return Get(); }
-  inline operator bool() const { return Get() != NULL; }
+    inline eindex EntIndex() const { return m_iEnt; }
+    inline operator IBaseEntity*() const { return Get(); }
+    inline operator bool() const { return Get() != NULL; }
 
-  inline IBaseEntity *operator->() const { return (Get()); }
+    inline IBaseEntity* operator->() const { return (Get()); }
 };

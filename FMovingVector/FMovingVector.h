@@ -10,7 +10,6 @@
 #include "System/predefs.h"
 #include "UnrealEngine.h"
 
-
 /**
  *-------------------------------------------------------------------------------------
  * AMovingVector
@@ -23,26 +22,26 @@
  *-------------------------------------------------------------------------------------
  */
 class FMovingVector : public FVector {
-  friend class IMovingVectorManager;
+    friend class IMovingVectorManager;
 
 public:
-  FMovingVector(const FVector &v);
-  FMovingVector(const FVector &v, const FVector &vel);
-  FMovingVector(vec x, vec y, vec z);
-  FMovingVector(vec x, vec y, vec z, vec dx, vec dy, vec dz);
-  ~FMovingVector() {}
+    FMovingVector(const FVector& v);
+    FMovingVector(const FVector& v, const FVector& vel);
+    FMovingVector(vec x, vec y, vec z);
+    FMovingVector(vec x, vec y, vec z, vec dx, vec dy, vec dz);
+    ~FMovingVector() {}
 
-  FVector velocity;
-  inline vec speed() const { return velocity.Size(); }
+    FVector velocity;
+    inline vec speed() const { return velocity.Size(); }
 
 private:
-  inline void addSelf() { s_pVectors.Add(this); }
-  static bool s_bDeletingAll;
-  static TArray<FMovingVector *> s_pVectors;
+    inline void addSelf() { s_pVectors.Add(this); }
+    static bool s_bDeletingAll;
+    static TArray<FMovingVector*> s_pVectors;
 };
 
 class IMovingVectorManager {
-  static void UpdateAll();
-  static void RemoveAndDeleteAll();
-  static void Reset();
+    static void UpdateAll();
+    static void RemoveAndDeleteAll();
+    static void Reset();
 };

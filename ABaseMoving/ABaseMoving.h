@@ -7,15 +7,15 @@
 
 #pragma once
 
-#include "ABaseMoving.generated.h"
 #include "APickup/APickup.h"
 #include "Components/SceneComponent.h"
 #include "CoreMinimal.h"
 #include "System/NLogger.h"
 
+#include "ABaseMoving.generated.h"
 
 // fractional lerp value for measuring the open/closed status of a still door
-#define OPENCLOSE_MEASURE_TOLERANCE 0.05f
+#define OPENCLOSE_MEASURE_TOLERANCE        0.05f
 #define OPENCLOSE_MOVING_MEASURE_TOLERANCE 0.001f
 
 /**
@@ -30,70 +30,70 @@
 UCLASS()
 class VRBASE_API ABaseMoving : public APickup {
 public:
-  GENERATED_BODY()
+    GENERATED_BODY()
 
-  ABaseMoving();
-  virtual void OnConstruction(
-      const FTransform &Transform) override; // sets all in-editor properties
+    ABaseMoving();
+    virtual void OnConstruction(
+        const FTransform& Transform) override; // sets all in-editor properties
 
-  virtual void PreInit() override;
-  virtual bool IsUseableBy(const ABaseController *) const override;
+    virtual void PreInit() override;
+    virtual bool IsUseableBy(const ABaseController*) const override;
 
-  virtual void Pickup(ABaseController *pController) override;
-  virtual void Drop(ABaseController *pController) override;
+    virtual void Pickup(ABaseController* pController) override;
+    virtual void Drop(ABaseController* pController) override;
 
-  virtual void SetPositionFromController(ABaseController *);
+    virtual void SetPositionFromController(ABaseController*);
 
-  bool m_bAttachToController;
+    bool m_bAttachToController;
 
-  UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
-  float m_lInitialLerp;
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseMoving")
+    float m_lInitialLerp;
 
-  float m_flLerpSpeed;
+    float m_flLerpSpeed;
 
-  UFUNCTION(BlueprintCallable, Category = "BaseMoving")
-  virtual void SetLerpPosition(float _lLerp) { m_lCurrentLerp = _lLerp; }
+    UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+    virtual void SetLerpPosition(float _lLerp) { m_lCurrentLerp = _lLerp; }
 
-  UFUNCTION(BlueprintCallable, Category = "BaseMoving")
-  float GetLerpPosition() const { return m_lCurrentLerp; }
+    UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+    float GetLerpPosition() const { return m_lCurrentLerp; }
 
-  UFUNCTION(BlueprintCallable, Category = "BaseMoving")
-  void Open();
+    UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+    void Open();
 
-  UFUNCTION(BlueprintCallable, Category = "BaseMoving")
-  void Close();
+    UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+    void Close();
 
-  UFUNCTION(BlueprintCallable, Category = "BaseMoving")
-  bool IsOpen() const;
+    UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+    bool IsOpen() const;
 
-  UFUNCTION(BlueprintCallable, Category = "BaseMoving")
-  bool IsClosed() const;
+    UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+    bool IsClosed() const;
 
-  UFUNCTION(BlueprintCallable, Category = "BaseMoving")
-  bool IsOpening() const;
+    UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+    bool IsOpening() const;
 
-  UFUNCTION(BlueprintCallable, Category = "BaseMoving")
-  bool IsClosing() const;
+    UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+    bool IsClosing() const;
 
-  UFUNCTION(BlueprintCallable, Category = "BaseMoving")
-  bool IsMoving() const { return IsOpening() || IsClosing(); }
+    UFUNCTION(BlueprintCallable, Category = "BaseMoving")
+    bool IsMoving() const { return IsOpening() || IsClosing(); }
 
-  UFUNCTION(BlueprintImplementableEvent, Category = "BaseMoving")
-  void OnFinishOpen();
+    UFUNCTION(BlueprintImplementableEvent, Category = "BaseMoving")
+    void OnFinishOpen();
 
-  UFUNCTION(BlueprintImplementableEvent, Category = "BaseMoving")
-  void OnFinishClose();
+    UFUNCTION(BlueprintImplementableEvent, Category = "BaseMoving")
+    void OnFinishClose();
 
 protected:
-  bool m_bInAttachThink;
-  float m_lCurrentLerp;
-  ABaseController *m_pHoldingController; // what controller is holding on to us?
+    bool m_bInAttachThink;
+    float m_lCurrentLerp;
+    ABaseController* m_pHoldingController; // what controller is holding on to us?
 
-  FVector
-      m_vTempAttachLoc; // the position of the object if it were not constrained
-                        // (e.g. the position of the controller during movement)
+    FVector m_vTempAttachLoc; // the position of the object if it were not
+                              // constrained (e.g. the position of the
+                              // controller during movement)
 
-  static void OpenThink(void *vpBaseMoving);
-  static void CloseThink(void *vpBaseMoving);
-  static void AttachThink(void *vpBaseMoving);
+    static void OpenThink(void* vpBaseMoving);
+    static void CloseThink(void* vpBaseMoving);
+    static void AttachThink(void* vpBaseMoving);
 };

@@ -12,15 +12,13 @@
 #include "VRAppSwitchFunctionLibrary.generated.h"
 #include "predefs.h"
 
-
 UCLASS()
-class VRBASE_API UVRAppSwitchFunctionLibrary
-    : public UBlueprintFunctionLibrary {
-  GENERATED_BODY()
+class VRBASE_API UVRAppSwitchFunctionLibrary : public UBlueprintFunctionLibrary {
+    GENERATED_BODY()
 
-  UFUNCTION(BlueprintCallable, Category = "UVRAppSwitchFunctionLibrary")
-  static void markNextProgramName(FString name);
+    UFUNCTION(BlueprintCallable, Category = "UVRAppSwitchFunctionLibrary")
+    static void markNextProgramName(FString name);
 
-  UFUNCTION(BlueprintCallable, Category = "UVRAppSwitchFunctionLibrary")
-  static void exit();
+    UFUNCTION(BlueprintCallable, Category = "UVRAppSwitchFunctionLibrary")
+    static void exit();
 };

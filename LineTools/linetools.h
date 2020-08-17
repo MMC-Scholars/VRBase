@@ -10,12 +10,11 @@
 #include "System/predefs.h"
 #include "UnrealEngine.h"
 
-
 // contains parameters used for drawing lines and splines in the world
 struct SLineDrawParams {
-  FColor Color;
-  float Thickness;
-  ftime Duration;
+    FColor Color;
+    float Thickness;
+    ftime Duration;
 };
 
 /*
@@ -23,9 +22,9 @@ struct SLineDrawParams {
  * and max distance, performs a ray cast and stores the result in the given
  * FHitResult
  */
-void UTIL_TraceLine(FHitResult &t, const FVector &start, FVector direction,
-                    AActor **ppIgnoredActors = NULL,
-                    float maxDistance = (float)INT32_MAX);
+void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction,
+                    AActor** ppIgnoredActors = NULL,
+                    float maxDistance        = (float)INT32_MAX);
 
 /* Given a start position, direction, force, and maximum number of iterations
  * performs a spline cast and stores the result in the given FHitResult.
@@ -33,16 +32,16 @@ void UTIL_TraceLine(FHitResult &t, const FVector &start, FVector direction,
  * The direction and magnitude of force determines the curvature of the spline;
  * i.e. the force vector causes an acceleration on the spline curve.
  */
-void UTIL_TraceSpline(FHitResult &t, const FVector &start, FVector direction,
+void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction,
                       FVector force, uint16 maxIterations = 4096,
-                      SLineDrawParams *rendered = NULL,
-                      AActor **ppIgnoredActors = NULL);
+                      SLineDrawParams* rendered = NULL,
+                      AActor** ppIgnoredActors  = NULL);
 
 /*
  * Given a start position, end position, color, thickness, and lifetime,
  * draws a line in the world.
  */
-void UTIL_DrawLine(FVector start, FVector end, SLineDrawParams *rendered);
+void UTIL_DrawLine(FVector start, FVector end, SLineDrawParams* rendered);
 
 /*
  * Given a start position, end position, force, color, thickness,
@@ -56,7 +55,7 @@ void UTIL_DrawSpline(FVector start, FVector end, FVector force, FColor c,
  * Given a start position, radius, and render parameters,
  * renders a circle in the world.
  */
-void UTIL_DrawCircle(FVector loc, vec radius, SLineDrawParams *);
+void UTIL_DrawCircle(FVector loc, vec radius, SLineDrawParams*);
 
 /*
  * Given a vector vDirection originating from vOrigin, finds the distance

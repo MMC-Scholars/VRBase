@@ -45,7 +45,13 @@ libraries found on the [LLVM download page](https://releases.llvm.org/download.h
 using the LLVM 10.0.0 Windows 64-bit pre-built binary. Be sure to add LLVM to the
 system path for all users when prompted.
 
-`Format On Save` should be enabled in VS Code preferences in order for this to work.
+`Format On Save` should be enabled in VS Code settings in order for this to work:
+```json
+"[cpp]": {
+    "editor.defaultFormatter": "xaver.clang-format",
+    "editor.formatOnSave": true
+},
+```
 
 ## Example VRBase Projects <a name="projects"></a>
 Below is a list of projects in which VRBase has been used:

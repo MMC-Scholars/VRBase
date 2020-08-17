@@ -6,9 +6,9 @@
 #pragma once
 
 #include "ABaseEntity/ABaseEntity.h"
-#include "AGameRules.generated.h"
 #include "CoreMinimal.h"
 
+#include "AGameRules.generated.h"
 
 /**
  *-------------------------------------------------------------------------------------
@@ -20,33 +20,33 @@
 UCLASS()
 class VRBASE_API AGameRules : public ABaseEntity {
 public:
-  GENERATED_BODY()
-  AGameRules();
+    GENERATED_BODY()
+    AGameRules();
 
-  // UE4 Overrides create a new gamerules flow. AGameRules does not use
-  // IBaseEntity::DefaultThink() nor IBaseEntity::Think() because if it
-  // did, the game flow would end up calling itself.
-  virtual void BeginPlay() override;
-  virtual void Tick(float deltaTime) override;
-  virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+    // UE4 Overrides create a new gamerules flow. AGameRules does not use
+    // IBaseEntity::DefaultThink() nor IBaseEntity::Think() because if it
+    // did, the game flow would end up calling itself.
+    virtual void BeginPlay() override;
+    virtual void Tick(float deltaTime) override;
+    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-  //-------------------------------------------------------------------------------------
-  // Master game interface
-  //-------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------
+    // Master game interface
+    //-------------------------------------------------------------------------------------
 
 public:
-  virtual void RestartRound();
-  inline void SetNextRoundRestart(ftime next) { m_tNextRoundRestart = next; }
-  inline ftime GetNextResetRound() const { return m_tNextRoundRestart; }
+    virtual void RestartRound();
+    inline void SetNextRoundRestart(ftime next) { m_tNextRoundRestart = next; }
+    inline ftime GetNextResetRound() const { return m_tNextRoundRestart; }
 
-  bool GameReady() const { return m_bHasInitializedAllEntities; }
+    bool GameReady() const { return m_bHasInitializedAllEntities; }
 
 private:
-  void InitializeAllEntities();
+    void InitializeAllEntities();
 
-  bool m_bHasInitializedAllEntities;
-  bool m_bHasRestartedRound;
-  ftime m_tNextRoundRestart;
+    bool m_bHasInitializedAllEntities;
+    bool m_bHasRestartedRound;
+    ftime m_tNextRoundRestart;
 };
 
-extern AGameRules *g_pGameRules;
+extern AGameRules* g_pGameRules;
