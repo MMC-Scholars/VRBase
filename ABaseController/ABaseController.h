@@ -31,16 +31,16 @@ private:
 public:
     ABaseController();
 
-    USceneComponent* m_pHandScene;
-    UStaticMeshComponent* m_pHandMeshComponent;
-    USphereComponent* m_pControllerCollision;
+    USceneComponent*          m_pHandScene;
+    UStaticMeshComponent*     m_pHandMeshComponent;
+    USphereComponent*         m_pControllerCollision;
     UProceduralMeshComponent* m_pProcMeshComponent;
 
     ABasePawn* m_pOwnerPawn;
 
-    EControllerHand m_eWhichHand;
-    bool m_bPerformedPositionFixup;
-    TArray<AActor*> m_aOverlapActors;
+    EControllerHand  m_eWhichHand;
+    bool             m_bPerformedPositionFixup;
+    TArray<AActor*>  m_aOverlapActors;
     TArray<APickup*> m_aAttachActors;
 
     bool m_bTeleportationActive;
@@ -59,9 +59,9 @@ protected:
                                // controller?
 
 public:
-    uint32 m_iButtons;         // which buttons are currently being pressed?
-    uint32 m_iButtonsPressed;  // which buttons were just pressed?
-    uint32 m_iButtonsReleased; // which buttons were just released?
+    uint32       m_iButtons;         // which buttons are currently being pressed?
+    uint32       m_iButtonsPressed;  // which buttons were just pressed?
+    uint32       m_iButtonsReleased; // which buttons were just released?
     virtual void OnButtonsChanged();
 
     uint32 ButtonsPressed() const {

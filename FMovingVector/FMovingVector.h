@@ -31,12 +31,12 @@ public:
     FMovingVector(vec x, vec y, vec z, vec dx, vec dy, vec dz);
     ~FMovingVector() {}
 
-    FVector velocity;
+    FVector    velocity;
     inline vec speed() const { return velocity.Size(); }
 
 private:
-    inline void addSelf() { s_pVectors.Add(this); }
-    static bool s_bDeletingAll;
+    inline void                   addSelf() { s_pVectors.Add(this); }
+    static bool                   s_bDeletingAll;
     static TArray<FMovingVector*> s_pVectors;
 };
 

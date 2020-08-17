@@ -32,7 +32,7 @@ public:
 
     FVector m_parentToThis;
     FVector m_startLoc;
-    FPlane m_startPlane;
-    FPlane m_endPlane;
-    bool m_hasParent;
+    FPlane  m_startPlane;
+    FPlane  m_endPlane;
+    bool    m_hasParent;
 };

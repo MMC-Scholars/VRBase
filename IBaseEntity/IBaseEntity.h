@@ -30,9 +30,9 @@ public:
     virtual ~IBaseEntity() { RemoveSelfFromLists(); }
 
     ftime m_tConstructionTime;
-    void RemoveSelfFromLists(); // invalidates EHANDLES but DOES NOT modify static
-                                // counts
-    bool DestroyEntity();       // destroys this Actor
+    void  RemoveSelfFromLists(); // invalidates EHANDLES but DOES NOT modify static
+                                 // counts
+    bool        DestroyEntity(); // destroys this Actor
     inline void ReportReady() { s_iReadyEntityCount++; }
 
     //-------------------------------------------------------------------------------------
@@ -40,16 +40,16 @@ public:
     //-------------------------------------------------------------------------------------
 
     inline eindex EntIndex() const { return m_iEntIndex; }
-    EHANDLE GetEHandle() const { return EHANDLE(this); }
+    EHANDLE       GetEHandle() const { return EHANDLE(this); }
 
 private:
     eindex m_iEntIndex;
 
 protected:
-    void PostDuplicate(EDuplicateMode::Type mode);
+    void        PostDuplicate(EDuplicateMode::Type mode);
     static void AddEntityToLists(IBaseEntity * pEnt);
-    static int s_iReadyEntityCount;
-    static int s_iEntityCount;
+    static int  s_iReadyEntityCount;
+    static int  s_iEntityCount;
 
     //-------------------------------------------------------------------------------------
     // Initialization system
@@ -66,15 +66,15 @@ public:
     // may occur, or something worse!
 
 public:
-    // bool								IsBaseEntity()					const	{
-    // return GetActor()->ActorHasTag(TAG_BASEENTITY); }
+    // bool								IsBaseEntity()					const
+    // { return GetActor()->ActorHasTag(TAG_BASEENTITY); }
     bool IsBasePawn() const { return GetActor()->ActorHasTag(TAG_BASEPAWN); }
     bool IsBaseCharacter() const {
         return GetActor()->ActorHasTag(TAG_BASECHARACTER);
     }
     static IBaseEntity* FromActor(AActor * pActor);
     inline IBaseEntity& GetRef() { return *this; }
-    inline AActor* GetActor() const { return m_pSelfAsActor; }
+    inline AActor*      GetActor() const { return m_pSelfAsActor; }
 
 protected:
     AActor* m_pSelfAsActor;
@@ -87,9 +87,9 @@ protected:
 
 public:
     FTransform getInitialTransform() { return m_tInitialTransform; };
-    FVector getInitialScale() { return m_tInitialTransform.GetScale3D(); };
-    FRotator getInitialRotation() { return m_tInitialTransform.Rotator(); };
-    FVector getInitialLocation() { return m_tInitialTransform.GetLocation(); };
+    FVector    getInitialScale() { return m_tInitialTransform.GetScale3D(); };
+    FRotator   getInitialRotation() { return m_tInitialTransform.Rotator(); };
+    FVector    getInitialLocation() { return m_tInitialTransform.GetLocation(); };
 
     //-------------------------------------------------------------------------------------
     // Think System
@@ -98,12 +98,12 @@ public:
 public:
     typedef void (*BASEPTR)(void*);
     virtual void DefaultThink(); // this think function is always called
-    inline void Think() {
+    inline void  Think() {
         if (m_pfnThink) m_pfnThink(m_pThinkParam);
     }
-    inline void SetNextThink(ftime time) { m_tNextThink = time; }
+    inline void  SetNextThink(ftime time) { m_tNextThink = time; }
     inline ftime GetNextThink() const { return m_tNextThink; }
-    inline void ThinkSet(BASEPTR pProcedure, void* pThinkParam) {
+    inline void  ThinkSet(BASEPTR pProcedure, void* pThinkParam) {
         m_pfnThink    = pProcedure;
         m_pThinkParam = pThinkParam;
     }
@@ -121,9 +121,9 @@ public:
     }
 
 private:
-    BASEPTR m_pfnThink  = nullptr;
-    void* m_pThinkParam = nullptr;
-    ftime m_tNextThink;
+    BASEPTR m_pfnThink    = nullptr;
+    void*   m_pThinkParam = nullptr;
+    ftime   m_tNextThink;
 
     //-------------------------------------------------------------------------------------
     // Respawn system
@@ -141,8 +141,8 @@ private:
     //-------------------------------------------------------------------------------------
 
 public:
-    int GetHealth() const { return m_iHealth; }
-    int GetSpawnHealth() const { return m_iSpawnHealth; }
+    int  GetHealth() const { return m_iHealth; }
+    int  GetSpawnHealth() const { return m_iSpawnHealth; }
     void SetHealth(int health);
 
     inline bool IsInvincible() const { return HasFlags(FL_INVINCIBLE); }
@@ -164,8 +164,8 @@ protected:
 
 public:
     inline ulong GetFlags() const { return m_iFlags; }
-    inline bool HasFlags(ulong flags) const { return (m_iFlags & flags) != 0; }
-    inline bool HasFlagsAll(ulong flags) const {
+    inline bool  HasFlags(ulong flags) const { return (m_iFlags & flags) != 0; }
+    inline bool  HasFlagsAll(ulong flags) const {
         return (m_iFlags & flags) == flags;
     }
     inline void AddFlags(ulong flags) { m_iFlags |= flags; }
@@ -185,13 +185,13 @@ protected:
 public:
     bool Use(ABaseEntity * pActivator); // returns true on success, false if blocked
     virtual void OnUsed(ABaseEntity * pActivator) {}
-    inline bool IsUseable() const {
+    inline bool  IsUseable() const {
         return !HasFlags(FL_IGNORE_USE | FL_INGORE_INPUT);
     }
-    virtual bool IsUseableBy(const ABaseController*) const { return true; }
-    inline bool IsInputEnabled() const { return !HasFlags(FL_INGORE_INPUT); }
+    virtual bool     IsUseableBy(const ABaseController*) const { return true; }
+    inline bool      IsInputEnabled() const { return !HasFlags(FL_INGORE_INPUT); }
     UInputComponent* GetInput();
-    void RegisterInputsToControllers();
+    void             RegisterInputsToControllers();
 
     ftime m_tLastTimeUsed;
 

@@ -17,15 +17,14 @@
 #define VRBASE_API
 #endif
 
-typedef unsigned char byte;
-typedef unsigned short ushort;
-typedef unsigned int uint;
+typedef unsigned char      byte;
+typedef unsigned short     ushort;
+typedef unsigned int       uint;
 typedef unsigned long long ulong;
-
-typedef float ftime;           // time
-typedef float vec;             // float representing world space (used by vectors)
-typedef unsigned short eindex; // entity index
-typedef float lerp;            // linear interpolation
+typedef float              ftime; // time
+typedef float              vec;   // float representing world space (used by vectors)
+typedef unsigned short     eindex; // entity index
+typedef float              lerp;   // linear interpolation
 
 #define STRINGIZE(tokens) #tokens // stringifies a token
 
@@ -48,7 +47,7 @@ struct EHANDLE;
 // forward declaration of global entity lists
 #define MAX_ENTITY_COUNT 2048
 extern IBaseEntity*
-    g_ppEntityList[]; // const-index list, don't iterate over this, don't modify
+                            g_ppEntityList[]; // const-index list, don't iterate over this, don't modify
 extern TArray<IBaseEntity*> g_entList; // entity list, iterate through this instead.
                                        // All entries guaranteed to be non-null
 

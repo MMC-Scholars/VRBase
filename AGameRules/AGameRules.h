@@ -36,7 +36,7 @@ public:
 
 public:
     virtual void RestartRound();
-    inline void SetNextRoundRestart(ftime next) { m_tNextRoundRestart = next; }
+    inline void  SetNextRoundRestart(ftime next) { m_tNextRoundRestart = next; }
     inline ftime GetNextResetRound() const { return m_tNextRoundRestart; }
 
     bool GameReady() const { return m_bHasInitializedAllEntities; }
@@ -44,8 +44,8 @@ public:
 private:
     void InitializeAllEntities();
 
-    bool m_bHasInitializedAllEntities;
-    bool m_bHasRestartedRound;
+    bool  m_bHasInitializedAllEntities;
+    bool  m_bHasRestartedRound;
     ftime m_tNextRoundRestart;
 };
 

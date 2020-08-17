@@ -22,7 +22,7 @@ FMovingVector::FMovingVector(vec x, vec y, vec z, vec dx, vec dy, vec dz)
     addSelf();
 }
 
-bool FMovingVector::s_bDeletingAll = false;
+bool                   FMovingVector::s_bDeletingAll = false;
 TArray<FMovingVector*> FMovingVector::s_pVectors;
 
 void IMovingVectorManager::UpdateAll() {

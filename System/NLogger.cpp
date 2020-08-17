@@ -8,7 +8,7 @@ namespace NLogger {
 // Implementation functions
 //-------------------------------------------------------------------------------------
 
-char buffer[BUFFER_SIZE];
+char        buffer[BUFFER_SIZE];
 static void VMsgMaster(FColor c, ftime duration, const char* pszFormat,
                        va_list args) {
     if (GEngine) {
@@ -18,7 +18,7 @@ static void VMsgMaster(FColor c, ftime duration, const char* pszFormat,
     }
 }
 
-wchar_t wbuffer[BUFFER_SIZE];
+wchar_t     wbuffer[BUFFER_SIZE];
 static void VWMsgMaster(FColor c, ftime duration, const wchar_t* pszFormat,
                         va_list args) {
     if (GEngine) {

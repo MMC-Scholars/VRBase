@@ -153,7 +153,7 @@ ABaseController::ABaseController() {
 //-------------------------------------------------------------------------------------
 
 void ABaseController::OnOverlapBegin(UPrimitiveComponent* OverlappedComp,
-                                     AActor* OtherActor,
+                                     AActor*              OtherActor,
                                      UPrimitiveComponent* OtherComp,
                                      int32 OtherBodyIndex, bool bFromSweep,
                                      const FHitResult& SweepResult) {
@@ -177,9 +177,9 @@ void ABaseController::OnOverlapBegin(UPrimitiveComponent* OverlappedComp,
 //-------------------------------------------------------------------------------------
 
 void ABaseController::OnOverlapEnd(UPrimitiveComponent* OverlappedComp,
-                                   AActor* OtherActor,
+                                   AActor*              OtherActor,
                                    UPrimitiveComponent* OtherComp,
-                                   int32 OtherBodyIndex) {
+                                   int32                OtherBodyIndex) {
     m_aOverlapActors.Remove(OtherActor);
 
     // pickup handling
@@ -235,7 +235,7 @@ void ABaseController::OnButtonsChanged() {
         GetTraceIgnoredActors(ignoredActors);
 
         FHitResult t;
-        FVector force = FVector(0, 0, -0.08f);
+        FVector    force = FVector(0, 0, -0.08f);
         UTIL_TraceSpline(t, start, direction, force, 4096, NULL, &ignoredActors[0]);
 
         FVector loc = t.Location; // where the trace has hit
@@ -381,7 +381,7 @@ void ABaseController::DefaultThink() {
         UTIL_DrawLine(loc, vDest, &rendered);
 
         // draw trace arrow lines
-        float fLineAngle      = 50.0f;
+        float   fLineAngle    = 50.0f;
         FVector vLineAngleDir = -1 * direction * traceSize * 0.6;
 
         FVector vRightLine = FRotator(0, GetActorRotation().Roll - fLineAngle, 0)

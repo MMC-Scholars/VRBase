@@ -60,13 +60,13 @@ public:
     //-------------------------------------------------------------------------------------
 
 public:
-    UCapsuleComponent* m_pRootCapsule;
-    USceneComponent* m_pPlayerRoot;
-    UCameraComponent* m_pCamera;
+    UCapsuleComponent*          m_pRootCapsule;
+    USceneComponent*            m_pPlayerRoot;
+    UCameraComponent*           m_pCamera;
     UMotionControllerComponent* m_pLMotionController;
-    UChildActorComponent* m_pLChildActor;
+    UChildActorComponent*       m_pLChildActor;
     UMotionControllerComponent* m_pRMotionController;
-    UChildActorComponent* m_pRChildActor;
+    UChildActorComponent*       m_pRChildActor;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Left Controller",
               DisplayName = "Controller Class")
@@ -199,7 +199,7 @@ private:
     FPawnInstruction* m_sInstr;
 
 public:
-    ftime m_tInstrChangeTime;
+    ftime                 m_tInstrChangeTime;
     UTextRenderComponent* m_pRTextInstr;
     UTextRenderComponent* m_pLTextInstr;
 

@@ -32,7 +32,7 @@ public:
 
 private:
     UProceduralMeshComponent* m_pMesh;
-    UTextRenderComponent* m_pTextRender;
+    UTextRenderComponent*     m_pTextRender;
 
 public:
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Text",

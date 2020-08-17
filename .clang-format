@@ -17,6 +17,8 @@ ColumnLimit: 85
 IncludeBlocks: Preserve
 # align modifiers like public
 AccessModifierOffset: -4
+# align declarations in headers
+AlignConsecutiveDeclarations: true
 # various
 AlignTrailingComments: true
 AllowShortBlocksOnASingleLine: Always

@@ -15,7 +15,7 @@ void UVRAppSwitchFunctionLibrary::markNextProgramName(FString name) {
     if (g_bDidMarkNextProgram) return;
 
     // Convert FString to C string
-    char buffer[512];
+    char         buffer[512];
     const TCHAR* pwszName = name.Len() > 0 ? &name[0] : TEXT("");
 
     mbstate_t state;

@@ -101,8 +101,8 @@ void UTIL_DrawSpline(FVector start, FVector end, FVector force, FColor c,
     ULineBatchComponent* lb = g_pGameRules->GetWorld()->LineBatcher;
 
     FVector displacement = end - start;
-    vec len              = displacement.Size();
-    vec step             = 0.0f;
+    vec     len          = displacement.Size();
+    vec     step         = 0.0f;
     FVector vectorStep   = start;
     FVector previousStep = vectorStep;
     while (step < len) {
@@ -120,10 +120,10 @@ void UTIL_DrawCircle(FVector loc, vec radius, SLineDrawParams* rendered) {
 
     ULineBatchComponent* lb = g_pGameRules->GetWorld()->LineBatcher;
 
-    const uint8 NUM_ARCS       = 64;
-    FRotator rotationIncrement = FRotator(0, 360.f / NUM_ARCS, 0);
-    FVector previous           = FVector(radius, 0, 0);
-    FVector next               = rotationIncrement.RotateVector(previous);
+    const uint8 NUM_ARCS          = 64;
+    FRotator    rotationIncrement = FRotator(0, 360.f / NUM_ARCS, 0);
+    FVector     previous          = FVector(radius, 0, 0);
+    FVector     next              = rotationIncrement.RotateVector(previous);
 
     for (uint8 i = 0; i < NUM_ARCS + 1; i++) {
         lb->DrawLine(loc + previous, loc + next, rendered->Color, SDPG_World,

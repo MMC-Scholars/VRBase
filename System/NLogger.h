@@ -29,9 +29,9 @@ void Fatal(const char* pszFormat, ...);
 } // namespace NLogger
 
 inline const wchar_t* WCStr(const FString& str) { return &(str[0]); }
-void Msg(const char* pszFormat, ...);
-void Msg(const wchar_t* pszFormat, ...);
-inline void Msg(const FString& str) { Msg(WCStr(str)); }
+void                  Msg(const char* pszFormat, ...);
+void                  Msg(const wchar_t* pszFormat, ...);
+inline void           Msg(const FString& str) { Msg(WCStr(str)); }
 
 // shortcuts for Unreal structures
 

@@ -3,7 +3,7 @@
 #include "ABasePawn/ABasePawn.h"
 #include "CoreMinimal.h"
 
-IBaseEntity* g_ppEntityList[MAX_ENTITY_COUNT] = {NULL};
+IBaseEntity*         g_ppEntityList[MAX_ENTITY_COUNT] = {NULL};
 TArray<IBaseEntity*> g_entList;
 
 // a global index which keeps track of where we last inserted an entity into the
@@ -160,7 +160,7 @@ void IBaseEntity::RegisterInputsToControllers() {
                 pController->RegisterEntityInput(this, IN_STICK, bOnRelease);
         };
 
-    auto registerToController = [&](ABaseController* pController,
+    auto registerToController = [&](ABaseController*                pController,
                                     FEntityInputRegistrationParams* params) {
         registerButtonSetToController(pController, &params->m_onPressed, false);
         registerButtonSetToController(pController, &params->m_onReleased, true);
@@ -176,9 +176,9 @@ UStaticMesh* FindMesh(const wchar_t* path) {
 }
 
 UStaticMesh* FindMesh(const char* path) {
-    size_t pathLen     = strlen(path) + 1;
+    size_t   pathLen   = strlen(path) + 1;
     wchar_t* wcharPath = new wchar_t[pathLen];
-    size_t outputSize;
+    size_t   outputSize;
     mbstowcs_s(&outputSize, wcharPath, pathLen, path, pathLen - 1);
 
     return FindMesh(wcharPath);

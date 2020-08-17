@@ -49,7 +49,7 @@ void AGameRules::Tick(float deltaTime) {
 }
 
 UWorld* g_pWorld = NULL;
-void AGameRules::BeginPlay() {
+void    AGameRules::BeginPlay() {
     Super::BeginPlay();
     Msg("AGameRules::BeginPlay\n");
     if (s_iEntityCount != g_entList.Num()) {

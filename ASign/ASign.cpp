@@ -67,9 +67,9 @@ ASign::ASign() {
     UV0.Add(ConvertTo2D(cornerBR));
     UV0.Add(ConvertTo2D(cornerBL));
 
-    TArray<FVector> normals;
+    TArray<FVector>          normals;
     TArray<FProcMeshTangent> tangents;
-    TArray<FLinearColor> vertexColors;
+    TArray<FLinearColor>     vertexColors;
 
     m_pMesh = CreateDefaultSubobject<UProceduralMeshComponent>("mesh");
     m_pMesh->bUseAsyncCooking       = true;
@@ -134,8 +134,8 @@ void ASign::DefaultThink() {
         FVector vLocCurrent = GetActorLocation();
         FVector vLocPlayer  = g_pBasePawn->m_pCamera->GetComponentLocation();
 
-        FVector forward = vLocCurrent - vLocPlayer;
-        FRotator rot    = forward.ToOrientationRotator();
+        FVector  forward = vLocCurrent - vLocPlayer;
+        FRotator rot     = forward.ToOrientationRotator();
 
         SetActorRotation(rot);
     }
@@ -147,14 +147,14 @@ void ASign::TextWrap(FString input) {
     const float BASE_FONT_SIZE = 10.8;
 
     const char* lineBreak = "<br>";
-    int maxLen            = input.Len() * strlen(lineBreak);
-    rsize_t size          = maxLen;
+    int         maxLen    = input.Len() * strlen(lineBreak);
+    rsize_t     size      = maxLen;
 
     wchar_t* initialWideText = &input[0];
 
     size_t i;
-    char* initialText = new char[maxLen];
-    size_t wTextSize  = input.Len() + 1; // null terminator
+    char*  initialText = new char[maxLen];
+    size_t wTextSize   = input.Len() + 1; // null terminator
 
     wcstombs_s(&i, initialText, wTextSize, initialWideText, wTextSize);
 
@@ -164,8 +164,8 @@ void ASign::TextWrap(FString input) {
     memset(lineText, 0, maxLen);
 
     const char* delimiters = " <>";
-    char* word;
-    char* state;
+    char*       word;
+    char*       state;
 
     word = strtok_s(initialText, delimiters, &state);
 

@@ -22,8 +22,8 @@ class VRBASE_API APickup : public ABaseEntity {
 public:
     APickup();
 
-    TArray<AActor*> m_aParentActors;
-    UStaticMeshComponent* m_pPickupMeshComponent;
+    TArray<AActor*>           m_aParentActors;
+    UStaticMeshComponent*     m_pPickupMeshComponent;
     UProceduralMeshComponent* m_pProcMeshComponent;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mesh",

@@ -36,8 +36,8 @@ public:
     inline IBaseEntity* Get() const { return g_ppEntityList[m_iEnt]; }
 
     inline eindex EntIndex() const { return m_iEnt; }
-    inline operator IBaseEntity*() const { return Get(); }
-    inline operator bool() const { return Get() != NULL; }
+    inline        operator IBaseEntity*() const { return Get(); }
+    inline        operator bool() const { return Get() != NULL; }
 
     inline IBaseEntity* operator->() const { return (Get()); }
 };

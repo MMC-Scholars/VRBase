@@ -3,11 +3,11 @@
 #include "NLogger.h"
 
 static CGlobalVars g_vars;
-CGlobalVars* g_pGlobals = &g_vars;
+CGlobalVars*       g_pGlobals = &g_vars;
 
 void CGlobalVars::update() {
     steady_clock::time_point newclock = steady_clock::now();
-    duration<float> time_elapsed =
+    duration<float>          time_elapsed =
         duration_cast<duration<float>>(newclock - m_tPrevious);
 
     curtime = time_elapsed.count();
@@ -26,9 +26,9 @@ void CGlobalVars::reset() {
     // recount number of entities
     IBaseEntity::s_iEntityCount = 0;
     for (int i = 0; i < g_entList.Num(); i++) {
-        IBaseEntity* pEnt = g_entList[i];
-        AActor* pActor    = pEnt->GetActor();
-        FString name      = pActor->GetName();
+        IBaseEntity* pEnt   = g_entList[i];
+        AActor*      pActor = pEnt->GetActor();
+        FString      name   = pActor->GetName();
 
         // ignore templates for actors and child actors
         // CAT stands for Child Actor Template,

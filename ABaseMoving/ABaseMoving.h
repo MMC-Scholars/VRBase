@@ -85,8 +85,8 @@ public:
     void OnFinishClose();
 
 protected:
-    bool m_bInAttachThink;
-    float m_lCurrentLerp;
+    bool             m_bInAttachThink;
+    float            m_lCurrentLerp;
     ABaseController* m_pHoldingController; // what controller is holding on to us?
 
     FVector m_vTempAttachLoc; // the position of the object if it were not

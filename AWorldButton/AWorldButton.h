@@ -82,11 +82,11 @@ public:
                       UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
     UFUNCTION(BlueprintNativeEvent)
-    void OnPressed(ABaseController* pController);
+    void         OnPressed(ABaseController* pController);
     virtual void OnPressed_Implementation(ABaseController* pController) {}
 
     UFUNCTION(BlueprintNativeEvent)
-    void OffPressed(ABaseController* pController);
+    void         OffPressed(ABaseController* pController);
     virtual void OffPressed_Implementation(ABaseController* pController) {}
 
 private:

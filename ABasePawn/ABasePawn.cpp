@@ -215,7 +215,7 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 }
 
 ABasePawn* g_pBasePawn = NULL;
-void ABasePawn::PreInit() {
+void       ABasePawn::PreInit() {
     g_pBasePawn = this;
 
     // set tracking origin to floor
@@ -307,9 +307,9 @@ bool ABasePawn::CanTeleportToLocation(const FVector& loc) {
     // if no bounds exist return true
     if (!m_aTeleportBounds.Num()) return true;
 
-    bool bLocValid = false;
+    bool    bLocValid = false;
     FVector boxOrigin, boxExtent;
-    int i = 0;
+    int     i = 0;
 
     // use a while loop to ensure loop runs <= n times
     while (i < m_aTeleportBounds.Num() && !bLocValid) {
