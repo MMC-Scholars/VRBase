@@ -9,8 +9,9 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "VRAppSwitchFunctionLibrary.generated.h"
 #include "predefs.h"
+
+#include "VRAppSwitchFunctionLibrary.generated.h"
 
 UCLASS()
 class VRBASE_API UVRAppSwitchFunctionLibrary : public UBlueprintFunctionLibrary {
