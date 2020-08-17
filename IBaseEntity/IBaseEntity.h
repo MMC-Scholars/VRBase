@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "System/predefs.h"
+#include "System/Assert.h"
 #include "System/Globals.h"
 #include "System/static_initialize.h"
 #include "System/EHandle.h"

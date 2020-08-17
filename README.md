@@ -1,4 +1,4 @@
-# VRBase Library v2
+# VRBase Library 2.0.0
 
 VRBase is a C++ Unreal Engine library designed to simplify virtual reality development in Unreal. It includes a variety of different classes, each of which perform specific functionality designed to improve overall ease of development.
 

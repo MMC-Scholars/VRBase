@@ -27,6 +27,7 @@ class CGlobalVars {
 };
 
 extern CGlobalVars* g_pGlobals;
+extern UWorld* g_pWorld;
 
 inline bool IsCookedBuild() {
 	return !WITH_EDITOR;
