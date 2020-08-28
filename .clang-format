@@ -1,0 +1,26 @@
+# see https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+# for details
+
+BasedOnStyle: LLVM
+# indent 4 spaces
+IndentWidth: 4
+# pointer asterisks left-aligned
+DerivePointerAlignment: false
+PointerAlignment: Left
+# align variable definitions
+AlignConsecutiveAssignments: true
+# align macro definitions
+AlignConsecutiveMacros: true
+# limit column lengths to prevent trailing
+ColumnLimit: 85
+# seperate includes are not sorted
+IncludeBlocks: Preserve
+# align modifiers like public
+AccessModifierOffset: -4
+# align declarations in headers
+AlignConsecutiveDeclarations: true
+# various
+AlignTrailingComments: true
+AllowShortBlocksOnASingleLine: Always
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: true
