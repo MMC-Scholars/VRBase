@@ -4,7 +4,6 @@
 #include "System/system.h"
 #include "UnrealEngine.h"
 
-#define sqr(a)      ((a) * (a))
 #define SPLINE_STEP 5.f
 
 #define CHN_WORLDSTATIC  (1 << ECC_WorldStatic)
