@@ -17,6 +17,8 @@
 #define VRBASE_API
 #endif
 
+#define sqr(a)      ((a) * (a))
+
 typedef unsigned char      byte;
 typedef unsigned short     ushort;
 typedef unsigned int       uint;
