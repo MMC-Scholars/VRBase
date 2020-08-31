@@ -17,7 +17,7 @@
 #define VRBASE_API
 #endif
 
-#define sqr(a)      ((a) * (a))
+#define sqr(a) ((a) * (a))
 
 typedef unsigned char      byte;
 typedef unsigned short     ushort;
@@ -27,6 +27,11 @@ typedef float              ftime; // time
 typedef float              vec;   // float representing world space (used by vectors)
 typedef unsigned short     eindex; // entity index
 typedef float              lerp;   // linear interpolation
+
+enum Playmode {
+    DESKTOP = 0,
+    VR,
+};
 
 #define STRINGIZE(tokens) #tokens // stringifies a token
 

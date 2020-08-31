@@ -102,6 +102,15 @@ void AGameRules::RestartRound() {
     }
 }
 
+Playmode AGameRules::Playmode() {
+    auto HMD = GEngine->HMDDevice.Get();
+    if (HMD) {
+        return Playmode.VR;
+    } else {
+        return Playmode.DESKTOP;
+    }
+}
+
 void AGameRules::InitializeAllEntities() {
     Msg(__FUNCTION__);
     // run pre inits of all entities

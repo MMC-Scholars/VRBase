@@ -41,6 +41,8 @@ public:
 
     bool GameReady() const { return m_bHasInitializedAllEntities; }
 
+    Playmode Playmode();
+
 private:
     void InitializeAllEntities();
 

@@ -218,12 +218,12 @@ ABasePawn* g_pBasePawn = NULL;
 void       ABasePawn::PreInit() {
     g_pBasePawn = this;
 
-    // set tracking origin to floor
-    auto HMD = GEngine->HMDDevice.Get();
-    if (HMD)
+    if (g_pGlobals->Playmode() == Platform.VR) {
+        // set tracking origin to floor
         HMD->SetTrackingOrigin(EHMDTrackingOrigin::Floor);
-    else
+    } else {
         NLogger::Warning("Failed to initialize HMD!");
+    }
 
     FVector loc = GetActorLocation();
     SetActorLocation(FVector(loc.X, loc.Y, loc.Z - CAPSULE_HEIGHT));
