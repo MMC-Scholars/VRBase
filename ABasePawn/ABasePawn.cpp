@@ -35,7 +35,7 @@ ABasePawn::ABasePawn() {
     // L Motion Controller
     m_pLMotionController =
         CreateDefaultSubobject<UMotionControllerComponent>("Left Motion Controller");
-    m_pLMotionController->Hand = EControllerHand::Left;
+    m_pLMotionController->SetTrackingSource(EControllerHand::Left);
     m_pLMotionController->SetupAttachment(m_pPlayerRoot);
 
     // L Child Actor
@@ -47,7 +47,7 @@ ABasePawn::ABasePawn() {
     // R Motion Controller
     m_pRMotionController = CreateDefaultSubobject<UMotionControllerComponent>(
         "Right Motion Controller");
-    m_pRMotionController->Hand = EControllerHand::Right;
+    m_pRMotionController->SetTrackingSource(EControllerHand::Right);
     m_pRMotionController->SetupAttachment(m_pPlayerRoot);
 
     // R Child Actor
@@ -219,7 +219,7 @@ void       ABasePawn::PreInit() {
     g_pBasePawn = this;
 
     // set tracking origin to floor
-    auto HMD = GEngine->HMDDevice.Get();
+    auto HMD = GEngine->XRSystem.Get();
     if (HMD)
         HMD->SetTrackingOrigin(EHMDTrackingOrigin::Floor);
     else

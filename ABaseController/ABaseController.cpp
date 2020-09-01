@@ -35,7 +35,7 @@ ABaseController::ABaseController() {
     m_pControllerCollision->InitSphereRadius(12.0f);
 
     // Sphere Collision Overlap
-    m_pControllerCollision->bGenerateOverlapEvents = true;
+    m_pControllerCollision->SetGenerateOverlapEvents(true);
     m_pControllerCollision->OnComponentBeginOverlap.AddDynamic(
         this, &ABaseController::OnOverlapBegin);
     m_pControllerCollision->OnComponentEndOverlap.AddDynamic(
