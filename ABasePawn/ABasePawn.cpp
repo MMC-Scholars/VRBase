@@ -111,96 +111,177 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
     if (PlayerInputComponent) {
 
+		// OCULUS TOUCH KEY BINDINGS //
+		
         // left input
 
         // Trigger
-        PlayerInputComponent->BindKey(EKeys::MotionController_Left_Trigger,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Left_Trigger_Click,
                                       IE_Pressed, this,
                                       &ABasePawn::OnL_TRIGGER_Pressed);
-        PlayerInputComponent->BindKey(EKeys::MotionController_Left_Trigger,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Left_Trigger_Click,
                                       IE_Released, this,
                                       &ABasePawn::OnL_TRIGGER_Released);
         // Grip
-        PlayerInputComponent->BindKey(EKeys::MotionController_Left_Grip1, IE_Pressed,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Left_Grip_Click, IE_Pressed,
                                       this, &ABasePawn::OnL_GRIP_Pressed);
-        PlayerInputComponent->BindKey(EKeys::MotionController_Left_Grip1,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Left_Grip_Click,
                                       IE_Released, this,
                                       &ABasePawn::OnL_GRIP_Released);
         // Menu Button
-        PlayerInputComponent->BindKey(EKeys::Gamepad_Special_Left, IE_Pressed, this,
-                                      &ABasePawn::OnL_MENU_Pressed);
-        PlayerInputComponent->BindKey(EKeys::Gamepad_Special_Left, IE_Released, this,
-                                      &ABasePawn::OnL_MENU_Released);
-        PlayerInputComponent->BindKey(EKeys::MotionController_Left_Shoulder,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Left_Menu_Click,
                                       IE_Pressed, this,
                                       &ABasePawn::OnL_MENU_Pressed);
-        PlayerInputComponent->BindKey(EKeys::MotionController_Left_Shoulder,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Left_Menu_Click,
                                       IE_Released, this,
                                       &ABasePawn::OnL_MENU_Released);
-        // AX
-        PlayerInputComponent->BindKey(EKeys::MotionController_Left_FaceButton1,
+        // X
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Left_X_Click,
                                       IE_Pressed, this, &ABasePawn::OnL_AX_Pressed);
-        PlayerInputComponent->BindKey(EKeys::MotionController_Left_FaceButton1,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Left_X_Click,
                                       IE_Released, this,
                                       &ABasePawn::OnL_AX_Released);
-        // BY
-        PlayerInputComponent->BindKey(EKeys::MotionController_Left_FaceButton2,
+        // Y
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Left_Y_Click,
                                       IE_Pressed, this, &ABasePawn::OnL_BY_Pressed);
-        PlayerInputComponent->BindKey(EKeys::MotionController_Left_FaceButton2,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Left_Y_Click,
                                       IE_Released, this,
                                       &ABasePawn::OnL_BY_Released);
         // Thumbstick
-        PlayerInputComponent->BindKey(EKeys::MotionController_Left_Thumbstick,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Left_Thumbstick_Click,
                                       IE_Pressed, this,
                                       &ABasePawn::OnL_STICK_Pressed);
-        PlayerInputComponent->BindKey(EKeys::MotionController_Left_Thumbstick,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Left_Thumbstick_Click,
                                       IE_Released, this,
                                       &ABasePawn::OnL_STICK_Released);
 
         // right input
 
         // Trigger
-        PlayerInputComponent->BindKey(EKeys::MotionController_Right_Trigger,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Right_Trigger_Click,
                                       IE_Pressed, this,
                                       &ABasePawn::OnR_TRIGGER_Pressed);
-        PlayerInputComponent->BindKey(EKeys::MotionController_Right_Trigger,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Right_Trigger_Click,
                                       IE_Released, this,
                                       &ABasePawn::OnR_TRIGGER_Released);
         // Grip
-        PlayerInputComponent->BindKey(EKeys::MotionController_Right_Grip1,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Right_Grip_Click,
                                       IE_Pressed, this,
                                       &ABasePawn::OnR_GRIP_Pressed);
-        PlayerInputComponent->BindKey(EKeys::MotionController_Right_Grip1,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Right_Grip_Click,
                                       IE_Released, this,
                                       &ABasePawn::OnR_GRIP_Released);
         // Menu Button
-        PlayerInputComponent->BindKey(EKeys::Gamepad_Special_Right, IE_Pressed, this,
-                                      &ABasePawn::OnR_MENU_Pressed);
-        PlayerInputComponent->BindKey(EKeys::Gamepad_Special_Right, IE_Released,
-                                      this, &ABasePawn::OnR_MENU_Released);
-        PlayerInputComponent->BindKey(EKeys::MotionController_Right_Shoulder,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Right_System_Click,
                                       IE_Pressed, this,
                                       &ABasePawn::OnR_MENU_Pressed);
-        PlayerInputComponent->BindKey(EKeys::MotionController_Right_Shoulder,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Right_System_Click,
                                       IE_Released, this,
                                       &ABasePawn::OnR_MENU_Released);
-        // AX
-        PlayerInputComponent->BindKey(EKeys::MotionController_Right_FaceButton1,
+        // A
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Right_A_Click,
                                       IE_Pressed, this, &ABasePawn::OnR_AX_Pressed);
-        PlayerInputComponent->BindKey(EKeys::MotionController_Right_FaceButton1,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Right_A_Click,
                                       IE_Released, this,
                                       &ABasePawn::OnR_AX_Released);
-        // BY
-        PlayerInputComponent->BindKey(EKeys::MotionController_Right_FaceButton2,
+        // B
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Right_B_Click,
                                       IE_Pressed, this, &ABasePawn::OnR_BY_Pressed);
-        PlayerInputComponent->BindKey(EKeys::MotionController_Right_FaceButton2,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Right_B_Click,
                                       IE_Released, this,
                                       &ABasePawn::OnR_BY_Released);
         // Thumbstick
-        PlayerInputComponent->BindKey(EKeys::MotionController_Right_Thumbstick,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Right_Thumbstick_Click,
                                       IE_Pressed, this,
                                       &ABasePawn::OnR_STICK_Pressed);
-        PlayerInputComponent->BindKey(EKeys::MotionController_Right_Thumbstick,
+        PlayerInputComponent->BindKey(EKeys::OculusTouch_Right_Thumbstick_Click,
+                                      IE_Released, this,
+                                      &ABasePawn::OnR_STICK_Released);
+
+		// HTC VIVE KEY BINDINGS //
+
+		// left input
+
+        // Trigger
+        PlayerInputComponent->BindKey(EKeys::Vive_Left_Trigger_Click,
+                                      IE_Pressed, this,
+                                      &ABasePawn::OnL_TRIGGER_Pressed);
+        PlayerInputComponent->BindKey(EKeys::Vive_Left_Trigger_Click,
+                                      IE_Released, this,
+                                      &ABasePawn::OnL_TRIGGER_Released);
+        // Grip
+        PlayerInputComponent->BindKey(EKeys::Vive_Left_Grip_Click, IE_Pressed,
+                                      this, &ABasePawn::OnL_GRIP_Pressed);
+        PlayerInputComponent->BindKey(EKeys::Vive_Left_Grip_Click,
+                                      IE_Released, this,
+                                      &ABasePawn::OnL_GRIP_Released);
+        // Menu Button
+        PlayerInputComponent->BindKey(EKeys::Vive_Left_Menu_Click,
+                                      IE_Pressed, this,
+                                      &ABasePawn::OnL_MENU_Pressed);
+        PlayerInputComponent->BindKey(EKeys::Vive_Left_Menu_Click,
+                                      IE_Released, this,
+                                      &ABasePawn::OnL_MENU_Released);
+        // X
+        PlayerInputComponent->BindKey(EKeys::Vive_Left_Trackpad_Left,
+                                      IE_Pressed, this, &ABasePawn::OnL_AX_Pressed);
+        PlayerInputComponent->BindKey(EKeys::Vive_Left_Trackpad_Left,
+                                      IE_Released, this,
+                                      &ABasePawn::OnL_AX_Released);
+        // Y
+        PlayerInputComponent->BindKey(EKeys::Vive_Left_Trackpad_Right,
+                                      IE_Pressed, this, &ABasePawn::OnL_BY_Pressed);
+        PlayerInputComponent->BindKey(EKeys::Vive_Left_Trackpad_Right,
+                                      IE_Released, this,
+                                      &ABasePawn::OnL_BY_Released);
+        // Thumbstick
+        PlayerInputComponent->BindKey(EKeys::Vive_Left_Trackpad_Click,
+                                      IE_Pressed, this,
+                                      &ABasePawn::OnL_STICK_Pressed);
+        PlayerInputComponent->BindKey(EKeys::Vive_Left_Trackpad_Click,
+                                      IE_Released, this,
+                                      &ABasePawn::OnL_STICK_Released);
+
+        // right input
+
+        // Trigger
+        PlayerInputComponent->BindKey(EKeys::Vive_Right_Trigger_Click,
+                                      IE_Pressed, this,
+                                      &ABasePawn::OnR_TRIGGER_Pressed);
+        PlayerInputComponent->BindKey(EKeys::Vive_Right_Trigger_Click,
+                                      IE_Released, this,
+                                      &ABasePawn::OnR_TRIGGER_Released);
+        // Grip
+        PlayerInputComponent->BindKey(EKeys::Vive_Right_Grip_Click,
+                                      IE_Pressed, this,
+                                      &ABasePawn::OnR_GRIP_Pressed);
+        PlayerInputComponent->BindKey(EKeys::Vive_Right_Grip_Click,
+                                      IE_Released, this,
+                                      &ABasePawn::OnR_GRIP_Released);
+        // Menu Button
+        PlayerInputComponent->BindKey(EKeys::Vive_Right_Menu_Click,
+                                      IE_Pressed, this,
+                                      &ABasePawn::OnR_MENU_Pressed);
+        PlayerInputComponent->BindKey(EKeys::Vive_Right_Menu_Click,
+                                      IE_Released, this,
+                                      &ABasePawn::OnR_MENU_Released);
+        // A
+        PlayerInputComponent->BindKey(EKeys::Vive_Right_Trackpad_Right,
+                                      IE_Pressed, this, &ABasePawn::OnR_AX_Pressed);
+        PlayerInputComponent->BindKey(EKeys::Vive_Right_Trackpad_Right,
+                                      IE_Released, this,
+                                      &ABasePawn::OnR_AX_Released);
+        // B
+        PlayerInputComponent->BindKey(EKeys::Vive_Right_Trackpad_Left,
+                                      IE_Pressed, this, &ABasePawn::OnR_BY_Pressed);
+        PlayerInputComponent->BindKey(EKeys::Vive_Right_Trackpad_Left,
+                                      IE_Released, this,
+                                      &ABasePawn::OnR_BY_Released);
+        // Thumbstick
+        PlayerInputComponent->BindKey(EKeys::Vive_Right_Trackpad_Click,
+                                      IE_Pressed, this,
+                                      &ABasePawn::OnR_STICK_Pressed);
+        PlayerInputComponent->BindKey(EKeys::Vive_Right_Trackpad_Click,
                                       IE_Released, this,
                                       &ABasePawn::OnR_STICK_Released);
 
