@@ -9,7 +9,7 @@ AWorldButton::AWorldButton() {
     m_pMeshComponent->SetStaticMesh(m_pStaticMesh);
     m_pMeshComponent->SetMaterial(0, m_pOriginalMaterial);
 
-    m_pMeshComponent->bGenerateOverlapEvents = true;
+    m_pMeshComponent->SetGenerateOverlapEvents(true);
     m_pMeshComponent->OnComponentBeginOverlap.AddDynamic(
         this, &AWorldButton::OnOverlapBegin);
     m_pMeshComponent->OnComponentEndOverlap.AddDynamic(this,
