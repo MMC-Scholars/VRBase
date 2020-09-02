@@ -2,6 +2,7 @@
 #include "System/NLogger.h"
 #define DEFAULT_CONTROLLER_CLASS ABaseController
 #define CAPSULE_HEIGHT           96.0
+#define REACH_RANGE              20.0
 
 ABasePawn::ABasePawn() {
     Tags.Add(TAG_BASEPAWN);
@@ -96,6 +97,11 @@ ABasePawn::ABasePawn() {
                                   "indicate the teleportation direction"));
     m_aInstr.Add(FPawnInstruction("Press the index finger triggers near objects "
                                   "to pick them up or interact"));
+
+    // Reach range component for desktop
+    m_pReachRange = CreateDefaultSubobject<USphereComponent>("Reach Range");
+    m_pReachRange->SetupAttachment(RootComponent);
+    m_pReachRange->InitSphereRadius(REACH_RANGE);
 
     // automatically possess pawn placed in world instead of generating a pawn
     AutoPossessPlayer = EAutoReceiveInput::Player0;

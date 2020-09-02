@@ -12,6 +12,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/ChildActorComponent.h"
+#include "Components/SphereComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "CoreMinimal.h"
 #include "FPawnInstruction.h"
@@ -67,6 +68,7 @@ public:
     UChildActorComponent*       m_pLChildActor;
     UMotionControllerComponent* m_pRMotionController;
     UChildActorComponent*       m_pRChildActor;
+    USphereComponent*           m_pReachRange;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Left Controller",
               DisplayName = "Controller Class")
