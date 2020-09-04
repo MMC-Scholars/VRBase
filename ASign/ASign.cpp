@@ -73,7 +73,7 @@ ASign::ASign() {
 
     m_pMesh = CreateDefaultSubobject<UProceduralMeshComponent>("mesh");
     m_pMesh->bUseAsyncCooking       = true;
-    m_pMesh->bGenerateOverlapEvents = false;
+    m_pMesh->SetGenerateOverlapEvents(false);
     m_pMesh->bHiddenInGame          = m_bMeshHiddenInGame;
 
     m_pMesh->CreateMeshSection_LinearColor(0, vertices, Triangles, normals, UV0,

@@ -120,7 +120,7 @@ APickup::APickup() {
 #endif
 
     // enable overlap
-    m_pPickupMeshComponent->bGenerateOverlapEvents = true;
+    m_pPickupMeshComponent->SetGenerateOverlapEvents(true);
 
     // simulate physics
     m_pPickupMeshComponent->SetSimulatePhysics(true);
