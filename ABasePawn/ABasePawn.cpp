@@ -306,9 +306,9 @@ ABasePawn* g_pBasePawn = NULL;
 void       ABasePawn::PreInit() {
     g_pBasePawn = this;
 
-    if (g_pGlobals->Playmode() == Platform.VR) {
+    if (g_pGameRules->Playmode() == VR) {
         // set tracking origin to floor
-		auto HMD = GEngine->XRSystem.Get();
+		auto HMD = GEngine->XRSystem.Get();	
         HMD->SetTrackingOrigin(EHMDTrackingOrigin::Floor);
     } else {
         NLogger::Warning("Failed to initialize HMD!");

@@ -1,4 +1,5 @@
 #include "AGameRules.h"
+#include "IXRTrackingSystem.h"
 #include "FMovingVector/FMovingVector.h"
 
 AGameRules* g_pGameRules = NULL;
@@ -103,11 +104,11 @@ void AGameRules::RestartRound() {
 }
 
 Playmode AGameRules::Playmode() {
-    auto HMD = GEngine->HMDDevice.Get();
+    auto HMD = GEngine->XRSystem.Get();
     if (HMD) {
-        return Playmode.VR;
+        return VR;
     } else {
-        return Playmode.DESKTOP;
+        return DESKTOP;
     }
 }
 
