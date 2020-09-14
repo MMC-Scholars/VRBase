@@ -4,7 +4,7 @@
 #ifndef VRBASE_PREDEFS_H
 #define VRBASE_PREDEFS_H
 
-#include "CoreMinimal.h"
+//#include "CoreMinimal.h"
 
 #ifndef VRBASE_API
 #define VRBASE_API

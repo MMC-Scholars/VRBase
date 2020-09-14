@@ -1,5 +1,5 @@
 #include "AMoveLinear.h"
-#include "ABaseController/ABaseController.h"
+//#include "ABaseController/ABaseController.h"
 
 AMoveLinear::AMoveLinear() {
     m_pAxis       = CreateDefaultSubobject<USplineComponent>("spline axis");

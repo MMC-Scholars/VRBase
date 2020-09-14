@@ -5,7 +5,7 @@
 
 #include "EHandle.h"
 #include "GameFramework/Actor.h"
-#include "predefs.h"
+//#include "predefs.h"
 
 INTERFACE IBaseEntity;
 class ABaseController;

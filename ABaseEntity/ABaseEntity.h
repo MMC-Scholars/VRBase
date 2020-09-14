@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CoreMinimal.h"
+//#include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "IBaseEntity/IBaseEntity.h"
 
