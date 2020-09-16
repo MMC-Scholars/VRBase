@@ -2,6 +2,7 @@
 #define GLOBALS_H
 
 #include "predefs.h"
+//#include "IBaseEntity/IBaseEntity.h"
 #include <chrono>
 
 using namespace std::chrono;

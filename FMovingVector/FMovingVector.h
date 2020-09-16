@@ -2,6 +2,7 @@
 
 #include "System/predefs.h"
 //#include "UnrealEngine.h"
+#include "System/Globals.h"
 
 /**
  *-------------------------------------------------------------------------------------

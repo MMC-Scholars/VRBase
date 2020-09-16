@@ -1,5 +1,5 @@
 #include "FMovingVector.h"
-#include "System/Globals.h"
+//#include "System/Globals.h"
 
 // all FMovingVector constructors register the vector into the global list
 

@@ -1,5 +1,5 @@
 #include "ABaseMoving.h"
-#include "ABaseController/ABaseController.h"
+//#include "ABaseController/ABaseController.h"
 
 ABaseMoving::ABaseMoving() {
     m_lInitialLerp       = 0;

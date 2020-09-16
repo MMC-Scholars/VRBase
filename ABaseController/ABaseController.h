@@ -10,7 +10,7 @@
 #include "LineTools/linetools.h"
 #include "ProceduralMeshComponent.h"
 //#include "System/Input.h"
-#include "VRBase/ABaseEntity/ABaseEntity.h"
+//#include "VRBase/ABaseEntity/ABaseEntity.h"
 
 #include "ABaseController.generated.h"
 
