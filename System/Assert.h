@@ -7,8 +7,8 @@
 #define ASSERT_H
 
 #include "Globals.h"
-#include "MessageLog.h"
-#include "TokenizedMessage.h"
+#include "Logging/MessageLog.h"
+#include "Logging/TokenizedMessage.h"
 
 void _Assert(const char* function, const char* file, long line, bool bAssertion,
              const char* pszFormat, ...);
