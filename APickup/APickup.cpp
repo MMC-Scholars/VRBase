@@ -1,8 +1,8 @@
 
 #include "APickup.h"
-//#include "ABaseController/ABaseController.h"
+#include "ABaseController/ABaseController.h"
 #include "Materials/MaterialInstanceDynamic.h"
-#include "System/NLogger.h"
+//#include "System/NLogger.h"
 
 #define DEFAULT_SIZE 20
 

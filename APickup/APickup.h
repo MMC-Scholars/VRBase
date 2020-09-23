@@ -3,8 +3,8 @@
 #include "Components/StaticMeshComponent.h"
 //#include "CoreMinimal.h"
 #include "ProceduralMeshComponent.h"
-//#include "System/NLogger.h"
-#include "VRBase/ABaseEntity/ABaseEntity.h"
+#include "System/NLogger.h"
+//#include "VRBase/ABaseEntity/ABaseEntity.h"
 
 #include "APickup.generated.h"
 

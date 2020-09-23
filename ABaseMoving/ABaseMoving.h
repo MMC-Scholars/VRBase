@@ -4,6 +4,7 @@
 #include "Components/SceneComponent.h"
 //#include "CoreMinimal.h"
 //#include "System/NLogger.h"
+#include "ABaseController/ABaseController.h"
 
 #include "ABaseMoving.generated.h"
 

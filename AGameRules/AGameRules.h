@@ -2,6 +2,7 @@
 
 //#include "CoreMinimal.h"
 #include "ABaseEntity/ABaseEntity.h"
+#include "System/NLogger.h"
 
 #include "AGameRules.generated.h"
 

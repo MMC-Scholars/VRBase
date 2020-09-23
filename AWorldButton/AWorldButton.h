@@ -5,6 +5,7 @@
 #include "Components/StaticMeshComponent.h"
 //#include "CoreMinimal.h"
 #include "Sound/SoundCue.h"
+#include "ABaseController/ABaseController.h"
 
 #include "AWorldButton.generated.h"
 

@@ -11,6 +11,8 @@
 #include "ProceduralMeshComponent.h"
 //#include "System/Input.h"
 //#include "VRBase/ABaseEntity/ABaseEntity.h"
+#include "System/NLogger.h"
+//#include "ABasePawn/ABasePawn.h"
 
 #include "ABaseController.generated.h"
 
