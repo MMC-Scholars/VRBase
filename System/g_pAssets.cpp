@@ -9,12 +9,23 @@
 
 
 UStaticMesh* GPAssetsVar::FindMesh(const char* path){
-//TODO: Figure out implementation!
+
+    size_t pathLen = strlen(path) + 1;
+    wchar_t* wcharPath = new wchar_t[pathLen];
+    size_t outputSize;
+    mbstowcs_s(&outputSize, wcharPath, pathLen, path, pathLen - 1);
+
+    return FindMesh(wcharPath);
+
 
 }
 
 UStaticMesh# GPAssetsVar::FindMesh(const wchar_t* path){
+    
+    //Todo: Check meshFinder documentation
+    ConstructionHelpers::FObjectFinder<UStaticMesh> meshFinder(path);
 
-
-
+    return meshFinder.Object;
 }
+
+//Todo: Implement other potential features such as find Animation, Material, etc. 
