@@ -3,7 +3,7 @@
 #include "System/NLogger.h"
 
 #include "Components/TextRenderComponent.h"
-#include "CoreMinimal.h"
+//#include "CoreMinimal.h"
 #include "ProceduralMeshComponent.h"
 #include "VRBase/ABaseEntity/ABaseEntity.h"
 

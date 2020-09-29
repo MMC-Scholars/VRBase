@@ -6,7 +6,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/ChildActorComponent.h"
 #include "Components/TextRenderComponent.h"
-#include "CoreMinimal.h"
+//#include "CoreMinimal.h"
 #include "FPawnInstruction.h"
 #include "GameFramework/Pawn.h"
 #include "HeadMountedDisplay.h"

@@ -3,7 +3,7 @@
 #include "ABaseEntity/ABaseEntity.h"
 #include "Components/AudioComponent.h"
 #include "Components/StaticMeshComponent.h"
-#include "CoreMinimal.h"
+//#include "CoreMinimal.h"
 #include "Sound/SoundCue.h"
 
 #include "AWorldButton.generated.h"
