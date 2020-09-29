@@ -166,7 +166,7 @@ void ABaseController::OnOverlapBegin(UPrimitiveComponent* OverlappedComp,
         APickup* pPickupActor = Cast<APickup>(OtherActor);
         if (pPickupActor) {
             // outline mesh if not held by anything
-            if (pPickupActor->GetParentActors()->Num() == 0)
+            if (pPickupActor->Get_Parent_Actors2().Num() == 0)
                 pPickupActor->m_pPickupMeshComponent->SetRenderCustomDepth(true);
         }
     }

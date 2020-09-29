@@ -67,7 +67,7 @@ public:
     }
 #endif
 	UFUNCTION(BlueprintNativeEvent)
-	TArray<AActor*> GetParentActors();
+	TArray<AActor*> Get_Parent_Actors2();
 
     virtual void Pickup(ABaseController*);
     virtual void Drop(ABaseController*);
