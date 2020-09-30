@@ -126,6 +126,8 @@ APickup::APickup() {
     m_pPickupMeshComponent->SetSimulatePhysics(true);
 }
 
+TArray<AActor*> APickup::GetPickupParents() { return m_aParentActors; }
+
 void APickup::Pickup(ABaseController* controller) {
     if (m_pPickupMeshComponent->GetStaticMesh()) {
         m_pPickupMeshComponent->SetSimulatePhysics(false);

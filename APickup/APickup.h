@@ -15,7 +15,10 @@ class VRBASE_API APickup : public ABaseEntity {
 public:
     APickup();
 
+private:
     TArray<AActor*>           m_aParentActors;
+
+public:
     UStaticMeshComponent*     m_pPickupMeshComponent;
     UProceduralMeshComponent* m_pProcMeshComponent;
 
@@ -63,6 +66,8 @@ public:
         Super::PostEditChangeProperty(PropertyChangedEvent);
     }
 #endif
+    UFUNCTION(BlueprintCallable)
+    TArray<AActor*> GetPickupParents();
 
     virtual void Pickup(ABaseController*);
     virtual void Drop(ABaseController*);
