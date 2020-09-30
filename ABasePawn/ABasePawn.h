@@ -4,7 +4,7 @@
 #include "AGameRules/AGameRules.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Components/ChildActorComponent.h"
+//#include "Components/ChildActorComponent.h"
 #include "Components/TextRenderComponent.h"
 //#include "CoreMinimal.h"
 #include "FPawnInstruction.h"
