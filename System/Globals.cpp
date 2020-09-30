@@ -59,7 +59,7 @@ void CGlobalVars::markReset() {
     ineditor     = true;
     worldcreated = false;
 
-    g_pGameRules = NULL;
+    //g_pGameRules = NULL;
 
     // clear all lists
     Msg("Reseting entity counts.");
