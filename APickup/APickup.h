@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Components/StaticMeshComponent.h"
+//#include "Components/StaticMeshComponent.h"
 //#include "CoreMinimal.h"
 #include "ProceduralMeshComponent.h"
 //#include "System/NLogger.h"
