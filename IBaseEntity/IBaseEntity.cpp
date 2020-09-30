@@ -1,5 +1,5 @@
 #include "IBaseEntity.h"
-#include "ABaseEntity/ABaseEntity.h"
+//#include "ABaseEntity/ABaseEntity.h"
 #include "ABasePawn/ABasePawn.h"
 //#include "CoreMinimal.h"
 
