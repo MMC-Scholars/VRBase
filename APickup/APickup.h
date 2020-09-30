@@ -66,8 +66,8 @@ public:
         Super::PostEditChangeProperty(PropertyChangedEvent);
     }
 #endif
-	UFUNCTION(BlueprintNativeEvent)
-	TArray<AActor*> Get_Parent_Actors2();
+	UFUNCTION(BlueprintCallable)
+	TArray<AActor*> GetPickupParents();
 
     virtual void Pickup(ABaseController*);
     virtual void Drop(ABaseController*);

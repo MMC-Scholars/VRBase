@@ -1,5 +1,5 @@
 
-//#include "APickup.h"
+#include "APickup.h"
 #include "ABaseController/ABaseController.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "System/NLogger.h"
@@ -126,7 +126,7 @@ APickup::APickup() {
     m_pPickupMeshComponent->SetSimulatePhysics(true);
 }
 
-TArray<AActor*> APickup::Get_Parent_Actors2() {
+TArray<AActor*> APickup::GetPickupParents() {
 	return m_aParentActors;
 }
 
