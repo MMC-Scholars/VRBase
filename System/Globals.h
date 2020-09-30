@@ -1,7 +1,7 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-#include "NLogger.h"
+//#include "NLogger.h"
 #include "predefs.h"
 #include <chrono>
 

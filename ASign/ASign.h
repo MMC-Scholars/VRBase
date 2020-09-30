@@ -1,6 +1,6 @@
 #pragma once
 
-#include "System/NLogger.h"
+//#include "System/NLogger.h"
 
 #include "Components/TextRenderComponent.h"
 //#include "CoreMinimal.h"

@@ -2,7 +2,7 @@
 
 #include "Components/SplineComponent.h"
 //#include "CoreMinimal.h"
-#include "System/NLogger.h"
+//#include "System/NLogger.h"
 #include "VRBase/ABaseMoving/ABaseMoving.h"
 
 #include "AMoveLinear.generated.h"
