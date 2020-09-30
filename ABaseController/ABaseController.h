@@ -9,8 +9,8 @@
 #include "Haptics/HapticFeedbackEffect_Base.h"
 #include "LineTools/linetools.h"
 #include "ProceduralMeshComponent.h"
-#include "System/Input.h"
-#include "VRBase/ABaseEntity/ABaseEntity.h"
+//#include "System/Input.h"
+//#include "VRBase/ABaseEntity/ABaseEntity.h"
 
 #include "ABaseController.generated.h"
 
