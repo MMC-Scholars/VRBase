@@ -1,7 +1,7 @@
 #pragma once
 
 #include "APickup/APickup.h"
-#include "Components/SceneComponent.h"
+//#include "Components/SceneComponent.h"
 //#include "CoreMinimal.h"
 //#include "System/NLogger.h"
 
