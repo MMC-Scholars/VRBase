@@ -1,12 +1,12 @@
 #pragma once
 
 #include "APickup/APickup.h"
-#include "Components/SceneComponent.h"
+//#include "Components/SceneComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
-#include "UObject/ConstructorHelpers.h"
+//#include "UObject/ConstructorHelpers.h"
 //#include "CoreMinimal.h"
-#include "Haptics/HapticFeedbackEffect_Base.h"
+//#include "Haptics/HapticFeedbackEffect_Base.h"
 #include "LineTools/linetools.h"
 #include "ProceduralMeshComponent.h"
 //#include "System/Input.h"
