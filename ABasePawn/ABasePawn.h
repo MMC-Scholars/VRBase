@@ -9,10 +9,10 @@
 //#include "CoreMinimal.h"
 #include "FPawnInstruction.h"
 #include "GameFramework/Pawn.h"
-#include "HeadMountedDisplay.h"
-#include "IBaseEntity/IBaseEntity.h"
+//#include "HeadMountedDisplay.h"
+//#include "IBaseEntity/IBaseEntity.h"
 #include "MotionControllerComponent.h"
-#include "System/Input.h"
+//#include "System/Input.h"
 #include "System/NLogger.h"
 
 #include "ABasePawn.generated.h"

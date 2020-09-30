@@ -1,6 +1,6 @@
 #include "ABasePawn.h"
 #include "IXRTrackingSystem.h"
-#include "System/NLogger.h"
+//#include "System/NLogger.h"
 #define DEFAULT_CONTROLLER_CLASS ABaseController
 #define CAPSULE_HEIGHT           96.0
 
