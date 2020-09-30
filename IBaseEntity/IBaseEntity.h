@@ -1,15 +1,15 @@
 #pragma once
 
 //#include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+//#include "GameFramework/Actor.h"
 #include "IBaseEntity_flags.h"
 //#include "System/Assert.h"
 //#include "System/EHandle.h"
 #include "System/Globals.h"
 #include "System/Input.h"
 //#include "System/predefs.h"
-#include "System/static_initialize.h"
-#include "UObject/ConstructorHelpers.h"
+//#include "System/static_initialize.h"
+//#include "UObject/ConstructorHelpers.h"
 
 /**
  *-------------------------------------------------------------------------------------
