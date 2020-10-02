@@ -117,6 +117,10 @@ APickup::APickup() {
 
     // attach procedural mesh
     m_pProcMeshComponent->SetupAttachment(RootComponent);
+
+    m_pProcMeshComponent->SetSimulatePhysics(false);
+    //m_pProcMeshComponent->SetGenerateOverlapEvents(false);
+    m_pProcMeshComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 #endif
 
     // enable overlap
