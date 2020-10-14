@@ -69,6 +69,9 @@ public:
     UFUNCTION(BlueprintCallable)
     TArray<AActor*> GetPickupParents();
 
+    UFUNCTION(BlueprintCallable)
+    bool SetSimulatePickupPhysics(bool physics);
+
     virtual void Pickup(ABaseController*);
     virtual void Drop(ABaseController*);
 

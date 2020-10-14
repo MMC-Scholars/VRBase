@@ -132,9 +132,14 @@ APickup::APickup() {
 
 TArray<AActor*> APickup::GetPickupParents() { return m_aParentActors; }
 
+bool APickup::SetSimulatePickupPhysics(bool physics) {
+    m_pPickupMeshComponent->SetSimulatePhysics(physics);
+    return physics;
+}
+
 void APickup::Pickup(ABaseController* controller) {
     if (m_pPickupMeshComponent->GetStaticMesh()) {
-        m_pPickupMeshComponent->SetSimulatePhysics(false);
+        SetSimulatePickupPhysics(false);
         AttachToActor(controller, FAttachmentTransformRules::KeepWorldTransform);
         m_aParentActors.Add(controller);
 
