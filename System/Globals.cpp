@@ -59,8 +59,6 @@ void CGlobalVars::markReset() {
     ineditor     = true;
     worldcreated = false;
 
-    //g_pGameRules = NULL;
-
     // clear all lists
     Msg("Reseting entity counts.");
     IBaseEntity::s_iReadyEntityCount = IBaseEntity::s_iEntityCount = 0;
