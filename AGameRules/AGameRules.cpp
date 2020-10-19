@@ -1,5 +1,4 @@
 #include "AGameRules.h"
-#include "System/static_initialize.h"
 #include "System/NLogger.h"
 
 AGameRules* g_pGameRules = NULL;
@@ -111,10 +110,6 @@ void AGameRules::InitializeAllEntities() {
         g_entList[i]->SetNextThink(FLT_MAX);
         g_entList[i]->PreInit();
     }
-
-    // run global initializers in order
-    Msg("Running all static initializers");
-    CStaticInitializer::InvokeAllInOrder();
 
     // run post inits of all entities
     Msg("Running all post-inits");
