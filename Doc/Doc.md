@@ -57,7 +57,6 @@ Be sure to note the following:
 
 - [FEntityInputRegistrationButtons](FEntityInputRegistrationButtons.md)
 - [FEntityInputRegistrationParams](FEntityInputRegistrationParams.md)
-- [FMovingVector](FMovingVector.md)
 - [FPawnInstruction](FPawnInstruction.md)
 
 _Be sure to also look at VRBase defined [typedefs](typedefs.md)._
