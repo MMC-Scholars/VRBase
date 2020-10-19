@@ -1,7 +1,6 @@
 #include "AWorldButton.h"
 #include "ABaseController/ABaseController.h"
 #include "Kismet/GameplayStatics.h"
-//#include "System/NLogger.h"
 
 AWorldButton::AWorldButton() {
     m_pMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("Button Mesh");

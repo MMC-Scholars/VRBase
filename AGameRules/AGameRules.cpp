@@ -1,7 +1,6 @@
 #include "AGameRules.h"
 #include "System/static_initialize.h"
 #include "System/NLogger.h"
-//#include "FMovingVector/FMovingVector.h"
 
 AGameRules* g_pGameRules = NULL;
 AGameRules::AGameRules() : ABaseEntity() {

@@ -4,8 +4,6 @@
 #define VRBASE_INPUT_H
 
 #include "EHandle.h"
-//#include "GameFramework/Actor.h"
-//#include "predefs.h"
 
 INTERFACE IBaseEntity;
 class ABaseController;

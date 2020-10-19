@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ABaseEntity/ABaseEntity.h"
-//#include "CoreMinimal.h"
 
 #include "AGameRules.generated.h"
 

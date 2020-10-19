@@ -1,5 +1,4 @@
 #include "NLogger.h"
-//#include "predefs.h"
 
 namespace NLogger {
 #define BUFFER_SIZE 512

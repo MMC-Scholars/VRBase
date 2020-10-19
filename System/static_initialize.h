@@ -1,8 +1,6 @@
 #ifndef STATIC_INITIALIZE_H
 #define STATIC_INITIALIZE_H
 
-//#include "predefs.h"
-
 //------------------------------------------------------------------------
 // This function handles and maintains reference to ordered global
 //		initialization functions. These functions are called in

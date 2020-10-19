@@ -1,7 +1,5 @@
 #include "IBaseEntity.h"
-//#include "ABaseEntity/ABaseEntity.h"
 #include "ABasePawn/ABasePawn.h"
-//#include "CoreMinimal.h"
 
 IBaseEntity*         g_ppEntityList[MAX_ENTITY_COUNT] = {NULL};
 TArray<IBaseEntity*> g_entList;
