@@ -69,11 +69,9 @@ public:
     UFUNCTION(BlueprintCallable)
     bool SetSimulatePickupPhysics(bool physics);
 
-private:
     UFUNCTION(BlueprintCallable)
     bool SetRenderCustomPickupDepth(bool renderCustom);
 
-public:
     virtual void Pickup(ABaseController*);
     virtual void Drop(ABaseController*);
 
