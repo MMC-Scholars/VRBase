@@ -53,7 +53,7 @@ public:
 
     // unrecommended to override AActor functions
     virtual void BeginPlay() override;
-    virtual void Tick(float deltaTime) override {}
+    virtual void Tick(float deltaTime) override { Super::Tick(deltaTime); }
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override {}
     virtual void PostDuplicate(EDuplicateMode::Type mode) override {
         Super::PostDuplicate(mode);
