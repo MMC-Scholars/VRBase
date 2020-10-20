@@ -1,7 +1,6 @@
 #include "linetools.h"
 #include "AGameRules/AGameRules.h"
 #include "Components/LineBatchComponent.h"
-#include "System/system.h"
 #include "UnrealEngine.h"
 
 #define SPLINE_STEP 5.f

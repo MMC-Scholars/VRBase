@@ -1,7 +1,5 @@
 #pragma once
 
-#include "CoreMinimal.h"
-#include "UnrealEngine.h"
 #include "predefs.h"
 
 namespace NLogger {

@@ -1,9 +1,5 @@
 #pragma once
 
-#include "CoreMinimal.h"
-#include "Engine.h"
-#include "EngineMinimal.h"
-
 #include "FPawnInstruction.generated.h"
 
 USTRUCT(BlueprintType)
