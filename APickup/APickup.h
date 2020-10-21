@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ProceduralMeshComponent.h"
 #include "VRBase/ABaseEntity/ABaseEntity.h"
 
 #include "APickup.generated.h"
@@ -13,11 +12,13 @@ public:
     APickup();
 
 private:
-    TArray<AActor*>           m_aParentActors;
+    TArray<AActor*> m_aParentActors;
 
 public:
-    UStaticMeshComponent*     m_pPickupMeshComponent;
-    UProceduralMeshComponent* m_pProcMeshComponent;
+    UStaticMeshComponent* m_pPickupMeshComponent;
+    // TODO add procedural mesh component
+    // for reference, view
+    // https://github.com/MMC-Scholars/VRBase/tree/cb9ca2eb29bba46b89aada1b487c409b44a5f36d
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Pickup Mesh",
               DisplayName = "Static Mesh")
@@ -47,8 +48,6 @@ public:
                 m_pMat = m_pStaticMesh->GetMaterial(0);
 
             m_pPickupMeshComponent->SetMaterial(0, m_pMat);
-
-            m_pProcMeshComponent->SetVisibility(false);
         }
         // static mesh is not explicitly set
         else {
@@ -56,8 +55,6 @@ public:
 
             m_pMat = nullptr;
             m_pPickupMeshComponent->SetMaterial(0, m_pMat);
-
-            m_pProcMeshComponent->SetVisibility(true);
         }
 
         Super::PostEditChangeProperty(PropertyChangedEvent);
