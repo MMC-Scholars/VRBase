@@ -137,9 +137,9 @@ bool APickup::SetSimulatePickupPhysics(bool physics) {
     return physics;
 }
 
-bool APickup::SetRenderCustomPickupDepth(bool renderCustom) {
-    m_pPickupMeshComponent->SetRenderCustomDepth(renderCustom);
-    return renderCustom;
+bool APickup::SetRenderCustomPickupDepth(bool isRenderingCustomDepth) {
+    m_pPickupMeshComponent->SetRenderCustomDepth(isRenderingCustomDepth);
+    return isRenderingCustomDepth;
 }
 
 void APickup::Pickup(ABaseController* controller) {
