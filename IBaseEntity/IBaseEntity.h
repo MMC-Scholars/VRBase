@@ -21,7 +21,7 @@
  *types and defines some of the most basic functions.
  *-------------------------------------------------------------------------------------
  */
-INTERFACE IBaseEntity {
+interface IBaseEntity {
 public:
     friend class CGlobalVars; // allow CGlobalVars to access s_iEntityCount
     IBaseEntity();

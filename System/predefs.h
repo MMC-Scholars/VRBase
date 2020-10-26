@@ -1,5 +1,4 @@
-// predefs.h creates commonly-used aliases and definitions throughout the
-// project.
+// Creates commonly-used code aliases and definitions to be used throughout any project.
 
 #ifndef VRBASE_PREDEFS_H
 #define VRBASE_PREDEFS_H
@@ -8,7 +7,7 @@
 #define VRBASE_API
 #endif
 
-#define sqr(a)      ((a) * (a))
+// types
 
 typedef unsigned char      byte;
 typedef unsigned short     ushort;
@@ -19,10 +18,17 @@ typedef float              vec;   // float representing world space (used by vec
 typedef unsigned short     eindex; // entity index
 typedef float              lerp;   // linear interpolation
 
-#define STRINGIZE(tokens) #tokens // stringifies a token
+// aliases
 
-#define until(condition) while (!(condition)) // simplifies thinking in many contexts
-#define INTERFACE        class // abstract class never directly constructed
+#define interface class // no native interfaces
+#define until(condition) while (!(condition))
+
+// common functions
+
+#define sqr(a) ((a) * (a))
+#define toString(x) #x
+
+// misc
 
 // forward declarations of classes so that other classes can use them in header
 // files
