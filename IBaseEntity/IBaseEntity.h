@@ -64,12 +64,6 @@ public:
     // may occur, or something worse!
 
 public:
-    // bool								IsBaseEntity()					const
-    // { return GetActor()->ActorHasTag(TAG_BASEENTITY); }
-    bool IsBasePawn() const { return GetActor()->ActorHasTag(TAG_BASEPAWN); }
-    bool IsBaseCharacter() const {
-        return GetActor()->ActorHasTag(TAG_BASECHARACTER);
-    }
     static IBaseEntity* FromActor(AActor * pActor);
     inline IBaseEntity& GetRef() { return *this; }
     inline AActor*      GetActor() const { return m_pSelfAsActor; }
@@ -122,38 +116,6 @@ private:
     BASEPTR m_pfnThink    = nullptr;
     void*   m_pThinkParam = nullptr;
     ftime   m_tNextThink;
-
-    //-------------------------------------------------------------------------------------
-    // Respawn system
-    //-------------------------------------------------------------------------------------
-
-public:
-    virtual void Respawn();
-
-private:
-    ftime m_tLastRespawn;
-    ftime m_tNextRespawn;
-
-    //-------------------------------------------------------------------------------------
-    // Health system
-    //-------------------------------------------------------------------------------------
-
-public:
-    int  GetHealth() const { return m_iHealth; }
-    int  GetSpawnHealth() const { return m_iSpawnHealth; }
-    void SetHealth(int health);
-
-    inline bool IsInvincible() const { return HasFlags(FL_INVINCIBLE); }
-    inline bool IsNotDamageable() const { return HasFlags(FL_NODAMAGE); }
-
-protected:
-    inline bool IsAlive() const { return m_iHealth > 0; }
-    inline bool IsDead() const { return !IsAlive(); }
-
-protected:
-    int m_iSpawnHealth = 100;
-    int m_iHealth;
-    int m_iDestoryHealth = 0; // health at which this entity is destroyed
 
     //-------------------------------------------------------------------------------------
     // Flag system
