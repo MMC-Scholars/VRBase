@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IBaseEntity_flags.h"
+#include "System/Debug.h"
 #include "System/Globals.h"
 #include "System/Input.h"
 
