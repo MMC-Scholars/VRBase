@@ -1,8 +1,3 @@
-// This software is under partial ownership by The Ohio State University, for it
-// is a product of student employees. For official policy, see
-// https://tco.osu.edu/sites/default/files/pdfs/IP-Policy.pdf or contact The
-// Ohio State University Office of Legal Affairs.
-
 #include "ASign.h"
 #include "ABasePawn/ABasePawn.h"
 
@@ -72,9 +67,9 @@ ASign::ASign() {
     TArray<FLinearColor>     vertexColors;
 
     m_pMesh = CreateDefaultSubobject<UProceduralMeshComponent>("mesh");
-    m_pMesh->bUseAsyncCooking       = true;
+    m_pMesh->bUseAsyncCooking = true;
     m_pMesh->SetGenerateOverlapEvents(false);
-    m_pMesh->bHiddenInGame          = m_bMeshHiddenInGame;
+    m_pMesh->bHiddenInGame = m_bMeshHiddenInGame;
 
     m_pMesh->CreateMeshSection_LinearColor(0, vertices, Triangles, normals, UV0,
                                            vertexColors, tangents, true);
