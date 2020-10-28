@@ -6,8 +6,8 @@ VRBase implements all essential virtual reality classes in C++. This mitigates t
 ## Table of Contents
 1. [Installation](#install)
 2. [Code Formatting](#codeFormatting)
-3. [VRBase Projects](#projects)
-4. [Documentation](#doc)
+3. [Documentation](#documentation)
+4. [Example VRBase Projects](#projects)
 
 ## Installation <a name="install"></a>
 VRBase must be added to an _existing_ Unreal project.
@@ -65,13 +65,26 @@ Alternatively, you can edit the json settings as follows:
 },
 ```
 
-## VRBase Projects <a name="projects"></a>
+## Documentation <a name="documentation"></a>
+The best codebase is a well-documented codebase. As such, VRBase aims to be as
+well-documented as possible.
+
+While there are many different XML-based documentation page generaters such as
+Sandcastle or Doxygen, these are unnecessary as VRBase aims to be as minimal
+and concise as possible. Any questions regarding the function of VRBase utilities
+and/or what members are publically available should be made clear using good
+code practices and simplified commenting.
+
+Unreal Engine recognizes triple slashes as a comment - as such, we use triple
+comments for general class comments and member comments. Aside from these comments,
+all other comments should be sparingly used. Code comments should never explain
+_what_ a section of code is doing, but rather, _why_ it is performing that
+function.
+
+## Example VRBase Projects <a name="projects"></a>
 Below is a cumulative list of projects in which VRBase has been used:
 
 - [Archery](https://github.com/bossley9/Archery)
 - [Crime Solver](https://github.com/MMC-Scholars/CrimeSolver)
 - [The Great Balloon Race](https://github.com/MMC-Scholars/TheGreatBalloonRace)
 - [Office Recreation](https://github.com/MMC-Scholars/OfficeRecreation)
-
-## Documentation <a name="doc"></a>
-See the [documentation page](Doc/Doc.md) for more information.

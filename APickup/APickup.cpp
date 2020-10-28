@@ -1,4 +1,3 @@
-
 #include "APickup.h"
 #include "ABaseController/ABaseController.h"
 #include "Materials/MaterialInstanceDynamic.h"
