@@ -27,3 +27,16 @@ void ADebug::Log(const char* pszFormat, ...) {
 
     va_end(args);
 }
+
+void ADebug::LogWarning(FString message, FLinearColor color, float duration) {
+    Log(message, color.Quantize(), duration);
+}
+
+void ADebug::LogWarning(const char* pszFormat, ...) {
+    va_list args;
+    va_start(args, pszFormat);
+
+    LogWarning(pszFormatToFString(pszFormat, args));
+
+    va_end(args);
+}
