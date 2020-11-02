@@ -13,12 +13,17 @@ class ADebug : public AActor {
     GENERATED_BODY()
 
 private:
-    int m_iBufferSize = 512;
+    static const int m_iBufferSize = 512;
+
+    static FString pszFormatToFString(const char* pszFormat, va_list args);
 
 public:
     ADebug();
 
     /// Logs a message to the console.
+    /// Accepts FStrings, format strings, and const char*.
     UFUNCTION(BlueprintCallable)
-    static void Log(FString message);
+    static void Log(FString message, FLinearColor color = FLinearColor::White,
+                    float duration = 5.0f);
+    static void Log(const char* pzsFormat, ...);
 };
