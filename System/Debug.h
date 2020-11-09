@@ -39,13 +39,13 @@ public:
     /// Uses the same message format(s) as Log().
     UFUNCTION(BlueprintCallable)
     static void LogError(FString      message,
-                           FLinearColor color    = FLinearColor(1, 0, 0, 1),
-                           float        duration = 5.0f);
+                         FLinearColor color    = FLinearColor(1, 0, 0, 1),
+                         float        duration = 5.0f);
     static void LogError(const char* pzsFormat, ...);
 
-    /// Assert a condition and logs an error message to the Unity console on failure.
-    /// Uses the same message format(s) as Log().
+    /// Asserts a condition and logs an error message to the Unity console on
+    /// failure. Uses the same message format(s) as Log().
     UFUNCTION(BlueprintCallable)
-    static void Assert(bool condition, FString message);
-    static void Assert(bool condition, const char* pzsFormat, ...);
+    static void Assert(bool bCondition, FString message);
+    static void Assert(bool bCondition, const char* pzsFormat, ...);
 };

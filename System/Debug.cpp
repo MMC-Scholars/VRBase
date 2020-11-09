@@ -11,14 +11,13 @@ FString ADebug::pszFormatToFString(const char* pszFormat, va_list args) {
 }
 
 void ADebug::Log(FString message, FLinearColor color, float duration) {
-    // log to screen
+    // print to screen
     if (GEngine) {
         GEngine->AddOnScreenDebugMessage(-1, duration, color.Quantize(), message);
     }
-    // log to output log
+    // print to output log
     UE_LOG(VRBase, Log, TEXT("%s"), *message);
 }
-
 void ADebug::Log(const char* pszFormat, ...) {
     va_list args;
     va_start(args, pszFormat);
@@ -28,8 +27,8 @@ void ADebug::Log(const char* pszFormat, ...) {
 
 void ADebug::LogWarning(FString message, FLinearColor color, float duration) {
     Log(message, color.Quantize(), duration);
+    FMessageLog("PIE").Warning(FText::FromString(message));
 }
-
 void ADebug::LogWarning(const char* pszFormat, ...) {
     va_list args;
     va_start(args, pszFormat);
@@ -39,8 +38,8 @@ void ADebug::LogWarning(const char* pszFormat, ...) {
 
 void ADebug::LogError(FString message, FLinearColor color, float duration) {
     Log(message, color.Quantize(), duration);
+    FMessageLog("PIE").Error(FText::FromString(message));
 }
-
 void ADebug::LogError(const char* pszFormat, ...) {
     va_list args;
     va_start(args, pszFormat);
@@ -48,16 +47,15 @@ void ADebug::LogError(const char* pszFormat, ...) {
     va_end(args);
 }
 
-void ADebug::Assert(bool condition, FString message) {
-    if (!condition) {
+void ADebug::Assert(bool bCondition, FString message) {
+    if (!bCondition) {
         message.InsertAt(0, "ASSERTION FAILED: ");
         LogError(message);
     }
 }
-
-void ADebug::Assert(bool condition, const char* pszFormat, ...) {
+void ADebug::Assert(bool bCondition, const char* pszFormat, ...) {
     va_list args;
     va_start(args, pszFormat);
-    Assert(condition, pszFormatToFString(pszFormat, args));
+    Assert(bCondition, pszFormatToFString(pszFormat, args));
     va_end(args);
 }
