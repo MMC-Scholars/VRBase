@@ -1,9 +1,19 @@
 #pragma once
 
-#include "IBaseEntity_flags.h"
 #include "System/Debug.h"
 #include "System/Globals.h"
 #include "System/Input.h"
+
+#define BF(i)             (1UL << i)
+#define FL_NODAMAGE       BF(0) // ignores all damage whatsoever
+#define FL_INVINCIBLE     BF(1) // damage events happen, but never actually dies
+#define FL_ROUND_PRESERVE BF(2) // round restarts don't respawn this entity
+#define FL_ROUND_DESTROY  BF(3) // round restarts destroy this entity
+#define FL_IGNORE_USE     BF(4) // entity ignores generic "+Use" functionality
+#define FL_INGORE_INPUT                                                             \
+    BF(5) // entity ignores all player controller input whatsoever
+#define FL_EXTRA   BF(6)
+#define FL_EXTRA_2 BF(7)
 
 /**
  *-------------------------------------------------------------------------------------
@@ -12,7 +22,7 @@
  *types and defines some of the most basic functions.
  *-------------------------------------------------------------------------------------
  */
-INTERFACE IBaseEntity {
+interface IBaseEntity {
 public:
     friend class CGlobalVars; // allow CGlobalVars to access s_iEntityCount
     IBaseEntity();
@@ -55,12 +65,6 @@ public:
     // may occur, or something worse!
 
 public:
-    // bool								IsBaseEntity()					const
-    // { return GetActor()->ActorHasTag(TAG_BASEENTITY); }
-    bool IsBasePawn() const { return GetActor()->ActorHasTag(TAG_BASEPAWN); }
-    bool IsBaseCharacter() const {
-        return GetActor()->ActorHasTag(TAG_BASECHARACTER);
-    }
     static IBaseEntity* FromActor(AActor * pActor);
     inline IBaseEntity& GetRef() { return *this; }
     inline AActor*      GetActor() const { return m_pSelfAsActor; }
@@ -113,38 +117,6 @@ private:
     BASEPTR m_pfnThink    = nullptr;
     void*   m_pThinkParam = nullptr;
     ftime   m_tNextThink;
-
-    //-------------------------------------------------------------------------------------
-    // Respawn system
-    //-------------------------------------------------------------------------------------
-
-public:
-    virtual void Respawn();
-
-private:
-    ftime m_tLastRespawn;
-    ftime m_tNextRespawn;
-
-    //-------------------------------------------------------------------------------------
-    // Health system
-    //-------------------------------------------------------------------------------------
-
-public:
-    int  GetHealth() const { return m_iHealth; }
-    int  GetSpawnHealth() const { return m_iSpawnHealth; }
-    void SetHealth(int health);
-
-    inline bool IsInvincible() const { return HasFlags(FL_INVINCIBLE); }
-    inline bool IsNotDamageable() const { return HasFlags(FL_NODAMAGE); }
-
-protected:
-    inline bool IsAlive() const { return m_iHealth > 0; }
-    inline bool IsDead() const { return !IsAlive(); }
-
-protected:
-    int m_iSpawnHealth = 100;
-    int m_iHealth;
-    int m_iDestoryHealth = 0; // health at which this entity is destroyed
 
     //-------------------------------------------------------------------------------------
     // Flag system

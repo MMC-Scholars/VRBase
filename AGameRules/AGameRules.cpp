@@ -88,8 +88,6 @@ void AGameRules::RestartRound() {
             if (pEnt->HasFlags(FL_ROUND_DESTROY)) {
                 m_aDestroyedEntities.Add(pEnt->GetEHandle());
                 continue;
-            } else {
-                pEnt->Respawn();
             }
         }
     }
