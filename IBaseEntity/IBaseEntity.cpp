@@ -100,30 +100,10 @@ IBaseEntity* IBaseEntity::FromActor(AActor* pActor) {
 //-------------------------------------------------------------------------------------
 // Think system
 //-------------------------------------------------------------------------------------
-void IBaseEntity::DefaultThink() {
-    if (g_pGlobals->curtime > m_tNextRespawn) Respawn();
-}
+void IBaseEntity::DefaultThink() {}
 
 int IBaseEntity::s_iEntityCount      = 0;
 int IBaseEntity::s_iReadyEntityCount = 0;
-
-//-------------------------------------------------------------------------------------
-// Respawn system
-//-------------------------------------------------------------------------------------
-void IBaseEntity::Respawn() {
-    m_iHealth = m_iSpawnHealth;
-    m_iFlags  = m_iSpawnFlags;
-}
-
-//-------------------------------------------------------------------------------------
-// Health system
-//-------------------------------------------------------------------------------------
-void IBaseEntity::SetHealth(int health) {
-    if (IsNotDamageable()) return;
-    int deltaHealth = health - m_iHealth;
-
-    if (!IsInvincible()) m_iHealth = health;
-}
 
 //-------------------------------------------------------------------------------------
 // Generic "use" system
