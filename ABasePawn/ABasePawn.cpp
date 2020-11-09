@@ -276,10 +276,12 @@ void       ABasePawn::PreInit() {
 
     // set tracking origin to floor
     auto HMD = GEngine->XRSystem.Get();
-    if (HMD)
+    if (HMD) {
         HMD->SetTrackingOrigin(EHMDTrackingOrigin::Floor);
-    else
-        NLogger::Warning("Failed to initialize HMD!");
+    } else {
+        // TODO switch to desktop pawn
+        ADebug::Log("Failed to initialize HMD!");
+    }
 
     FVector loc = GetActorLocation();
     SetActorLocation(FVector(loc.X, loc.Y, loc.Z - CAPSULE_HEIGHT));

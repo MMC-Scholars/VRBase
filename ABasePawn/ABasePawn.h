@@ -8,7 +8,6 @@
 #include "FPawnInstruction.h"
 #include "GameFramework/Pawn.h"
 #include "MotionControllerComponent.h"
-#include "System/NLogger.h"
 
 #include "ABasePawn.generated.h"
 
@@ -105,7 +104,7 @@ private:
 #define KEY_INPUT(key, change, hand)                                                \
     void On##hand##_##key##_##change() {                                            \
         if (m_p##hand##Hand == NULL) {                                              \
-            NLogger::Warning("ABasePawn hand is NULL");                             \
+            ADebug::LogWarning("ABasePawn hand is NULL");                           \
             return;                                                                 \
         }                                                                           \
         m_p##hand##Hand->m_iButtons##change |= IN_##key;                            \
