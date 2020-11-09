@@ -28,10 +28,18 @@ public:
     static void Log(const char* pzsFormat, ...);
 
     /// Logs a warning message to the console.
-    /// Accepts FStrings, format strings, and const char*.
+    /// Uses the same format as Log().
     UFUNCTION(BlueprintCallable)
     static void LogWarning(FString      message,
-                           FLinearColor color    = FLinearColor(1, 0.8, 0, 1),
+                           FLinearColor color    = FLinearColor(1, 0.9, 0, 1),
                            float        duration = 5.0f);
     static void LogWarning(const char* pzsFormat, ...);
+
+    /// Logs an error message to the console.
+    /// Uses the same format as Log().
+    UFUNCTION(BlueprintCallable)
+    static void LogError(FString      message,
+                           FLinearColor color    = FLinearColor(1, 0, 0, 1),
+                           float        duration = 5.0f);
+    static void LogError(const char* pzsFormat, ...);
 };
