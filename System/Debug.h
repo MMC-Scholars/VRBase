@@ -28,7 +28,7 @@ public:
     static void Log(const char* pzsFormat, ...);
 
     /// Logs a warning message to the console.
-    /// Uses the same format as Log().
+    /// Uses the same message format(s) as Log().
     UFUNCTION(BlueprintCallable)
     static void LogWarning(FString      message,
                            FLinearColor color    = FLinearColor(1, 0.9, 0, 1),
@@ -36,10 +36,16 @@ public:
     static void LogWarning(const char* pzsFormat, ...);
 
     /// Logs an error message to the console.
-    /// Uses the same format as Log().
+    /// Uses the same message format(s) as Log().
     UFUNCTION(BlueprintCallable)
     static void LogError(FString      message,
                            FLinearColor color    = FLinearColor(1, 0, 0, 1),
                            float        duration = 5.0f);
     static void LogError(const char* pzsFormat, ...);
+
+    /// Assert a condition and logs an error message to the Unity console on failure.
+    /// Uses the same message format(s) as Log().
+    UFUNCTION(BlueprintCallable)
+    static void Assert(bool condition, FString message);
+    static void Assert(bool condition, const char* pzsFormat, ...);
 };
