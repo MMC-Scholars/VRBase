@@ -64,6 +64,9 @@ public:
     TArray<AActor*> GetPickupParents();
 
     UFUNCTION(BlueprintCallable)
+    UStaticMeshComponent* GetPickupMeshComponent();
+
+    UFUNCTION(BlueprintCallable)
     bool SetSimulatePickupPhysics(bool physics);
 
     UFUNCTION(BlueprintCallable)

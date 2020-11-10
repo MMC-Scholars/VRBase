@@ -28,6 +28,10 @@ APickup::APickup() {
 
 TArray<AActor*> APickup::GetPickupParents() { return m_aParentActors; }
 
+UStaticMeshComponent* APickup::GetPickupMeshComponent() {
+    return m_pPickupMeshComponent;
+}
+
 bool APickup::SetSimulatePickupPhysics(bool physics) {
     m_pPickupMeshComponent->SetSimulatePhysics(physics);
     return physics;
