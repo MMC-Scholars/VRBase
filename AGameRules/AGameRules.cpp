@@ -1,5 +1,4 @@
 #include "AGameRules.h"
-#include "System/NLogger.h"
 
 AGameRules* g_pGameRules = NULL;
 AGameRules::AGameRules() : ABaseEntity() {
@@ -14,17 +13,18 @@ void AGameRules::Tick(float deltaTime) {
     // check for round restart
     // also check for initialization of all entities (efficient place to do it)
     if (g_pGlobals->curtime > m_tNextRoundRestart) {
-        Msg("Executing round restart statement");
-        Msg("ReadyEntityCount = %i/%i\n", s_iReadyEntityCount, s_iEntityCount);
+        ADebug::Log("Executing round restart statement");
+        ADebug::Log("ReadyEntityCount = %i/%i\n", s_iReadyEntityCount,
+                    s_iEntityCount);
         if (!m_bHasInitializedAllEntities && AllEntitiesReady()) {
-            Msg("Initializing all entities");
+            ADebug::Log("Initializing all entities");
             InitializeAllEntities();
         } else if (!AllEntitiesReady()) {
             //?! This should never happen!
-            NLogger::Fatal(
+            ADebug::LogError(
                 "OUT OF SYNC - s_iReadyEntityCount != s_iEntityCount !!!");
         } else {
-            NLogger::Message(FColor::Cyan, 3.0f, "Restarting round");
+            ADebug::Log("Restarting round");
             RestartRound();
         }
         m_tNextRoundRestart = FLT_MAX;
@@ -32,7 +32,7 @@ void AGameRules::Tick(float deltaTime) {
 
     // execute all default thinks
     for (eindex i = 0; i < g_entList.Num(); i++) {
-        // Msg(L"Executing think for actor %s",
+        // ADebug::Log(L"Executing think for actor %s",
         // WCStr(g_entList[i]->GetActor()->GetName()));
         g_entList[i]->DefaultThink();
     }
@@ -51,10 +51,9 @@ void AGameRules::Tick(float deltaTime) {
 UWorld* g_pWorld = NULL;
 void    AGameRules::BeginPlay() {
     Super::BeginPlay();
-    Msg("AGameRules::BeginPlay\n");
-    if (s_iEntityCount != g_entList.Num()) {
-        NLogger::Fatal("\nIBaseEntity::s_iEntityCount != g_entList.Num()");
-    }
+    ADebug::Log("AGameRules::BeginPlay\n");
+    ADebug::Assert((bool)(s_iEntityCount = g_entList.Num()),
+                   "\nIBaseEntity::s_iEntityCount = g_entList.Num()");
 
     m_bHasRestartedRound         = false;
     m_bHasInitializedAllEntities = false;
@@ -65,13 +64,13 @@ void    AGameRules::BeginPlay() {
 }
 
 void AGameRules::EndPlay(const EEndPlayReason::Type EndPlayReason) {
-    Msg(__FUNCTION__);
+    ADebug::Log(__FUNCTION__);
     m_bHasInitializedAllEntities = false;
     g_pGlobals->markReset();
 }
 
 void AGameRules::RestartRound() {
-    Msg(__FUNCTION__);
+    ADebug::Log(__FUNCTION__);
 
     // we need to do this right, otherwise when we iterate through
     // the entity list, the size of the list might change
@@ -101,16 +100,16 @@ void AGameRules::RestartRound() {
 }
 
 void AGameRules::InitializeAllEntities() {
-    Msg(__FUNCTION__);
+    ADebug::Log(__FUNCTION__);
     // run pre inits of all entities
-    Msg("Running all pre-inits");
+    ADebug::Log("Running all pre-inits");
     for (eindex i = 0; i < g_entList.Num(); i++) {
         g_entList[i]->SetNextThink(FLT_MAX);
         g_entList[i]->PreInit();
     }
 
     // run post inits of all entities
-    Msg("Running all post-inits");
+    ADebug::Log("Running all post-inits");
     for (eindex i = 0; i < g_entList.Num(); i++)
         g_entList[i]->PostInit();
 

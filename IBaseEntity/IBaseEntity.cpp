@@ -83,7 +83,7 @@ void IBaseEntity::AddEntityToLists(IBaseEntity* pEnt) {
 }
 
 void IBaseEntity::PostInit() {
-    NLogger::Message(GetActor()->GetName() + __FUNCTION__);
+    ADebug::Log(GetActor()->GetName() + __FUNCTION__);
     RegisterInputsToControllers();
 }
 

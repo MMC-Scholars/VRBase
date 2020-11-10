@@ -1,6 +1,5 @@
 #include "Globals.h"
 #include "AGameRules/AGameRules.h"
-#include "NLogger.h"
 
 static CGlobalVars g_vars;
 CGlobalVars*       g_pGlobals = &g_vars;
@@ -16,7 +15,7 @@ void CGlobalVars::update() {
 
 void CGlobalVars::reset() {
     m_bReset = false;
-    Msg("CGlobalVars::reset\n");
+    ADebug::Log("CGlobalVars::reset\n");
 
     curtime     = 0.00f; // reset clock to zero
     m_tPrevious = steady_clock::now();
@@ -60,7 +59,7 @@ void CGlobalVars::markReset() {
     worldcreated = false;
 
     // clear all lists
-    Msg("Reseting entity counts.");
+    ADebug::Log("Reseting entity counts.");
     IBaseEntity::s_iReadyEntityCount = IBaseEntity::s_iEntityCount = 0;
 
     for (int i = 0; i < MAX_ENTITY_COUNT; i++) {

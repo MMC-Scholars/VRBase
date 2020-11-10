@@ -1,5 +1,6 @@
 #pragma once
 
+#include "System/Debug.h"
 #include "System/Globals.h"
 #include "System/Input.h"
 
