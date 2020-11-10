@@ -5,7 +5,7 @@
 
 #include "EHandle.h"
 
-INTERFACE IBaseEntity;
+interface IBaseEntity;
 class ABaseController;
 
 extern ABaseController* g_pLeftController;

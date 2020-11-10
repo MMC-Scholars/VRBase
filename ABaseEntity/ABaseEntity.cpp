@@ -1,10 +1,8 @@
 #include "ABaseEntity.h"
 #include "ABaseController/ABaseController.h"
 #include "AGameRules/AGameRules.h"
-#include "System/NLogger.h"
 
 ABaseEntity::ABaseEntity() : IBaseEntity() {
-    Tags.Add(TAG_BASEENTITY);
     m_pSelfAsActor            = this;
     bAllowTickBeforeBeginPlay = false;
     SetActorTickEnabled(false);

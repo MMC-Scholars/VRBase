@@ -307,8 +307,8 @@ void ABaseController::SetWhichHand(EControllerHand h) {
     else if (h == EControllerHand::Right)
         g_pRightController = this;
     else {
-        NLogger::Warning("Unknown controller registered with EControllerHand == %i",
-                         h);
+        ADebug::LogWarning(
+            "Unknown controller registered with EControllerHand == %i", h);
         fixup = false;
     }
 
@@ -319,9 +319,7 @@ void ABaseController::SetStaticMesh(UStaticMesh* pMesh) {
     m_pHandMeshComponent->SetStaticMesh(pMesh);
 }
 
-void ABaseController::OnUsed(ABaseEntity* pActivator) {
-    // Msg(__FUNCTION__);
-}
+void ABaseController::OnUsed(ABaseEntity* pActivator) {}
 
 void ABaseController::DefaultThink() {
 

@@ -36,7 +36,7 @@ public:
         if (m_pMeshComponent != nullptr && m_pStaticMesh != nullptr) {
             m_pMeshComponent->SetStaticMesh(m_pStaticMesh);
 
-            if (PropertyName == FName(STRINGIZE(m_pStaticMesh))) {
+            if (PropertyName == FName(toString(m_pStaticMesh))) {
                 m_pOriginalMaterial = m_pStaticMesh->GetMaterial(0);
             }
 

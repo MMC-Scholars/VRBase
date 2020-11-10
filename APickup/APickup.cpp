@@ -1,7 +1,6 @@
 #include "APickup.h"
 #include "ABaseController/ABaseController.h"
 #include "Materials/MaterialInstanceDynamic.h"
-#include "System/NLogger.h"
 
 #define DEFAULT_SIZE 20
 
@@ -51,7 +50,7 @@ void APickup::Pickup(ABaseController* controller) {
 
         OnPickup(controller);
     } else {
-        NLogger::Warning("Error: Pickup static mesh is null");
+        ADebug::LogWarning("Error: Pickup static mesh is null");
     }
 }
 

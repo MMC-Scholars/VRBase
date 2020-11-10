@@ -44,7 +44,7 @@ public:
 
             m_pPickupMeshComponent->SetStaticMesh(m_pStaticMesh);
 
-            if (PropertyName == FName(STRINGIZE(m_pStaticMesh)))
+            if (PropertyName == FName(toString(m_pStaticMesh)))
                 m_pMat = m_pStaticMesh->GetMaterial(0);
 
             m_pPickupMeshComponent->SetMaterial(0, m_pMat);
