@@ -13,18 +13,16 @@ void AGameRules::Tick(float deltaTime) {
     // check for round restart
     // also check for initialization of all entities (efficient place to do it)
     if (g_pGlobals->curtime > m_tNextRoundRestart) {
-        ADebug::Log("Executing round restart statement");
-        ADebug::Log("ReadyEntityCount = %i/%i\n", s_iReadyEntityCount,
-                    s_iEntityCount);
+        // executing round restart statement
         if (!m_bHasInitializedAllEntities && AllEntitiesReady()) {
-            ADebug::Log("Initializing all entities");
+            // initializing all entities
             InitializeAllEntities();
         } else if (!AllEntitiesReady()) {
             //?! This should never happen!
-            ADebug::LogError(
-                "OUT OF SYNC - s_iReadyEntityCount != s_iEntityCount !!!");
+            ADebug::Assert((bool)(s_iReadyEntityCount == s_iEntityCount),
+                           "s_iReadyEntityCount == s_iEntityCount");
         } else {
-            ADebug::Log("Restarting round");
+            // restarting round
             RestartRound();
         }
         m_tNextRoundRestart = FLT_MAX;
@@ -32,8 +30,7 @@ void AGameRules::Tick(float deltaTime) {
 
     // execute all default thinks
     for (eindex i = 0; i < g_entList.Num(); i++) {
-        // ADebug::Log(L"Executing think for actor %s",
-        // WCStr(g_entList[i]->GetActor()->GetName()));
+        // executing DefaultThink for BaseEntity g_entList[i]
         g_entList[i]->DefaultThink();
     }
 
@@ -51,7 +48,6 @@ void AGameRules::Tick(float deltaTime) {
 UWorld* g_pWorld = NULL;
 void    AGameRules::BeginPlay() {
     Super::BeginPlay();
-    ADebug::Log("AGameRules::BeginPlay\n");
     ADebug::Assert((bool)(s_iEntityCount = g_entList.Num()),
                    "\nIBaseEntity::s_iEntityCount = g_entList.Num()");
 
@@ -64,14 +60,11 @@ void    AGameRules::BeginPlay() {
 }
 
 void AGameRules::EndPlay(const EEndPlayReason::Type EndPlayReason) {
-    ADebug::Log(__FUNCTION__);
     m_bHasInitializedAllEntities = false;
     g_pGlobals->markReset();
 }
 
 void AGameRules::RestartRound() {
-    ADebug::Log(__FUNCTION__);
-
     // we need to do this right, otherwise when we iterate through
     // the entity list, the size of the list might change
     TArray<EHANDLE> m_aDestroyedEntities;
@@ -100,16 +93,13 @@ void AGameRules::RestartRound() {
 }
 
 void AGameRules::InitializeAllEntities() {
-    ADebug::Log(__FUNCTION__);
     // run pre inits of all entities
-    ADebug::Log("Running all pre-inits");
     for (eindex i = 0; i < g_entList.Num(); i++) {
         g_entList[i]->SetNextThink(FLT_MAX);
         g_entList[i]->PreInit();
     }
 
     // run post inits of all entities
-    ADebug::Log("Running all post-inits");
     for (eindex i = 0; i < g_entList.Num(); i++)
         g_entList[i]->PostInit();
 

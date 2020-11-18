@@ -15,7 +15,6 @@ void CGlobalVars::update() {
 
 void CGlobalVars::reset() {
     m_bReset = false;
-    ADebug::Log("CGlobalVars::reset\n");
 
     curtime     = 0.00f; // reset clock to zero
     m_tPrevious = steady_clock::now();
@@ -58,8 +57,7 @@ void CGlobalVars::markReset() {
     ineditor     = true;
     worldcreated = false;
 
-    // clear all lists
-    ADebug::Log("Reseting entity counts.");
+    // clear all lists and resetting entity counts
     IBaseEntity::s_iReadyEntityCount = IBaseEntity::s_iEntityCount = 0;
 
     for (int i = 0; i < MAX_ENTITY_COUNT; i++) {
