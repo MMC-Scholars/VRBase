@@ -19,7 +19,7 @@ public:
 
     // UE4 Overrides create a new game flow. This does not use
     // IBaseEntity::DefaultThink() nor IBaseEntity::Think() because if it
-    // did, the game flow would enSd up calling itself.
+    // did, the game flow would end up calling itself.
     virtual void BeginPlay() override;
     virtual void Tick(float deltaTime) override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
