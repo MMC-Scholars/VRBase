@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ABaseController/ABaseController.h"
-#include "AGameRules/AGameRules.h"
+#include "AGameBase/AGameBase.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/TextRenderComponent.h"
@@ -23,7 +23,7 @@ public:
         APawn::BeginPlay();
         ReportReady();
 
-        if (g_pGameRules && g_pGameRules->GameReady()) {
+        if (g_pGameBase && g_pGameBase->GameReady()) {
             PreInit();
             PostInit();
         }

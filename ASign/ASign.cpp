@@ -127,7 +127,9 @@ void ASign::PreInit() {
 void ASign::DefaultThink() {
     if (m_bAlwaysFacePlayer) {
         FVector vLocCurrent = GetActorLocation();
-        FVector vLocPlayer  = g_pBasePawn->m_pCamera->GetComponentLocation();
+        FVector vLocPlayer  = FVector(0, 0, 0);
+        if (g_pBasePawn && g_pBasePawn->m_pCamera)
+            vLocPlayer = g_pBasePawn->m_pCamera->GetComponentLocation();
 
         FVector  forward = vLocCurrent - vLocPlayer;
         FRotator rot     = forward.ToOrientationRotator();

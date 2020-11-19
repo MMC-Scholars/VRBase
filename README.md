@@ -34,7 +34,7 @@ public class YOURPROJECTNAME : ModuleRules {
     }
 }
 ```
-4. After opening the Unreal project in the editor, VRBase **requires** an instance of [AGameRules](Doc/AGameRules.md) to be included in the level UMap for VRBase to function properly. VRBase classes will not function properly otherwise.
+4. After opening the Unreal project in the editor, VRBase **requires** a single instance of `AGameBase` to be included in the level UMap for VRBase to function properly. VRBase classes will not function properly otherwise.
 
 ## Code Formatting <a name="codeFormatting"></a>
 Code formatting, also known as linting, is the process of running a program to check and format source code files  according to a certain project or language specification. Without linting, each developer adds their own code style to the codebase, causing inconsistent formatting and making source code harder to read. Linting fixes these issues by formatting code for developers, allowing developers to focus more on the content of the code rather than indentation and spacing.

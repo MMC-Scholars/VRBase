@@ -1,5 +1,5 @@
 #include "Globals.h"
-#include "AGameRules/AGameRules.h"
+#include "AGameBase/AGameBase.h"
 
 static CGlobalVars g_vars;
 CGlobalVars*       g_pGlobals = &g_vars;
