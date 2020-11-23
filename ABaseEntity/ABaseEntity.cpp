@@ -1,6 +1,6 @@
 #include "ABaseEntity.h"
 #include "ABaseController/ABaseController.h"
-#include "AGameRules/AGameRules.h"
+#include "AGameBase/AGameBase.h"
 
 ABaseEntity::ABaseEntity() : IBaseEntity() {
     m_pSelfAsActor            = this;
@@ -16,7 +16,7 @@ void ABaseEntity::BeginPlay() {
     ReportReady();
 
     // if the game has already started, call initializations
-    if (g_pGameRules && g_pGameRules->GameReady()) {
+    if (g_pGameBase && g_pGameBase->GameReady()) {
         PreInit();
         PostInit();
     }

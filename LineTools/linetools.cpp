@@ -1,5 +1,5 @@
 #include "linetools.h"
-#include "AGameRules/AGameRules.h"
+#include "AGameBase/AGameBase.h"
 #include "Components/LineBatchComponent.h"
 #include "UnrealEngine.h"
 
@@ -31,7 +31,7 @@ inline FCollisionQueryParams GetDefaultTraceParams(AActor** ppIgnored) {
     return params;
 }
 
-inline bool LineToolsReady() { return g_pGameRules && g_pGameRules->GetWorld(); }
+inline bool LineToolsReady() { return g_pGameBase && g_pGameBase->GetWorld(); }
 
 void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction,
                     AActor** ppIgnoredActors, float maxDistance) {
@@ -40,7 +40,7 @@ void UTIL_TraceLine(FHitResult& t, const FVector& start, FVector direction,
     t.Init();
     FVector end = start;
     end += direction.GetClampedToSize(maxDistance, maxDistance);
-    g_pGameRules->GetWorld()->LineTraceSingleByObjectType(
+    g_pGameBase->GetWorld()->LineTraceSingleByObjectType(
         t, start, end, g_coqpDefault, GetDefaultTraceParams(ppIgnoredActors));
 }
 
@@ -61,7 +61,7 @@ void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction,
         t.Reset();
         next = start + direction + force;
 
-        g_pGameRules->GetWorld()->LineTraceSingleByObjectType(
+        g_pGameBase->GetWorld()->LineTraceSingleByObjectType(
             t, previous, next, g_coqpDefault,
             GetDefaultTraceParams(ppIgnoredActors));
         previous = next;
@@ -74,7 +74,7 @@ void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction,
     if (rendered) {
         while (iterations <= maxIterations && t.Time > 0.9999f) {
             pfTraceOp();
-            g_pGameRules->GetWorld()->LineBatcher->DrawLine(
+            g_pGameBase->GetWorld()->LineBatcher->DrawLine(
                 t.TraceStart, t.TraceEnd, rendered->Color, SDPG_World,
                 rendered->Thickness, rendered->Duration);
         }
@@ -86,17 +86,17 @@ void UTIL_TraceSpline(FHitResult& t, const FVector& start, FVector direction,
 }
 
 void UTIL_DrawLine(FVector start, FVector end, SLineDrawParams* rendered) {
-    if (!LineToolsReady() || !g_pGameRules->GetWorld()->LineBatcher) return;
-    g_pGameRules->GetWorld()->LineBatcher->DrawLine(start, end, rendered->Color,
+    if (!LineToolsReady() || !g_pGameBase->GetWorld()->LineBatcher) return;
+    g_pGameBase->GetWorld()->LineBatcher->DrawLine(start, end, rendered->Color,
                                                     SDPG_World, rendered->Thickness,
                                                     rendered->Duration);
 }
 
 void UTIL_DrawSpline(FVector start, FVector end, FVector force, FColor c,
                      float thickness, ftime life) {
-    if (!LineToolsReady() || !g_pGameRules->GetWorld()->LineBatcher) return;
+    if (!LineToolsReady() || !g_pGameBase->GetWorld()->LineBatcher) return;
 
-    ULineBatchComponent* lb = g_pGameRules->GetWorld()->LineBatcher;
+    ULineBatchComponent* lb = g_pGameBase->GetWorld()->LineBatcher;
 
     FVector displacement = end - start;
     vec     len          = displacement.Size();
@@ -114,9 +114,9 @@ void UTIL_DrawSpline(FVector start, FVector end, FVector force, FColor c,
 }
 
 void UTIL_DrawCircle(FVector loc, vec radius, SLineDrawParams* rendered) {
-    if (!LineToolsReady() || !g_pGameRules->GetWorld()->LineBatcher) return;
+    if (!LineToolsReady() || !g_pGameBase->GetWorld()->LineBatcher) return;
 
-    ULineBatchComponent* lb = g_pGameRules->GetWorld()->LineBatcher;
+    ULineBatchComponent* lb = g_pGameBase->GetWorld()->LineBatcher;
 
     const uint8 NUM_ARCS          = 64;
     FRotator    rotationIncrement = FRotator(0, 360.f / NUM_ARCS, 0);
