@@ -18,9 +18,10 @@ class VRBASE_API ABasePawn : public APawn, public IBaseEntity {
 public:
     ABasePawn();
 
-    virtual void BeginPlay() override {
+    void BeginPlay() override {
         g_pGlobals->checkReset();
-        APawn::BeginPlay();
+        Super::BeginPlay();
+        IBaseEntity::BeginPlay();
         ReportReady();
 
         if (g_pGameBase && g_pGameBase->GameReady()) {
@@ -28,11 +29,18 @@ public:
             PostInit();
         }
     }
+    void EndPlay(const EEndPlayReason::Type EndPlayReason) override {
+        Super::EndPlay(EndPlayReason);
+        IBaseEntity::EndPlay(EndPlayReason);
+    }
+
     virtual void Tick(float deltaTime) override {}
+
     virtual void PostDuplicate(EDuplicateMode::Type mode) override {
         Super::PostDuplicate(mode);
         IBaseEntity::PostDuplicate(mode);
     }
+
     virtual void
     SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

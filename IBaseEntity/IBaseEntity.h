@@ -77,10 +77,19 @@ public:
     inline eindex EntIndex() const { return m_iEntIndex; }
     EHANDLE       GetEHandle() const { return EHANDLE(this); }
 
+    // A collection of references to all BaseEntities present in the world
+    // at any given moment
+    static TArray<IBaseEntity*> s_aBaseEntities;
+
 private:
     eindex m_iEntIndex;
 
 protected:
+    void BeginPlay() { IBaseEntity::s_aBaseEntities.Add(this); }
+    void EndPlay(const EEndPlayReason::Type EndPlayReason) {
+        IBaseEntity::s_aBaseEntities.Remove(this);
+    }
+
     void        PostDuplicate(EDuplicateMode::Type mode);
     static void AddEntityToLists(IBaseEntity * pEnt);
     static int  s_iReadyEntityCount;

@@ -12,7 +12,8 @@ ABaseEntity::ABaseEntity() : IBaseEntity() {
 
 void ABaseEntity::BeginPlay() {
     g_pGlobals->checkReset();
-    AActor::BeginPlay();
+    Super::BeginPlay();
+    IBaseEntity::BeginPlay();
     ReportReady();
 
     // if the game has already started, call initializations
