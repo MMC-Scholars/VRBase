@@ -10,6 +10,13 @@ AGameBase::AGameBase() : ABaseEntity() {
 void AGameBase::Tick(float deltaTime) {
     Super::Tick(deltaTime);
 
+    // by the time Tick is called, all BeginPlay()s have been safely and successfully
+    // called
+    // IBaseEntity::s_bAreBaseEntitiesReady = true;
+    if (!IBaseEntity::s_bHasAlreadyInitializedBaseEntities) {
+        InitializeBaseEntities();
+    }
+
     // check for round restart
     // also check for initialization of all entities (efficient place to do it)
     if (g_pGlobals->curtime > m_tNextRoundRestart) {
@@ -48,6 +55,11 @@ void AGameBase::Tick(float deltaTime) {
 void AGameBase::BeginPlay() {
     Super::BeginPlay();
 
+    /*
+    for (eindex i = 0; i < IBaseEntity::s_aBaseEntities.Num(); i++)
+    IBaseEntity::s_aBaseEntities[i]->PreInit();
+    */
+
     ADebug::Assert(s_iEntityCount == g_entList.Num(),
                    "\nIBaseEntity::s_iEntityCount == g_entList.Num()");
 
@@ -59,7 +71,8 @@ void AGameBase::BeginPlay() {
 
 void AGameBase::EndPlay(const EEndPlayReason::Type EndPlayReason) {
     Super::EndPlay(EndPlayReason);
-    m_bHasInitializedAllEntities = false;
+    IBaseEntity::s_bHasAlreadyInitializedBaseEntities = false;
+    m_bHasInitializedAllEntities                      = false;
     g_pGlobals->markReset();
 }
 
@@ -95,13 +108,24 @@ void AGameBase::InitializeAllEntities() {
     // run pre inits of all entities
     for (eindex i = 0; i < g_entList.Num(); i++) {
         g_entList[i]->SetNextThink(FLT_MAX);
-        g_entList[i]->PreInit();
+        // g_entList[i]->PreInit();
     }
 
     // run post inits of all entities
-    for (eindex i = 0; i < g_entList.Num(); i++)
-        g_entList[i]->PostInit();
+    // for (eindex i = 0; i < g_entList.Num(); i++)
+    //    g_entList[i]->PostInit();
 
     // mark as ready
     m_bHasInitializedAllEntities = true;
+}
+
+void AGameBase::InitializeBaseEntities() {
+    IBaseEntity::s_bHasAlreadyInitializedBaseEntities = true;
+    eindex iNumEntities = IBaseEntity::s_aBaseEntities.Num();
+
+    for (eindex i = 0; i < iNumEntities; i++)
+        IBaseEntity::s_aBaseEntities[i]->PreInit();
+
+    for (eindex i = 0; i < iNumEntities; i++)
+        IBaseEntity::s_aBaseEntities[i]->PostInit();
 }

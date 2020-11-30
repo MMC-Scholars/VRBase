@@ -36,7 +36,10 @@ public:
     bool GameReady() const { return m_bHasInitializedAllEntities; }
 
 private:
+    // daniel
     void InitializeAllEntities();
+    // the cooler daniel
+    void InitializeBaseEntities();
 
     bool  m_bHasInitializedAllEntities;
     bool  m_bHasRestartedRound;

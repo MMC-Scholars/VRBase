@@ -81,11 +81,21 @@ public:
     // at any given moment
     static TArray<IBaseEntity*> s_aBaseEntities;
 
+    // bool whether entities have already been initialized (e.g. PreInits and
+    // PostInits called)
+    static bool s_bHasAlreadyInitializedBaseEntities;
+
 private:
     eindex m_iEntIndex;
 
 protected:
-    void BeginPlay() { IBaseEntity::s_aBaseEntities.Add(this); }
+    void BeginPlay() {
+        IBaseEntity::s_aBaseEntities.Add(this);
+        if (IBaseEntity::s_bHasAlreadyInitializedBaseEntities) {
+            PreInit();
+            PostInit();
+        }
+    }
     void EndPlay(const EEndPlayReason::Type EndPlayReason) {
         IBaseEntity::s_aBaseEntities.Remove(this);
     }
@@ -100,8 +110,8 @@ protected:
     //-------------------------------------------------------------------------------------
 
 public:
-    virtual void PreInit() {} // called before all the static intializers
-    virtual void PostInit();  // called after all the static initializers
+    virtual void PreInit() {}
+    virtual void PostInit();
 
     //-------------------------------------------------------------------------------------
     // Linkage to vanilla Unreal system

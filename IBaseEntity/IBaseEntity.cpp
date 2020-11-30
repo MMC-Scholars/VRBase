@@ -4,8 +4,10 @@
 IBaseEntity*         g_ppEntityList[MAX_ENTITY_COUNT] = {NULL};
 TArray<IBaseEntity*> g_entList;
 
-// required to be redeclared in source file (cpp) for linker to detect it
+// static variables are required to be redeclared in source file (cpp) for the linker
+// to detect it
 TArray<IBaseEntity*> IBaseEntity::s_aBaseEntities;
+bool IBaseEntity::s_bHasAlreadyInitializedBaseEntities;
 
 // a global index which keeps track of where we last inserted an entity into the
 // list
@@ -85,9 +87,7 @@ void IBaseEntity::AddEntityToLists(IBaseEntity* pEnt) {
     }
 }
 
-void IBaseEntity::PostInit() {
-    RegisterInputsToControllers();
-}
+void IBaseEntity::PostInit() { RegisterInputsToControllers(); }
 
 IBaseEntity* IBaseEntity::FromActor(AActor* pActor) {
     // Epic disabled RTTI so we use this janky and hacky method instead
