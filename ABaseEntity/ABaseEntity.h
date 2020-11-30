@@ -51,9 +51,13 @@ public:
     virtual void OnUsed(ABaseEntity* pActivator) {}
 
     // unrecommended to override AActor functions
-    virtual void BeginPlay() override;
+    void BeginPlay() override;
+    void EndPlay(const EEndPlayReason::Type EndPlayReason) override {
+        Super::EndPlay(EndPlayReason);
+        IBaseEntity::EndPlay(EndPlayReason);
+    }
+
     virtual void Tick(float deltaTime) override { Super::Tick(deltaTime); }
-    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override {}
     virtual void PostDuplicate(EDuplicateMode::Type mode) override {
         Super::PostDuplicate(mode);
         IBaseEntity::PostDuplicate(mode);

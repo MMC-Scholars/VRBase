@@ -4,6 +4,9 @@
 IBaseEntity*         g_ppEntityList[MAX_ENTITY_COUNT] = {NULL};
 TArray<IBaseEntity*> g_entList;
 
+// required to be redeclared in source file (cpp) for linker to detect it
+TArray<IBaseEntity*> IBaseEntity::s_aBaseEntities;
+
 // a global index which keeps track of where we last inserted an entity into the
 // list
 static eindex g_iEntityCounter = 0;

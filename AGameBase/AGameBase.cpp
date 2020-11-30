@@ -45,21 +45,20 @@ void AGameBase::Tick(float deltaTime) {
     g_pGlobals->update();
 }
 
-UWorld* g_pWorld = NULL;
-void    AGameBase::BeginPlay() {
+void AGameBase::BeginPlay() {
     Super::BeginPlay();
-    ADebug::Assert((bool)(s_iEntityCount = g_entList.Num()),
-                   "\nIBaseEntity::s_iEntityCount = g_entList.Num()");
+
+    ADebug::Assert(s_iEntityCount == g_entList.Num(),
+                   "\nIBaseEntity::s_iEntityCount == g_entList.Num()");
 
     m_bHasRestartedRound         = false;
     m_bHasInitializedAllEntities = false;
 
     m_tNextRoundRestart = -FLT_MAX;
-
-    g_pWorld = GetWorld();
 }
 
 void AGameBase::EndPlay(const EEndPlayReason::Type EndPlayReason) {
+    Super::EndPlay(EndPlayReason);
     m_bHasInitializedAllEntities = false;
     g_pGlobals->markReset();
 }
