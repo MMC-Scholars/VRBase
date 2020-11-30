@@ -17,10 +17,12 @@ void ABaseEntity::BeginPlay() {
     ReportReady();
 
     // if the game has already started, call initializations
+    /*
     if (g_pGameBase && g_pGameBase->GameReady()) {
         PreInit();
         PostInit();
     }
+    */
 
     // initial world transform (rotation, location, scale)
     m_tInitialTransform =

@@ -23,11 +23,12 @@ public:
         Super::BeginPlay();
         IBaseEntity::BeginPlay();
         ReportReady();
-
+        /*
         if (g_pGameBase && g_pGameBase->GameReady()) {
             PreInit();
             PostInit();
         }
+        */
     }
     void EndPlay(const EEndPlayReason::Type EndPlayReason) override {
         Super::EndPlay(EndPlayReason);

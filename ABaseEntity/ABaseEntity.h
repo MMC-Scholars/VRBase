@@ -48,6 +48,20 @@ public:
 
     ABaseEntity();
 
+    /// Is called exactly once as soon as the BaseEntity has spawned in the world
+    UFUNCTION(BlueprintNativeEvent, DisplayName = "PreInit")
+    void         PreInit();
+    virtual void PreInit_Implementation() {
+        IBaseEntity::PreInit();
+    }; // provided solely for Blueprint implementations
+
+    /// Is called exactly once immediately following PreInit()
+    UFUNCTION(BlueprintNativeEvent, DisplayName = "PostInit")
+    void         PostInit();
+    virtual void PostInit_Implementation() {
+        IBaseEntity::PostInit();
+    }; // provided solely for Blueprint implementations
+
     virtual void OnUsed(ABaseEntity* pActivator) {}
 
     // unrecommended to override AActor functions
