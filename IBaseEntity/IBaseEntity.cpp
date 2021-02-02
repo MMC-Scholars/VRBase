@@ -7,7 +7,7 @@ TArray<IBaseEntity*> g_entList;
 // static variables are required to be redeclared in source file (cpp) for the linker
 // to detect it
 TArray<IBaseEntity*> IBaseEntity::s_aBaseEntities;
-bool IBaseEntity::s_bHasAlreadyInitializedBaseEntities;
+bool                 IBaseEntity::s_bHasAlreadyInitializedBaseEntities;
 
 // a global index which keeps track of where we last inserted an entity into the
 // list
@@ -29,9 +29,7 @@ IBaseEntity::IBaseEntity() {
     m_tLastTimeUsed = -FLT_MAX;
 }
 
-bool IBaseEntity::DestroyEntity() {
-    return GetActor()->Destroy();
-}
+bool IBaseEntity::DestroyEntity() { return GetActor()->Destroy(); }
 
 void IBaseEntity::PostInit() { RegisterInputsToControllers(); }
 

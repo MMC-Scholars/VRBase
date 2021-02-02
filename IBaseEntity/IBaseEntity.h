@@ -104,8 +104,8 @@ protected:
         PostDestroy();
     }
 
-    static int  s_iReadyEntityCount;
-    static int  s_iEntityCount;
+    static int s_iReadyEntityCount;
+    static int s_iEntityCount;
 
     //-------------------------------------------------------------------------------------
     // Initialization system
@@ -116,7 +116,7 @@ public:
     virtual void PostInit();
 
     virtual void PreDestroy() {}
-    virtual void PostDestroy() {};
+    virtual void PostDestroy(){};
 
     //-------------------------------------------------------------------------------------
     // Linkage to vanilla Unreal system

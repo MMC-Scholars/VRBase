@@ -20,31 +20,11 @@ public:
     // UE4 Overrides create a new game flow. This does not use
     // IBaseEntity::DefaultThink() nor IBaseEntity::Think() because if it
     // did, the game flow would end up calling itself.
-    virtual void BeginPlay() override;
+    // virtual void BeginPlay() override;
     virtual void Tick(float deltaTime) override;
 
-    //-------------------------------------------------------------------------------------
-    // Master game interface
-    //-------------------------------------------------------------------------------------
-
-public:
-    virtual void RestartRound();
-    inline void  SetNextRoundRestart(ftime next) { m_tNextRoundRestart = next; }
-    inline ftime GetNextResetRound() const { return m_tNextRoundRestart; }
-
-    bool GameReady() const { return m_bHasInitializedAllEntities; }
-
 private:
-    // TODO deprecate
-    // daniel
-    void InitializeAllEntities();
-    // the cooler daniel
     void InitializeBaseEntities();
-
-    // TODO deprecate
-    bool  m_bHasInitializedAllEntities;
-    bool  m_bHasRestartedRound;
-    ftime m_tNextRoundRestart;
 };
 
 extern AGameBase* g_pGameBase;
