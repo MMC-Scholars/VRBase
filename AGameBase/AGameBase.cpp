@@ -17,34 +17,16 @@ void AGameBase::Tick(float deltaTime) {
         InitializeBaseEntities();
     }
 
-    // check for round restart
-    // also check for initialization of all entities (efficient place to do it)
-    if (g_pGlobals->curtime > m_tNextRoundRestart) {
-        // executing round restart statement
-        if (!m_bHasInitializedAllEntities && AllEntitiesReady()) {
-            // initializing all entities
-            InitializeAllEntities();
-        } else if (!AllEntitiesReady()) {
-            //?! This should never happen!
-            ADebug::Assert((bool)(s_iReadyEntityCount == s_iEntityCount),
-                           "s_iReadyEntityCount == s_iEntityCount");
-        } else {
-            // restarting round
-            RestartRound();
-        }
-        m_tNextRoundRestart = FLT_MAX;
-    }
+    int numBaseEntities = IBaseEntity::s_aBaseEntities.Num();
 
-    // execute all default thinks
-    for (eindex i = 0; i < g_entList.Num(); i++) {
-        // executing DefaultThink for BaseEntity g_entList[i]
-        g_entList[i]->DefaultThink();
+    for (eindex i = 0; i < numBaseEntities; i++) {
+        IBaseEntity::s_aBaseEntities[i]->DefaultThink();
     }
 
     // execute all the pointer-based thinks
-    for (eindex i = 0; i < g_entList.Num(); i++) {
-        if (g_entList[i]->GetNextThink() > g_pGlobals->curtime) {
-            g_entList[i]->Think();
+    for (eindex i = 0; i < numBaseEntities; i++) {
+        if (IBaseEntity::s_aBaseEntities[i]->GetNextThink() > g_pGlobals->curtime) {
+            IBaseEntity::s_aBaseEntities[i]->Think();
         }
     }
 
@@ -55,11 +37,6 @@ void AGameBase::Tick(float deltaTime) {
 void AGameBase::BeginPlay() {
     Super::BeginPlay();
 
-    /*
-    for (eindex i = 0; i < IBaseEntity::s_aBaseEntities.Num(); i++)
-    IBaseEntity::s_aBaseEntities[i]->PreInit();
-    */
-
     ADebug::Assert(s_iEntityCount == g_entList.Num(),
                    "\nIBaseEntity::s_iEntityCount == g_entList.Num()");
 
@@ -67,13 +44,6 @@ void AGameBase::BeginPlay() {
     m_bHasInitializedAllEntities = false;
 
     m_tNextRoundRestart = -FLT_MAX;
-}
-
-void AGameBase::EndPlay(const EEndPlayReason::Type EndPlayReason) {
-    Super::EndPlay(EndPlayReason);
-    IBaseEntity::s_bHasAlreadyInitializedBaseEntities = false;
-    m_bHasInitializedAllEntities                      = false;
-    g_pGlobals->markReset();
 }
 
 void AGameBase::RestartRound() {
@@ -120,7 +90,6 @@ void AGameBase::InitializeAllEntities() {
 }
 
 void AGameBase::InitializeBaseEntities() {
-    IBaseEntity::s_bHasAlreadyInitializedBaseEntities = true;
     eindex iNumEntities = IBaseEntity::s_aBaseEntities.Num();
 
     for (eindex i = 0; i < iNumEntities; i++)
@@ -128,4 +97,6 @@ void AGameBase::InitializeBaseEntities() {
 
     for (eindex i = 0; i < iNumEntities; i++)
         IBaseEntity::s_aBaseEntities[i]->PostInit();
+
+    IBaseEntity::s_bHasAlreadyInitializedBaseEntities = true;
 }

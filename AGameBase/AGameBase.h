@@ -22,7 +22,6 @@ public:
     // did, the game flow would end up calling itself.
     virtual void BeginPlay() override;
     virtual void Tick(float deltaTime) override;
-    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
     //-------------------------------------------------------------------------------------
     // Master game interface
@@ -36,11 +35,13 @@ public:
     bool GameReady() const { return m_bHasInitializedAllEntities; }
 
 private:
+    // TODO deprecate
     // daniel
     void InitializeAllEntities();
     // the cooler daniel
     void InitializeBaseEntities();
 
+    // TODO deprecate
     bool  m_bHasInitializedAllEntities;
     bool  m_bHasRestartedRound;
     ftime m_tNextRoundRestart;

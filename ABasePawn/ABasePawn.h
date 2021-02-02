@@ -23,12 +23,6 @@ public:
         Super::BeginPlay();
         IBaseEntity::BeginPlay();
         ReportReady();
-        /*
-        if (g_pGameBase && g_pGameBase->GameReady()) {
-            PreInit();
-            PostInit();
-        }
-        */
     }
     void EndPlay(const EEndPlayReason::Type EndPlayReason) override {
         Super::EndPlay(EndPlayReason);
@@ -36,11 +30,6 @@ public:
     }
 
     virtual void Tick(float deltaTime) override {}
-
-    virtual void PostDuplicate(EDuplicateMode::Type mode) override {
-        Super::PostDuplicate(mode);
-        IBaseEntity::PostDuplicate(mode);
-    }
 
     virtual void
     SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

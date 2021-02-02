@@ -62,7 +62,7 @@ interface IBaseEntity {
 public:
     friend class CGlobalVars; // allow CGlobalVars to access s_iEntityCount
     IBaseEntity();
-    virtual ~IBaseEntity() { RemoveSelfFromLists(); }
+    virtual ~IBaseEntity() {}
 
     ftime m_tConstructionTime;
     void  RemoveSelfFromLists(); // invalidates EHANDLES but DOES NOT modify static
@@ -79,6 +79,8 @@ public:
 
     // A collection of references to all BaseEntities present in the world
     // at any given moment
+    // NOTE: This information cannot be retrieved from a Blueprint since
+    // Blueprints cannot read IBaseEntities
     static TArray<IBaseEntity*> s_aBaseEntities;
 
     // bool whether entities have already been initialized (e.g. PreInits and
@@ -98,10 +100,10 @@ protected:
     }
     void EndPlay(const EEndPlayReason::Type EndPlayReason) {
         IBaseEntity::s_aBaseEntities.Remove(this);
+        PreDestroy();
+        PostDestroy();
     }
 
-    void        PostDuplicate(EDuplicateMode::Type mode);
-    static void AddEntityToLists(IBaseEntity * pEnt);
     static int  s_iReadyEntityCount;
     static int  s_iEntityCount;
 
@@ -112,6 +114,9 @@ protected:
 public:
     virtual void PreInit() {}
     virtual void PostInit();
+
+    virtual void PreDestroy() {}
+    virtual void PostDestroy() {};
 
     //-------------------------------------------------------------------------------------
     // Linkage to vanilla Unreal system
@@ -164,6 +169,7 @@ public:
     ent->ThinkSet((BASEPTR)(func), reinterpret_cast<void*>(ent))
 #define SetThink(func) SetThinkEnt(func, this)
 
+    // TODO deprecate
     static inline bool AllEntitiesReady() {
         return s_iReadyEntityCount == s_iEntityCount;
     }

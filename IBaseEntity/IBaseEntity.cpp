@@ -27,64 +27,10 @@ IBaseEntity::IBaseEntity() {
     m_tConstructionTime = g_pGlobals->curtime;
 
     m_tLastTimeUsed = -FLT_MAX;
-
-    // in a cooked game PostDuplicate is not called so let's call it here
-    // we'll also call it if all other other BeginPlays have been called
-    if (IsCookedBuild() || g_pGlobals->worldcreated) AddEntityToLists(this);
 }
 
 bool IBaseEntity::DestroyEntity() {
-    RemoveSelfFromLists();
     return GetActor()->Destroy();
-}
-
-void IBaseEntity::RemoveSelfFromLists() {
-    g_ppEntityList[EntIndex()] = NULL;
-    g_entList.Remove(this);
-}
-
-void IBaseEntity::PostDuplicate(EDuplicateMode::Type mode) {
-    if (mode != EDuplicateMode::Normal) {
-        AddEntityToLists(this);
-        g_pGlobals->ineditor = false;
-    }
-}
-
-void IBaseEntity::AddEntityToLists(IBaseEntity* pEnt) {
-    g_entList.Add(pEnt);
-    s_iEntityCount++;
-
-    // now add it to the const-index array
-    eindex slot = -1;
-
-    // finds an empty slot if one exists
-    int checkCount = 0;
-    for (; ++g_iEntityCounter < MAX_ENTITY_COUNT && g_ppEntityList[g_iEntityCounter];
-         checkCount++)
-        ;
-
-    if (g_iEntityCounter != MAX_ENTITY_COUNT) {
-        slot = g_iEntityCounter;
-    } else {
-        g_iEntityCounter = 0;
-        checkCount       = MAX_ENTITY_COUNT - checkCount;
-
-        for (; ++g_iEntityCounter < checkCount && g_ppEntityList[g_iEntityCounter];)
-            ;
-
-        if (g_iEntityCounter != checkCount) { slot = g_iEntityCounter; }
-    }
-
-    // if a valid slot was not found
-    if (slot == -1) {
-        UE_LOG(LogTemp, Error,
-               TEXT("Could not find slot for new entity!\nThis most likely means "
-                    "that there are too many entities!"));
-    } else {
-        // assign entities
-        g_ppEntityList[slot] = pEnt;
-        pEnt->m_iEntIndex    = slot;
-    }
 }
 
 void IBaseEntity::PostInit() { RegisterInputsToControllers(); }

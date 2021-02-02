@@ -72,10 +72,6 @@ public:
     }
 
     virtual void Tick(float deltaTime) override { Super::Tick(deltaTime); }
-    virtual void PostDuplicate(EDuplicateMode::Type mode) override {
-        Super::PostDuplicate(mode);
-        IBaseEntity::PostDuplicate(mode);
-    }
 
     // "Use" controller input
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
