@@ -42,7 +42,6 @@ void CGlobalVars::reset() {
     // remove defaults from list
     while (removedList.Num() > 0) {
         IBaseEntity* ent = removedList.Pop();
-        ent->RemoveSelfFromLists();
     }
 
     worldcreated = true;

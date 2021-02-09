@@ -6,6 +6,7 @@
 
 using namespace std::chrono;
 
+// TODO deprecate
 class CGlobalVars {
 public:
     ftime curtime;
