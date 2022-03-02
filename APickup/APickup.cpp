@@ -9,16 +9,6 @@ APickup::APickup() {
     m_pPickupMeshComponent =
         CreateDefaultSubobject<UStaticMeshComponent>("Static Mesh Component");
 
-    /*
-    // set default mesh
-    m_pStaticMesh = NULL;
-
-    m_pPickupMeshComponent->SetStaticMesh(m_pStaticMesh);
-
-    // set default material
-    m_pMat = m_pPickupMeshComponent->GetMaterial(0);
-    */
-
     // set root component
     RootComponent = m_pPickupMeshComponent;
 
