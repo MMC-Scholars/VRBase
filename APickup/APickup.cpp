@@ -7,10 +7,11 @@
 APickup::APickup() {
     // static mesh component
     m_pPickupMeshComponent =
-        CreateDefaultSubobject<UStaticMeshComponent>("Static Mesh Component");
+        CreateDefaultSubobject<UStaticMeshComponent>( TEXT( "Pickup Mesh Component" ) );
 
     // set root component
-    RootComponent = m_pPickupMeshComponent;
+    //RootComponent = m_pPickupMeshComponent
+    m_pPickupMeshComponent->SetupAttachment(RootComponent);
 
     // enable overlap
     m_pPickupMeshComponent->SetGenerateOverlapEvents(true);
@@ -21,15 +22,6 @@ APickup::APickup() {
 
 TArray<AActor*> APickup::GetPickupParents() { return m_aParentActors; }
 
-UStaticMeshComponent* APickup::GetPickupMeshComponent() {
-    return m_pPickupMeshComponent;
-}
-
-bool APickup::SetSimulatePickupPhysics(bool physics) {
-    m_pPickupMeshComponent->SetSimulatePhysics(physics);
-    return physics;
-}
-
 bool APickup::SetPickupRenderCustomDepth(bool isRenderingCustomDepth) {
     m_pPickupMeshComponent->SetRenderCustomDepth(isRenderingCustomDepth);
     return isRenderingCustomDepth;
@@ -37,7 +29,7 @@ bool APickup::SetPickupRenderCustomDepth(bool isRenderingCustomDepth) {
 
 void APickup::Pickup(ABaseController* controller) {
     if (m_pPickupMeshComponent->GetStaticMesh()) {
-        SetSimulatePickupPhysics(false);
+        m_pPickupMeshComponent->SetSimulatePhysics(false);
         AttachToActor(controller, FAttachmentTransformRules::KeepWorldTransform);
         m_aParentActors.Add(controller);
 
