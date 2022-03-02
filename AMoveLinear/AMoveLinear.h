@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Components/SplineComponent.h"
-#include "VRBase/ABaseMoving/ABaseMoving.h"
+#include "ABaseMoving/ABaseMoving.h"
 
 #include "AMoveLinear.generated.h"
 

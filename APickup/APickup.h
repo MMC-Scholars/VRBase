@@ -1,6 +1,6 @@
 #pragma once
 
-#include "VRBase/ABaseEntity/ABaseEntity.h"
+#include "ABaseEntity/ABaseEntity.h"
 
 #include "APickup.generated.h"
 

@@ -2,7 +2,7 @@
 
 #include "Components/TextRenderComponent.h"
 #include "ProceduralMeshComponent.h"
-#include "VRBase/ABaseEntity/ABaseEntity.h"
+#include "ABaseEntity/ABaseEntity.h"
 
 #include "ASign.generated.h"
 
