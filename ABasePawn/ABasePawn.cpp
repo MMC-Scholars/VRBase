@@ -112,7 +112,7 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
         // OCULUS TOUCH KEY BINDINGS //
 
-        // left input
+        // left button input
 
         // Trigger
         PlayerInputComponent->BindKey(EKeys::OculusTouch_Left_Trigger_Click,
@@ -151,7 +151,7 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
                                       IE_Released, this,
                                       &ABasePawn::OnL_STICK_Released);
 
-        // right input
+        // right button input
 
         // Trigger
         PlayerInputComponent->BindKey(EKeys::OculusTouch_Right_Trigger_Click,
@@ -192,9 +192,15 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
                                       IE_Released, this,
                                       &ABasePawn::OnR_STICK_Released);
 
+
+        // axis inputs
+
+
+
+
         // HTC VIVE KEY BINDINGS //
 
-        // left input
+        // left button input
 
         // Trigger
         PlayerInputComponent->BindKey(EKeys::Vive_Left_Trigger_Click, IE_Pressed,
@@ -227,7 +233,7 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
         PlayerInputComponent->BindKey(EKeys::Vive_Left_Trackpad_Click, IE_Released,
                                       this, &ABasePawn::OnL_STICK_Released);
 
-        // right input
+        // right button input
 
         // Trigger
         PlayerInputComponent->BindKey(EKeys::Vive_Right_Trigger_Click, IE_Pressed,
@@ -264,6 +270,14 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
         // PlayerInputComponent->BindTouch(IE_Pressed, this,
         // &ABasePawn::UpdateTouch(ETouchIndex::Type, FVector);
 
+        // axis input
+
+        PlayerInputComponent->BindAxis(EKeys::Vive_Left_Trackpad_X.GetFName(), this,
+                                       &ABasePawn::UpdateLXInput);
+        PlayerInputComponent->BindAxis(EKeys::Vive_Left_Trackpad_Y.GetFName(), this,
+                                       &ABasePawn::UpdateLYInput);
+
+
         // TODO axis events?
         // PlayerInputComponent->BindAxisKey(EKeys::MotionController_Left_Thumbstick_X,
         // this, &ABasePawn::UpdateInput);
@@ -271,7 +285,7 @@ void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 }
 
 ABasePawn* g_pBasePawn = NULL;
-void       ABasePawn::PreInit() {
+void ABasePawn::PreInit() {
     g_pBasePawn = this;
 
     // set tracking origin to floor

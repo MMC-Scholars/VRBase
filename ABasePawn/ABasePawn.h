@@ -138,7 +138,8 @@ public:
     KEY_INPUT(STICK, Pressed, R);
     KEY_INPUT(STICK, Released, R);
 
-    // virtual void UpdateInput(float);
+    void UpdateLXInput(float x){};
+    void UpdateLYInput(float y){};
     // virtual void UpdateTouch(ETouchIndex::Type, FVector);
     // https://api.unrealengine.com/INT/API/Runtime/InputCore/ETouchIndex__Type/index.html
 
