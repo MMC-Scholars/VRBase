@@ -7,20 +7,16 @@ ABaseMoving::ABaseMoving() {
     m_bInAttachThink     = false;
     m_pHoldingController = NULL;
 
-    m_pPickupMeshComponent->SetStaticMesh(m_pStaticMesh);
     m_pPickupMeshComponent->SetSimulatePhysics(false);
 }
 
 void ABaseMoving::OnConstruction(const FTransform& Transform) {
-    // set static mesh
-    m_pPickupMeshComponent->SetStaticMesh(m_pStaticMesh);
     // set initial lerp value
     SetLerpPosition(m_lInitialLerp);
 }
 
 void ABaseMoving::PreInit() {
     Super::PreInit();
-    m_pPickupMeshComponent->SetStaticMesh(m_pStaticMesh);
     SetLerpPosition(m_lInitialLerp);
 }
 
